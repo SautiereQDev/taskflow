@@ -1,0 +1,21 @@
+<header class="bg-base-200 shadow-lg">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold text-primary">TaskFlow</a>
+      
+      <div class="flex items-center gap-4">
+        <% if (locals.user) { %>
+          <span class="text-sm">Welcome, <%= user.name %></span>
+          <a href="/dashboard" class="btn btn-sm btn-ghost">Dashboard</a>
+          <a href="/tasks" class="btn btn-sm btn-ghost">Tasks</a>
+          <form action="/auth/logout" method="POST" class="inline">
+            <button type="submit" class="btn btn-sm btn-ghost">Logout</button>
+          </form>
+        <% } else { %>
+          <a href="/auth/login" class="btn btn-sm btn-primary">Login</a>
+          <a href="/auth/register" class="btn btn-sm btn-ghost">Register</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+</header>

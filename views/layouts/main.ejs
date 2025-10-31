@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="<%= locals.locale || 'fr' %>" data-theme="<%= locals.theme || 'light' %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow - Modern task management application">
+  <title><%= locals.title || 'TaskFlow' %> | TaskFlow</title>
+  
+  <!-- Tailwind CSS (will be built in Phase 4) -->
+  <link rel="stylesheet" href="/css/tailwind.css">
+  
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/loading-states.js"></script>
+  
+  <!-- Alpine.js (for local interactivity) -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="min-h-screen bg-base-100">
+  
+  <!-- Header / Navigation -->
+  <%- include('../partials/header') %>
+  
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+  
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <%- body %>
+  </main>
+  
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  
+  <!-- HTMX Configuration -->
+  <script>
+    // Global HTMX configuration
+    document.body.addEventListener('htmx:beforeRequest', () => {
+      document.body.classList.add('htmx-loading');
+    });
+    
+    document.body.addEventListener('htmx:afterRequest', () => {
+      document.body.classList.remove('htmx-loading');
+    });
+    
+    // Show errors from HX-Trigger header
+    document.body.addEventListener('htmx:responseError', (event) => {
+      const showError = event.detail.xhr.getResponseHeader('HX-Trigger');
+      if (showError) {
+        const errorData = JSON.parse(showError);
+        if (errorData.showError) {
+          alert(errorData.showError); // Replace with toast in Phase 4
+        }
+      }
+    });
+  </script>
+</body>
+</html>

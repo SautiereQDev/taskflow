@@ -1,0 +1,96 @@
+/* Tailwind CSS - Temporary placeholder for Phase 3.1 */
+/* Real Tailwind + DaisyUI will be configured in Phase 4.1 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #3b82f6;
+  --base-100: #ffffff;
+  --base-200: #f3f4f6;
+  --base-content: #1f2937;
+}
+
+[data-theme="dark"] {
+  --primary: #60a5fa;
+  --base-100: #1f2937;
+  --base-200: #111827;
+  --base-content: #f9fafb;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--base-100);
+  color: var(--base-content);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+.card {
+  background: var(--base-200);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.alert {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  background: #10b981;
+  color: white;
+}
+
+.alert-error {
+  background: #ef4444;
+  color: white;
+}
+
+.alert-info {
+  background: #3b82f6;
+  color: white;
+}
+
+.htmx-loading {
+  cursor: wait;
+  opacity: 0.7;
+}
