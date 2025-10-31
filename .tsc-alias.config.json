@@ -1,0 +1,9 @@
+{
+  "verbose": false,
+  "resolveFullPaths": true,
+  "replacers": {
+    "exampleOldPath": {
+      "enabled": false
+    }
+  }
+}

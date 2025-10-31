@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: task_management_db
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: taskflow
+      POSTGRES_PASSWORD: taskflow_dev_password
+      POSTGRES_DB: taskflow_dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskflow -d taskflow_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task_management_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://taskflow:taskflow_dev_password@db:5432/taskflow_dev?schema=public"
+      NODE_ENV: production
+      SESSION_SECRET: bdEX"rOUw)f+\]Sq-p|bFivPEMtP(L}.Gceve6x#'d.q/FpJ'3'Xc0[):ok9-Pea
+      SESSION_MAX_AGE: 86400000
+      PORT: 3000
+      HOST: 0.0.0.0
+      LOG_LEVEL: info
+      SEED_DATABASE: "true"
+    volumes:
+      - ./prisma:/app/prisma
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

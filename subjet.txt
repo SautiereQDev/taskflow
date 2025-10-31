@@ -1,0 +1,29 @@
+Projet: Système de Gestion de Tâches en Temps Réel
+
+Objectifs:
+1. Créer une API REST pour gérer des projets et des tâches
+2. Implémenter des mises à jour en temps réel via WebSockets
+3. Utiliser Prisma comme ORM pour PostgreSQL
+4. Appliquer les design patterns (DI, Repository, Factory, Observer)
+5. Suivre l'approche TDD (Test-Driven Development)
+6. Documenter le code avec des docstrings
+7. Utiliser TypeScript avec les dernières fonctionnalités
+
+Fonctionnalités requises:
+- CRUD complet pour les projets
+- CRUD complet pour les tâches
+- Association des tâches aux projets
+- Notifications en temps réel des changements
+- Gestion des erreurs robuste
+- Validation des données
+- Tests unitaires et d'intégration
+
+Technologies:
+- Express.js (framework web)
+- TypeScript (typage statique)
+- Prisma (ORM)
+- PostgreSQL (base de données)
+- Vitest (tests)
+- WebSockets (temps réel)
+- Docker (conteneurisation)
+

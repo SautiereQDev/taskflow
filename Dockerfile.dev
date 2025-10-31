@@ -1,0 +1,61 @@
+# Dockerfile optimisé pour développement avec Tailwind v4
+FROM node:24.9-alpine
+
+WORKDIR /app
+
+# Install build dependencies and OpenSSL for Prisma
+RUN apk add --no-cache \
+    g++ \
+    make \
+    openssl \
+    openssl-dev \
+    python3 \
+    netcat-openbsd
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev)
+RUN npm install
+
+# Copy configuration files
+COPY tsconfig.json ./
+COPY vitest.config.ts ./
+COPY eslint.config.ts ./
+COPY postcss.config.js ./
+COPY loader.mjs ./
+
+# Copy scripts
+COPY scripts ./scripts
+
+# Copy Prisma schema
+COPY prisma ./prisma/
+
+# Generate Prisma Client
+RUN npx prisma generate
+
+# Copy source code
+COPY src ./src
+COPY public ./public
+COPY views ./views
+COPY locales ./locales
+
+# Build CSS initially (will be rebuilt by watch mode)
+RUN npm run css:build
+
+# Copy docker entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD nc -z localhost 3000 || exit 1
+
+# Start with entrypoint (will run migrations and seed)
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+# Default command (can be overridden by docker-compose)
+CMD ["npm", "run", "dev:docker"]
