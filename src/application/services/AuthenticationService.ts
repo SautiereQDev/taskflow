@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import type { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import type { IPasswordHasher } from '../interfaces/IPasswordHasher.js';
 import type { User } from '../../domain/entities/User.js';
-import { AppError } from '../../utils/errors.util.js';
+import { AppError } from '../../utils/AppError.js';
 
 /**
  * Authentication Result
@@ -95,15 +95,14 @@ export class AuthenticationService {
   }
 
   /**
-   * Logout user (session cleanup)
+   * Logout user
    *
    * Note: Actual session destruction happens in the controller/middleware.
    * This method can be extended to handle additional cleanup (e.g., revoke tokens).
    *
    * @param userId - User ID to logout
-   * @returns Promise resolving when logout is complete
    */
-  async logout(userId: string): Promise<void> {
+  logout(userId: string): void {
     // Future: Add token revocation, audit logging, etc.
     console.info(`User ${userId} logged out`);
   }
@@ -139,6 +138,6 @@ export class AuthenticationService {
     const hashedNewPassword = await this.passwordHasher.hash(newPassword);
     user.updatePassword(hashedNewPassword);
 
-    await this.userRepository.save(user);
+    await this.userRepository.update(user);
   }
 }

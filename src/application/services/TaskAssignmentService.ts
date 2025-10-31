@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import type { ITaskRepository } from '../../domain/repositories/ITaskRepository.js';
 import type { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import type { Task } from '../../domain/entities/Task.js';
-import { AppError } from '../../utils/errors.util.js';
+import { AppError } from '../../utils/AppError.js';
 
 /**
  * Task Assignment Service
@@ -57,10 +57,10 @@ export class TaskAssignmentService {
     }
 
     // Assign task using domain method
-    task.assign(assigneeId);
+    task.assignTo(assigneeId);
 
     // Persist changes
-    return await this.taskRepository.save(task);
+    return await this.taskRepository.update(task);
   }
 
   /**
@@ -78,7 +78,7 @@ export class TaskAssignmentService {
 
     task.unassign();
 
-    return await this.taskRepository.save(task);
+    return await this.taskRepository.update(task);
   }
 
   /**
