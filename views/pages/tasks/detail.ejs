@@ -14,7 +14,40 @@
     <!-- Header -->
     <div class="flex justify-between items-start mb-6">
       <div class="flex-1">
-        <h1 class="text-3xl font-bold mb-3"><%= task.title %></h1>
+        <!-- Title with Inline Edit -->
+        <% if (task.canEdit) { %>
+          <div x-data="inlineEdit('<%= task.title %>', '/tasks/<%= task.id %>', 'title')" 
+               class="mb-3">
+            <div x-show="!editing" class="flex items-center gap-2 group">
+              <h1 class="text-3xl font-bold"><%= task.title %></h1>
+              <button @click="startEdit" 
+                      class="btn btn-ghost btn-sm btn-circle opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Modifier le titre">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+            </div>
+            <div x-show="editing" x-cloak>
+              <input type="text" 
+                     x-model="value"
+                     @keydown="handleKeydown"
+                     class="input input-bordered w-full text-3xl font-bold" />
+              <div class="flex gap-2 mt-2">
+                <button @click="save" 
+                        :disabled="saving"
+                        class="btn btn-primary btn-sm">
+                  <span x-show="!saving">Enregistrer</span>
+                  <span x-show="saving" class="loading loading-spinner loading-xs"></span>
+                </button>
+                <button @click="cancel" class="btn btn-ghost btn-sm">Annuler</button>
+              </div>
+            </div>
+          </div>
+        <% } else { %>
+          <h1 class="text-3xl font-bold mb-3"><%= task.title %></h1>
+        <% } %>
+        
         <div class="flex flex-wrap gap-2">
           <%- include('../../partials/ui/badge', {
             text: task.status.label,
@@ -42,7 +75,7 @@
           <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 glass">
             <li><a href="/tasks/<%= task.id %>/edit">Modifier</a></li>
             <li>
-              <form method="POST" action="/tasks/<%= task.id %>/delete" 
+              <form method="POST" action="/tasks/<%= task.id %>/delete"
                     hx-delete="/tasks/<%= task.id %>"
                     hx-confirm="Êtes-vous sûr de vouloir supprimer cette tâche ?">
                 <button type="submit" class="text-error w-full text-left">Supprimer</button>

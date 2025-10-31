@@ -164,6 +164,227 @@ document.addEventListener('alpine:init', () => {
       });
     },
   }));
+
+  /**
+   * Toast Notification Component
+   * Displays temporary toast notifications with auto-dismiss
+   */
+  Alpine.data('toastManager', () => ({
+    toasts: [],
+    nextId: 1,
+
+    init() {
+      // Listen for custom flash events
+      window.addEventListener('show-flash', (event) => {
+        this.show(event.detail.text, event.detail.type || 'info');
+      });
+
+      // Listen for HTMX success/error events
+      document.body.addEventListener('htmx:afterSwap', (event) => {
+        const trigger = event.detail.xhr.getResponseHeader('HX-Trigger');
+        if (trigger) {
+          try {
+            const data = JSON.parse(trigger);
+            if (data.showSuccess) {
+              this.show(data.showSuccess, 'success');
+            }
+            if (data.showError) {
+              this.show(data.showError, 'error');
+            }
+          } catch (error) {
+            console.error('Failed to parse HX-Trigger:', error);
+          }
+        }
+      });
+    },
+
+    show(message, type = 'info', duration = 4000) {
+      const id = this.nextId++;
+      const toast = { id, message, type, visible: true };
+      this.toasts.push(toast);
+
+      // Auto-dismiss after duration
+      if (duration > 0) {
+        setTimeout(() => this.dismiss(id), duration);
+      }
+    },
+
+    dismiss(id) {
+      const index = this.toasts.findIndex((t) => t.id === id);
+      if (index !== -1) {
+        this.toasts[index].visible = false;
+        setTimeout(() => {
+          this.toasts = this.toasts.filter((t) => t.id !== id);
+        }, 300); // Wait for animation
+      }
+    },
+
+    getAlertClass(type) {
+      const classes = {
+        success: 'alert-success',
+        error: 'alert-error',
+        warning: 'alert-warning',
+        info: 'alert-info',
+      };
+      return classes[type] || 'alert-info';
+    },
+
+    getIcon(type) {
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ',
+      };
+      return icons[type] || 'ℹ';
+    },
+  }));
+
+  /**
+   * Inline Edit Component
+   * Enables inline editing of text fields
+   */
+  Alpine.data('inlineEdit', (initialValue = '', endpoint = '', field = '') => ({
+    editing: false,
+    value: initialValue,
+    originalValue: initialValue,
+    saving: false,
+    error: null,
+
+    startEdit() {
+      this.editing = true;
+      this.originalValue = this.value;
+      this.$nextTick(() => {
+        const input = this.$el.querySelector('input, textarea');
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      });
+    },
+
+    async save() {
+      if (this.value === this.originalValue) {
+        this.cancel();
+        return;
+      }
+
+      this.saving = true;
+      this.error = null;
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: JSON.stringify({ [field]: this.value }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save');
+        }
+
+        this.editing = false;
+        this.originalValue = this.value;
+
+        // Show success toast
+        window.dispatchEvent(
+          new CustomEvent('show-flash', {
+            detail: { type: 'success', text: 'Modifications enregistrées' },
+          })
+        );
+      } catch (error) {
+        this.error = error.message;
+        window.dispatchEvent(
+          new CustomEvent('show-flash', {
+            detail: { type: 'error', text: 'Erreur lors de la sauvegarde' },
+          })
+        );
+      } finally {
+        this.saving = false;
+      }
+    },
+
+    cancel() {
+      this.value = this.originalValue;
+      this.editing = false;
+      this.error = null;
+    },
+
+    handleKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        this.save();
+      } else if (e.key === 'Escape') {
+        this.cancel();
+      }
+    },
+  }));
+
+  /**
+   * Task Search Component
+   * Client-side task search with debouncing
+   */
+  Alpine.data('taskSearch', () => ({
+    query: '',
+    searching: false,
+    debounceTimer: null,
+
+    search() {
+      clearTimeout(this.debounceTimer);
+      this.searching = true;
+
+      this.debounceTimer = setTimeout(() => {
+        // Trigger HTMX search request
+        htmx.ajax('GET', `/tasks?search=${encodeURIComponent(this.query)}`, {
+          target: '#task-list-container',
+          swap: 'innerHTML',
+        });
+        this.searching = false;
+      }, 300);
+    },
+
+    clear() {
+      this.query = '';
+      this.search();
+    },
+  }));
+
+  /**
+   * Confirmation Dialog Component
+   * Confirms destructive actions
+   */
+  Alpine.data('confirmDialog', () => ({
+    open: false,
+    title: '',
+    message: '',
+    confirmText: 'Confirmer',
+    cancelText: 'Annuler',
+    onConfirm: null,
+
+    show(options = {}) {
+      this.title = options.title || 'Confirmation';
+      this.message = options.message || 'Êtes-vous sûr ?';
+      this.confirmText = options.confirmText || 'Confirmer';
+      this.cancelText = options.cancelText || 'Annuler';
+      this.onConfirm = options.onConfirm || null;
+      this.open = true;
+    },
+
+    confirm() {
+      if (this.onConfirm) {
+        this.onConfirm();
+      }
+      this.close();
+    },
+
+    close() {
+      this.open = false;
+      this.onConfirm = null;
+    },
+  }));
 });
 
 /**

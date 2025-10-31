@@ -13,6 +13,9 @@
 
   <%- include('../partials/footer') %>
 
+  <!-- Toast Notifications (Alpine.js) -->
+  <%- include('../partials/toast-notifications') %>
+
   <!-- HTMX 1.9.10 - Dynamic content updates -->
   <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 
@@ -22,5 +25,8 @@
 
   <!-- Theme initialization (runs before Alpine) -->
   <script src="/js/theme-init.js"></script>
+
+  <!-- Alpine.js components (theme, modal, toast, etc.) -->
+  <script src="/js/alpine-components.js"></script>
 </body>
 </html>

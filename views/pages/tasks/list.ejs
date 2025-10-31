@@ -1,7 +1,25 @@
 <div class="flex flex-col lg:flex-row gap-6">
   <!-- Filters Sidebar -->
-  <aside class="w-full lg:w-80 shrink-0">
-    <div id="filters-panel">
+  <aside class="w-full lg:w-80 shrink-0" x-data="filtersPanel">
+    <!-- Collapse Button (mobile) -->
+    <button @click="toggle" 
+            class="lg:hidden btn btn-ghost btn-sm w-full mb-4 justify-between">
+      <span>Filtres</span>
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-4 w-4 transition-transform" 
+           :class="{ 'rotate-180': open }"
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <!-- Filters Panel -->
+    <div id="filters-panel" 
+         x-show="open" 
+         x-transition
+         class="lg:block">
       <%- include('../../partials/htmx/task-filters', { 
         filters: filters || {},
         users: users || []
@@ -11,20 +29,41 @@
 
   <!-- Main Content -->
   <main class="flex-1 space-y-6">
-    <!-- Header -->
-    <div class="flex justify-between items-center">
-      <div>
-        <h1 class="text-3xl font-bold">Mes tâches</h1>
-        <p class="text-base-content/70 mt-1">
-          <span id="task-count"><%= pagination.total %></span> tâche(s) au total
-        </p>
+    <!-- Header with Search -->
+    <div class="space-y-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-3xl font-bold">Mes tâches</h1>
+          <p class="text-base-content/70 mt-1">
+            <span id="task-count"><%= pagination.total %></span> tâche(s) au total
+          </p>
+        </div>
+        <a href="/tasks/new" class="btn btn-primary gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Nouvelle tâche
+        </a>
       </div>
-      <a href="/tasks/new" class="btn btn-primary gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-        Nouvelle tâche
-      </a>
+
+      <!-- Search Bar (Alpine.js) -->
+      <div x-data="taskSearch" class="form-control">
+        <div class="input-group">
+          <input type="text" 
+                 x-model="query"
+                 @input="search"
+                 placeholder="Rechercher une tâche..." 
+                 class="input input-bordered flex-1" />
+          <button @click="clear" 
+                  x-show="query.length > 0"
+                  class="btn btn-ghost btn-square">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <span x-show="searching" class="loading loading-spinner loading-sm"></span>
+        </div>
+      </div>
     </div>
 
     <!-- Task List Container (HTMX Target) -->
