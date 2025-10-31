@@ -70,7 +70,7 @@ export function requireOwnership(paramName = 'userId') {
       throw new AppError('User not authenticated', 401);
     }
 
-    const resourceOwnerId = req.params[paramName] || req.body[paramName];
+    const resourceOwnerId = req.params[paramName] ?? req.body[paramName];
 
     if (!resourceOwnerId) {
       throw new AppError(`Resource owner ID not found in ${paramName}`, 400);
@@ -124,7 +124,7 @@ export function requireAdminOrOwner(paramName = 'userId') {
     }
 
     // Check ownership
-    const resourceOwnerId = req.params[paramName] || req.body[paramName];
+    const resourceOwnerId = req.params[paramName] ?? req.body[paramName];
 
     if (!resourceOwnerId) {
       throw new AppError(`Resource owner ID not found in ${paramName}`, 400);
