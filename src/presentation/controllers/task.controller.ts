@@ -1,0 +1,219 @@
+/**
+ * Task Controller
+ *
+ * Handles HTTP requests for task operations (CRUD).
+ * Supports both full page renders and HTMX partial updates.
+ *
+ * @module presentation/controllers/task.controller
+ */
+
+import type { Response } from 'express';
+import { injectable, inject } from 'tsyringe';
+import { CommandBus } from '@application/commands/CommandBus.js';
+import { QueryBus } from '@application/queries/QueryBus.js';
+import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
+import { GetTaskByIdQuery } from '@application/queries/tasks/GetTaskByIdQuery.js';
+import {
+  CreateTaskCommand,
+  type CreateTaskCommandInput,
+} from '@application/commands/tasks/CreateTaskCommand.js';
+import {
+  UpdateTaskCommand,
+  type UpdateTaskCommandInput,
+} from '@application/commands/tasks/UpdateTaskCommand.js';
+import { DeleteTaskCommand } from '@application/commands/tasks/DeleteTaskCommand.js';
+import {
+  renderOrPartial,
+  htmxRedirect,
+  htmxTrigger,
+} from '@presentation/utils/response.helpers.js';
+import type { IAuthenticatedRequest } from './auth.controller.js';
+
+/**
+ * TaskController
+ *
+ * Thin HTTP handler for task operations.
+ * Delegates to Commands/Queries, handles HTMX responses.
+ */
+@injectable()
+export class TaskController {
+  constructor(
+    @inject(CommandBus) private readonly commandBus: CommandBus,
+    @inject(QueryBus) private readonly queryBus: QueryBus
+  ) {}
+
+  /**
+   * GET /tasks - List all tasks with filters and pagination
+   *
+   * @param req - Express request with query parameters
+   * @param res - Express response
+   */
+  async list(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const {
+      page = '1',
+      limit = '20',
+      status,
+      priority,
+      assigneeId,
+      creatorId,
+      search,
+    } = req.query as Record<string, string>;
+
+    // Execute query
+    const query = new GetAllTasksQuery(
+      parseInt(page, 10),
+      parseInt(limit, 10),
+      status,
+      priority,
+      assigneeId,
+      creatorId,
+      search
+    );
+    const result = await this.queryBus.execute(GetAllTasksQuery, query);
+
+    // Render full page or partial for filters
+    renderOrPartial(req, res, 'pages/tasks/list', 'partials/tasks/task-list', {
+      tasks: result.tasks,
+      pagination: result.pagination,
+      filters: { status, priority, assigneeId, creatorId, search },
+      user: req.user,
+    });
+  }
+
+  /**
+   * GET /tasks/:id - Get task details
+   *
+   * @param req - Express request with task ID in params
+   * @param res - Express response
+   */
+  async detail(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    // Execute query
+    const query = new GetTaskByIdQuery(id);
+    const task = await this.queryBus.execute(GetTaskByIdQuery, query);
+
+    // Render full page or partial (for modals)
+    renderOrPartial(req, res, 'pages/tasks/detail', 'partials/tasks/task-detail', {
+      task,
+      user: req.user,
+    });
+  }
+
+  /**
+   * GET /tasks/new - Render task creation form
+   *
+   * @param req - Express request
+   * @param res - Express response
+   */
+  createPage(req: IAuthenticatedRequest, res: Response): void {
+    renderOrPartial(req, res, 'pages/tasks/create', 'partials/tasks/task-form', {
+      user: req.user,
+    });
+  }
+
+  /**
+   * POST /tasks - Create new task
+   *
+   * @param req - Express request with task data in body
+   * @param res - Express response
+   */
+  async create(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const taskData = req.body as CreateTaskCommandInput;
+
+    // Set creator from authenticated user
+    const commandData = {
+      ...taskData,
+      creatorId: req.user!.id,
+    };
+
+    // Execute command
+    const command = new CreateTaskCommand(commandData);
+    const task = await this.commandBus.execute(CreateTaskCommand, command);
+
+    // Set flash message
+    req.flash('success', 'Task created successfully!');
+
+    // Redirect or trigger event
+    if (req.isHtmx) {
+      htmxTrigger(res, 'taskCreated');
+      htmxRedirect(res, `/tasks/${task.id}`);
+    } else {
+      res.redirect(`/tasks/${task.id}`);
+    }
+  }
+
+  /**
+   * GET /tasks/:id/edit - Render task edit form
+   *
+   * @param req - Express request with task ID in params
+   * @param res - Express response
+   */
+  async updatePage(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    // Get task data
+    const query = new GetTaskByIdQuery(id);
+    const task = await this.queryBus.execute(GetTaskByIdQuery, query);
+
+    // Render form
+    renderOrPartial(req, res, 'pages/tasks/edit', 'partials/tasks/task-form', {
+      task,
+      user: req.user,
+    });
+  }
+
+  /**
+   * PATCH /tasks/:id - Update task
+   *
+   * @param req - Express request with task ID and update data
+   * @param res - Express response
+   */
+  async update(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const updateData = req.body as Omit<UpdateTaskCommandInput, 'taskId'>;
+
+    // Execute command
+    const command = new UpdateTaskCommand({
+      taskId: id,
+      ...updateData,
+    });
+    await this.commandBus.execute(UpdateTaskCommand, command);
+
+    // Set flash message
+    req.flash('success', 'Task updated successfully!');
+
+    // Trigger refresh or redirect
+    if (req.isHtmx) {
+      htmxTrigger(res, 'taskUpdated');
+      res.status(200).send('<div class="alert alert-success">Task updated!</div>');
+    } else {
+      res.redirect(`/tasks/${id}`);
+    }
+  }
+
+  /**
+   * DELETE /tasks/:id - Delete task
+   *
+   * @param req - Express request with task ID in params
+   * @param res - Express response
+   */
+  async delete(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    // Execute command
+    const command = new DeleteTaskCommand({ taskId: id });
+    await this.commandBus.execute(DeleteTaskCommand, command);
+
+    // Set flash message
+    req.flash('success', 'Task deleted successfully!');
+
+    // Trigger refresh or redirect
+    if (req.isHtmx) {
+      htmxTrigger(res, 'taskDeleted');
+      res.status(200).end();
+    } else {
+      res.redirect('/tasks');
+    }
+  }
+}

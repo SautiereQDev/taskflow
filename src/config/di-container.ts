@@ -59,6 +59,12 @@ import { TaskCreatedEventHandler } from '../application/events/handlers/TaskCrea
 import { TaskAssignedEventHandler } from '../application/events/handlers/TaskAssignedEventHandler.js';
 import { UserRegisteredEventHandler } from '../application/events/handlers/UserRegisteredEventHandler.js';
 
+// Presentation Layer - Controllers
+import { AuthController } from '../presentation/controllers/auth.controller.js';
+import { DashboardController } from '../presentation/controllers/dashboard.controller.js';
+import { TaskController } from '../presentation/controllers/task.controller.js';
+import { UserController } from '../presentation/controllers/user.controller.js';
+
 /**
  * Register Infrastructure Services
  */
@@ -153,6 +159,16 @@ const eventBus = container.resolve(EventBus);
 eventBus.register(container.resolve(TaskCreatedEventHandler));
 eventBus.register(container.resolve(TaskAssignedEventHandler));
 eventBus.register(container.resolve(UserRegisteredEventHandler));
+
+/**
+ * Register Presentation Layer - Controllers
+ */
+
+// Controllers as singletons (one instance per application)
+container.registerSingleton(AuthController);
+container.registerSingleton(DashboardController);
+container.registerSingleton(TaskController);
+container.registerSingleton(UserController);
 
 /**
  * Helper function to get repository instances

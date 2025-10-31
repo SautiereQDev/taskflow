@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import { AppError } from '@utils/AppError.js';
-import { logger } from '@utils/logger.util.js';
+import { AppError } from '../../utils/AppError.js';
+import { logger } from '../../utils/logger.util.js';
 
 /**
  * Error Response Interface
