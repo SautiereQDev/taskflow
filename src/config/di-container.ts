@@ -53,6 +53,12 @@ import { TaskAssignmentService } from '../application/services/TaskAssignmentSer
 import { DashboardMetricsService } from '../application/services/DashboardMetricsService.js';
 import type { IPasswordHasher } from '../application/interfaces/IPasswordHasher.js';
 
+// Application Layer - Event System
+import { EventBus } from '../application/events/EventBus.js';
+import { TaskCreatedEventHandler } from '../application/events/handlers/TaskCreatedEventHandler.js';
+import { TaskAssignedEventHandler } from '../application/events/handlers/TaskAssignedEventHandler.js';
+import { UserRegisteredEventHandler } from '../application/events/handlers/UserRegisteredEventHandler.js';
+
 /**
  * Register Infrastructure Services
  */
@@ -129,6 +135,24 @@ container.register<IPasswordHasher>('IPasswordHasher' as never, {
 container.registerSingleton(AuthenticationService);
 container.registerSingleton(TaskAssignmentService);
 container.registerSingleton(DashboardMetricsService);
+
+/**
+ * Register Event System
+ */
+
+// EventBus as singleton (shared event dispatcher)
+container.registerSingleton(EventBus);
+
+// Event handlers as singletons
+container.registerSingleton(TaskCreatedEventHandler);
+container.registerSingleton(TaskAssignedEventHandler);
+container.registerSingleton(UserRegisteredEventHandler);
+
+// Register event handlers with EventBus
+const eventBus = container.resolve(EventBus);
+eventBus.register(container.resolve(TaskCreatedEventHandler));
+eventBus.register(container.resolve(TaskAssignedEventHandler));
+eventBus.register(container.resolve(UserRegisteredEventHandler));
 
 /**
  * Helper function to get repository instances
