@@ -149,8 +149,14 @@ export class AuthController {
   logout(req: IAuthenticatedRequest, res: Response): void {
     const userId = req.session.userId;
 
+    // If no session, just redirect to login (graceful handling)
     if (!userId) {
-      throw new AppError('No active session', 401);
+      if (req.isHtmx) {
+        htmxRedirect(res, '/auth/login');
+      } else {
+        res.redirect('/auth/login');
+      }
+      return;
     }
 
     // Cleanup (optional - can be extended)

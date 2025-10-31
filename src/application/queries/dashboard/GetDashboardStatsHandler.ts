@@ -22,7 +22,7 @@ export class GetDashboardStatsHandler
     const filters = query.userId ? { assigneeId: query.userId } : undefined;
 
     // Fetch all tasks (in production, use optimized COUNT queries)
-    const allTasks = await this.taskRepository.findAll(1, 1000, filters);
+    const allTasks = await this.taskRepository.findAll(filters, 1, 1000);
 
     // Calculate statistics
     const totalTasks = allTasks.items.length;
