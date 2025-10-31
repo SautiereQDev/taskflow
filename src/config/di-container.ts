@@ -46,6 +46,13 @@ import { GetAllTasksHandler } from '../application/queries/tasks/GetAllTasksHand
 import { GetTaskByIdHandler } from '../application/queries/tasks/GetTaskByIdHandler.js';
 import { GetDashboardStatsHandler } from '../application/queries/dashboard/GetDashboardStatsHandler.js';
 
+// Application Layer - Domain Services
+import { PasswordHashingService } from '../application/services/PasswordHashingService.js';
+import { AuthenticationService } from '../application/services/AuthenticationService.js';
+import { TaskAssignmentService } from '../application/services/TaskAssignmentService.js';
+import { DashboardMetricsService } from '../application/services/DashboardMetricsService.js';
+import type { IPasswordHasher } from '../application/interfaces/IPasswordHasher.js';
+
 /**
  * Register Infrastructure Services
  */
@@ -108,6 +115,20 @@ container.register('GetTaskByIdQueryHandler', { useClass: GetTaskByIdHandler });
 
 // Dashboard Query Handlers
 container.register('GetDashboardStatsQueryHandler', { useClass: GetDashboardStatsHandler });
+
+/**
+ * Register Application Layer - Domain Services
+ */
+
+// Password Hashing Service (interface binding)
+container.register<IPasswordHasher>('IPasswordHasher' as never, {
+  useClass: PasswordHashingService,
+});
+
+// Domain Services (singletons)
+container.registerSingleton(AuthenticationService);
+container.registerSingleton(TaskAssignmentService);
+container.registerSingleton(DashboardMetricsService);
 
 /**
  * Helper function to get repository instances
