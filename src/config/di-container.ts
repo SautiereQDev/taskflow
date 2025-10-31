@@ -38,6 +38,14 @@ import { UpdateTaskHandler } from '../application/commands/tasks/UpdateTaskHandl
 import { CompleteTaskHandler } from '../application/commands/tasks/CompleteTaskHandler.js';
 import { DeleteTaskHandler } from '../application/commands/tasks/DeleteTaskHandler.js';
 
+// Application Layer - Query Handlers
+import { QueryBus } from '../application/queries/QueryBus.js';
+import { GetUserByIdHandler } from '../application/queries/users/GetUserByIdHandler.js';
+import { GetAllUsersHandler } from '../application/queries/users/GetAllUsersHandler.js';
+import { GetAllTasksHandler } from '../application/queries/tasks/GetAllTasksHandler.js';
+import { GetTaskByIdHandler } from '../application/queries/tasks/GetTaskByIdHandler.js';
+import { GetDashboardStatsHandler } from '../application/queries/dashboard/GetDashboardStatsHandler.js';
+
 /**
  * Register Infrastructure Services
  */
@@ -82,6 +90,24 @@ container.register('CreateTaskCommandHandler', { useClass: CreateTaskHandler });
 container.register('UpdateTaskCommandHandler', { useClass: UpdateTaskHandler });
 container.register('CompleteTaskCommandHandler', { useClass: CompleteTaskHandler });
 container.register('DeleteTaskCommandHandler', { useClass: DeleteTaskHandler });
+
+/**
+ * Register Application Layer - Query Bus & Handlers
+ */
+
+// Query Bus (singleton)
+container.registerSingleton(QueryBus);
+
+// User Query Handlers
+container.register('GetUserByIdQueryHandler', { useClass: GetUserByIdHandler });
+container.register('GetAllUsersQueryHandler', { useClass: GetAllUsersHandler });
+
+// Task Query Handlers
+container.register('GetAllTasksQueryHandler', { useClass: GetAllTasksHandler });
+container.register('GetTaskByIdQueryHandler', { useClass: GetTaskByIdHandler });
+
+// Dashboard Query Handlers
+container.register('GetDashboardStatsQueryHandler', { useClass: GetDashboardStatsHandler });
 
 /**
  * Helper function to get repository instances
