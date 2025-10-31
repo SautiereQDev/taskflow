@@ -3,6 +3,7 @@
  * Tests actual database operations with PostgreSQL test database
  */
 
+import { randomUUID } from 'node:crypto';
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import { PrismaUserRepository } from '@infrastructure/database/prisma/PrismaUserRepository.js';
 import { PrismaService } from '@infrastructure/database/prisma/PrismaService.js';
@@ -42,10 +43,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('test-create@example.com');
       const password = await Password.create('SecurePass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Test User Create',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
 
       // Act
@@ -56,7 +58,7 @@ describe('PrismaUserRepository Integration Tests', () => {
       expect(createdUser.id).toBe(user.id);
       expect(createdUser.name).toBe('Test User Create');
       expect(createdUser.email.value).toBe('test-create@example.com');
-      expect(createdUser.role).toBe(UserRole.USER);
+      expect(createdUser.role).toBe(UserRole.MEMBER);
       expect(createdUser.isActive).toBe(true);
       expect(createdUser.createdAt).toBeInstanceOf(Date);
       expect(createdUser.updatedAt).toBeInstanceOf(Date);
@@ -67,19 +69,21 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('duplicate@example.com');
       const password = await Password.create('SecurePass123!');
       const user1 = User.create({
+        id: randomUUID(),
         name: 'User 1',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
 
       await repository.create(user1);
 
       const user2 = User.create({
+        id: randomUUID(),
         name: 'User 2',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
 
       // Act & Assert
@@ -91,6 +95,7 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('admin@example.com');
       const password = await Password.create('AdminPass123!');
       const admin = User.create({
+        id: randomUUID(),
         name: 'Admin User',
         email,
         password,
@@ -111,10 +116,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('findbyid@example.com');
       const password = await Password.create('FindPass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Find By ID User',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       const created = await repository.create(user);
 
@@ -143,10 +149,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('findbyemail@example.com');
       const password = await Password.create('EmailPass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Find By Email User',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(user);
 
@@ -172,10 +179,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('CaseSensitive@Example.com');
       const password = await Password.create('CasePass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Case Test User',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(user);
 
@@ -195,6 +203,7 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Manager 1',
           email: Email.create('manager1@example.com'),
           password,
@@ -204,6 +213,7 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Manager 2',
           email: Email.create('manager2@example.com'),
           password,
@@ -213,10 +223,11 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Regular User',
           email: Email.create('user@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
@@ -235,18 +246,20 @@ describe('PrismaUserRepository Integration Tests', () => {
       const password = await Password.create('ActivePass123!');
 
       const activeUser = User.create({
+        id: randomUUID(),
         name: 'Active User',
         email: Email.create('active@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(activeUser);
 
       const inactiveUser = User.create({
+        id: randomUUID(),
         name: 'Inactive User',
         email: Email.create('inactive@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       inactiveUser.deactivate();
       await repository.create(inactiveUser);
@@ -269,15 +282,17 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'User 1',
           email: Email.create('user1@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'User 2',
           email: Email.create('user2@example.com'),
           password,
@@ -298,6 +313,7 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Admin',
           email: Email.create('admin-filter@example.com'),
           password,
@@ -307,10 +323,11 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'User',
           email: Email.create('user-filter@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
@@ -327,18 +344,20 @@ describe('PrismaUserRepository Integration Tests', () => {
       const password = await Password.create('StatusPass123!');
 
       const activeUser = User.create({
+        id: randomUUID(),
         name: 'Active',
         email: Email.create('active-filter@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(activeUser);
 
       const inactiveUser = User.create({
+        id: randomUUID(),
         name: 'Inactive',
         email: Email.create('inactive-filter@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       inactiveUser.deactivate();
       await repository.create(inactiveUser);
@@ -356,19 +375,21 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'John Doe Search',
           email: Email.create('john-search@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Jane Smith',
           email: Email.create('jane@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
@@ -387,15 +408,16 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('update@example.com');
       const password = await Password.create('UpdatePass123!');
       let user = User.create({
+        id: randomUUID(),
         name: 'Original Name',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       user = await repository.create(user);
 
       // Act
-      user.updateProfile({ name: 'Updated Name' });
+      user.updateName('Updated Name');
       const updated = await repository.update(user);
 
       // Assert
@@ -409,10 +431,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('deactivate@example.com');
       const password = await Password.create('DeactivatePass123!');
       let user = User.create({
+        id: randomUUID(),
         name: 'User To Deactivate',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       user = await repository.create(user);
 
@@ -429,10 +452,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('reactivate@example.com');
       const password = await Password.create('ReactivatePass123!');
       let user = User.create({
+        id: randomUUID(),
         name: 'User To Reactivate',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       user.deactivate();
       user = await repository.create(user);
@@ -452,10 +476,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('delete@example.com');
       const password = await Password.create('DeletePass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'User To Delete',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       const created = await repository.create(user);
 
@@ -479,10 +504,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('exists@example.com');
       const password = await Password.create('ExistsPass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Exists User',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(user);
 
@@ -508,10 +534,11 @@ describe('PrismaUserRepository Integration Tests', () => {
       const email = Email.create('existsid@example.com');
       const password = await Password.create('ExistsIdPass123!');
       const user = User.create({
+        id: randomUUID(),
         name: 'Exists By ID User',
         email,
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       const created = await repository.create(user);
 
@@ -538,19 +565,21 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Count User 1',
           email: Email.create('count1@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Count User 2',
           email: Email.create('count2@example.com'),
           password,
-          role: UserRole.USER,
+          role: UserRole.MEMBER,
         })
       );
 
@@ -567,6 +596,7 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       await repository.create(
         User.create({
+          id: randomUUID(),
           name: 'Manager Count',
           email: Email.create('manager-count@example.com'),
           password,
@@ -586,18 +616,20 @@ describe('PrismaUserRepository Integration Tests', () => {
       const password = await Password.create('CountActivePass123!');
 
       const activeUser = User.create({
+        id: randomUUID(),
         name: 'Active Count',
         email: Email.create('active-count@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       await repository.create(activeUser);
 
       const inactiveUser = User.create({
+        id: randomUUID(),
         name: 'Inactive Count',
         email: Email.create('inactive-count@example.com'),
         password,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       });
       inactiveUser.deactivate();
       await repository.create(inactiveUser);

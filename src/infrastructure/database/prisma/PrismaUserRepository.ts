@@ -113,9 +113,17 @@ export class PrismaUserRepository implements IUserRepository {
    * Delete a user by ID
    */
   async delete(id: string): Promise<void> {
-    await this.prismaService.client.user.delete({
-      where: { id },
-    });
+    try {
+      await this.prismaService.client.user.delete({
+        where: { id },
+      });
+    } catch (error) {
+      // Ignore P2025 error (record not found) - idempotent delete
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'P2025') {
+        return;
+      }
+      throw error;
+    }
   }
 
   /**

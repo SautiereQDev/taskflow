@@ -3,6 +3,7 @@
  * Tests actual database operations with PostgreSQL test database
  */
 
+import { randomUUID } from 'node:crypto';
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import { PrismaTaskRepository } from '@infrastructure/database/prisma/PrismaTaskRepository.js';
 import { PrismaUserRepository } from '@infrastructure/database/prisma/PrismaUserRepository.js';
@@ -35,6 +36,7 @@ describe('PrismaTaskRepository Integration Tests', () => {
     const creatorPassword = await Password.create('CreatorPass123!');
     testCreator = await userRepository.create(
       User.create({
+        id: randomUUID(),
         name: 'Task Creator',
         email: Email.create('task-creator@test.com'),
         password: creatorPassword,
@@ -45,10 +47,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     const assigneePassword = await Password.create('AssigneePass123!');
     testAssignee = await userRepository.create(
       User.create({
+        id: randomUUID(),
         name: 'Task Assignee',
         email: Email.create('task-assignee@test.com'),
         password: assigneePassword,
-        role: UserRole.USER,
+        role: UserRole.MEMBER,
       })
     );
   });
@@ -64,7 +67,7 @@ describe('PrismaTaskRepository Integration Tests', () => {
     // Clean tasks before each test (keep users)
     await prismaService.client.task.deleteMany({
       where: {
-        OR: [{ createdById: testCreator.id }, { assigneeId: testAssignee.id }],
+        OR: [{ creatorId: testCreator.id }, { assigneeId: testAssignee.id }],
       },
     });
   });
@@ -73,11 +76,12 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should create a new task', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Test Task Create',
         description: 'Test Description',
         status: TaskStatus.TODO,
         priority: TaskPriority.MEDIUM,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
         assigneeId: testAssignee.id,
       });
 
@@ -90,7 +94,7 @@ describe('PrismaTaskRepository Integration Tests', () => {
       expect(created.title).toBe('Test Task Create');
       expect(created.status).toBe(TaskStatus.TODO);
       expect(created.priority).toBe(TaskPriority.MEDIUM);
-      expect(created.createdById).toBe(testCreator.id);
+      expect(created.creatorId).toBe(testCreator.id);
       expect(created.assigneeId).toBe(testAssignee.id);
     });
 
@@ -98,10 +102,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       const dueDate = new Date('2025-12-31');
       const task = Task.create({
+        id: randomUUID(),
         title: 'Task with Due Date',
         status: TaskStatus.TODO,
         priority: TaskPriority.HIGH,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
         dueDate,
       });
 
@@ -116,10 +121,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should create task without assignee', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Unassigned Task',
         status: TaskStatus.TODO,
         priority: TaskPriority.LOW,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
 
       // Act
@@ -132,10 +138,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should create task without description', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Task Without Description',
         status: TaskStatus.TODO,
         priority: TaskPriority.MEDIUM,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
 
       // Act
@@ -150,10 +157,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should find task by ID', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Find By ID Task',
         status: TaskStatus.TODO,
         priority: TaskPriority.LOW,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       const created = await taskRepository.create(task);
 
@@ -180,20 +188,22 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Assigned Task 1',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Assigned Task 2',
           status: TaskStatus.IN_PROGRESS,
           priority: TaskPriority.HIGH,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
@@ -220,19 +230,21 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Created Task 1',
           status: TaskStatus.TODO,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Created Task 2',
           status: TaskStatus.DONE,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -241,7 +253,7 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       // Assert
       expect(tasks.length).toBeGreaterThanOrEqual(2);
-      expect(tasks.every((t) => t.createdById === testCreator.id)).toBe(true);
+      expect(tasks.every((t) => t.creatorId === testCreator.id)).toBe(true);
     });
   });
 
@@ -250,20 +262,22 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'In Progress Task',
           status: TaskStatus.IN_PROGRESS,
           priority: TaskPriority.HIGH,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'TODO Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -284,10 +298,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Overdue Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.URGENT,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
           dueDate: pastDate,
         })
@@ -299,10 +314,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Future Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           dueDate: futureDate,
         })
       );
@@ -323,10 +339,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Completed Past Due Task',
           status: TaskStatus.DONE,
           priority: TaskPriority.HIGH,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           dueDate: pastDate,
         })
       );
@@ -348,10 +365,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Due Tomorrow',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           dueDate: tomorrow,
         })
       );
@@ -375,10 +393,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Far Future Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           dueDate: farFuture,
         })
       );
@@ -401,10 +420,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       for (let i = 1; i <= 5; i++) {
         await taskRepository.create(
           Task.create({
+            id: randomUUID(),
             title: `Paginated Task ${i}`,
             status: TaskStatus.TODO,
             priority: TaskPriority.MEDIUM,
-            createdById: testCreator.id,
+            creatorId: testCreator.id,
           })
         );
       }
@@ -424,19 +444,21 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Done Task Filter',
           status: TaskStatus.DONE,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'TODO Task Filter',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -451,10 +473,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Urgent Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.URGENT,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -469,10 +492,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Assigned Filter Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
@@ -488,10 +512,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Creator Filter Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -499,17 +524,18 @@ describe('PrismaTaskRepository Integration Tests', () => {
       const result = await taskRepository.findAll({ creatorId: testCreator.id }, 1, 10);
 
       // Assert
-      expect(result.items.every((t) => t.createdById === testCreator.id)).toBe(true);
+      expect(result.items.every((t) => t.creatorId === testCreator.id)).toBe(true);
     });
 
     it('should search by title', async () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Searchable Unique Task Title',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -526,10 +552,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should update task properties', async () => {
       // Arrange
       let task = Task.create({
+        id: randomUUID(),
         title: 'Original Title',
         status: TaskStatus.TODO,
         priority: TaskPriority.LOW,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       task = await taskRepository.create(task);
 
@@ -545,10 +572,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should mark task as complete', async () => {
       // Arrange
       let task = Task.create({
+        id: randomUUID(),
         title: 'Task to Complete',
         status: TaskStatus.IN_PROGRESS,
         priority: TaskPriority.MEDIUM,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       task = await taskRepository.create(task);
 
@@ -564,10 +592,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should assign task to user', async () => {
       // Arrange
       let task = Task.create({
+        id: randomUUID(),
         title: 'Task to Assign',
         status: TaskStatus.TODO,
         priority: TaskPriority.MEDIUM,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       task = await taskRepository.create(task);
 
@@ -582,10 +611,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should unassign task', async () => {
       // Arrange
       let task = Task.create({
+        id: randomUUID(),
         title: 'Task to Unassign',
         status: TaskStatus.TODO,
         priority: TaskPriority.MEDIUM,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
         assigneeId: testAssignee.id,
       });
       task = await taskRepository.create(task);
@@ -603,10 +633,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should delete task', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Task to Delete',
         status: TaskStatus.TODO,
         priority: TaskPriority.LOW,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       const created = await taskRepository.create(task);
 
@@ -629,19 +660,21 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Count Task 1',
           status: TaskStatus.TODO,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Count Task 2',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -656,10 +689,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Urgent Count Task',
           status: TaskStatus.TODO,
           priority: TaskPriority.URGENT,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -674,10 +708,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'In Progress Count',
           status: TaskStatus.IN_PROGRESS,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -694,10 +729,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Done Status Count',
           status: TaskStatus.DONE,
           priority: TaskPriority.LOW,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
         })
       );
 
@@ -714,20 +750,22 @@ describe('PrismaTaskRepository Integration Tests', () => {
       // Arrange
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Assignee Count 1',
           status: TaskStatus.TODO,
           priority: TaskPriority.MEDIUM,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
 
       await taskRepository.create(
         Task.create({
+          id: randomUUID(),
           title: 'Assignee Count 2',
           status: TaskStatus.IN_PROGRESS,
           priority: TaskPriority.HIGH,
-          createdById: testCreator.id,
+          creatorId: testCreator.id,
           assigneeId: testAssignee.id,
         })
       );
@@ -744,10 +782,11 @@ describe('PrismaTaskRepository Integration Tests', () => {
     it('should return true for existing task', async () => {
       // Arrange
       const task = Task.create({
+        id: randomUUID(),
         title: 'Exists Task',
         status: TaskStatus.TODO,
         priority: TaskPriority.LOW,
-        createdById: testCreator.id,
+        creatorId: testCreator.id,
       });
       const created = await taskRepository.create(task);
 

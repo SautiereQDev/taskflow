@@ -32,7 +32,7 @@ export class TaskQueryBuilder {
    * Build where clause for finding tasks by creator
    */
   static byCreator(creatorId: string): Prisma.TaskWhereInput {
-    return { createdById: creatorId };
+    return { creatorId: creatorId };
   }
 
   /**
