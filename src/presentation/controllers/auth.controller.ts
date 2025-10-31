@@ -79,8 +79,10 @@ export class AuthController {
     // Store user ID in session
     req.session.userId = result.user.id;
 
-    // Set flash message
-    req.flash('success', 'Welcome back!');
+    // Set flash message (if available)
+    if (typeof req.flash === 'function') {
+      req.flash('success', 'Welcome back!');
+    }
 
     // Redirect to dashboard (HTMX-aware)
     if (req.isHtmx) {
@@ -125,8 +127,10 @@ export class AuthController {
     // Auto-login after registration
     req.session.userId = user.id;
 
-    // Set flash message
-    req.flash('success', 'Account created successfully! Welcome aboard!');
+    // Set flash message (if available)
+    if (typeof req.flash === 'function') {
+      req.flash('success', 'Account created successfully! Welcome aboard!');
+    }
 
     // Redirect to dashboard (HTMX-aware)
     if (req.isHtmx) {
@@ -142,7 +146,7 @@ export class AuthController {
    * @param req - Express request with user session
    * @param res - Express response
    */
-  async logout(req: IAuthenticatedRequest, res: Response): Promise<void> {
+  logout(req: IAuthenticatedRequest, res: Response): void {
     const userId = req.session.userId;
 
     if (!userId) {
@@ -150,7 +154,7 @@ export class AuthController {
     }
 
     // Cleanup (optional - can be extended)
-    await this.authService.logout(userId);
+    this.authService.logout(userId);
 
     // Destroy session
     req.session.destroy((err) => {
@@ -161,8 +165,10 @@ export class AuthController {
       // Clear session cookie
       res.clearCookie('connect.sid');
 
-      // Set flash message (stored in cookie for next request)
-      req.flash('success', 'You have been logged out');
+      // Set flash message (stored in cookie for next request, if available)
+      if (typeof req.flash === 'function') {
+        req.flash('success', 'You have been logged out');
+      }
 
       // Redirect to login (HTMX-aware)
       if (req.isHtmx) {

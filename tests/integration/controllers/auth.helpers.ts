@@ -18,30 +18,30 @@ import { PasswordHashingService } from '@application/services/PasswordHashingSer
 export const TEST_CREDENTIALS = {
   admin: {
     email: 'admin@example.com',
-    password: 'admin123',
+    password: 'admin12345',
     name: 'Admin User',
     role: UserRole.ADMIN,
   },
   user: {
     email: 'user@example.com',
-    password: 'user123',
+    password: 'user12345',
     name: 'Test User',
-    role: UserRole.USER,
+    role: UserRole.MEMBER,
   },
   manager: {
     email: 'manager@example.com',
-    password: 'manager123',
+    password: 'manager12345',
     name: 'Manager User',
-    role: UserRole.MANAGER,
+    role: UserRole.MEMBER,
   },
-} as const;
+};
 
 /**
  * Create a test user in the database
  *
- * @param prisma - Prisma client
+ * @param prisma - Prisma client instance
  * @param credentials - User credentials
- * @returns Created user entity
+ * @returns Created user domain entity
  */
 export async function createTestUser(
   prisma: PrismaClient,
@@ -52,8 +52,8 @@ export async function createTestUser(
 
   const dbUser = await prisma.user.create({
     data: {
-      name: credentials.name,
       email: credentials.email,
+      name: credentials.name,
       password: hashedPassword,
       role: credentials.role,
       isActive: true,
@@ -67,6 +67,8 @@ export async function createTestUser(
     password: Password.fromHash(dbUser.password),
     role: dbUser.role as UserRole,
     isActive: dbUser.isActive,
+    createdAt: dbUser.createdAt,
+    updatedAt: dbUser.updatedAt,
   });
 }
 
@@ -94,35 +96,13 @@ export async function loginAndGetCookie(
     throw new Error('No session cookie returned from login');
   }
 
-  // Return the session cookie
   return cookies[0] as string;
 }
 
 /**
- * Create an authenticated supertest agent
+ * Cleanup test users from database
  *
- * @param app - Express application
- * @param credentials - Login credentials
- * @returns Authenticated supertest agent
- */
-export async function createAuthenticatedAgent(
-  app: Express,
-  credentials: { email: string; password: string }
-) {
-  const agent = supertest.agent(app);
-
-  await agent.post('/auth/login').send({
-    email: credentials.email,
-    password: credentials.password,
-  });
-
-  return agent;
-}
-
-/**
- * Clean up test users from database
- *
- * @param prisma - Prisma client
+ * @param prisma - Prisma client instance
  */
 export async function cleanupTestUsers(prisma: PrismaClient): Promise<void> {
   await prisma.user.deleteMany({
@@ -136,14 +116,4 @@ export async function cleanupTestUsers(prisma: PrismaClient): Promise<void> {
       },
     },
   });
-}
-
-/**
- * Clean up test sessions
- *
- * @param prisma - Prisma client
- */
-export async function cleanupTestSessions(prisma: PrismaClient): Promise<void> {
-  // PostgreSQL session table cleanup
-  await prisma.$executeRaw`DELETE FROM session WHERE expire < NOW()`;
 }

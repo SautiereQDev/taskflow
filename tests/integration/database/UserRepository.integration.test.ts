@@ -9,10 +9,7 @@ import { PrismaService } from '@infrastructure/database/prisma/PrismaService.js'
 import { User, UserRole } from '@domain/entities/User.js';
 import { Email } from '@domain/value-objects/Email.js';
 import { Password } from '@domain/value-objects/Password.js';
-import {
-  cleanDatabase,
-  disconnectTestDatabase,
-} from '@tests/utils/test-db.js';
+import { cleanDatabase, disconnectTestDatabase } from '@tests/utils/test-db.js';
 
 describe('PrismaUserRepository Integration Tests', () => {
   let prismaService: PrismaService;

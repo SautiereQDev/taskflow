@@ -10,10 +10,16 @@
 import rateLimit from 'express-rate-limit';
 
 /**
+ * Check if running in test environment
+ */
+const isTestEnvironment = process.env.NODE_ENV === 'test' || process.env.VITEST === 'true';
+
+/**
  * Global rate limiter
  * Applies to all routes unless overridden
  *
  * Limit: 100 requests per 15 minutes per IP
+ * Disabled in test environment
  */
 export const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -21,6 +27,7 @@ export const globalLimiter = rateLimit({
   message: 'Too many requests from this IP, please try again later',
   standardHeaders: true, // Return rate limit info in RateLimit-* headers
   legacyHeaders: false, // Disable X-RateLimit-* headers
+  skip: () => isTestEnvironment, // Skip rate limiting in tests
   handler: (req, res) => {
     if (req.isHtmx) {
       // HTMX request: send trigger event
@@ -45,6 +52,7 @@ export const globalLimiter = rateLimit({
  * Prevents brute force attacks
  *
  * Limit: 5 requests per 15 minutes per IP
+ * Disabled in test environment
  *
  * @example
  * ```typescript
@@ -58,6 +66,7 @@ export const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: true, // Don't count successful logins
+  skip: () => isTestEnvironment, // Skip rate limiting in tests
   handler: (req, res) => {
     if (req.isHtmx) {
       res.setHeader(
@@ -81,6 +90,7 @@ export const authLimiter = rateLimit({
  * Moderate protection for POST/PATCH/DELETE operations
  *
  * Limit: 50 requests per 15 minutes per IP
+ * Disabled in test environment
  *
  * @example
  * ```typescript
@@ -93,7 +103,7 @@ export const apiLimiter = rateLimit({
   message: 'Too many API requests, please try again later',
   standardHeaders: true,
   legacyHeaders: false,
-  skip: (req) => req.method === 'GET', // Don't limit GET requests
+  skip: (req) => isTestEnvironment || req.method === 'GET', // Skip in tests and for GET requests
   handler: (req, res) => {
     if (req.isHtmx) {
       res.setHeader(
