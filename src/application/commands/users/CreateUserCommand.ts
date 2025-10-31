@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { ICommand } from '../ICommand.js';
-import { UserRole } from '../../../domain/value-objects/UserRole.js';
+import { UserRole } from '../../../domain/entities/User.js';
 
 /**
  * Create User Command Schema (Zod)

@@ -3,7 +3,7 @@ import type { IQueryHandler } from '../IQueryHandler.js';
 import type { GetTaskByIdQuery } from './GetTaskByIdQuery.js';
 import type { ITaskDto } from '../../dtos/TaskDto.js';
 import type { ITaskRepository } from '../../../domain/repositories/ITaskRepository.js';
-import { AppError } from '../../../utils/errors.util.js';
+import { AppError } from '../../../utils/AppError.js';
 
 /**
  * Handler for GetTaskByIdQuery

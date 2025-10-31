@@ -3,7 +3,7 @@ import type { IQueryHandler } from '../IQueryHandler.js';
 import type { GetUserByIdQuery } from './GetUserByIdQuery.js';
 import type { IUserDto } from '../../dtos/UserDto.js';
 import type { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
-import { AppError } from '../../../utils/errors.util.js';
+import { AppError } from '../../../utils/AppError.js';
 
 /**
  * Handler for GetUserByIdQuery
