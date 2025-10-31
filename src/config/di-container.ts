@@ -28,6 +28,16 @@ import { UnitOfWork } from '../infrastructure/database/prisma/UnitOfWork.js';
 import type { IUserRepository } from '../domain/repositories/IUserRepository.js';
 import type { ITaskRepository } from '../domain/repositories/ITaskRepository.js';
 
+// Application Layer - Command Handlers
+import { CommandBus } from '../application/commands/CommandBus.js';
+import { CreateUserHandler } from '../application/commands/users/CreateUserHandler.js';
+import { UpdateUserHandler } from '../application/commands/users/UpdateUserHandler.js';
+import { DeactivateUserHandler } from '../application/commands/users/DeactivateUserHandler.js';
+import { CreateTaskHandler } from '../application/commands/tasks/CreateTaskHandler.js';
+import { UpdateTaskHandler } from '../application/commands/tasks/UpdateTaskHandler.js';
+import { CompleteTaskHandler } from '../application/commands/tasks/CompleteTaskHandler.js';
+import { DeleteTaskHandler } from '../application/commands/tasks/DeleteTaskHandler.js';
+
 /**
  * Register Infrastructure Services
  */
@@ -54,6 +64,24 @@ container.register<IUserRepository>('IUserRepository', {
 container.register<ITaskRepository>('ITaskRepository', {
   useClass: PrismaTaskRepository,
 });
+
+/**
+ * Register Application Layer - Command Bus & Handlers
+ */
+
+// Command Bus (singleton)
+container.registerSingleton(CommandBus);
+
+// User Command Handlers
+container.register('CreateUserCommandHandler', { useClass: CreateUserHandler });
+container.register('UpdateUserCommandHandler', { useClass: UpdateUserHandler });
+container.register('DeactivateUserCommandHandler', { useClass: DeactivateUserHandler });
+
+// Task Command Handlers
+container.register('CreateTaskCommandHandler', { useClass: CreateTaskHandler });
+container.register('UpdateTaskCommandHandler', { useClass: UpdateTaskHandler });
+container.register('CompleteTaskCommandHandler', { useClass: CompleteTaskHandler });
+container.register('DeleteTaskCommandHandler', { useClass: DeleteTaskHandler });
 
 /**
  * Helper function to get repository instances
