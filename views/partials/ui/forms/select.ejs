@@ -1,0 +1,68 @@
+<%
+/**
+ * Select Field Component
+ * Dropdown select field with options
+ * 
+ * Props:
+ *  - label: string - Field label
+ *  - name: string - Select name attribute
+ *  - options: array - Options array [{ value, label }]
+ *  - value: string (optional) - Selected value
+ *  - error: string (optional) - Error message
+ *  - required: boolean (default: false)
+ *  - placeholder: string (optional) - Placeholder option
+ * 
+ * Usage:
+ *  <%- include('../partials/ui/forms/select', { 
+ *    label: 'Status', 
+ *    name: 'status', 
+ *    options: [{ value: 'TODO', label: 'À faire' }, ...],
+ *    value: task.status,
+ *    required: true 
+ *  }) %>
+ */
+
+const label = typeof label !== 'undefined' ? label : '';
+const name = typeof name !== 'undefined' ? name : '';
+const options = typeof options !== 'undefined' ? options : [];
+const value = typeof value !== 'undefined' ? value : '';
+const error = typeof error !== 'undefined' ? error : '';
+const required = typeof required !== 'undefined' ? required : false;
+const placeholder = typeof placeholder !== 'undefined' ? placeholder : 'Sélectionner...';
+const disabled = typeof disabled !== 'undefined' ? disabled : false;
+%>
+
+<div class="form-control w-full">
+  <label class="label">
+    <span class="label-text font-semibold">
+      <%= label %>
+      <% if (required) { %>
+        <span class="text-error">*</span>
+      <% } %>
+    </span>
+  </label>
+  
+  <select
+    name="<%= name %>"
+    id="<%= name %>"
+    class="select-glass select w-full <%= error ? 'select-error' : '' %>"
+    <%= required ? 'required' : '' %>
+    <%= disabled ? 'disabled' : '' %>
+  >
+    <% if (placeholder) { %>
+      <option value="" disabled <%= !value ? 'selected' : '' %>><%= placeholder %></option>
+    <% } %>
+    
+    <% options.forEach(opt => { %>
+      <option value="<%= opt.value %>" <%= value === opt.value ? 'selected' : '' %>>
+        <%= opt.label %>
+      </option>
+    <% }) %>
+  </select>
+  
+  <% if (error) { %>
+    <label class="label">
+      <span class="label-text-alt text-error"><%= error %></span>
+    </label>
+  <% } %>
+</div>

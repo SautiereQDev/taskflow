@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "tasks": "Tâches",
+    "users": "Utilisateurs",
+    "account": "Mon compte",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "logout": "Déconnexion"
+  },
+  "footer": {
+    "tagline": "Gestion de tâches moderne et collaborative",
+    "copyright": "© {{year}} TaskFlow. Tous droits réservés.",
+    "product": "Produit",
+    "about": "À propos",
+    "features": "Fonctionnalités",
+    "roadmap": "Roadmap",
+    "changelog": "Changelog",
+    "support": "Support",
+    "help": "Aide",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "status": "Statut",
+    "legal": "Légal",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "licenses": "Licences"
+  },
+  "theme": {
+    "switchToLight": "Passer au thème clair",
+    "switchToDark": "Passer au thème sombre"
+  },
+  "common": {
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "warning": "Attention",
+    "info": "Information"
+  }
+}

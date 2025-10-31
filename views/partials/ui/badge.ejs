@@ -1,0 +1,27 @@
+<%
+/**
+ * Badge Component
+ * Displays colored badges for status, priority, roles, etc.
+ * 
+ * Props:
+ *  - text: string - Badge text content
+ *  - variant: string - DaisyUI badge variant (badge-success, badge-error, etc.)
+ *  - size: 'sm' | 'md' | 'lg' (default: 'md')
+ *  - outline: boolean - outline style (default: false)
+ * 
+ * Usage:
+ *  <%- include('../partials/ui/badge', { text: 'Urgent', variant: 'badge-error', size: 'lg' }) %>
+ */
+
+const text = typeof text !== 'undefined' ? text : '';
+const variant = typeof variant !== 'undefined' ? variant : 'badge-ghost';
+const size = typeof size !== 'undefined' ? size : 'md';
+const outline = typeof outline !== 'undefined' ? outline : false;
+
+const sizeClass = size === 'sm' ? 'badge-sm' : size === 'lg' ? 'badge-lg' : '';
+const outlineClass = outline ? 'badge-outline' : '';
+%>
+
+<span class="badge <%= variant %> <%= sizeClass %> <%= outlineClass %>">
+  <%= text %>
+</span>

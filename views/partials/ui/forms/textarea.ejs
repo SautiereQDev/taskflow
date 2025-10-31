@@ -1,0 +1,59 @@
+<%
+/**
+ * Textarea Field Component
+ * Multi-line text input
+ * 
+ * Props:
+ *  - label: string - Field label
+ *  - name: string - Textarea name attribute
+ *  - value: string (optional) - Textarea value
+ *  - error: string (optional) - Error message
+ *  - required: boolean (default: false)
+ *  - placeholder: string (optional)
+ *  - rows: number (default: 4)
+ * 
+ * Usage:
+ *  <%- include('../partials/ui/forms/textarea', { 
+ *    label: 'Description', 
+ *    name: 'description', 
+ *    rows: 6,
+ *    value: task.description 
+ *  }) %>
+ */
+
+const label = typeof label !== 'undefined' ? label : '';
+const name = typeof name !== 'undefined' ? name : '';
+const value = typeof value !== 'undefined' ? value : '';
+const error = typeof error !== 'undefined' ? error : '';
+const required = typeof required !== 'undefined' ? required : false;
+const placeholder = typeof placeholder !== 'undefined' ? placeholder : '';
+const rows = typeof rows !== 'undefined' ? rows : 4;
+const disabled = typeof disabled !== 'undefined' ? disabled : false;
+%>
+
+<div class="form-control w-full">
+  <label class="label">
+    <span class="label-text font-semibold">
+      <%= label %>
+      <% if (required) { %>
+        <span class="text-error">*</span>
+      <% } %>
+    </span>
+  </label>
+  
+  <textarea
+    name="<%= name %>"
+    id="<%= name %>"
+    rows="<%= rows %>"
+    placeholder="<%= placeholder %>"
+    class="textarea-glass textarea w-full <%= error ? 'textarea-error' : '' %>"
+    <%= required ? 'required' : '' %>
+    <%= disabled ? 'disabled' : '' %>
+  ><%= value %></textarea>
+  
+  <% if (error) { %>
+    <label class="label">
+      <span class="label-text-alt text-error"><%= error %></span>
+    </label>
+  <% } %>
+</div>

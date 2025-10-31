@@ -1,0 +1,30 @@
+<%
+/**
+ * Glassmorphism Surface Component
+ * Reusable container with glass effect
+ * 
+ * Props:
+ *  - variant: 'light' | 'normal' | 'heavy' (default: 'normal')
+ *  - hover: boolean - enable hover effect (default: false)
+ *  - class: string - additional CSS classes
+ *  - padding: boolean - add padding (default: true)
+ * 
+ * Usage:
+ *  <%- include('../partials/ui/surface', { variant: 'heavy', hover: true }) %>
+ *    <h2>Content</h2>
+ *  </div>
+ */
+
+const variant = typeof variant !== 'undefined' ? variant : 'normal';
+const hover = typeof hover !== 'undefined' ? hover : false;
+const extraClass = typeof extraClass !== 'undefined' ? extraClass : '';
+const padding = typeof padding !== 'undefined' ? padding : true;
+
+const glassClass = variant === 'light' ? 'glass-light' 
+                 : variant === 'heavy' ? 'glass-heavy' 
+                 : 'glass';
+const hoverClass = hover ? 'glass-hover' : '';
+const paddingClass = padding ? 'p-6' : '';
+%>
+
+<div class="<%= glassClass %> <%= hoverClass %> <%= paddingClass %> <%= extraClass %> rounded-xl">
