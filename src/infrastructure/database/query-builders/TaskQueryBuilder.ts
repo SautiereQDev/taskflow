@@ -105,7 +105,7 @@ export class TaskQueryBuilder {
     }
 
     if (filters.creatorId !== undefined) {
-      where.createdById = filters.creatorId;
+      where.creatorId = filters.creatorId;
     }
 
     if (filters.isOverdue) {

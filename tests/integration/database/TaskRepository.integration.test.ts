@@ -561,7 +561,8 @@ describe('PrismaTaskRepository Integration Tests', () => {
       task = await taskRepository.create(task);
 
       // Act
-      task.updateDetails({ title: 'Updated Title', priority: TaskPriority.HIGH });
+      task.updateTitle('Updated Title');
+      task.updatePriority(TaskPriority.HIGH);
       const updated = await taskRepository.update(task);
 
       // Assert

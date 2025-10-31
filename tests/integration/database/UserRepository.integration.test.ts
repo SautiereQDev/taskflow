@@ -10,7 +10,7 @@ import { PrismaService } from '@infrastructure/database/prisma/PrismaService.js'
 import { User, UserRole } from '@domain/entities/User.js';
 import { Email } from '@domain/value-objects/Email.js';
 import { Password } from '@domain/value-objects/Password.js';
-import { cleanDatabase, disconnectTestDatabase } from '@tests/utils/test-db.js';
+import { disconnectTestDatabase } from '@tests/utils/test-db.js';
 
 describe('PrismaUserRepository Integration Tests', () => {
   let prismaService: PrismaService;
@@ -26,15 +26,31 @@ describe('PrismaUserRepository Integration Tests', () => {
   });
 
   afterAll(async () => {
-    // Cleanup and disconnect
-    await cleanDatabase();
+    // Cleanup only users created by these tests
+    await prismaService.client.user.deleteMany({
+      where: {
+        email: {
+          not: {
+            in: ['task-creator@test.com', 'task-assignee@test.com'], // Preserve TaskRepository test users
+          },
+        },
+      },
+    });
     await disconnectTestDatabase();
     await prismaService.disconnect();
   });
 
   beforeEach(async () => {
-    // Clean database before each test
-    await cleanDatabase();
+    // Clean only users created by these tests (not TaskRepository users)
+    await prismaService.client.user.deleteMany({
+      where: {
+        email: {
+          not: {
+            in: ['task-creator@test.com', 'task-assignee@test.com'],
+          },
+        },
+      },
+    });
   });
 
   describe('create()', () => {
