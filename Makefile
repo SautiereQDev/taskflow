@@ -1,149 +1,295 @@
 .PHONY: help install dev build start stop restart logs clean test lint docker-up docker-down docker-logs prisma-migrate prisma-seed
 
 
-Guide complet pour développer et déployer TaskFlow avec Docker et Tailwind CSS v4.# Variables
+# Colors
 
-NODE := node
+BLUE := \033[0;34mGuide complet pour développer et déployer TaskFlow avec Docker et Tailwind CSS v4.# Variables
+
+GREEN := \033[0;32m
+
+YELLOW := \033[1;33mNODE := node
+
+NC := \033[0m
 
 ---NPM := npm
 
+.DEFAULT_GOAL := help
+
 PRISMA := npx prisma
 
-## 🚀 Démarrage RapideVITEST := npx vitest
+help: ## Show this help message
+
+	@echo "$(BLUE)TaskFlow - Available Commands:$(NC)"## 🚀 Démarrage RapideVITEST := npx vitest
+
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(NC) %s\n", $$1, $$2}'
 
 ESLINT := npx eslint
 
-### Mode Développement (Recommandé)
+install: ## Install dependencies
 
-# Couleurs pour l'output
+	@echo "$(YELLOW)Installing dependencies...$(NC)"### Mode Développement (Recommandé)
+
+	@npm install
+
+	@npx prisma generate# Couleurs pour l'output
+
+	@echo "$(GREEN)✓ Dependencies installed$(NC)"
 
 ```bashBLUE := \033[0;34m
 
-# Démarrer les containers dev avec hot reloadGREEN := \033[0;32m
+dev: ## Start development server with hot reload
+
+	@echo "$(YELLOW)Starting development server...$(NC)"# Démarrer les containers dev avec hot reloadGREEN := \033[0;32m
+
+	@npm run dev
 
 make docker-dev-upYELLOW := \033[1;33m
 
-NC := \033[0m # No Color
+build: ## Build for production
 
-# Voir les logs
+	@echo "$(YELLOW)Building application...$(NC)"NC := \033[0m # No Color
 
-make docker-dev-logshelp: ## Affiche cette aide
+	@npm run build
 
-	@echo "$(BLUE)Commandes disponibles:$(NC)"
+	@echo "$(GREEN)✓ Build complete$(NC)"# Voir les logs
 
-# Arrêter	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(NC) %s\n", $$1, $$2}'
 
-make docker-dev-down
 
-```install: ## Installe les dépendances
+start: ## Start production servermake docker-dev-logshelp: ## Affiche cette aide
+
+	@echo "$(YELLOW)Starting production server...$(NC)"
+
+	@npm start	@echo "$(BLUE)Commandes disponibles:$(NC)"
+
+
+
+test: ## Run tests# Arrêter	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(NC) %s\n", $$1, $$2}'
+
+	@echo "$(YELLOW)Running tests...$(NC)"
+
+	@npm testmake docker-dev-down
+
+
+
+test-watch: ## Run tests in watch mode```install: ## Installe les dépendances
+
+	@npm run test:watch
 
 	@echo "$(YELLOW)Installation des dépendances...$(NC)"
 
-**URL** : http://localhost:3000	$(NPM) install
+test-e2e: ## Run E2E tests
+
+	@echo "$(YELLOW)Running E2E tests...$(NC)"**URL** : http://localhost:3000	$(NPM) install
+
+	@npm run test:e2e:browser
 
 
 
-**Features** :dev: ## Lance le serveur en mode développement avec Node.js natif
+test-coverage: ## Run tests with coverage
+
+	@echo "$(YELLOW)Running tests with coverage...$(NC)"**Features** :dev: ## Lance le serveur en mode développement avec Node.js natif
+
+	@npm run test:coverage
 
 - ✅ Hot reload code TypeScript (tsx watch)	@echo "$(YELLOW)Démarrage du serveur en mode développement...$(NC)"
 
-- ✅ Hot reload CSS Tailwind v4 (watch mode)	$(NODE) --env-file=.env --experimental-strip-types --watch --no-warnings=ExperimentalWarning --import ./loader.mjs src/server.ts
+lint: ## Lint code
+
+	@echo "$(YELLOW)Linting code...$(NC)"- ✅ Hot reload CSS Tailwind v4 (watch mode)	$(NODE) --env-file=.env --experimental-strip-types --watch --no-warnings=ExperimentalWarning --import ./loader.mjs src/server.ts
+
+	@npm run lint
 
 - ✅ Hot reload templates EJS
 
-- ✅ Source code monté en volume (pas de rebuild)build: ## Compile le projet TypeScript
+lint-fix: ## Fix linting issues
+
+	@echo "$(YELLOW)Fixing linting issues...$(NC)"- ✅ Source code monté en volume (pas de rebuild)build: ## Compile le projet TypeScript
+
+	@npm run lint:fix
 
 - ✅ PostgreSQL sur port 5433	@echo "$(YELLOW)Compilation du projet...$(NC)"
 
-	npx tsc
+format: ## Format code
+
+	@echo "$(YELLOW)Formatting code...$(NC)"	npx tsc
+
+	@npm run format
 
 ### Mode Production	@echo "$(YELLOW)Résolution des alias de chemins...$(NC)"
 
-	npx tsc-alias
+clean: ## Clean generated files
 
-```bash	@echo "$(YELLOW)Ajout des extensions .js...$(NC)"
+	@echo "$(YELLOW)Cleaning generated files...$(NC)"	npx tsc-alias
 
-# Build et démarrer	$(NODE) scripts/add-js-extensions.mjs
+	@rm -rf dist coverage test-results node_modules/.cache
 
-make docker-up	@echo "$(GREEN)✓ Build terminé$(NC)"
+	@echo "$(GREEN)✓ Clean complete$(NC)"```bash	@echo "$(YELLOW)Ajout des extensions .js...$(NC)"
 
 
 
-# Voir les logsstart: ## Lance le serveur en production
+# Docker commands# Build et démarrer	$(NODE) scripts/add-js-extensions.mjs
 
-make docker-logs	@echo "$(YELLOW)Démarrage du serveur en production...$(NC)"
+docker-up: ## Start Docker containers (production)
+
+	@echo "$(YELLOW)Starting Docker containers...$(NC)"make docker-up	@echo "$(GREEN)✓ Build terminé$(NC)"
+
+	@docker compose up -d
+
+	@echo "$(GREEN)✓ Containers started - http://localhost:3000$(NC)"
+
+
+
+docker-down: ## Stop Docker containers# Voir les logsstart: ## Lance le serveur en production
+
+	@echo "$(YELLOW)Stopping Docker containers...$(NC)"
+
+	@docker compose downmake docker-logs	@echo "$(YELLOW)Démarrage du serveur en production...$(NC)"
+
+	@echo "$(GREEN)✓ Containers stopped$(NC)"
 
 	$(NODE) dist/server.js
 
-# Arrêter
+docker-logs: ## Show Docker logs
 
-make docker-downtest: ## Lance tous les tests
+	@docker compose logs -f# Arrêter
 
-```	@echo "$(YELLOW)Exécution des tests...$(NC)"
+
+
+docker-restart: ## Restart Docker containersmake docker-downtest: ## Lance tous les tests
+
+	@echo "$(YELLOW)Restarting Docker containers...$(NC)"
+
+	@docker compose restart```	@echo "$(YELLOW)Exécution des tests...$(NC)"
+
+	@echo "$(GREEN)✓ Containers restarted$(NC)"
 
 	$(VITEST) run
 
----
+docker-dev: ## Start Docker containers (development with hot reload)
 
-test-watch: ## Lance les tests en mode watch
+	@echo "$(YELLOW)Starting Docker development environment...$(NC)"---
 
-## 📁 Structure Docker	$(VITEST)
+	@docker compose -f docker-compose.dev.yml up -d
+
+	@echo "$(GREEN)✓ Development containers started - http://localhost:3000$(NC)"test-watch: ## Lance les tests en mode watch
 
 
+
+docker-dev-down: ## Stop development Docker containers## 📁 Structure Docker	$(VITEST)
+
+	@echo "$(YELLOW)Stopping development containers...$(NC)"
+
+	@docker compose -f docker-compose.dev.yml down
+
+	@echo "$(GREEN)✓ Development containers stopped$(NC)"
 
 ```test-ui: ## Lance les tests avec l'interface UI
 
-.	$(VITEST) --ui
+docker-build: ## Build Docker images
 
-├── docker-compose.yml        # Production
+	@echo "$(YELLOW)Building Docker images...$(NC)".	$(VITEST) --ui
 
-├── docker-compose.dev.yml    # Développement (hot reload)test-coverage: ## Lance les tests avec couverture
+	@docker compose build
 
-├── Dockerfile                # Image production (multi-stage)	@echo "$(YELLOW)Exécution des tests avec couverture...$(NC)"
+	@echo "$(GREEN)✓ Build complete$(NC)"├── docker-compose.yml        # Production
+
+
+
+docker-rebuild: ## Rebuild Docker images (no cache)├── docker-compose.dev.yml    # Développement (hot reload)test-coverage: ## Lance les tests avec couverture
+
+	@echo "$(YELLOW)Rebuilding Docker images...$(NC)"
+
+	@docker compose build --no-cache├── Dockerfile                # Image production (multi-stage)	@echo "$(YELLOW)Exécution des tests avec couverture...$(NC)"
+
+	@echo "$(GREEN)✓ Rebuild complete$(NC)"
 
 ├── Dockerfile.dev            # Image développement	$(VITEST) run --coverage
 
-├── docker-entrypoint.sh      # Entrypoint (migrations, seed)
+docker-clean: ## Clean Docker resources
 
-└── .dockerignore             # Fichiers exclustest-e2e: ## Lance les tests E2E
+	@echo "$(YELLOW)Cleaning Docker resources...$(NC)"├── docker-entrypoint.sh      # Entrypoint (migrations, seed)
+
+	@docker compose down -v --remove-orphans
+
+	@docker system prune -f└── .dockerignore             # Fichiers exclustest-e2e: ## Lance les tests E2E
+
+	@echo "$(GREEN)✓ Docker clean complete$(NC)"
 
 ```	@echo "$(YELLOW)Exécution des tests E2E...$(NC)"
 
-	$(VITEST) run --config vitest.config.ts src/test/e2e.test.ts
+# Prisma commands
 
----
+prisma-generate: ## Generate Prisma client	$(VITEST) run --config vitest.config.ts src/test/e2e.test.ts
+
+	@echo "$(YELLOW)Generating Prisma client...$(NC)"
+
+	@npx prisma generate---
+
+	@echo "$(GREEN)✓ Prisma client generated$(NC)"
 
 lint: ## Vérifie le code avec ESLint
 
-## 🔧 Configuration Détaillée	@echo "$(YELLOW)Vérification du code...$(NC)"
+prisma-migrate: ## Create and apply database migration
 
-	$(ESLINT) . --ext .ts
+	@echo "$(YELLOW)Creating and applying migration...$(NC)"## 🔧 Configuration Détaillée	@echo "$(YELLOW)Vérification du code...$(NC)"
 
-### docker-compose.dev.yml (Développement)
+	@npx prisma migrate dev
 
-lint-fix: ## Corrige automatiquement les erreurs ESLint
+	@echo "$(GREEN)✓ Migration complete$(NC)"	$(ESLINT) . --ext .ts
+
+
+
+prisma-migrate-deploy: ## Apply migrations (production)### docker-compose.dev.yml (Développement)
+
+	@echo "$(YELLOW)Applying migrations...$(NC)"
+
+	@npx prisma migrate deploylint-fix: ## Corrige automatiquement les erreurs ESLint
+
+	@echo "$(GREEN)✓ Migrations applied$(NC)"
 
 **Services** :	@echo "$(YELLOW)Correction automatique du code...$(NC)"
 
-- `db` : PostgreSQL 18 (port 5433)	$(ESLINT) . --ext .ts --fix
+prisma-seed: ## Seed database
 
-- `app` : Node.js 24 avec hot reload
+	@echo "$(YELLOW)Seeding database...$(NC)"- `db` : PostgreSQL 18 (port 5433)	$(ESLINT) . --ext .ts --fix
 
-format: ## Formate le code avec Prettier
+	@npm run prisma:seed
 
-**Volumes montés** :	@echo "$(YELLOW)Formatage du code...$(NC)"
+	@echo "$(GREEN)✓ Database seeded$(NC)"- `app` : Node.js 24 avec hot reload
 
-```yaml	npx prettier --write "src/**/*.ts"
 
-volumes:
 
-  - ./src:/app/src:ro                    # Code TypeScript (lecture seule)css-build: ## Compile le CSS avec Tailwind v4
+prisma-studio: ## Open Prisma Studioformat: ## Formate le code avec Prettier
 
-  - ./views:/app/views:ro                # Templates EJS	@echo "$(YELLOW)Compilation du CSS avec Tailwind v4...$(NC)"
+	@echo "$(YELLOW)Opening Prisma Studio...$(NC)"
 
-  - ./public/css:/app/public/css         # CSS Tailwind v4 (lecture/écriture)	$(NPM) run css:build
+	@npx prisma studio**Volumes montés** :	@echo "$(YELLOW)Formatage du code...$(NC)"
 
-  - ./public/js:/app/public/js:ro        # JS client	@echo "$(GREEN)✓ CSS compilé$(NC)"
+
+
+# Combined shortcuts```yaml	npx prettier --write "src/**/*.ts"
+
+setup: install prisma-migrate prisma-seed ## Full setup (install + migrate + seed)
+
+	@echo "$(GREEN)✓ Setup complete!$(NC)"volumes:
+
+
+
+dev-docker: docker-dev docker-logs ## Start dev containers and show logs  - ./src:/app/src:ro                    # Code TypeScript (lecture seule)css-build: ## Compile le CSS avec Tailwind v4
+
+
+
+reset-db: ## Reset database (WARNING: deletes all data)  - ./views:/app/views:ro                # Templates EJS	@echo "$(YELLOW)Compilation du CSS avec Tailwind v4...$(NC)"
+
+	@echo "$(YELLOW)Resetting database...$(NC)"
+
+	@docker compose exec db psql -U taskflow -d taskflow_dev -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"  - ./public/css:/app/public/css         # CSS Tailwind v4 (lecture/écriture)	$(NPM) run css:build
+
+	@make prisma-migrate
+
+	@make prisma-seed  - ./public/js:/app/public/js:ro        # JS client	@echo "$(GREEN)✓ CSS compilé$(NC)"
+
+	@echo "$(GREEN)✓ Database reset complete$(NC)"
 
   - ./prisma:/app/prisma:ro              # Schema Prisma
 
