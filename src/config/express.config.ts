@@ -11,6 +11,9 @@ import { fileURLToPath } from 'node:url';
 import { PrismaClient } from '@prisma/client';
 import { htmxMiddleware } from '@presentation/middleware/htmx.middleware.js';
 import { errorHandler, notFoundHandler } from '@presentation/middleware/error.middleware.js';
+import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js';
+import { i18nMiddleware } from '@config/i18n.config.js';
+import routes from '@presentation/routes/index.js';
 import { logger } from '@utils/logger.util.js';
 
 // ES Module __dirname equivalent
@@ -134,6 +137,8 @@ export function createApp(): Express {
 
   // Custom Middleware
   app.use(htmxMiddleware);
+  app.use(i18nMiddleware);
+  app.use(globalLimiter);
 
   // Health Checks
   app.get('/health', (_req, res) => {
@@ -150,10 +155,8 @@ export function createApp(): Express {
     }
   });
 
-  // Routes
-  app.get('/', (_req, res) => {
-    res.render('pages/home', { title: 'Home' });
-  });
+  // Application Routes
+  app.use('/', routes);
 
   // Error Handling
   app.use(notFoundHandler);

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "TaskFlow",
+    "welcome": "Bienvenue",
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "back": "Retour",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "yes": "Oui",
+    "no": "Non",
+    "or": "ou"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "name": "Nom complet",
+    "loginButton": "Se connecter",
+    "registerButton": "S'inscrire",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+    "forgotPassword": "Mot de passe oublié ?",
+    "welcomeBack": "Bon retour !",
+    "accountCreated": "Compte créé avec succès ! Bienvenue à bord !",
+    "loggedOut": "Vous avez été déconnecté"
+  },
+  "tasks": {
+    "title": "Tâches",
+    "myTasks": "Mes tâches",
+    "allTasks": "Toutes les tâches",
+    "newTask": "Nouvelle tâche",
+    "taskDetails": "Détails de la tâche",
+    "editTask": "Modifier la tâche",
+    "deleteTask": "Supprimer la tâche",
+    "taskTitle": "Titre de la tâche",
+    "description": "Description",
+    "status": "Statut",
+    "priority": "Priorité",
+    "dueDate": "Date d'échéance",
+    "assignee": "Assigné à",
+    "creator": "Créé par",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "taskCreated": "Tâche créée avec succès !",
+    "taskUpdated": "Tâche mise à jour avec succès !",
+    "taskDeleted": "Tâche supprimée avec succès !",
+    "noTasks": "Aucune tâche trouvée",
+    "statuses": {
+      "TODO": "À faire",
+      "IN_PROGRESS": "En cours",
+      "DONE": "Terminé",
+      "CANCELLED": "Annulé"
+    },
+    "priorities": {
+      "LOW": "Basse",
+      "MEDIUM": "Moyenne",
+      "HIGH": "Haute",
+      "URGENT": "Urgente"
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue, {{name}} !",
+    "stats": "Statistiques",
+    "totalTasks": "Tâches totales",
+    "completedTasks": "Tâches terminées",
+    "inProgressTasks": "Tâches en cours",
+    "overdueTasks": "Tâches en retard",
+    "recentActivity": "Activité récente",
+    "teamCapacity": "Capacité de l'équipe"
+  },
+  "user": {
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "editProfile": "Modifier le profil",
+    "updateProfile": "Mettre à jour le profil",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "settingsUpdated": "Paramètres mis à jour avec succès !",
+    "theme": "Thème",
+    "language": "Langue",
+    "themes": {
+      "light": "Clair",
+      "dark": "Sombre"
+    },
+    "languages": {
+      "fr": "Français",
+      "en": "English"
+    }
+  },
+  "errors": {
+    "notFound": "Page non trouvée",
+    "serverError": "Erreur serveur",
+    "unauthorized": "Non autorisé",
+    "forbidden": "Accès interdit",
+    "validationFailed": "Validation échouée",
+    "somethingWentWrong": "Une erreur s'est produite",
+    "tryAgainLater": "Veuillez réessayer plus tard"
+  }
+}

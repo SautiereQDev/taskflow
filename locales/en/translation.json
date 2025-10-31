@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "TaskFlow",
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "search": "Search",
+    "filter": "Filter",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "loginButton": "Sign in",
+    "registerButton": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "forgotPassword": "Forgot password?",
+    "welcomeBack": "Welcome back!",
+    "accountCreated": "Account created successfully! Welcome aboard!",
+    "loggedOut": "You have been logged out"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "myTasks": "My tasks",
+    "allTasks": "All tasks",
+    "newTask": "New task",
+    "taskDetails": "Task details",
+    "editTask": "Edit task",
+    "deleteTask": "Delete task",
+    "taskTitle": "Task title",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "dueDate": "Due date",
+    "assignee": "Assigned to",
+    "creator": "Created by",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "taskCreated": "Task created successfully!",
+    "taskUpdated": "Task updated successfully!",
+    "taskDeleted": "Task deleted successfully!",
+    "noTasks": "No tasks found",
+    "statuses": {
+      "TODO": "To Do",
+      "IN_PROGRESS": "In Progress",
+      "DONE": "Done",
+      "CANCELLED": "Cancelled"
+    },
+    "priorities": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "URGENT": "Urgent"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {{name}}!",
+    "stats": "Statistics",
+    "totalTasks": "Total tasks",
+    "completedTasks": "Completed tasks",
+    "inProgressTasks": "In progress tasks",
+    "overdueTasks": "Overdue tasks",
+    "recentActivity": "Recent activity",
+    "teamCapacity": "Team capacity"
+  },
+  "user": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "editProfile": "Edit profile",
+    "updateProfile": "Update profile",
+    "profileUpdated": "Profile updated successfully!",
+    "settingsUpdated": "Settings updated successfully!",
+    "theme": "Theme",
+    "language": "Language",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "languages": {
+      "fr": "Français",
+      "en": "English"
+    }
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access forbidden",
+    "validationFailed": "Validation failed",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgainLater": "Please try again later"
+  }
+}
