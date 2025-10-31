@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Implémenter l'authentification",
+    "description": "Mettre en place le système d'authentification avec sessions PostgreSQL et bcrypt.",
+    "status": "TODO",
+    "priority": "HIGH",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": "alice@example.com",
+    "dueDateOffset": 7
+  },
+  {
+    "title": "Créer le design system",
+    "description": "Définir les composants UI réutilisables avec le style glassmorphism.",
+    "status": "TODO",
+    "priority": "MEDIUM",
+    "creatorEmail": "manager@example.com",
+    "assigneeEmail": "bob@example.com",
+    "dueDateOffset": 7
+  },
+  {
+    "title": "Configuration CI/CD",
+    "description": "Mettre en place les pipelines GitHub Actions pour les tests et le déploiement.",
+    "status": "TODO",
+    "priority": "LOW",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": null,
+    "dueDateOffset": null
+  },
+  {
+    "title": "Intégration HTMX pour les mises à jour partielles",
+    "description": "Implémenter les patterns HTMX pour les filtres et la pagination des tâches.",
+    "status": "IN_PROGRESS",
+    "priority": "HIGH",
+    "creatorEmail": "manager@example.com",
+    "assigneeEmail": "alice@example.com",
+    "dueDateOffset": 1
+  },
+  {
+    "title": "Tests E2E avec Playwright",
+    "description": "Écrire les tests end-to-end pour les parcours utilisateur critiques.",
+    "status": "IN_PROGRESS",
+    "priority": "MEDIUM",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": "bob@example.com",
+    "dueDateOffset": 7
+  },
+  {
+    "title": "Setup du projet",
+    "description": "Initialisation du projet avec TypeScript, Express, Prisma et configuration Docker.",
+    "status": "DONE",
+    "priority": "HIGH",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": "admin@example.com",
+    "dueDateOffset": -1,
+    "completed": true
+  },
+  {
+    "title": "Documentation Architecture",
+    "description": "Rédiger les ADRs et la documentation d'architecture du projet.",
+    "status": "DONE",
+    "priority": "MEDIUM",
+    "creatorEmail": "manager@example.com",
+    "assigneeEmail": "manager@example.com",
+    "dueDateOffset": -1,
+    "completed": true
+  },
+  {
+    "title": "Corriger la faille de sécurité",
+    "description": "Corriger la vulnérabilité détectée dans la gestion des sessions.",
+    "status": "TODO",
+    "priority": "URGENT",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": "alice@example.com",
+    "dueDateOffset": -1
+  },
+  {
+    "title": "Migration vers MongoDB",
+    "description": "Après discussion, nous restons sur PostgreSQL.",
+    "status": "CANCELLED",
+    "priority": "LOW",
+    "creatorEmail": "manager@example.com",
+    "assigneeEmail": null,
+    "dueDateOffset": null
+  },
+  {
+    "title": "Optimisation des performances",
+    "description": "Analyser et optimiser les requêtes lentes de la base de données.",
+    "status": "TODO",
+    "priority": "MEDIUM",
+    "creatorEmail": "admin@example.com",
+    "assigneeEmail": null,
+    "dueDateOffset": 7
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "email": "admin@example.com",
+    "name": "Admin User",
+    "role": "ADMIN",
+    "locale": "fr",
+    "isActive": true
+  },
+  {
+    "email": "manager@example.com",
+    "name": "Manager User",
+    "role": "MANAGER",
+    "locale": "fr",
+    "isActive": true
+  },
+  {
+    "email": "alice@example.com",
+    "name": "Alice Dupont",
+    "role": "MEMBER",
+    "locale": "fr",
+    "isActive": true
+  },
+  {
+    "email": "bob@example.com",
+    "name": "Bob Martin",
+    "role": "MEMBER",
+    "locale": "en",
+    "isActive": true
+  },
+  {
+    "email": "charlie@example.com",
+    "name": "Charlie Dubois",
+    "role": "MEMBER",
+    "locale": "fr",
+    "isActive": false
+  }
+]
