@@ -25,9 +25,10 @@
       "@services/*": ["src/services/*"],
       "@view-models/*": ["src/view-models/*"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@tests/*": ["tests/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*", "vitest.config.ts", "playwright.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

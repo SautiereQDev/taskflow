@@ -19,6 +19,28 @@ services:
       timeout: 5s
       retries: 5
 
+  db-test:
+    image: postgres:18-alpine
+    container_name: task_management_db_test
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: taskflow_test
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d taskflow_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - test
+
   app:
     build:
       context: .
@@ -46,6 +68,7 @@ services:
 
 volumes:
   postgres_data:
+  postgres_test_data:
 
 networks:
   app-network:

@@ -2,7 +2,7 @@
 /**
  * Select Field Component
  * Dropdown select field with options
- * 
+ *
  * Props:
  *  - label: string - Field label
  *  - name: string - Select name attribute
@@ -11,14 +11,14 @@
  *  - error: string (optional) - Error message
  *  - required: boolean (default: false)
  *  - placeholder: string (optional) - Placeholder option
- * 
+ *
  * Usage:
- *  <%- include('../partials/ui/forms/select', { 
- *    label: 'Status', 
- *    name: 'status', 
+ *  <%- include('../partials/ui/forms/select', {
+ *    label: 'Status',
+ *    name: 'status',
  *    options: [{ value: 'TODO', label: 'À faire' }, ...],
  *    value: task.status,
- *    required: true 
+ *    required: true
  *  }) %>
  */
 
@@ -41,7 +41,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
       <% } %>
     </span>
   </label>
-  
+
   <select
     name="<%= name %>"
     id="<%= name %>"
@@ -52,14 +52,14 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
     <% if (placeholder) { %>
       <option value="" disabled <%= !value ? 'selected' : '' %>><%= placeholder %></option>
     <% } %>
-    
+
     <% options.forEach(opt => { %>
       <option value="<%= opt.value %>" <%= value === opt.value ? 'selected' : '' %>>
         <%= opt.label %>
       </option>
     <% }) %>
   </select>
-  
+
   <% if (error) { %>
     <label class="label">
       <span class="label-text-alt text-error"><%= error %></span>

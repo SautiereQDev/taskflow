@@ -1,173 +1,716 @@
 <div class="max-w-4xl mx-auto space-y-6">
   <!-- Back Button -->
-  <div>
+
+## Overview  <div>
+
     <a href="/tasks" class="btn btn-ghost btn-sm gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+This document describes the Alpine.js components used in TaskFlow for progressive enhancement and client-side interactivity.      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+
+**Philosophy**: Alpine.js handles local UI interactions while HTMX manages server communication. The app works without JavaScript (graceful degradation).      </svg>
+
       Retour
-    </a>
+
+## Component List    </a>
+
   </div>
 
+### 1. Theme Switcher (`themeSwitch`)
+
   <!-- Task Details -->
-  <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+
+**Purpose**: Toggle between light and dark themes with localStorage persistence.  <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+
     <!-- Header -->
-    <div class="flex justify-between items-start mb-6">
-      <div class="flex-1">
-        <!-- Title with Inline Edit -->
-        <% if (task.canEdit) { %>
-          <div x-data="inlineEdit('<%= task.title %>', '/tasks/<%= task.id %>', 'title')" 
-               class="mb-3">
-            <div x-show="!editing" class="flex items-center gap-2 group">
-              <h1 class="text-3xl font-bold"><%= task.title %></h1>
-              <button @click="startEdit" 
+
+**Usage**:    <div class="flex justify-between items-start mb-6">
+
+```html      <div class="flex-1">
+
+<div x-data="themeSwitch">        <!-- Title with Inline Edit -->
+
+  <button @click="toggle" class="btn btn-ghost">        <% if (task.canEdit) { %>
+
+    <span x-show="!isDark">🌙 Mode sombre</span>          <div x-data="inlineEdit('<%= task.title %>', '/tasks/<%= task.id %>', 'title')"
+
+    <span x-show="isDark">☀️ Mode clair</span>               class="mb-3">
+
+  </button>            <div x-show="!editing" class="flex items-center gap-2 group">
+
+</div>              <h1 class="text-3xl font-bold"><%= task.title %></h1>
+
+```              <button @click="startEdit"
+
                       class="btn btn-ghost btn-sm btn-circle opacity-0 group-hover:opacity-100 transition-opacity"
-                      title="Modifier le titre">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+
+**Properties**:                      title="Modifier le titre">
+
+- `isDark` (boolean): Current theme state                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+- `toggle()`: Switch themes and persist to localStorage                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+
                 </svg>
-              </button>
+
+**Integration**: Included in `views/partials/header.ejs`              </button>
+
             </div>
-            <div x-show="editing" x-cloak>
-              <input type="text" 
-                     x-model="value"
+
+---            <div x-show="editing" x-cloak>
+
+              <input type="text"
+
+### 2. Modal (`modal`)                     x-model="value"
+
                      @keydown="handleKeydown"
-                     class="input input-bordered w-full text-3xl font-bold" />
+
+**Purpose**: Manage modal dialogs with keyboard navigation and focus trapping.                     class="input input-bordered w-full text-3xl font-bold" />
+
               <div class="flex gap-2 mt-2">
-                <button @click="save" 
-                        :disabled="saving"
-                        class="btn btn-primary btn-sm">
-                  <span x-show="!saving">Enregistrer</span>
-                  <span x-show="saving" class="loading loading-spinner loading-xs"></span>
-                </button>
-                <button @click="cancel" class="btn btn-ghost btn-sm">Annuler</button>
-              </div>
-            </div>
-          </div>
-        <% } else { %>
-          <h1 class="text-3xl font-bold mb-3"><%= task.title %></h1>
-        <% } %>
-        
-        <div class="flex flex-wrap gap-2">
+
+**Usage**:                <button @click="save"
+
+```html                        :disabled="saving"
+
+<div x-data="modal(false)">                        class="btn btn-primary btn-sm">
+
+  <button @click="show" class="btn">Open Modal</button>                  <span x-show="!saving">Enregistrer</span>
+
+                    <span x-show="saving" class="loading loading-spinner loading-xs"></span>
+
+  <div x-show="open"                 </button>
+
+       x-cloak                <button @click="cancel" class="btn btn-ghost btn-sm">Annuler</button>
+
+       @keydown.escape="hide"              </div>
+
+       class="modal modal-open">            </div>
+
+    <div class="modal-box glass">          </div>
+
+      <h3>Modal Title</h3>        <% } else { %>
+
+      <p>Modal content...</p>          <h1 class="text-3xl font-bold mb-3"><%= task.title %></h1>
+
+      <div class="modal-action">        <% } %>
+
+        <button @click="hide" class="btn">Close</button>
+
+      </div>        <div class="flex flex-wrap gap-2">
+
+    </div>          <%- include('../../partials/ui/badge', {
+
+  </div>            text: task.status.label,
+
+</div>            variant: task.status.color
+
+```          }) %>
+
           <%- include('../../partials/ui/badge', {
-            text: task.status.label,
-            variant: task.status.color
-          }) %>
-          <%- include('../../partials/ui/badge', {
-            text: task.priority.label,
-            variant: task.priority.color
-          }) %>
-          <% if (task.dueDate.formatted) { %>
-            <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %>">
+
+**Properties**:            text: task.priority.label,
+
+- `open` (boolean): Modal visibility state            variant: task.priority.color
+
+- `show()`: Open modal, trap focus, disable body scroll          }) %>
+
+- `hide()`: Close modal, restore scroll          <% if (task.dueDate.formatted) { %>
+
+- `handleKeydown(e)`: Handle Escape key            <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %>">
+
               📅 <%= task.dueDate.formatted %>
-            </span>
+
+**Accessibility**: Automatically focuses first focusable element, traps focus within modal.            </span>
+
           <% } %>
-        </div>
+
+---        </div>
+
       </div>
 
+### 3. Dropdown (`dropdown`)
+
       <% if (task.canEdit) { %>
-        <div class="dropdown dropdown-end">
+
+**Purpose**: Manage dropdown menus with click-outside detection.        <div class="dropdown dropdown-end">
+
           <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </label>
-          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 glass">
-            <li><a href="/tasks/<%= task.id %>/edit">Modifier</a></li>
-            <li>
-              <form method="POST" action="/tasks/<%= task.id %>/delete"
-                    hx-delete="/tasks/<%= task.id %>"
-                    hx-confirm="Êtes-vous sûr de vouloir supprimer cette tâche ?">
-                <button type="submit" class="text-error w-full text-left">Supprimer</button>
-              </form>
-            </li>
-          </ul>
-        </div>
-      <% } %>
-    </div>
 
-    <!-- Description -->
-    <% if (task.description) { %>
-      <div class="mb-6">
+**Usage**:            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+```html              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+
+<div x-data="dropdown()" @click.outside="close">            </svg>
+
+  <button @click="toggle" class="btn">          </label>
+
+    Menu          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 glass">
+
+  </button>            <li><a href="/tasks/<%= task.id %>/edit">Modifier</a></li>
+
+              <li>
+
+  <ul x-show="open"               <form method="POST" action="/tasks/<%= task.id %>/delete"
+
+      x-transition                    hx-delete="/tasks/<%= task.id %>"
+
+      class="dropdown-content menu glass">                    hx-confirm="Êtes-vous sûr de vouloir supprimer cette tâche ?">
+
+    <li><a @click="close">Option 1</a></li>                <button type="submit" class="text-error w-full text-left">Supprimer</button>
+
+    <li><a @click="close">Option 2</a></li>              </form>
+
+  </ul>            </li>
+
+</div>          </ul>
+
+```        </div>
+
+      <% } %>
+
+**Properties**:    </div>
+
+- `open` (boolean): Dropdown visibility
+
+- `toggle()`: Toggle dropdown    <!-- Description -->
+
+- `close()`: Close dropdown    <% if (task.description) { %>
+
+- `handleClickOutside(e)`: Close when clicking outside      <div class="mb-6">
+
         <h2 class="text-lg font-semibold mb-2">Description</h2>
-        <div class="prose prose-sm max-w-none">
+
+---        <div class="prose prose-sm max-w-none">
+
           <%= task.description %>
-        </div>
-      </div>
-    <% } %>
 
-    <!-- Metadata Grid -->
-    <div class="grid md:grid-cols-2 gap-6">
-      <!-- Creator -->
-      <div>
-        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Créée par</h3>
-        <div class="flex items-center gap-3">
-          <%- include('../../partials/ui/avatar', {
-            name: task.creator.name,
-            size: 'md'
-          }) %>
-          <div>
-            <div class="font-medium"><%= task.creator.name %></div>
-            <div class="text-sm text-base-content/70"><%= task.createdAt.formatted %></div>
-          </div>
-        </div>
+### 4. Form Validation (`formValidation`)        </div>
+
       </div>
 
-      <!-- Assignee -->
-      <div>
+**Purpose**: Client-side form validation with real-time feedback.    <% } %>
+
+
+
+**Usage**:    <!-- Metadata Grid -->
+
+```html    <div class="grid md:grid-cols-2 gap-6">
+
+<form x-data="formValidation()">      <!-- Creator -->
+
+  <div class="form-control">      <div>
+
+    <label>Email</label>        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Créée par</h3>
+
+    <input type="email"         <div class="flex items-center gap-3">
+
+           x-model="email"          <%- include('../../partials/ui/avatar', {
+
+           @blur="touch('email')"            name: task.creator.name,
+
+           @input="validate('email', $event.target.value, {             size: 'md'
+
+             required: true,           }) %>
+
+             email: true           <div>
+
+           })"            <div class="font-medium"><%= task.creator.name %></div>
+
+           :class="{ 'input-error': hasError('email') }" />            <div class="text-sm text-base-content/70"><%= task.createdAt.formatted %></div>
+
+    <span x-show="hasError('email')"           </div>
+
+          x-text="getError('email')"        </div>
+
+          class="text-error text-sm"></span>      </div>
+
+  </div>
+
+</form>      <!-- Assignee -->
+
+```      <div>
+
         <h3 class="text-sm font-semibold text-base-content/70 mb-2">Assignée à</h3>
-        <% if (task.assignee) { %>
-          <div class="flex items-center gap-3">
-            <%- include('../../partials/ui/avatar', {
-              name: task.assignee.name,
-              size: 'md'
-            }) %>
-            <div>
+
+**Properties**:        <% if (task.assignee) { %>
+
+- `errors` (object): Field errors          <div class="flex items-center gap-3">
+
+- `touched` (object): Touched fields            <%- include('../../partials/ui/avatar', {
+
+- `validate(field, value, rules)`: Validate field              name: task.assignee.name,
+
+- `touch(field)`: Mark field as touched              size: 'md'
+
+- `hasError(field)`: Check if field has error            }) %>
+
+- `getError(field)`: Get error message            <div>
+
               <div class="font-medium"><%= task.assignee.name %></div>
-              <div class="text-sm text-base-content/70"><%= task.assignee.email %></div>
-            </div>
-          </div>
-        <% } else { %>
-          <div class="text-base-content/50">Non assignée</div>
+
+**Validation Rules**:              <div class="text-sm text-base-content/70"><%= task.assignee.email %></div>
+
+- `required`: Field is required            </div>
+
+- `minLength`: Minimum character count          </div>
+
+- `maxLength`: Maximum character count        <% } else { %>
+
+- `email`: Valid email format          <div class="text-base-content/50">Non assignée</div>
+
         <% } %>
-      </div>
 
-      <!-- Dates -->
+---      </div>
+
+
+
+### 5. Filters Panel (`filtersPanel`)      <!-- Dates -->
+
       <div>
-        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Dates</h3>
-        <div class="space-y-1 text-sm">
-          <div>Créée : <%= task.createdAt.formatted %></div>
-          <div>Modifiée : <%= task.updatedAt.formatted %></div>
-          <% if (task.dueDate.formatted) { %>
-            <div class="<%= task.dueDate.isOverdue ? 'text-error' : '' %>">
-              Échéance : <%= task.dueDate.formatted %>
-            </div>
-          <% } %>
-        </div>
-      </div>
 
-      <!-- Actions -->
-      <% if (task.canEdit) { %>
-        <div>
-          <h3 class="text-sm font-semibold text-base-content/70 mb-2">Actions rapides</h3>
-          <div class="flex flex-wrap gap-2">
-            <% if (task.status.value !== 'DONE') { %>
+**Purpose**: Collapsible filter sidebar with HTMX integration.        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Dates</h3>
+
+        <div class="space-y-1 text-sm">
+
+**Usage**:          <div>Créée : <%= task.createdAt.formatted %></div>
+
+```html          <div>Modifiée : <%= task.updatedAt.formatted %></div>
+
+<aside x-data="filtersPanel">          <% if (task.dueDate.formatted) { %>
+
+  <button @click="toggle" class="btn">            <div class="<%= task.dueDate.isOverdue ? 'text-error' : '' %>">
+
+    Filtres              Échéance : <%= task.dueDate.formatted %>
+
+  </button>            </div>
+
+            <% } %>
+
+  <div x-show="open" x-transition>        </div>
+
+    <form @submit.prevent="apply">      </div>
+
+      <!-- Filter inputs -->
+
+      <button type="submit">Appliquer</button>      <!-- Actions -->
+
+      <button type="button" @click="reset">Réinitialiser</button>      <% if (task.canEdit) { %>
+
+    </form>        <div>
+
+  </div>          <h3 class="text-sm font-semibold text-base-content/70 mb-2">Actions rapides</h3>
+
+</aside>          <div class="flex flex-wrap gap-2">
+
+```            <% if (task.status.value !== 'DONE') { %>
+
               <form method="POST" action="/tasks/<%= task.id %>/complete"
-                    hx-post="/tasks/<%= task.id %>/complete"
-                    hx-target="body">
-                <button type="submit" class="btn btn-success btn-sm">Marquer terminée</button>
-              </form>
-            <% } %>
-            <% if (task.status.value === 'TODO') { %>
+
+**Properties**:                    hx-post="/tasks/<%= task.id %>/complete"
+
+- `open` (boolean): Panel visibility                    hx-target="body">
+
+- `filters` (object): Current filter values                <button type="submit" class="btn btn-success btn-sm">Marquer terminée</button>
+
+- `toggle()`: Toggle panel visibility              </form>
+
+- `reset()`: Clear all filters            <% } %>
+
+- `apply()`: Apply filters via HTMX            <% if (task.status.value === 'TODO') { %>
+
               <form method="POST" action="/tasks/<%= task.id %>/start"
-                    hx-post="/tasks/<%= task.id %>/start"
+
+**Integration**: Used in `views/pages/tasks/list.ejs`                    hx-post="/tasks/<%= task.id %>/start"
+
                     hx-target="body">
-                <button type="submit" class="btn btn-primary btn-sm">Démarrer</button>
+
+---                <button type="submit" class="btn btn-primary btn-sm">Démarrer</button>
+
               </form>
-            <% } %>
+
+### 6. Toast Manager (`toastManager`)            <% } %>
+
           </div>
-        </div>
+
+**Purpose**: Display temporary toast notifications with auto-dismiss.        </div>
+
       <% } %>
+
+**Usage**:    </div>
+
+```html  </div>
+
+<!-- In layout (already included) --></div>
+
+<div x-data="toastManager" class="toast toast-end"></div>
+
+<!-- Trigger from JavaScript -->
+<script>
+window.dispatchEvent(new CustomEvent('show-flash', {
+  detail: { type: 'success', text: 'Task created!' }
+}));
+</script>
+```
+
+**Properties**:
+- `toasts` (array): Active toast notifications
+- `show(message, type, duration)`: Display toast
+- `dismiss(id)`: Dismiss specific toast
+- `getAlertClass(type)`: Get DaisyUI alert class
+- `getIcon(type)`: Get icon for toast type
+
+**Toast Types**: `success`, `error`, `warning`, `info`
+
+**Auto-Integration**: Listens for:
+- Custom `show-flash` events
+- HTMX `HX-Trigger` headers (`showSuccess`, `showError`)
+
+---
+
+### 7. Inline Edit (`inlineEdit`)
+
+**Purpose**: Enable inline editing of text fields with optimistic updates.
+
+**Usage**:
+```html
+<div x-data="inlineEdit('Initial value', '/tasks/123', 'title')">
+  <div x-show="!editing" class="group">
+    <span x-text="value"></span>
+    <button @click="startEdit" class="btn-ghost opacity-0 group-hover:opacity-100">
+      Edit
+    </button>
+  </div>
+
+  <div x-show="editing">
+    <input type="text"
+           x-model="value"
+           @keydown="handleKeydown" />
+    <button @click="save" :disabled="saving">Save</button>
+    <button @click="cancel">Cancel</button>
+  </div>
+</div>
+```
+
+**Properties**:
+- `editing` (boolean): Edit mode state
+- `value` (string): Current value
+- `originalValue` (string): Backup for cancel
+- `saving` (boolean): Save operation in progress
+- `error` (string|null): Error message
+- `startEdit()`: Enter edit mode
+- `save()`: Save changes via PATCH request
+- `cancel()`: Cancel and restore original value
+- `handleKeydown(e)`: Handle Enter (save) and Escape (cancel)
+
+**API**: Sends `PATCH` request to endpoint with JSON body: `{ [field]: value }`
+
+---
+
+### 8. Task Search (`taskSearch`)
+
+**Purpose**: Client-side task search with debouncing and HTMX integration.
+
+**Usage**:
+```html
+<div x-data="taskSearch">
+  <input type="text"
+         x-model="query"
+         @input="search"
+         placeholder="Search tasks..." />
+  <button @click="clear" x-show="query.length > 0">Clear</button>
+  <span x-show="searching" class="loading loading-spinner"></span>
+</div>
+```
+
+**Properties**:
+- `query` (string): Search query
+- `searching` (boolean): Search in progress
+- `debounceTimer` (number): Debounce timer ID
+- `search()`: Trigger search with 300ms debounce
+- `clear()`: Clear search and reload all tasks
+
+**Integration**: Used in `views/pages/tasks/list.ejs`
+
+---
+
+### 9. Confirmation Dialog (`confirmDialog`)
+
+**Purpose**: Confirm destructive actions before execution.
+
+**Usage**:
+```html
+<div x-data="confirmDialog">
+  <button @click="show({
+    title: 'Delete Task',
+    message: 'Are you sure?',
+    confirmText: 'Delete',
+    onConfirm: () => deleteTask()
+  })">
+    Delete
+  </button>
+
+  <div x-show="open" class="modal modal-open">
+    <div class="modal-box">
+      <h3 x-text="title"></h3>
+      <p x-text="message"></p>
+      <div class="modal-action">
+        <button @click="confirm" x-text="confirmText"></button>
+        <button @click="close" x-text="cancelText"></button>
+      </div>
     </div>
   </div>
 </div>
+```
+
+**Properties**:
+- `open` (boolean): Dialog visibility
+- `title` (string): Dialog title
+- `message` (string): Confirmation message
+- `confirmText` (string): Confirm button text
+- `cancelText` (string): Cancel button text
+- `onConfirm` (function): Callback on confirmation
+- `show(options)`: Display dialog
+- `confirm()`: Execute callback and close
+- `close()`: Close dialog
+
+---
+
+## Global Events
+
+### show-flash
+Trigger toast notifications from anywhere:
+
+```javascript
+window.dispatchEvent(new CustomEvent('show-flash', {
+  detail: {
+    type: 'success',  // success | error | warning | info
+    text: 'Operation completed!'
+  }
+}));
+```
+
+---
+
+## HTMX Integration
+
+### HX-Trigger Header
+Controllers can trigger toasts via response headers:
+
+```typescript
+// In controller
+res.setHeader('HX-Trigger', JSON.stringify({
+  showSuccess: 'Task created successfully!'
+}));
+```
+
+Toast manager automatically listens for:
+- `showSuccess`: Display success toast
+- `showError`: Display error toast
+
+---
+
+## Best Practices
+
+### 1. Progressive Enhancement
+Always provide fallback behavior without JavaScript:
+
+```html
+<!-- Works without JS (form POST) -->
+<form method="POST" action="/tasks" hx-post="/tasks">
+  <!-- ... -->
+</form>
+```
+
+### 2. x-cloak
+Hide elements until Alpine initializes:
+
+```html
+<div x-show="open" x-cloak>
+  <!-- Hidden until Alpine loads -->
+</div>
+```
+
+**CSS** (in `public/css/tailwind.css`):
+```css
+[x-cloak] { display: none !important; }
+```
+
+### 3. Keyboard Navigation
+Always support keyboard shortcuts:
+
+```html
+<div @keydown.escape="close"
+     @keydown.enter="save">
+  <!-- ... -->
+</div>
+```
+
+### 4. Loading States
+Show feedback during async operations:
+
+```html
+<button @click="save" :disabled="saving">
+  <span x-show="!saving">Save</span>
+  <span x-show="saving" class="loading loading-spinner"></span>
+</button>
+```
+
+### 5. Error Handling
+Display errors gracefully:
+
+```javascript
+try {
+  await saveData();
+  this.error = null;
+} catch (error) {
+  this.error = error.message;
+  window.dispatchEvent(new CustomEvent('show-flash', {
+    detail: { type: 'error', text: 'Save failed' }
+  }));
+}
+```
+
+---
+
+## Testing Components
+
+### Manual Testing Checklist
+- [ ] Component initializes correctly
+- [ ] Keyboard navigation works (Enter, Escape, Tab)
+- [ ] Click-outside detection works (dropdowns, modals)
+- [ ] localStorage persistence (theme)
+- [ ] Focus trapping (modals)
+- [ ] Error states display correctly
+- [ ] Loading indicators appear during async ops
+- [ ] Toast notifications auto-dismiss
+- [ ] Responsive behavior on mobile
+
+### Example E2E Test (Playwright)
+```typescript
+test('inline edit saves task title', async ({ page }) => {
+  await page.goto('/tasks/123');
+
+  // Hover to reveal edit button
+  await page.hover('h1');
+
+  // Click edit button
+  await page.click('[title="Modifier le titre"]');
+
+  // Edit title
+  await page.fill('input[x-model="value"]', 'New Title');
+
+  // Press Enter to save
+  await page.keyboard.press('Enter');
+
+  // Verify toast notification
+  await expect(page.locator('.toast')).toContainText('Modifications enregistrées');
+});
+```
+
+---
+
+## Debugging Tips
+
+### 1. Alpine DevTools
+Install Chrome extension: [Alpine.js devtools](https://github.com/alpine-collective/alpine-devtools)
+
+### 2. Console Logging
+Add temporary logging in components:
+
+```javascript
+Alpine.data('myComponent', () => ({
+  init() {
+    console.log('Component initialized', this);
+  }
+}));
+```
+
+### 3. x-effect
+Debug reactive changes:
+
+```html
+<div x-data="{ count: 0 }"
+     x-effect="console.log('count changed:', count)">
+  <button @click="count++">Increment</button>
+</div>
+```
+
+### 4. HTMX Logging
+Enable in console:
+
+```javascript
+htmx.logAll();
+```
+
+---
+
+## Performance Considerations
+
+### 1. Debouncing
+Used in `taskSearch` to avoid excessive requests:
+
+```javascript
+this.debounceTimer = setTimeout(() => {
+  // Trigger search after 300ms pause
+}, 300);
+```
+
+### 2. Transition Performance
+Use CSS transforms (not properties that trigger layout):
+
+```html
+<div x-transition:enter="translate-x-8 opacity-0"
+     x-transition:enter-end="translate-x-0 opacity-100">
+```
+
+### 3. Lazy Loading
+Defer Alpine.js to improve page load:
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+```
+
+---
+
+## Migration Guide
+
+### From jQuery to Alpine.js
+```html
+<!-- jQuery -->
+<div id="myDiv">
+  <button onclick="$('#myDiv').toggleClass('active')">Toggle</button>
+</div>
+
+<!-- Alpine.js -->
+<div x-data="{ active: false }">
+  <button @click="active = !active" :class="{ 'active': active }">Toggle</button>
+</div>
+```
+
+### From React to Alpine.js
+```javascript
+// React
+const [count, setCount] = useState(0);
+
+// Alpine.js
+<div x-data="{ count: 0 }">
+  <button @click="count++">Increment</button>
+  <span x-text="count"></span>
+</div>
+```
+
+---
+
+## Resources
+
+- [Alpine.js Documentation](https://alpinejs.dev/)
+- [HTMX Documentation](https://htmx.org/)
+- [DaisyUI Components](https://daisyui.com/components/)
+- [TaskFlow GitHub](https://github.com/taskflow/app)
+
+---
+
+**Last Updated**: 31 octobre 2025
+**Version**: 1.0
+**Maintainer**: TaskFlow Team

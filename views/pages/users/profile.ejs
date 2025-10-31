@@ -24,7 +24,7 @@
 
           <!-- Name -->
           <h2 class="text-2xl font-bold mb-1"><%= user.name %></h2>
-          
+
           <!-- Role Badge -->
           <div class="flex justify-center mb-4">
             <%- include('../../partials/ui/badge', {
@@ -65,7 +65,7 @@
       <!-- Info -->
       <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
         <h3 class="text-xl font-bold mb-4">Informations</h3>
-        
+
         <div class="space-y-4">
           <div>
             <div class="text-sm text-base-content/70 mb-1">Email</div>
@@ -88,7 +88,7 @@
       <!-- Task Stats -->
       <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
         <h3 class="text-xl font-bold mb-4">Statistiques des tâches</h3>
-        
+
         <div class="grid md:grid-cols-2 gap-4">
           <div class="stat bg-base-200 rounded-lg">
             <div class="stat-title">Tâches créées</div>
@@ -96,7 +96,7 @@
               <%= user.taskCount.created %>
             </div>
           </div>
-          
+
           <div class="stat bg-base-200 rounded-lg">
             <div class="stat-title">Tâches assignées</div>
             <div class="stat-value text-3xl text-secondary">
@@ -115,10 +115,10 @@
               Voir toutes
             </a>
           </div>
-          
+
           <div class="space-y-2">
             <% recentTasks.forEach(task => { %>
-              <a href="/tasks/<%= task.id %>" 
+              <a href="/tasks/<%= task.id %>"
                  class="flex items-center justify-between p-3 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
                 <div class="flex-1">
                   <div class="font-medium"><%= task.title %></div>

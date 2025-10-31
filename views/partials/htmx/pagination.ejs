@@ -19,11 +19,11 @@
     <% } %>
 
     <!-- Page Numbers -->
-    <% 
+    <%
       const maxVisiblePages = 5;
       let startPage = Math.max(1, pagination.currentPage - Math.floor(maxVisiblePages / 2));
       let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
-      
+
       if (endPage - startPage + 1 < maxVisiblePages) {
         startPage = Math.max(1, endPage - maxVisiblePages + 1);
       }
@@ -94,6 +94,6 @@
 
 <!-- Page Info -->
 <div class="text-center text-sm text-base-content/70 mt-4">
-  Page <%= pagination.currentPage %> sur <%= pagination.totalPages %> 
+  Page <%= pagination.currentPage %> sur <%= pagination.totalPages %>
   (<%= pagination.total %> tâche<%= pagination.total > 1 ? 's' : '' %>)
 </div>

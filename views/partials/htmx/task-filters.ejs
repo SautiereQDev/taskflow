@@ -1,8 +1,8 @@
 <%- include('../ui/surface', { variant: 'light' }) %>
   <h2 class="text-lg font-bold mb-4">Filtres</h2>
-  
-  <form id="filters-form" 
-        hx-get="/tasks" 
+
+  <form id="filters-form"
+        hx-get="/tasks"
         hx-target="#task-list-container"
         hx-trigger="change, submit"
         hx-indicator="#filter-indicator"
@@ -13,12 +13,12 @@
       <label for="search" class="label">
         <span class="label-text font-semibold">Recherche</span>
       </label>
-      <input 
-        type="text" 
+      <input
+        type="text"
         id="search"
-        name="search" 
+        name="search"
         value="<%= filters.search || '' %>"
-        placeholder="Titre de la tâche..." 
+        placeholder="Titre de la tâche..."
         class="input input-bordered w-full"
       />
     </div>
@@ -30,40 +30,40 @@
       </label>
       <div class="space-y-2">
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="status" 
-            value="TODO" 
+          <input
+            type="checkbox"
+            name="status"
+            value="TODO"
             class="checkbox checkbox-sm"
             <%= filters.status && filters.status.includes('TODO') ? 'checked' : '' %>
           />
           <span class="label-text">À faire</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="status" 
-            value="IN_PROGRESS" 
+          <input
+            type="checkbox"
+            name="status"
+            value="IN_PROGRESS"
             class="checkbox checkbox-sm"
             <%= filters.status && filters.status.includes('IN_PROGRESS') ? 'checked' : '' %>
           />
           <span class="label-text">En cours</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="status" 
-            value="DONE" 
+          <input
+            type="checkbox"
+            name="status"
+            value="DONE"
             class="checkbox checkbox-sm"
             <%= filters.status && filters.status.includes('DONE') ? 'checked' : '' %>
           />
           <span class="label-text">Terminée</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="status" 
-            value="CANCELLED" 
+          <input
+            type="checkbox"
+            name="status"
+            value="CANCELLED"
             class="checkbox checkbox-sm"
             <%= filters.status && filters.status.includes('CANCELLED') ? 'checked' : '' %>
           />
@@ -79,40 +79,40 @@
       </label>
       <div class="space-y-2">
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="priority" 
-            value="URGENT" 
+          <input
+            type="checkbox"
+            name="priority"
+            value="URGENT"
             class="checkbox checkbox-sm checkbox-error"
             <%= filters.priority && filters.priority.includes('URGENT') ? 'checked' : '' %>
           />
           <span class="label-text">Urgente</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="priority" 
-            value="HIGH" 
+          <input
+            type="checkbox"
+            name="priority"
+            value="HIGH"
             class="checkbox checkbox-sm checkbox-warning"
             <%= filters.priority && filters.priority.includes('HIGH') ? 'checked' : '' %>
           />
           <span class="label-text">Haute</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="priority" 
-            value="MEDIUM" 
+          <input
+            type="checkbox"
+            name="priority"
+            value="MEDIUM"
             class="checkbox checkbox-sm checkbox-info"
             <%= filters.priority && filters.priority.includes('MEDIUM') ? 'checked' : '' %>
           />
           <span class="label-text">Moyenne</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="checkbox" 
-            name="priority" 
-            value="LOW" 
+          <input
+            type="checkbox"
+            name="priority"
+            value="LOW"
             class="checkbox checkbox-sm"
             <%= filters.priority && filters.priority.includes('LOW') ? 'checked' : '' %>
           />
@@ -145,40 +145,40 @@
       </label>
       <div class="space-y-2">
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="radio" 
-            name="dueDateFilter" 
-            value="" 
+          <input
+            type="radio"
+            name="dueDateFilter"
+            value=""
             class="radio radio-sm"
             <%= !filters.dueDateFilter ? 'checked' : '' %>
           />
           <span class="label-text">Toutes</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="radio" 
-            name="dueDateFilter" 
-            value="overdue" 
+          <input
+            type="radio"
+            name="dueDateFilter"
+            value="overdue"
             class="radio radio-sm radio-error"
             <%= filters.dueDateFilter === 'overdue' ? 'checked' : '' %>
           />
           <span class="label-text">En retard</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="radio" 
-            name="dueDateFilter" 
-            value="today" 
+          <input
+            type="radio"
+            name="dueDateFilter"
+            value="today"
             class="radio radio-sm radio-warning"
             <%= filters.dueDateFilter === 'today' ? 'checked' : '' %>
           />
           <span class="label-text">Aujourd'hui</span>
         </label>
         <label class="label cursor-pointer justify-start gap-3">
-          <input 
-            type="radio" 
-            name="dueDateFilter" 
-            value="week" 
+          <input
+            type="radio"
+            name="dueDateFilter"
+            value="week"
             class="radio radio-sm"
             <%= filters.dueDateFilter === 'week' ? 'checked' : '' %>
           />
@@ -193,7 +193,7 @@
         <span id="filter-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
         Appliquer
       </button>
-      <button type="reset" 
+      <button type="reset"
               class="btn btn-ghost btn-sm"
               hx-get="/tasks"
               hx-target="#task-list-container">

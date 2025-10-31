@@ -14,7 +14,7 @@
       <%= task ? 'Modifier la tâche' : 'Nouvelle tâche' %>
     </h1>
 
-    <form method="POST" 
+    <form method="POST"
           action="<%= task ? `/tasks/${task.id}/edit` : '/tasks' %>"
           hx-post="<%= task ? `/tasks/${task.id}` : '/tasks' %>"
           hx-target="body"
@@ -37,9 +37,9 @@
         <label for="description" class="label">
           <span class="label-text font-semibold">Description</span>
         </label>
-        <textarea 
+        <textarea
           id="description"
-          name="description" 
+          name="description"
           rows="5"
           class="textarea textarea-bordered w-full"
           placeholder="Description détaillée de la tâche..."><%= task ? task.description || '' : '' %></textarea>
@@ -106,7 +106,7 @@
             <option value="">Non assignée</option>
             <% if (typeof users !== 'undefined') { %>
               <% users.forEach(user => { %>
-                <option value="<%= user.id %>" 
+                <option value="<%= user.id %>"
                         <%= task && task.assigneeId === user.id ? 'selected' : '' %>>
                   <%= user.name %> (<%= user.email %>)
                 </option>

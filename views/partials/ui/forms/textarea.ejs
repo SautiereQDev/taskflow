@@ -2,7 +2,7 @@
 /**
  * Textarea Field Component
  * Multi-line text input
- * 
+ *
  * Props:
  *  - label: string - Field label
  *  - name: string - Textarea name attribute
@@ -11,13 +11,13 @@
  *  - required: boolean (default: false)
  *  - placeholder: string (optional)
  *  - rows: number (default: 4)
- * 
+ *
  * Usage:
- *  <%- include('../partials/ui/forms/textarea', { 
- *    label: 'Description', 
- *    name: 'description', 
+ *  <%- include('../partials/ui/forms/textarea', {
+ *    label: 'Description',
+ *    name: 'description',
  *    rows: 6,
- *    value: task.description 
+ *    value: task.description
  *  }) %>
  */
 
@@ -40,7 +40,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
       <% } %>
     </span>
   </label>
-  
+
   <textarea
     name="<%= name %>"
     id="<%= name %>"
@@ -50,7 +50,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
     <%= required ? 'required' : '' %>
     <%= disabled ? 'disabled' : '' %>
   ><%= value %></textarea>
-  
+
   <% if (error) { %>
     <label class="label">
       <span class="label-text-alt text-error"><%= error %></span>

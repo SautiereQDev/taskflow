@@ -2,7 +2,7 @@
 /**
  * Form Field Component
  * Complete form field with label, input, error message
- * 
+ *
  * Props:
  *  - label: string - Field label
  *  - name: string - Input name attribute
@@ -12,14 +12,14 @@
  *  - required: boolean (default: false)
  *  - placeholder: string (optional)
  *  - helpText: string (optional) - Help text below input
- * 
+ *
  * Usage:
- *  <%- include('../partials/ui/forms/field', { 
- *    label: 'Email', 
- *    name: 'email', 
- *    type: 'email', 
+ *  <%- include('../partials/ui/forms/field', {
+ *    label: 'Email',
+ *    name: 'email',
+ *    type: 'email',
  *    required: true,
- *    error: errors.email 
+ *    error: errors.email
  *  }) %>
  */
 
@@ -43,7 +43,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
       <% } %>
     </span>
   </label>
-  
+
   <input
     type="<%= type %>"
     name="<%= name %>"
@@ -54,7 +54,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
     <%= required ? 'required' : '' %>
     <%= disabled ? 'disabled' : '' %>
   />
-  
+
   <% if (error) { %>
     <label class="label">
       <span class="label-text-alt text-error"><%= error %></span>
