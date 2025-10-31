@@ -1,0 +1,59 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="text-center max-w-md">
+    <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+      <!-- Error Icon -->
+      <div class="text-8xl mb-6">⚠️</div>
+      
+      <!-- Error Code -->
+      <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-error to-warning bg-clip-text text-transparent">
+        500
+      </h1>
+      
+      <!-- Error Message -->
+      <h2 class="text-2xl font-bold mb-4">Erreur serveur</h2>
+      
+      <p class="text-base-content/70 mb-8">
+        Une erreur inattendue s'est produite. Nos équipes ont été notifiées et travaillent à résoudre le problème.
+      </p>
+      
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="btn btn-primary gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Retour à l'accueil
+        </a>
+        
+        <button onclick="location.reload()" class="btn btn-ghost gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Réessayer
+        </button>
+      </div>
+      
+      <!-- Error Details (only show in development) -->
+      <% if (typeof error !== 'undefined' && error && process.env.NODE_ENV === 'development') { %>
+        <div class="mt-8 p-4 bg-base-200 rounded-lg text-left">
+          <details>
+            <summary class="cursor-pointer font-semibold text-sm mb-2">
+              Détails de l'erreur (développement)
+            </summary>
+            <div class="text-xs text-error mt-2 overflow-auto max-h-60">
+              <div class="font-mono whitespace-pre-wrap"><%= error.stack || error.message %></div>
+            </div>
+          </details>
+        </div>
+      <% } %>
+      
+      <!-- Support Info -->
+      <div class="mt-12 pt-8 border-t border-base-300">
+        <p class="text-sm text-base-content/70 mb-2">Besoin d'aide ?</p>
+        <a href="mailto:support@taskflow.com" class="link link-primary text-sm">
+          Contactez le support
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

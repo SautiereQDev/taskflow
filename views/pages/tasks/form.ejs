@@ -1,0 +1,141 @@
+<div class="max-w-2xl mx-auto">
+  <!-- Back Button -->
+  <div class="mb-6">
+    <a href="<%= task ? `/tasks/${task.id}` : '/tasks' %>" class="btn btn-ghost btn-sm gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour
+    </a>
+  </div>
+
+  <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+    <h1 class="text-3xl font-bold mb-8">
+      <%= task ? 'Modifier la tâche' : 'Nouvelle tâche' %>
+    </h1>
+
+    <form method="POST" 
+          action="<%= task ? `/tasks/${task.id}/edit` : '/tasks' %>"
+          hx-post="<%= task ? `/tasks/${task.id}` : '/tasks' %>"
+          hx-target="body"
+          hx-indicator="#submit-btn"
+          class="space-y-6">
+
+      <!-- Title -->
+      <%- include('../../partials/ui/forms/field', {
+        label: 'Titre',
+        name: 'title',
+        type: 'text',
+        required: true,
+        value: task ? task.title : '',
+        placeholder: 'Ex: Implémenter le système d\'authentification',
+        error: typeof errors !== 'undefined' ? errors.title : null
+      }) %>
+
+      <!-- Description -->
+      <div class="form-control">
+        <label for="description" class="label">
+          <span class="label-text font-semibold">Description</span>
+        </label>
+        <textarea 
+          id="description"
+          name="description" 
+          rows="5"
+          class="textarea textarea-bordered w-full"
+          placeholder="Description détaillée de la tâche..."><%= task ? task.description || '' : '' %></textarea>
+        <% if (typeof errors !== 'undefined' && errors.description) { %>
+          <label class="label">
+            <span class="label-text-alt text-error"><%= errors.description %></span>
+          </label>
+        <% } %>
+      </div>
+
+      <!-- Status and Priority Row -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Status -->
+        <div class="form-control">
+          <label for="status" class="label">
+            <span class="label-text font-semibold">Statut</span>
+          </label>
+          <select id="status" name="status" class="select select-bordered w-full" required>
+            <option value="TODO" <%= task && task.status === 'TODO' ? 'selected' : '' %>>
+              À faire
+            </option>
+            <option value="IN_PROGRESS" <%= task && task.status === 'IN_PROGRESS' ? 'selected' : '' %>>
+              En cours
+            </option>
+            <option value="DONE" <%= task && task.status === 'DONE' ? 'selected' : '' %>>
+              Terminée
+            </option>
+            <option value="CANCELLED" <%= task && task.status === 'CANCELLED' ? 'selected' : '' %>>
+              Annulée
+            </option>
+          </select>
+        </div>
+
+        <!-- Priority -->
+        <div class="form-control">
+          <label for="priority" class="label">
+            <span class="label-text font-semibold">Priorité</span>
+          </label>
+          <select id="priority" name="priority" class="select select-bordered w-full" required>
+            <option value="LOW" <%= task && task.priority === 'LOW' ? 'selected' : '' %>>
+              Basse
+            </option>
+            <option value="MEDIUM" <%= task && task.priority === 'MEDIUM' ? 'selected' : '' %>>
+              Moyenne
+            </option>
+            <option value="HIGH" <%= task && task.priority === 'HIGH' ? 'selected' : '' %>>
+              Haute
+            </option>
+            <option value="URGENT" <%= task && task.priority === 'URGENT' ? 'selected' : '' %>>
+              Urgente
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Assignee and Due Date Row -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Assignee -->
+        <div class="form-control">
+          <label for="assigneeId" class="label">
+            <span class="label-text font-semibold">Assignée à</span>
+          </label>
+          <select id="assigneeId" name="assigneeId" class="select select-bordered w-full">
+            <option value="">Non assignée</option>
+            <% if (typeof users !== 'undefined') { %>
+              <% users.forEach(user => { %>
+                <option value="<%= user.id %>" 
+                        <%= task && task.assigneeId === user.id ? 'selected' : '' %>>
+                  <%= user.name %> (<%= user.email %>)
+                </option>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+
+        <!-- Due Date -->
+        <%- include('../../partials/ui/forms/field', {
+          label: 'Date d\'échéance',
+          name: 'dueDate',
+          type: 'datetime-local',
+          required: false,
+          value: task && task.dueDate ? task.dueDate : '',
+          error: typeof errors !== 'undefined' ? errors.dueDate : null
+        }) %>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-4 pt-4">
+        <button type="submit" id="submit-btn" class="btn btn-primary flex-1">
+          <span class="htmx-indicator loading loading-spinner loading-sm"></span>
+          <%= task ? 'Mettre à jour' : 'Créer la tâche' %>
+        </button>
+        <a href="<%= task ? `/tasks/${task.id}` : '/tasks' %>" class="btn btn-ghost">
+          Annuler
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<% if (tasks && tasks.length > 0) { %>
+  <div class="space-y-3">
+    <% tasks.forEach(task => { %>
+      <%- include('./task-item', { task: task }) %>
+    <% }) %>
+  </div>
+
+  <!-- Pagination -->
+  <% if (pagination && pagination.totalPages > 1) { %>
+    <%- include('./pagination', { pagination: pagination }) %>
+  <% } %>
+<% } else { %>
+  <div class="text-center py-16">
+    <%- include('../ui/surface', { variant: 'light' }) %>
+      <div class="text-6xl mb-4">📋</div>
+      <h3 class="text-xl font-bold mb-2">Aucune tâche trouvée</h3>
+      <p class="text-base-content/70 mb-6">
+        Commencez par créer une nouvelle tâche ou ajustez vos filtres.
+      </p>
+      <a href="/tasks/new" class="btn btn-primary">
+        Créer une tâche
+      </a>
+    </div>
+  </div>
+<% } %>

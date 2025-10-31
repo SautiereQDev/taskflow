@@ -1,34 +1,74 @@
-<div class="text-center py-16">
-  <h1 class="text-5xl font-bold mb-4">Welcome to TaskFlow</h1>
-  <p class="text-xl text-base-content/70 mb-8">
-    Modern task management with Clean Architecture + HTMX
-  </p>
-  
-  <div class="flex gap-4 justify-center">
-    <a href="/auth/login" class="btn btn-primary btn-lg">Get Started</a>
-    <a href="/about" class="btn btn-ghost btn-lg">Learn More</a>
-  </div>
-  
-  <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-    <div class="card bg-base-200">
-      <div class="card-body">
-        <h2 class="card-title">Clean Architecture</h2>
-        <p>Domain-Driven Design with CQRS patterns</p>
-      </div>
-    </div>
-    
-    <div class="card bg-base-200">
-      <div class="card-body">
-        <h2 class="card-title">SSR First</h2>
-        <p>Server-Side Rendering with HTMX for modern UX</p>
-      </div>
-    </div>
-    
-    <div class="card bg-base-200">
-      <div class="card-body">
-        <h2 class="card-title">Type-Safe</h2>
-        <p>TypeScript 5.7 with strict mode enabled</p>
+<div class="hero min-h-[70vh]">
+  <div class="hero-content text-center">
+    <div class="max-w-3xl">
+      <h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        Gestion de tâches moderne et collaborative
+      </h1>
+      <p class="text-xl mb-8 opacity-80">
+        Organisez votre travail, collaborez avec votre équipe et atteignez vos objectifs plus rapidement avec TaskFlow.
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="/auth/register" class="btn btn-primary btn-lg gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Commencer gratuitement
+        </a>
+        <a href="#features" class="btn btn-outline btn-lg">En savoir plus</a>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Features Section -->
+<section id="features" class="py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12">Fonctionnalités puissantes</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <%- include('../partials/ui/surface', { variant: 'normal', hover: true, extraClass: 'text-center' }) %>
+        <div class="flex justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Gestion intuitive</h3>
+        <p class="opacity-70">Créez, assignez et suivez vos tâches en quelques clics.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <%- include('../partials/ui/surface', { variant: 'normal', hover: true, extraClass: 'text-center' }) %>
+        <div class="flex justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Collaboration d'équipe</h3>
+        <p class="opacity-70">Travaillez ensemble en temps réel sur vos projets.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <%- include('../partials/ui/surface', { variant: 'normal', hover: true, extraClass: 'text-center' }) %>
+        <div class="flex justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Analyses avancées</h3>
+        <p class="opacity-70">Suivez vos progrès avec des statistiques détaillées.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-base-200">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-4">Prêt à améliorer votre productivité ?</h2>
+    <p class="text-lg mb-8 opacity-80">Rejoignez des milliers d'équipes qui font confiance à TaskFlow.</p>
+    <a href="/auth/register" class="btn btn-primary btn-lg">
+      Créer un compte gratuit
+    </a>
+  </div>
+</section>

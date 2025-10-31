@@ -1,0 +1,140 @@
+<div class="max-w-4xl mx-auto space-y-6">
+  <!-- Back Button -->
+  <div>
+    <a href="/tasks" class="btn btn-ghost btn-sm gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour
+    </a>
+  </div>
+
+  <!-- Task Details -->
+  <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+    <!-- Header -->
+    <div class="flex justify-between items-start mb-6">
+      <div class="flex-1">
+        <h1 class="text-3xl font-bold mb-3"><%= task.title %></h1>
+        <div class="flex flex-wrap gap-2">
+          <%- include('../../partials/ui/badge', {
+            text: task.status.label,
+            variant: task.status.color
+          }) %>
+          <%- include('../../partials/ui/badge', {
+            text: task.priority.label,
+            variant: task.priority.color
+          }) %>
+          <% if (task.dueDate.formatted) { %>
+            <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %>">
+              📅 <%= task.dueDate.formatted %>
+            </span>
+          <% } %>
+        </div>
+      </div>
+
+      <% if (task.canEdit) { %>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+          </label>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 glass">
+            <li><a href="/tasks/<%= task.id %>/edit">Modifier</a></li>
+            <li>
+              <form method="POST" action="/tasks/<%= task.id %>/delete" 
+                    hx-delete="/tasks/<%= task.id %>"
+                    hx-confirm="Êtes-vous sûr de vouloir supprimer cette tâche ?">
+                <button type="submit" class="text-error w-full text-left">Supprimer</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Description -->
+    <% if (task.description) { %>
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold mb-2">Description</h2>
+        <div class="prose prose-sm max-w-none">
+          <%= task.description %>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Metadata Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Creator -->
+      <div>
+        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Créée par</h3>
+        <div class="flex items-center gap-3">
+          <%- include('../../partials/ui/avatar', {
+            name: task.creator.name,
+            size: 'md'
+          }) %>
+          <div>
+            <div class="font-medium"><%= task.creator.name %></div>
+            <div class="text-sm text-base-content/70"><%= task.createdAt.formatted %></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignee -->
+      <div>
+        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Assignée à</h3>
+        <% if (task.assignee) { %>
+          <div class="flex items-center gap-3">
+            <%- include('../../partials/ui/avatar', {
+              name: task.assignee.name,
+              size: 'md'
+            }) %>
+            <div>
+              <div class="font-medium"><%= task.assignee.name %></div>
+              <div class="text-sm text-base-content/70"><%= task.assignee.email %></div>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="text-base-content/50">Non assignée</div>
+        <% } %>
+      </div>
+
+      <!-- Dates -->
+      <div>
+        <h3 class="text-sm font-semibold text-base-content/70 mb-2">Dates</h3>
+        <div class="space-y-1 text-sm">
+          <div>Créée : <%= task.createdAt.formatted %></div>
+          <div>Modifiée : <%= task.updatedAt.formatted %></div>
+          <% if (task.dueDate.formatted) { %>
+            <div class="<%= task.dueDate.isOverdue ? 'text-error' : '' %>">
+              Échéance : <%= task.dueDate.formatted %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <% if (task.canEdit) { %>
+        <div>
+          <h3 class="text-sm font-semibold text-base-content/70 mb-2">Actions rapides</h3>
+          <div class="flex flex-wrap gap-2">
+            <% if (task.status.value !== 'DONE') { %>
+              <form method="POST" action="/tasks/<%= task.id %>/complete"
+                    hx-post="/tasks/<%= task.id %>/complete"
+                    hx-target="body">
+                <button type="submit" class="btn btn-success btn-sm">Marquer terminée</button>
+              </form>
+            <% } %>
+            <% if (task.status.value === 'TODO') { %>
+              <form method="POST" action="/tasks/<%= task.id %>/start"
+                    hx-post="/tasks/<%= task.id %>/start"
+                    hx-target="body">
+                <button type="submit" class="btn btn-primary btn-sm">Démarrer</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

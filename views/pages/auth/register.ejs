@@ -1,0 +1,74 @@
+<div class="min-h-[calc(100vh-20rem)] flex items-center justify-center py-8">
+  <div class="w-full max-w-md">
+    <%- include('../../partials/ui/surface', { variant: 'heavy', padding: true }) %>
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2">Créer un compte</h1>
+        <p class="text-base-content/70">Rejoignez TaskFlow aujourd'hui</p>
+      </div>
+
+      <form method="POST" action="/auth/register" class="space-y-4">
+        <%- include('../../partials/ui/forms/field', {
+          label: 'Nom complet',
+          name: 'name',
+          type: 'text',
+          required: true,
+          placeholder: 'Jean Dupont',
+          error: typeof errors !== 'undefined' ? errors.name : '',
+          value: typeof formData !== 'undefined' ? formData.name : ''
+        }) %>
+
+        <%- include('../../partials/ui/forms/field', {
+          label: 'Email',
+          name: 'email',
+          type: 'email',
+          required: true,
+          placeholder: 'nom@example.com',
+          error: typeof errors !== 'undefined' ? errors.email : '',
+          value: typeof formData !== 'undefined' ? formData.email : ''
+        }) %>
+
+        <%- include('../../partials/ui/forms/field', {
+          label: 'Mot de passe',
+          name: 'password',
+          type: 'password',
+          required: true,
+          placeholder: '••••••••',
+          helpText: 'Minimum 8 caractères',
+          error: typeof errors !== 'undefined' ? errors.password : ''
+        }) %>
+
+        <%- include('../../partials/ui/forms/field', {
+          label: 'Confirmer le mot de passe',
+          name: 'confirmPassword',
+          type: 'password',
+          required: true,
+          placeholder: '••••••••',
+          error: typeof errors !== 'undefined' ? errors.confirmPassword : ''
+        }) %>
+
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start gap-2">
+            <input type="checkbox" name="acceptTerms" required class="checkbox checkbox-primary checkbox-sm" />
+            <span class="label-text text-sm">
+              J'accepte les <a href="/terms" class="link link-primary">conditions d'utilisation</a>
+              et la <a href="/privacy" class="link link-primary">politique de confidentialité</a>
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full">
+          Créer mon compte
+        </button>
+      </form>
+
+      <div class="divider">OU</div>
+
+      <div class="text-center">
+        <p class="text-sm">
+          Déjà un compte ?
+          <a href="/auth/login" class="link link-primary">Se connecter</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
