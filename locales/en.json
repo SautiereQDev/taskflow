@@ -80,5 +80,24 @@
       "changePassword": "Change password",
       "deleteAccount": "Delete account"
     }
+  },
+  "errors": {
+    "404": {
+      "title": "Page Not Found",
+      "message": "Sorry, the page you're looking for doesn't exist or has been moved.",
+      "searchPlaceholder": "Search for a page...",
+      "homeButton": "Back to Home",
+      "backButton": "Previous Page",
+      "helpfulLinks": "Helpful links:"
+    },
+    "500": {
+      "title": "Server Error",
+      "message": "An unexpected error occurred. Our team has been notified and is working to fix the issue.",
+      "homeButton": "Back to Home",
+      "retryButton": "Retry",
+      "detailsTitle": "Error Details (development)",
+      "supportTitle": "Need help?",
+      "supportEmail": "Contact Support"
+    }
   }
 }

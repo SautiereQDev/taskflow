@@ -80,5 +80,24 @@
       "changePassword": "Changer le mot de passe",
       "deleteAccount": "Supprimer le compte"
     }
+  },
+  "errors": {
+    "404": {
+      "title": "Page introuvable",
+      "message": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
+      "searchPlaceholder": "Rechercher une page...",
+      "homeButton": "Retour à l'accueil",
+      "backButton": "Page précédente",
+      "helpfulLinks": "Liens utiles :"
+    },
+    "500": {
+      "title": "Erreur serveur",
+      "message": "Une erreur inattendue s'est produite. Nos équipes ont été notifiées et travaillent à résoudre le problème.",
+      "homeButton": "Retour à l'accueil",
+      "retryButton": "Réessayer",
+      "detailsTitle": "Détails de l'erreur (développement)",
+      "supportTitle": "Besoin d'aide ?",
+      "supportEmail": "Contactez le support"
+    }
   }
 }
