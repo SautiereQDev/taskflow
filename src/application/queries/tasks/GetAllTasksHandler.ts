@@ -25,7 +25,7 @@ export class GetAllTasksHandler implements IQueryHandler<GetAllTasksQuery, IPagi
       search: query.search,
     };
 
-    const result = await this.taskRepository.findAll(query.page, query.limit, filters);
+    const result = await this.taskRepository.findAll(filters, query.page, query.limit);
 
     // Map to ITaskListItemDto
     const taskDtos: ITaskListItemDto[] = result.items.map((task) => ({

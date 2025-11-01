@@ -76,6 +76,7 @@ export class TaskController {
       tasks: result.tasks,
       pagination: result.pagination,
       filters: { status, priority, assigneeId, creatorId, search },
+      users: [], // TODO: Fetch users for filter dropdown
       user: req.user,
     });
   }
