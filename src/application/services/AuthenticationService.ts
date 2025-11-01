@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import type { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import type { IPasswordHasher } from '../interfaces/IPasswordHasher.js';
 import type { User } from '../../domain/entities/User.js';
+import { Password } from '../../domain/value-objects/Password.js';
 import { AppError } from '../../utils/AppError.js';
 
 /**
@@ -136,7 +137,8 @@ export class AuthenticationService {
 
     // Hash new password and update
     const hashedNewPassword = await this.passwordHasher.hash(newPassword);
-    user.updatePassword(hashedNewPassword);
+    const passwordObject = Password.fromHash(hashedNewPassword);
+    user.updatePassword(passwordObject);
 
     await this.userRepository.update(user);
   }

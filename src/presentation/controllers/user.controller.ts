@@ -44,7 +44,7 @@ export class UserController {
     const user = await this.queryBus.execute(GetUserByIdQuery, query);
 
     // Render profile
-    renderOrPartial(req, res, 'pages/user/profile', 'partials/user/profile-view', {
+    renderOrPartial(req, res, 'pages/users/profile', 'partials/user/profile-view', {
       user,
     });
   }
@@ -131,11 +131,11 @@ export class UserController {
 
     // Update session settings
     if (theme && ['light', 'dark'].includes(theme)) {
-      req.session.theme = theme;
+      req.session.theme = theme as 'light' | 'dark';
     }
 
     if (locale && ['fr', 'en'].includes(locale)) {
-      req.session.locale = locale;
+      req.session.locale = locale as 'fr' | 'en';
     }
 
     // Set flash message

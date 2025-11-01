@@ -9,7 +9,7 @@
 
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
-import middleware from 'i18next-http-middleware';
+import * as i18nextHttpMiddleware from 'i18next-http-middleware';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
  */
 await i18next
   .use(Backend)
-  .use(middleware.LanguageDetector)
+  .use(i18nextHttpMiddleware.LanguageDetector)
   .init({
     // Supported languages
     supportedLngs: ['fr', 'en'],
@@ -63,12 +63,12 @@ await i18next
  * i18n middleware for Express
  * Attaches i18next to request object
  */
-export const i18nMiddleware = middleware.handle(i18next);
+export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next);
 
 /**
  * Language detector middleware
  * Detects language from query, session, or headers
  */
-export const languageDetector = middleware.LanguageDetector;
+export const languageDetector = i18nextHttpMiddleware.LanguageDetector;
 
 export default i18next;

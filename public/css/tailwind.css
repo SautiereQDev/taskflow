@@ -48,26 +48,26 @@
   }
 
   /* Dark theme variants */
-  [data-theme="taskflowDark"] .glass-light {
+  [data-theme='taskflowDark'] .glass-light {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(255, 255, 255, 0.05);
   }
 
-  [data-theme="taskflowDark"] .glass {
+  [data-theme='taskflowDark'] .glass {
     background: rgba(0, 0, 0, 0.2);
     border-color: rgba(255, 255, 255, 0.1);
   }
 
-  [data-theme="taskflowDark"] .glass-heavy {
+  [data-theme='taskflowDark'] .glass-heavy {
     background: rgba(0, 0, 0, 0.3);
     border-color: rgba(255, 255, 255, 0.2);
   }
 
-  [data-theme="taskflowDark"] .glass-hover {
+  [data-theme='taskflowDark'] .glass-hover {
     background: rgba(0, 0, 0, 0.2);
   }
 
-  [data-theme="taskflowDark"] .glass-hover:hover {
+  [data-theme='taskflowDark'] .glass-hover:hover {
     background: rgba(0, 0, 0, 0.25);
   }
 
@@ -82,7 +82,7 @@
 
   .input-glass {
     @apply w-full px-4 py-3 rounded-lg border border-base-300;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
   }
 
   .badge-glass {
@@ -101,6 +101,6 @@
 
 @layer utilities {
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-50 focus-visible:ring-offset-2;
   }
 }

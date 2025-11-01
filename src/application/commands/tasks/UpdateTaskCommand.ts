@@ -32,6 +32,12 @@ export class UpdateTaskCommand implements ICommand {
 
   constructor(input: UpdateTaskCommandInput) {
     const validated = UpdateTaskCommandSchema.parse(input);
-    Object.assign(this, validated);
+    this.taskId = validated.taskId;
+    this.title = validated.title;
+    this.description = validated.description;
+    this.status = validated.status;
+    this.priority = validated.priority;
+    this.dueDate = validated.dueDate;
+    this.assigneeId = validated.assigneeId;
   }
 }

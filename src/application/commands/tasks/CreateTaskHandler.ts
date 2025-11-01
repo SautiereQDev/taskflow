@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { injectable, inject } from 'tsyringe';
 import type { ICommandHandler } from '../ICommandHandler.js';
 import type { CreateTaskCommand } from './CreateTaskCommand.js';
@@ -33,6 +34,7 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand, Tas
 
     // Create domain entity
     const task = TaskEntity.create({
+      id: randomUUID(),
       title: command.title,
       description: command.description,
       status: command.status,

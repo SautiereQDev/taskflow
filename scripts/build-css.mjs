@@ -16,7 +16,7 @@ const OUTPUT = path.join(__dirname, '../public/css/output.css');
 
 async function build() {
   console.log('🎨 Building Tailwind CSS 4 + DaisyUI...');
-  
+
   if (!existsSync(INPUT)) {
     throw new Error(`Input not found: ${INPUT}`);
   }

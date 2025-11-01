@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import type { ITaskRepository } from '../../domain/repositories/ITaskRepository.js';
 import type { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import type { Task } from '../../domain/entities/Task.js';
+import { TaskStatus } from '../../domain/value-objects/TaskStatus.js';
 import { AppError } from '../../utils/AppError.js';
 
 /**
@@ -102,12 +103,16 @@ export class TaskAssignmentService {
    * @returns Promise resolving to array of tasks
    */
   async getTasksForUser(userId: string, includeCompleted = false): Promise<Task[]> {
-    const filters = {
-      assigneeId: userId,
-      ...(includeCompleted ? {} : { status: 'TODO,IN_PROGRESS' }),
-    };
+    // Fetch all tasks for the user
+    const result = await this.taskRepository.findAll({ assigneeId: userId }, 1, 100);
 
-    const result = await this.taskRepository.findAll(1, 100, filters);
+    // Filter out completed tasks if needed
+    if (!includeCompleted) {
+      return result.items.filter(
+        (task) => task.status !== TaskStatus.DONE && task.status !== TaskStatus.CANCELLED
+      );
+    }
+
     return result.items;
   }
 }

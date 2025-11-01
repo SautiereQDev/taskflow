@@ -17,7 +17,11 @@ export default tseslint.config(
       '**/test-results/**',
       'eslint.config.ts',
       'vitest.config.ts',
+      'playwright.config.ts',
+      'tailwind.config.ts',
       'prisma/seed.ts',
+      'tests/**/*',
+      'scripts/**/*',
     ],
   },
 

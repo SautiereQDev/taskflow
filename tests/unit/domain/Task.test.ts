@@ -70,8 +70,8 @@ describe('Task Entity', () => {
     });
 
     it('should create task with description', () => {
-      const task = createTestTask({ 
-        description: 'This is a detailed task description' 
+      const task = createTestTask({
+        description: 'This is a detailed task description',
       });
 
       expect(task.description).toBe('This is a detailed task description');

@@ -13,15 +13,9 @@
 
       <!-- Badges -->
       <div class="flex flex-wrap gap-2 mb-3">
-        <%- include('../ui/badge', {
-          text: task.status.label,
-          variant: task.status.color
-        }) %>
-        <%- include('../ui/badge', {
-          text: task.priority.label,
-          variant: task.priority.color
-        }) %>
-        <% if (task.dueDate.formatted) { %>
+        <span class="badge badge-<%= task.status.color %>"><%= task.status.label %></span>
+        <span class="badge badge-<%= task.priority.color %>"><%= task.priority.label %></span>
+        <% if (task.dueDate && task.dueDate.formatted) { %>
           <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %> gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -34,10 +28,11 @@
       <!-- Assignee -->
       <% if (task.assignee) { %>
         <div class="flex items-center gap-2 text-sm text-base-content/70">
-          <%- include('../ui/avatar', {
-            name: task.assignee.name,
-            size: 'sm'
-          }) %>
+          <div class="avatar placeholder">
+            <div class="bg-neutral text-neutral-content rounded-full w-6 h-6">
+              <span class="text-xs"><%= task.assignee.name.charAt(0).toUpperCase() %></span>
+            </div>
+          </div>
           <span><%= task.assignee.name %></span>
         </div>
       <% } %>

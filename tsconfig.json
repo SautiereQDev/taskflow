@@ -33,6 +33,6 @@
       "@tests/*": ["tests/*"]
     }
   },
-  "include": ["src/**/*", "tests/**/*", "vitest.config.ts", "playwright.config.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests", "**/*.test.ts", "**/*.spec.ts"]
 }

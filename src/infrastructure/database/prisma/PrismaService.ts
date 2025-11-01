@@ -110,7 +110,7 @@ export class PrismaService {
    */
   async transaction<T>(
     fn: (
-      tx: Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$use'>
+      tx: Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$extends'>
     ) => Promise<T>
   ): Promise<T> {
     return this.client.$transaction(fn);

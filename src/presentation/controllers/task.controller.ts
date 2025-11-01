@@ -9,8 +9,10 @@
 
 import type { Response } from 'express';
 import { injectable, inject } from 'tsyringe';
+import type { Task } from '@domain/entities/Task.js';
 import { CommandBus } from '@application/commands/CommandBus.js';
 import { QueryBus } from '@application/queries/QueryBus.js';
+import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
 import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
 import { GetTaskByIdQuery } from '@application/queries/tasks/GetTaskByIdQuery.js';
 import {
@@ -61,20 +63,25 @@ export class TaskController {
 
     // Execute query
     const query = new GetAllTasksQuery(
-      parseInt(page, 10),
-      parseInt(limit, 10),
+      Number.parseInt(page, 10),
+      Number.parseInt(limit, 10),
       status,
       priority,
       assigneeId,
       creatorId,
       search
     );
-    const result = await this.queryBus.execute(GetAllTasksQuery, query);
+    const result = await this.queryBus.execute<IPaginatedTasksDto>(GetAllTasksQuery, query);
 
     // Render full page or partial for filters
     renderOrPartial(req, res, 'pages/tasks/list', 'partials/tasks/task-list', {
-      tasks: result.tasks,
-      pagination: result.pagination,
+      tasks: result.items,
+      pagination: {
+        page: result.page,
+        limit: result.limit,
+        total: result.total,
+        totalPages: result.totalPages,
+      },
       filters: { status, priority, assigneeId, creatorId, search },
       users: [], // TODO: Fetch users for filter dropdown
       user: req.user,
@@ -108,8 +115,9 @@ export class TaskController {
    * @param res - Express response
    */
   createPage(req: IAuthenticatedRequest, res: Response): void {
-    renderOrPartial(req, res, 'pages/tasks/create', 'partials/tasks/task-form', {
+    renderOrPartial(req, res, 'pages/tasks/form', 'partials/tasks/task-form', {
       user: req.user,
+      task: null, // For create page, task is null
     });
   }
 
@@ -130,7 +138,7 @@ export class TaskController {
 
     // Execute command
     const command = new CreateTaskCommand(commandData);
-    const task = await this.commandBus.execute(CreateTaskCommand, command);
+    const task = await this.commandBus.execute<CreateTaskCommand, Task>(CreateTaskCommand, command);
 
     // Set flash message
     req.flash('success', 'Task created successfully!');

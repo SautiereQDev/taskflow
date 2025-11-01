@@ -9,7 +9,7 @@
     </a>
   </div>
 
-  <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+  <div class="glass p-6 rounded-lg">
     <h1 class="text-3xl font-bold mb-8">
       <%= task ? 'Modifier la tâche' : 'Nouvelle tâche' %>
     </h1>
@@ -22,15 +22,15 @@
           class="space-y-6">
 
       <!-- Title -->
-      <%- include('../../partials/ui/forms/field', {
-        label: 'Titre',
-        name: 'title',
-        type: 'text',
-        required: true,
-        value: task ? task.title : '',
-        placeholder: 'Ex: Implémenter le système d\'authentification',
-        error: typeof errors !== 'undefined' ? errors.title : null
-      }) %>
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text font-semibold">Titre <span class="text-error">*</span></span>
+        </label>
+        <input type="text" name="title" id="title" value="<%= task ? task.title : '' %>" placeholder="Ex: Implémenter le système d'authentification" class="input-glass input w-full" required />
+        <% if (typeof errors !== 'undefined' && errors.title) { %>
+          <label class="label"><span class="label-text-alt text-error"><%= errors.title %></span></label>
+        <% } %>
+      </div>
 
       <!-- Description -->
       <div class="form-control">
@@ -115,15 +115,14 @@
           </select>
         </div>
 
-        <!-- Due Date -->
-        <%- include('../../partials/ui/forms/field', {
-          label: 'Date d\'échéance',
-          name: 'dueDate',
-          type: 'datetime-local',
-          required: false,
-          value: task && task.dueDate ? task.dueDate : '',
-          error: typeof errors !== 'undefined' ? errors.dueDate : null
-        }) %>
+        <!--Due Date -->
+        <div class="form-control w-full">
+          <label class="label"><span class="label-text font-semibold">Date d'échéance</span></label>
+          <input type="datetime-local" name="dueDate" id="dueDate" value="<%= task && task.dueDate ? task.dueDate : '' %>" class="input-glass input w-full" />
+          <% if (typeof errors !== 'undefined' && errors.dueDate) { %>
+            <label class="label"><span class="label-text-alt text-error"><%= errors.dueDate %></span></label>
+          <% } %>
+        </div>
       </div>
 
       <!-- Actions -->

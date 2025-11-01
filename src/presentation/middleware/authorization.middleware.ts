@@ -10,7 +10,7 @@
 import type { Response, NextFunction } from 'express';
 import type { IAuthenticatedRequest } from '@presentation/controllers/auth.controller.js';
 import { AppError } from '@utils/AppError.js';
-import { UserRole } from '@domain/value-objects/UserRole.js';
+import { UserRole } from '@domain/entities/User.js';
 
 /**
  * Middleware to require admin role
@@ -33,7 +33,7 @@ export function requireAdmin(req: IAuthenticatedRequest, _res: Response, next: N
     throw new AppError('User not authenticated', 401);
   }
 
-  if (req.user.role !== UserRole.ADMIN) {
+  if ((req.user.role as UserRole) !== UserRole.ADMIN) {
     throw new AppError('Admin access required', 403, {
       userId: req.user.id,
       requiredRole: UserRole.ADMIN,
@@ -77,7 +77,7 @@ export function requireOwnership(paramName = 'userId') {
     }
 
     // Admin can access any resource
-    if (req.user.role === UserRole.ADMIN) {
+    if ((req.user.role as UserRole) === UserRole.ADMIN) {
       next();
       return;
     }
@@ -118,7 +118,7 @@ export function requireAdminOrOwner(paramName = 'userId') {
     }
 
     // Admin has full access
-    if (req.user.role === UserRole.ADMIN) {
+    if ((req.user.role as UserRole) === UserRole.ADMIN) {
       next();
       return;
     }

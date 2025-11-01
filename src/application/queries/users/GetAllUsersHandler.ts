@@ -27,20 +27,25 @@ export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery, IPagi
   ) {}
 
   async handle(query: GetAllUsersQuery): Promise<IPaginatedUsersDto> {
-    const users = await this.userRepository.findAll(query.page, query.limit);
+    // Fetch all users (repository doesn't support pagination params)
+    const allUsers = await this.userRepository.findAll();
+
+    // Apply manual pagination
+    const startIndex = (query.page - 1) * query.limit;
+    const endIndex = startIndex + query.limit;
+    const paginatedUsers = allUsers.slice(startIndex, endIndex);
 
     // Map to IUserSummaryDto (excludes password hash and sensitive data)
-    const userDtos: IUserSummaryDto[] = users.map((user) => ({
+    const userDtos: IUserSummaryDto[] = paginatedUsers.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email.value,
       role: user.role,
       isActive: user.isActive,
-      avatar: user.avatar ?? undefined,
     }));
 
     // Calculate pagination metadata
-    const total = userDtos.length;
+    const total = allUsers.length;
     const totalPages = Math.ceil(total / query.limit);
 
     return {

@@ -26,6 +26,6 @@ export { CreateTaskHandler } from './tasks/CreateTaskHandler.js';
 export { UpdateTaskCommand, UpdateTaskCommandSchema } from './tasks/UpdateTaskCommand.js';
 export { UpdateTaskHandler } from './tasks/UpdateTaskHandler.js';
 export { CompleteTaskCommand, CompleteTaskCommandSchema } from './tasks/CompleteTaskCommand.js';
-export { CompleteTaskHandler } from './tasks/CompleteTaskHandler.ts';
+export { CompleteTaskHandler } from './tasks/CompleteTaskHandler.js';
 export { DeleteTaskCommand, DeleteTaskCommandSchema } from './tasks/DeleteTaskCommand.js';
 export { DeleteTaskHandler } from './tasks/DeleteTaskHandler.js';

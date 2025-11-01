@@ -1,4 +1,4 @@
-  import './config/di-container.js'; // MUST be first for DI
+import './config/di-container.js'; // MUST be first for DI
 import { createApp } from './config/express.config.js';
 import { logger } from './utils/logger.util.js';
 import { PrismaClient } from '@prisma/client';

@@ -26,9 +26,9 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
-    "prisma:seed": "node --env-file=.env --experimental-strip-types --loader ./loader.mjs prisma/seed.ts",
+    "prisma:seed": "node --experimental-strip-types prisma/seed.ts",
     "prisma:studio": "prisma studio",
-    "prepare": "husky"
+    "prepare": "[ -n \"$CI\" ] || husky || true"
   },
   "keywords": [
     "express",
@@ -137,7 +137,7 @@
     "npm": ">=10.0.0"
   },
   "prisma": {
-    "seed": "node --env-file=.env --experimental-strip-types prisma/seed.ts"
+    "seed": "node --experimental-strip-types prisma/seed.ts"
   },
   "lint-staged": {
     "*.{ts,js}": [

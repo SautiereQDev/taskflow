@@ -2,28 +2,25 @@
   <!-- Filters Sidebar -->
   <aside class="w-full lg:w-80 shrink-0" x-data="filtersPanel">
     <!-- Collapse Button (mobile) -->
-    <button @click="toggle" 
+    <button @click="toggle"
             class="lg:hidden btn btn-ghost btn-sm w-full mb-4 justify-between">
       <span>Filtres</span>
-      <svg xmlns="http://www.w3.org/2000/svg" 
-           class="h-4 w-4 transition-transform" 
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="h-4 w-4 transition-transform"
            :class="{ 'rotate-180': open }"
-           fill="none" 
-           viewBox="0 0 24 24" 
+           fill="none"
+           viewBox="0 0 24 24"
            stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </button>
 
     <!-- Filters Panel -->
-    <div id="filters-panel" 
-         x-show="open" 
+    <div id="filters-panel"
+         x-show="open"
          x-transition
          class="lg:block">
-      <%- include('../../partials/htmx/task-filters', { 
-        filters: filters || {},
-        users: users || []
-      }) %>
+      <%- include('../../partials/htmx/task-filters', { filters: filters || {}, users: users || [] }) %>
     </div>
   </aside>
 
@@ -49,12 +46,12 @@
       <!-- Search Bar (Alpine.js) -->
       <div x-data="taskSearch" class="form-control">
         <div class="input-group">
-          <input type="text" 
+          <input type="text"
                  x-model="query"
                  @input="search"
-                 placeholder="Rechercher une tâche..." 
+                 placeholder="Rechercher une tâche..."
                  class="input input-bordered flex-1" />
-          <button @click="clear" 
+          <button @click="clear"
                   x-show="query.length > 0"
                   class="btn btn-ghost btn-square">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,10 +65,7 @@
 
     <!-- Task List Container (HTMX Target) -->
     <div id="task-list-container">
-      <%- include('../../partials/htmx/task-list', { 
-        tasks: tasks,
-        pagination: pagination
-      }) %>
+      <%- include('../../partials/htmx/task-list', { tasks: tasks, pagination: pagination }) %>
     </div>
   </main>
 </div>

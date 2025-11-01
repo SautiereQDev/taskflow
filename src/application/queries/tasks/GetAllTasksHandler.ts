@@ -3,6 +3,8 @@ import type { IQueryHandler } from '../IQueryHandler.js';
 import type { GetAllTasksQuery } from './GetAllTasksQuery.js';
 import type { IPaginatedTasksDto, ITaskListItemDto } from '../../dtos/TaskDto.js';
 import type { ITaskRepository } from '../../../domain/repositories/ITaskRepository.js';
+import { TaskStatus } from '../../../domain/value-objects/TaskStatus.js';
+import { TaskPriority } from '../../../domain/value-objects/TaskPriority.js';
 
 /**
  * Handler for GetAllTasksQuery
@@ -16,10 +18,10 @@ export class GetAllTasksHandler implements IQueryHandler<GetAllTasksQuery, IPagi
   ) {}
 
   async handle(query: GetAllTasksQuery): Promise<IPaginatedTasksDto> {
-    // Build filter object
+    // Build filter object with proper type conversions
     const filters = {
-      status: query.status,
-      priority: query.priority,
+      status: query.status ? (query.status as TaskStatus) : undefined,
+      priority: query.priority ? (query.priority as TaskPriority) : undefined,
       assigneeId: query.assigneeId,
       creatorId: query.creatorId,
       search: query.search,

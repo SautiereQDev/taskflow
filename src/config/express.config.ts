@@ -74,20 +74,20 @@ export function createApp(): Express {
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
   app.use(compression());
 
-  // Request Logging
+  // Request Logging (pino-pretty only available in local development, not in Docker)
+  const isLocalDev = process.env.NODE_ENV === 'development' && !process.env.DOCKER_ENV;
   const pinoLogger = pino({
     level: process.env.LOG_LEVEL ?? 'info',
-    transport:
-      process.env.NODE_ENV === 'production'
-        ? undefined
-        : {
-            target: 'pino-pretty',
-            options: {
-              colorize: true,
-              translateTime: 'HH:MM:ss',
-              ignore: 'pid,hostname',
-            },
+    transport: isLocalDev
+      ? {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'HH:MM:ss',
+            ignore: 'pid,hostname',
           },
+        }
+      : undefined,
   });
 
   app.use(
@@ -118,12 +118,14 @@ export function createApp(): Express {
       secret: process.env.SESSION_SECRET ?? 'taskflow-secret-change-in-prod',
       resave: false,
       saveUninitialized: false,
-      name: 'taskflow.sid',
+      name: 'sessionId',
       cookie: {
-        secure: process.env.NODE_ENV === 'production',
+        secure: false, // Set to true only with HTTPS in production
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         sameSite: 'lax',
+        domain: undefined, // Let browser determine domain (works for localhost)
+        path: '/',
       },
     })
   );

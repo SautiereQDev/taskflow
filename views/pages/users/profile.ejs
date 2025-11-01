@@ -12,14 +12,15 @@
   <div class="grid lg:grid-cols-3 gap-6">
     <!-- Profile Card -->
     <div class="lg:col-span-1">
-      <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+      <div class="glass p-6 rounded-lg">
         <div class="text-center">
           <!-- Avatar -->
           <div class="flex justify-center mb-4">
-            <%- include('../../partials/ui/avatar', {
-              name: user.name,
-              size: 'xl'
-            }) %>
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content rounded-full w-24 h-24">
+                <span class="text-3xl"><%= user.name.charAt(0).toUpperCase() %></span>
+              </div>
+            </div>
           </div>
 
           <!-- Name -->
@@ -27,10 +28,7 @@
 
           <!-- Role Badge -->
           <div class="flex justify-center mb-4">
-            <%- include('../../partials/ui/badge', {
-              text: user.role.label,
-              variant: user.role.color
-            }) %>
+            <span class="badge <%= user.role.color %>"><%= user.role.label %></span>
           </div>
 
           <!-- Status -->
@@ -63,7 +61,7 @@
     <!-- Details -->
     <div class="lg:col-span-2 space-y-6">
       <!-- Info -->
-      <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+      <div class="glass p-6 rounded-lg">
         <h3 class="text-xl font-bold mb-4">Informations</h3>
 
         <div class="space-y-4">
@@ -86,29 +84,29 @@
       </div>
 
       <!-- Task Stats -->
-      <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+      <div class="glass p-6 rounded-lg">
         <h3 class="text-xl font-bold mb-4">Statistiques des tâches</h3>
 
         <div class="grid md:grid-cols-2 gap-4">
           <div class="stat bg-base-200 rounded-lg">
             <div class="stat-title">Tâches créées</div>
             <div class="stat-value text-3xl text-primary">
-              <%= user.taskCount.created %>
+              <%= user.taskCount ? user.taskCount.created : 0 %>
             </div>
           </div>
 
           <div class="stat bg-base-200 rounded-lg">
             <div class="stat-title">Tâches assignées</div>
             <div class="stat-value text-3xl text-secondary">
-              <%= user.taskCount.assigned %>
+              <%= user.taskCount ? user.taskCount.assigned : 0 %>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Recent Tasks -->
-      <% if (recentTasks && recentTasks.length > 0) { %>
-        <%- include('../../partials/ui/surface', { variant: 'normal' }) %>
+      <% if (typeof recentTasks !== 'undefined' && recentTasks && recentTasks.length > 0) { %>
+        <div class="glass p-6 rounded-lg">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-bold">Tâches récentes</h3>
             <a href="/tasks?assigneeId=<%= user.id %>" class="link link-primary text-sm">
@@ -123,10 +121,7 @@
                 <div class="flex-1">
                   <div class="font-medium"><%= task.title %></div>
                   <div class="flex gap-2 mt-1">
-                    <%- include('../../partials/ui/badge', {
-                      text: task.status.label,
-                      variant: task.status.color
-                    }) %>
+                    <%- include('../../partials/ui/badge', { text: task.status.label, variant: task.status.color }) %>
                   </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">

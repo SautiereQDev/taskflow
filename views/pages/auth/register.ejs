@@ -1,50 +1,109 @@
 <div class="min-h-[calc(100vh-20rem)] flex items-center justify-center py-8">
   <div class="w-full max-w-md">
-    <%- include('../../partials/ui/surface', { variant: 'heavy', padding: true }) %>
+    <div class="glass-heavy p-6 rounded-xl">
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold mb-2">Créer un compte</h1>
         <p class="text-base-content/70">Rejoignez TaskFlow aujourd'hui</p>
       </div>
 
       <form method="POST" action="/auth/register" class="space-y-4">
-        <%- include('../../partials/ui/forms/field', {
-          label: 'Nom complet',
-          name: 'name',
-          type: 'text',
-          required: true,
-          placeholder: 'Jean Dupont',
-          error: typeof errors !== 'undefined' ? errors.name : '',
-          value: typeof formData !== 'undefined' ? formData.name : ''
-        }) %>
+        <!-- Name Field -->
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-semibold">
+              Nom complet
+              <span class="text-error">*</span>
+            </span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value="<%= typeof formData !== 'undefined' ? formData.name : '' %>"
+            placeholder="Jean Dupont"
+            class="input-glass input w-full <%= typeof errors !== 'undefined' && errors.name ? 'input-error' : '' %>"
+            required
+          />
+          <% if (typeof errors !== 'undefined' && errors.name) { %>
+            <label class="label">
+              <span class="label-text-alt text-error"><%= errors.name %></span>
+            </label>
+          <% } %>
+        </div>
 
-        <%- include('../../partials/ui/forms/field', {
-          label: 'Email',
-          name: 'email',
-          type: 'email',
-          required: true,
-          placeholder: 'nom@example.com',
-          error: typeof errors !== 'undefined' ? errors.email : '',
-          value: typeof formData !== 'undefined' ? formData.email : ''
-        }) %>
+        <!-- Email Field -->
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-semibold">
+              Email
+              <span class="text-error">*</span>
+            </span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
+            placeholder="nom@example.com"
+            class="input-glass input w-full <%= typeof errors !== 'undefined' && errors.email ? 'input-error' : '' %>"
+            required
+          />
+          <% if (typeof errors !== 'undefined' && errors.email) { %>
+            <label class="label">
+              <span class="label-text-alt text-error"><%= errors.email %></span>
+            </label>
+          <% } %>
+        </div>
 
-        <%- include('../../partials/ui/forms/field', {
-          label: 'Mot de passe',
-          name: 'password',
-          type: 'password',
-          required: true,
-          placeholder: '••••••••',
-          helpText: 'Minimum 8 caractères',
-          error: typeof errors !== 'undefined' ? errors.password : ''
-        }) %>
+        <!-- Password Field -->
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-semibold">
+              Mot de passe
+              <span class="text-error">*</span>
+            </span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
+            class="input-glass input w-full <%= typeof errors !== 'undefined' && errors.password ? 'input-error' : '' %>"
+            required
+          />
+          <% if (typeof errors !== 'undefined' && errors.password) { %>
+            <label class="label">
+              <span class="label-text-alt text-error"><%= errors.password %></span>
+            </label>
+          <% } else { %>
+            <label class="label">
+              <span class="label-text-alt opacity-70">Minimum 8 caractères</span>
+            </label>
+          <% } %>
+        </div>
 
-        <%- include('../../partials/ui/forms/field', {
-          label: 'Confirmer le mot de passe',
-          name: 'confirmPassword',
-          type: 'password',
-          required: true,
-          placeholder: '••••••••',
-          error: typeof errors !== 'undefined' ? errors.confirmPassword : ''
-        }) %>
+        <!-- Confirm Password Field -->
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-semibold">
+              Confirmer le mot de passe
+              <span class="text-error">*</span>
+            </span>
+          </label>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="••••••••"
+            class="input-glass input w-full <%= typeof errors !== 'undefined' && errors.confirmPassword ? 'input-error' : '' %>"
+            required
+          />
+          <% if (typeof errors !== 'undefined' && errors.confirmPassword) { %>
+            <label class="label">
+              <span class="label-text-alt text-error"><%= errors.confirmPassword %></span>
+            </label>
+          <% } %>
+        </div>
 
         <div class="form-control">
           <label class="label cursor-pointer justify-start gap-2">

@@ -20,7 +20,6 @@ COPY tsconfig.json ./
 COPY vitest.config.ts ./
 COPY eslint.config.ts ./
 COPY postcss.config.js ./
-COPY loader.mjs ./
 COPY src ./src
 COPY public ./public
 COPY views ./views
@@ -85,3 +84,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 
 # Start application with entrypoint script
 ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["node", "dist/server.js"]

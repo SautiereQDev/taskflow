@@ -60,7 +60,7 @@ export class DashboardMetricsService {
    */
   async getOverallMetrics(): Promise<IDashboardMetrics> {
     // Fetch all tasks (in production, use optimized aggregation queries)
-    const allTasksResult = await this.taskRepository.findAll(1, 10000);
+    const allTasksResult = await this.taskRepository.findAll({}, 1, 10000);
     const allTasks = allTasksResult.items;
 
     // Calculate tasks by status
@@ -113,7 +113,7 @@ export class DashboardMetricsService {
     ).length;
 
     // Get active users count
-    const allUsers = await this.userRepository.findAll(1, 1000);
+    const allUsers = await this.userRepository.findAll();
     const activeUsers = allUsers.filter((user) => user.isActive).length;
 
     return {
@@ -136,9 +136,7 @@ export class DashboardMetricsService {
    */
   async getUserMetrics(userId: string): Promise<IUserProductivityMetrics> {
     // Fetch user's tasks
-    const userTasksResult = await this.taskRepository.findAll(1, 1000, {
-      assigneeId: userId,
-    });
+    const userTasksResult = await this.taskRepository.findAll({ assigneeId: userId }, 1, 1000);
     const userTasks = userTasksResult.items;
 
     const assignedTasks = userTasks.length;
@@ -173,7 +171,7 @@ export class DashboardMetricsService {
    * @returns Promise resolving to array of user metrics
    */
   async getTeamCapacity(): Promise<IUserProductivityMetrics[]> {
-    const allUsers = await this.userRepository.findAll(1, 1000);
+    const allUsers = await this.userRepository.findAll();
     const activeUsers = allUsers.filter((user) => user.isActive);
 
     const capacityMetrics: IUserProductivityMetrics[] = [];

@@ -1,4 +1,4 @@
-import { User, Role } from '@prisma/client';
+import type { User } from '@prisma/client';
 
 /**
  * ViewModel for User entity with safe data for display
@@ -9,7 +9,7 @@ export interface IUserViewModel {
   name: string;
   email: string;
   role: {
-    value: Role;
+    value: User['role'];
     label: string;
     badge: string;
   };
@@ -24,7 +24,7 @@ export interface IUserViewModel {
 /**
  * Role display configuration
  */
-const ROLE_CONFIG: Record<Role, { label: string; badge: string }> = {
+const ROLE_CONFIG: Record<User['role'], { label: string; badge: string }> = {
   ADMIN: { label: 'Administrateur', badge: 'badge-error' },
   MANAGER: { label: 'Manager', badge: 'badge-warning' },
   MEMBER: { label: 'Membre', badge: 'badge-info' },

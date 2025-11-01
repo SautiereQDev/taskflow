@@ -10,9 +10,10 @@
 import rateLimit from 'express-rate-limit';
 
 /**
- * Check if running in test environment
+ * Check if running in test or development environment
  */
 const isTestEnvironment = process.env.NODE_ENV === 'test' || process.env.VITEST === 'true';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 /**
  * Global rate limiter
@@ -61,7 +62,7 @@ export const globalLimiter = rateLimit({
  */
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login attempts per window
+  max: isDevelopment ? 1000 : 5, // Much higher limit in development, 5 in production
   message: 'Too many authentication attempts, please try again later',
   standardHeaders: true,
   legacyHeaders: false,

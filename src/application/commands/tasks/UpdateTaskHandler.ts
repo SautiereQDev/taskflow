@@ -17,15 +17,37 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand, Tas
       throw new Error(`Task with ID ${command.taskId} not found`);
     }
 
-    task.updateDetails({
-      title: command.title,
-      description: command.description,
-      priority: command.priority,
-      dueDate: command.dueDate,
-    });
+    // Update individual properties if provided
+    if (command.title !== undefined) {
+      task.updateTitle(command.title);
+    }
+
+    if (command.description !== undefined) {
+      task.updateDescription(command.description);
+    }
+
+    if (command.priority !== undefined) {
+      task.updatePriority(command.priority);
+    }
+
+    if (command.status !== undefined) {
+      task.changeStatus(command.status);
+    }
+
+    if (command.dueDate !== undefined) {
+      if (command.dueDate === null) {
+        task.clearDueDate();
+      } else {
+        task.setDueDate(command.dueDate);
+      }
+    }
 
     if (command.assigneeId !== undefined) {
-      task.assignTo(command.assigneeId);
+      if (command.assigneeId === null) {
+        task.unassign();
+      } else {
+        task.assignTo(command.assigneeId);
+      }
     }
 
     return this.taskRepo.update(task);

@@ -15,8 +15,10 @@ import {
   CreateUserCommand,
   type CreateUserCommandInput,
 } from '../../application/commands/users/CreateUserCommand.js';
+import { UserRole } from '@domain/entities/User.js';
 import { renderOrPartial, htmxRedirect } from '../utils/response.helpers.js';
 import { AppError } from '../../utils/AppError.js';
+import { logger } from '../../utils/logger.util.js';
 
 /**
  * Interface for authenticated Express request
@@ -79,6 +81,31 @@ export class AuthController {
     // Store user ID in session
     req.session.userId = result.user.id;
 
+    // Log session before save
+    logger.info('Session before save', {
+      userId: req.session.userId,
+      sessionID: req.sessionID,
+      cookie: req.session.cookie,
+    });
+
+    // Explicitly save session before redirect
+    await new Promise<void>((resolve, reject) => {
+      req.session.save((err) => {
+        if (err) {
+          logger.error('Session save error', { error: err });
+          reject(new AppError('Failed to save session', 500, { error: err }));
+        } else {
+          logger.info('Session saved successfully');
+          resolve();
+        }
+      });
+    });
+
+    logger.info('Session after save', {
+      userId: req.session.userId,
+      sessionID: req.sessionID,
+    });
+
     // Set flash message (if available)
     if (typeof req.flash === 'function') {
       req.flash('success', 'Welcome back!');
@@ -113,8 +140,14 @@ export class AuthController {
   async register(req: IAuthenticatedRequest, res: Response): Promise<void> {
     const { name, email, password } = req.body as CreateUserCommandInput;
 
-    // Create user via command
-    const command = new CreateUserCommand({ name, email, password });
+    // Create user via command with default role and locale from request
+    const command = new CreateUserCommand({
+      name,
+      email,
+      password,
+      role: UserRole.MEMBER, // Default role for new registrations
+      locale: (req.getLocale?.() as 'fr' | 'en') || 'fr', // From i18n middleware
+    });
     const user = await this.commandBus.execute<
       CreateUserCommand,
       { id: string; name: string; email: string }

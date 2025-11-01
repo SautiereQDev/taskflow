@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import type { PrismaClient } from '@prisma/client';
 import { PrismaService } from './PrismaService.js';
 
 /**
@@ -47,7 +48,9 @@ export class UnitOfWork {
    * ```
    */
   async execute<T>(
-    work: (prisma: ReturnType<typeof this.prismaService.client>) => Promise<T>
+    work: (
+      prisma: Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$extends'>
+    ) => Promise<T>
   ): Promise<T> {
     return this.prismaService.transaction(work);
   }
@@ -76,14 +79,16 @@ export class UnitOfWork {
    * ```
    */
   async executeWithOptions<T>(
-    work: (prisma: ReturnType<typeof this.prismaService.client>) => Promise<T>,
+    work: (
+      prisma: Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$extends'>
+    ) => Promise<T>,
     options: {
       maxWait?: number;
       timeout?: number;
       isolationLevel?: 'ReadUncommitted' | 'ReadCommitted' | 'RepeatableRead' | 'Serializable';
     }
   ): Promise<T> {
-    return this.prismaService.client.$transaction(work as never, options);
+    return this.prismaService.client.$transaction(work, options);
   }
 
   /**
@@ -105,8 +110,8 @@ export class UnitOfWork {
    * ```
    */
   async batch<T extends readonly unknown[]>(
-    operations: [...T]
+    operations: readonly [...T]
   ): Promise<{ -readonly [K in keyof T]: Awaited<T[K]> }> {
-    return Promise.all(operations);
+    return Promise.all(operations) as Promise<{ -readonly [K in keyof T]: Awaited<T[K]> }>;
   }
 }
