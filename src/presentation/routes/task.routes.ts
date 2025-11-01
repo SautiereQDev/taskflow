@@ -79,4 +79,16 @@ router.patch(
  */
 router.delete('/:id', apiLimiter, taskController.delete.bind(taskController));
 
+/**
+ * POST /tasks/:id/complete - Toggle task completion status
+ * HTMX endpoint for quick status toggle (DONE <-> IN_PROGRESS)
+ */
+router.post('/:id/complete', taskController.toggleComplete.bind(taskController));
+
+/**
+ * PATCH /tasks/:id/status - Update task status
+ * HTMX endpoint for status dropdown changes
+ */
+router.patch('/:id/status', taskController.updateStatus.bind(taskController));
+
 export default router;

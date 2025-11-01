@@ -10,6 +10,7 @@
 import type { Response } from 'express';
 import { injectable, inject } from 'tsyringe';
 import type { Task } from '@domain/entities/Task.js';
+import { TaskStatus } from '@domain/value-objects/TaskStatus.js';
 import { CommandBus } from '@application/commands/CommandBus.js';
 import { QueryBus } from '@application/queries/QueryBus.js';
 import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
@@ -223,6 +224,93 @@ export class TaskController {
       res.status(200).end();
     } else {
       res.redirect('/tasks');
+    }
+  }
+
+  /**
+   * POST /tasks/:id/complete - Toggle task completion status
+   *
+   * @param req - Express request with task ID in params
+   * @param res - Express response
+   */
+  async toggleComplete(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    // Get current task
+    const query = new GetTaskByIdQuery(id);
+    const task = await this.queryBus.execute(GetTaskByIdQuery, query);
+
+    // Toggle status: DONE <-> IN_PROGRESS
+    const newStatus: TaskStatus =
+      task.status === TaskStatus.DONE ? TaskStatus.IN_PROGRESS : TaskStatus.DONE;
+
+    // Execute update command
+    const command = new UpdateTaskCommand({
+      taskId: id,
+      status: newStatus,
+    });
+    const updatedTask = await this.commandBus.execute<UpdateTaskCommand, Task>(
+      UpdateTaskCommand,
+      command
+    );
+
+    // For HTMX requests, return updated task partial
+    if (req.isHtmx) {
+      htmxTrigger(res, 'taskStatusUpdated');
+      res.render('partials/htmx/task-item', {
+        task: updatedTask,
+        user: req.user,
+      });
+    } else {
+      req.flash('success', 'Task status updated successfully!');
+      res.redirect(`/tasks/${id}`);
+    }
+  }
+
+  /**
+   * PATCH /tasks/:id/status - Update task status (for quick status changes)
+   *
+   * @param req - Express request with task ID and new status
+   * @param res - Express response
+   */
+  async updateStatus(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const { status } = req.body as { status: string };
+
+    // Validate and convert status
+    const statusMap: Record<string, TaskStatus> = {
+      TODO: TaskStatus.TODO,
+      IN_PROGRESS: TaskStatus.IN_PROGRESS,
+      DONE: TaskStatus.DONE,
+      CANCELLED: TaskStatus.CANCELLED,
+    };
+
+    const taskStatus = statusMap[status];
+    if (!taskStatus) {
+      res.status(400).json({ error: 'Invalid status' });
+      return;
+    }
+
+    // Execute update command
+    const command = new UpdateTaskCommand({
+      taskId: id,
+      status: taskStatus,
+    });
+    const updatedTask = await this.commandBus.execute<UpdateTaskCommand, Task>(
+      UpdateTaskCommand,
+      command
+    );
+
+    // For HTMX requests, return updated task partial
+    if (req.isHtmx) {
+      htmxTrigger(res, 'taskStatusUpdated');
+      res.render('partials/htmx/task-item', {
+        task: updatedTask,
+        user: req.user,
+      });
+    } else {
+      req.flash('success', 'Task status updated successfully!');
+      res.redirect(`/tasks/${id}`);
     }
   }
 }
