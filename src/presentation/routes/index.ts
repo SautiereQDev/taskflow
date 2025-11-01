@@ -7,12 +7,24 @@
  */
 
 import { Router } from 'express';
+import type { Request, Response } from 'express';
 import authRoutes from './auth.routes.js';
 import taskRoutes from './task.routes.js';
 import userRoutes from './user.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
 
 const router = Router();
+
+/**
+ * Home page (public)
+ */
+router.get('/', (req: Request, res: Response) => {
+  res.render('pages/home', {
+    title: 'TaskFlow - Modern Task Management',
+    user: (req as { user?: unknown }).user,
+    locale: req.session.locale ?? 'fr',
+  });
+});
 
 /**
  * Mount route modules

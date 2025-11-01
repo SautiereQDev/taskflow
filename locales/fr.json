@@ -48,5 +48,37 @@
     "success": "Succès",
     "warning": "Attention",
     "info": "Information"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Personnalisez votre expérience TaskFlow",
+    "save": "Enregistrer les modifications",
+    "info": "Vos préférences sont synchronisées automatiquement sur tous vos appareils.",
+    "appearance": {
+      "title": "Apparence",
+      "theme": "Thème",
+      "themeHint": "Choisissez le thème de l'interface",
+      "light": "Clair",
+      "dark": "Sombre",
+      "themeSync": "Le thème est synchronisé avec le sélecteur dans l'en-tête"
+    },
+    "language": {
+      "title": "Langue",
+      "preferred": "Langue préférée",
+      "hint": "Sélectionnez votre langue"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "coming": "Les notifications seront disponibles dans une prochaine version.",
+      "email": "Notifications par email",
+      "browser": "Notifications navigateur",
+      "taskAssigned": "Nouvelle tâche assignée"
+    },
+    "privacy": {
+      "title": "Confidentialité et sécurité",
+      "coming": "Options de confidentialité à venir prochainement.",
+      "changePassword": "Changer le mot de passe",
+      "deleteAccount": "Supprimer le compte"
+    }
   }
 }

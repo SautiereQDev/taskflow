@@ -238,7 +238,8 @@ export class TaskController {
 
     // Get current task
     const query = new GetTaskByIdQuery(id);
-    const task = await this.queryBus.execute(GetTaskByIdQuery, query);
+    const taskResult = await this.queryBus.execute(GetTaskByIdQuery, query);
+    const task = taskResult as { status: TaskStatus };
 
     // Toggle status: DONE <-> IN_PROGRESS
     const newStatus: TaskStatus =

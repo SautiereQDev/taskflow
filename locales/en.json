@@ -48,5 +48,37 @@
     "success": "Success",
     "warning": "Warning",
     "info": "Information"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your TaskFlow experience",
+    "save": "Save changes",
+    "info": "Your preferences are automatically synced across all your devices.",
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "themeHint": "Choose your interface theme",
+      "light": "Light",
+      "dark": "Dark",
+      "themeSync": "Theme is synced with the header switcher"
+    },
+    "language": {
+      "title": "Language",
+      "preferred": "Preferred language",
+      "hint": "Select your language"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "coming": "Notifications will be available in a future version.",
+      "email": "Email notifications",
+      "browser": "Browser notifications",
+      "taskAssigned": "New task assigned"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "coming": "Privacy options coming soon.",
+      "changePassword": "Change password",
+      "deleteAccount": "Delete account"
+    }
   }
 }
