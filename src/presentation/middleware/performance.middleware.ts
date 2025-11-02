@@ -108,10 +108,7 @@ export function performanceMonitoring(req: Request, res: Response, next: NextFun
  * );
  * ```
  */
-export async function trackQuery<T>(
-  queryName: string,
-  queryFn: () => Promise<T>
-): Promise<T> {
+export async function trackQuery<T>(queryName: string, queryFn: () => Promise<T>): Promise<T> {
   const startTime = Date.now();
 
   try {
@@ -196,7 +193,7 @@ export async function trackCache<T>(
  * Generates summary statistics for a time window
  * Useful for monitoring dashboards
  */
-export interface PerformanceMetrics {
+export interface IPerformanceMetrics {
   requests: {
     total: number;
     successful: number;
@@ -240,7 +237,7 @@ class MetricsCollector {
     }
   }
 
-  getSummary(): PerformanceMetrics {
+  getSummary(): IPerformanceMetrics {
     const sortedDurations = [...this.durations].sort((a, b) => a - b);
     const sortedTtfbs = [...this.ttfbs].sort((a, b) => a - b);
 

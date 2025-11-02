@@ -71,15 +71,12 @@ export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
 });
 
 /**
- * Attach translation functions to res.locals for templates
+ * Middleware to attach i18n functions to res.locals for EJS templates
  * Must be used after i18nMiddleware
  */
 export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunction): void {
-  // @ts-expect-error - i18next adds t() to request
   res.locals.t = (req as { t: (key: string) => string }).t.bind(req);
-  // @ts-expect-error - i18next adds t() to request
   res.locals.__ = (req as { t: (key: string) => string }).t.bind(req);
-  // @ts-expect-error - i18next adds language/lng to request
   res.locals.locale =
     (req as { language?: string; lng?: string }).language ??
     (req as { language?: string; lng?: string }).lng ??
