@@ -9,6 +9,7 @@ import supertest from 'supertest';
 import { getTestApp, getTestPrisma, cleanupTestApp } from './test-app.factory.js';
 import { createTestUser, cleanupTestUsers, TEST_CREDENTIALS } from './auth.helpers.js';
 import type { User, Task } from '@prisma/client';
+import { PasswordHashingService } from '@application/services/PasswordHashingService.js';
 
 describe('TaskController - Edit Page Integration Tests', () => {
   const app = getTestApp();
@@ -97,12 +98,17 @@ describe('TaskController - Edit Page Integration Tests', () => {
     });
 
     it('should include users list for assignee dropdown', async () => {
-      // Create additional users
+      // Create additional users with properly hashed passwords
+      const passwordHasher = new PasswordHashingService();
+      const hashedPassword = await passwordHasher.hash('password123');
+
       const user2 = await prisma.user.create({
         data: {
           email: 'user2@example.com',
-          password: 'hashed',
+          password: hashedPassword,
           name: 'User Two',
+          role: 'USER',
+          isActive: true,
         },
       });
 
