@@ -1,4 +1,5 @@
 import './config/di-container.js'; // MUST be first for DI
+import { initializeTelemetry } from './config/telemetry.config.js';
 import { createApp } from './config/express.config.js';
 import { logger } from './utils/logger.util.js';
 import { PrismaClient } from '@prisma/client';
@@ -9,6 +10,9 @@ import { validateEnvVars } from './config/security.config.js';
  *
  * Initializes and starts the Express server
  */
+
+// Initialize OpenTelemetry (must be before any application code)
+initializeTelemetry();
 
 // Validate environment variables at startup (security best practice)
 validateEnvVars();

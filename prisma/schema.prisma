@@ -102,9 +102,11 @@ model Task {
   @@index([assigneeId])
   @@index([dueDate])
   @@index([completedAt])
-  @@index([createdAt])
+  @@index([createdAt], map: "tasks_created_at_asc_idx")
   @@index([status, priority]) // Composite index for common queries
   @@index([assigneeId, status]) // Composite index for user task lists
+  @@index([createdAt(sort: Desc)], map: "tasks_created_at_desc_idx") // Optimized for recent tasks queries
+  @@index([title(ops: raw("gin_trgm_ops"))], type: Gin) // Full-text search on title
   @@map("tasks")
 }
 
