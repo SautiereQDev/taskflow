@@ -22,7 +22,7 @@ export function expectRecentDate(date: Date | null, withinSeconds = 5): void {
 /**
  * Assert that object has expected shape
  */
-export function expectObjectShape<T extends object>(obj: T, expectedKeys: Array<keyof T>): void {
+export function expectObjectShape<T extends object>(obj: T, expectedKeys: (keyof T)[]): void {
   const actualKeys = Object.keys(obj);
   expectedKeys.forEach((key) => {
     expect(actualKeys).toContain(key);

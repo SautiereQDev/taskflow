@@ -175,7 +175,7 @@ test.describe('Authentication Diagnostics', () => {
 
     const status = response.status();
     const headers = response.headers();
-    const location = headers['location'] || 'none';
+    const location = headers.location || 'none';
 
     console.log(`Response status: ${status}`);
     console.log(`Location header: ${location}`);

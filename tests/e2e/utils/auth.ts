@@ -1,12 +1,12 @@
 /**
  * E2E Authentication Utilities
- * 
+ *
  * Helper functions for authenticating during E2E tests
  */
 
 import type { Page } from '@playwright/test';
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3000';
 
 /**
  * Login helper for E2E tests
@@ -14,11 +14,11 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
  */
 export async function login(page: Page, email: string, password: string): Promise<void> {
   await page.goto(`${BASE_URL}/auth/login`);
-  
+
   await page.fill('input[name="email"]', email);
   await page.fill('input[name="password"]', password);
   await page.click('button[type="submit"]');
-  
+
   // Wait for redirect to dashboard after successful login
   await page.waitForURL(`${BASE_URL}/dashboard`, { timeout: 5000 });
 }

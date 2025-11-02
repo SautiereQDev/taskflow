@@ -6,6 +6,9 @@ import type { Task } from '../../../domain/entities/Task.js';
 import { Task as TaskEntity } from '../../../domain/entities/Task.js';
 import { PrismaTaskRepository } from '../../../infrastructure/database/prisma/PrismaTaskRepository.js';
 import { PrismaUserRepository } from '../../../infrastructure/database/prisma/PrismaUserRepository.js';
+import { EventBus } from '../../events/EventBus.js';
+import { TaskCreatedEvent } from '../../../domain/events/TaskEvents.js';
+import { logger } from '../../../utils/logger.util.js';
 
 /**
  * Create Task Command Handler
@@ -14,7 +17,8 @@ import { PrismaUserRepository } from '../../../infrastructure/database/prisma/Pr
 export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand, Task> {
   constructor(
     @inject(PrismaTaskRepository) private readonly taskRepo: PrismaTaskRepository,
-    @inject(PrismaUserRepository) private readonly userRepo: PrismaUserRepository
+    @inject(PrismaUserRepository) private readonly userRepo: PrismaUserRepository,
+    @inject(EventBus) private readonly eventBus: EventBus
   ) {}
 
   async execute(command: CreateTaskCommand): Promise<Task> {
@@ -45,6 +49,25 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand, Tas
     });
 
     // Persist
-    return this.taskRepo.create(task);
+    const createdTask = await this.taskRepo.create(task);
+
+    // Publish domain event
+    const event = new TaskCreatedEvent(
+      createdTask.id,
+      createdTask.title,
+      createdTask.creatorId,
+      createdTask.priority
+    );
+
+    await this.eventBus.publish(event);
+
+    logger.info('Task created', {
+      taskId: createdTask.id,
+      title: createdTask.title,
+      creatorId: createdTask.creatorId,
+      eventPublished: true,
+    });
+
+    return createdTask;
   }
 }

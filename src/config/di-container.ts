@@ -37,6 +37,7 @@ import { CreateTaskHandler } from '../application/commands/tasks/CreateTaskHandl
 import { UpdateTaskHandler } from '../application/commands/tasks/UpdateTaskHandler.js';
 import { CompleteTaskHandler } from '../application/commands/tasks/CompleteTaskHandler.js';
 import { DeleteTaskHandler } from '../application/commands/tasks/DeleteTaskHandler.js';
+import { AssignTaskHandler } from '../application/commands/tasks/AssignTaskHandler.js';
 
 // Application Layer - Query Handlers
 import { QueryBus } from '../application/queries/QueryBus.js';
@@ -107,6 +108,7 @@ container.register('DeactivateUserCommandHandler', { useClass: DeactivateUserHan
 // Task Command Handlers
 container.register('CreateTaskCommandHandler', { useClass: CreateTaskHandler });
 container.register('UpdateTaskCommandHandler', { useClass: UpdateTaskHandler });
+container.register('AssignTaskCommandHandler', { useClass: AssignTaskHandler });
 container.register('CompleteTaskCommandHandler', { useClass: CompleteTaskHandler });
 container.register('DeleteTaskCommandHandler', { useClass: DeleteTaskHandler });
 

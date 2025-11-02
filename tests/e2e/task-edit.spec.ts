@@ -222,7 +222,7 @@ test.describe('Task Edit Page E2E', () => {
 
     // Check for "Unassigned" option
     const options = await assigneeSelect.locator('option').allTextContents();
-    expect(options.some((opt) => opt.match(/unassigned|non assignée/i))).toBeTruthy();
+    expect(options.some((opt) => /unassigned|non assignée/i.exec(opt))).toBeTruthy();
 
     // Check there are user options
     expect(options.length).toBeGreaterThan(1);

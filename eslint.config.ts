@@ -20,7 +20,6 @@ export default tseslint.config(
       'playwright.config.ts',
       'tailwind.config.ts',
       'prisma/seed.ts',
-      'tests/**/*',
       'scripts/**/*',
     ],
   },
@@ -40,7 +39,7 @@ export default tseslint.config(
         ...globals.es2024,
       },
       parserOptions: {
-        project: './tsconfig.json',
+        project: './tsconfig.eslint.json',
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -119,7 +118,7 @@ export default tseslint.config(
 
   // Configuration pour les fichiers de test
   {
-    files: ['**/*.test.ts', '**/test/**/*.ts'],
+    files: ['**/*.test.ts', '**/test/**/*.ts', 'tests/**/*.ts', 'tests/**/*.spec.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -128,6 +127,8 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
       'no-console': 'off',
     },
   },

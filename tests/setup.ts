@@ -10,16 +10,16 @@ import { resetFactoryCounters } from './utils/factories.js';
 
 // Mock environment variables
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'postgresql://test:test@localhost:5434/taskflow_test?schema=public';
+process.env.DATABASE_URL = 'postgresql://test:test@localhost:5435/taskflow_test?schema=public';
 process.env.SESSION_SECRET = 'test-secret-key-for-testing-only';
 
 // Global test timeout
-beforeAll(async () => {
-  console.log('🧪 Starting test suite...');
+beforeAll(() => {
+  console.info('🧪 Starting test suite...');
 });
 
-afterAll(async () => {
-  console.log('✅ Test suite complete');
+afterAll(() => {
+  console.info('✅ Test suite complete');
 });
 
 // Reset factory counters before each test
@@ -28,8 +28,9 @@ beforeEach(() => {
 });
 
 // Clean up after each test
-afterEach(async () => {
+afterEach(() => {
   // Clear any mocks
+
   vi.clearAllMocks();
 });
 
