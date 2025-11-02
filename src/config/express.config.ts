@@ -15,6 +15,7 @@ import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js
 import { i18nMiddleware } from '@config/i18n.config.js';
 import routes from '@presentation/routes/index.js';
 import { logger } from '@utils/logger.util.js';
+import { helmetConfig, csrfConfig } from '@config/security.config.js';
 
 // ES Module __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -38,25 +39,13 @@ const __dirname = path.dirname(__filename);
 export function createApp(): Express {
   const app = express();
 
-  // Security Middleware
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          imgSrc: ["'self'", 'data:', 'https:'],
-          connectSrc: ["'self'"],
-          fontSrc: ["'self'"],
-          objectSrc: ["'none'"],
-          mediaSrc: ["'self'"],
-          frameSrc: ["'none'"],
-        },
-      },
-      crossOriginEmbedderPolicy: false,
-    })
-  );
+  // Trust proxy in production (for rate limiting behind reverse proxy)
+  if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+  }
+
+  // Security Middleware - Helmet with comprehensive CSP
+  app.use(helmet(helmetConfig));
 
   // CORS configuration
   app.use(
@@ -120,10 +109,8 @@ export function createApp(): Express {
       saveUninitialized: false,
       name: 'sessionId',
       cookie: {
-        secure: false, // Set to true only with HTTPS in production
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: 'lax',
+        ...csrfConfig.cookieOptions,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         domain: undefined, // Let browser determine domain (works for localhost)
         path: '/',
       },

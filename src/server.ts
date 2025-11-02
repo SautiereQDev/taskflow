@@ -2,12 +2,16 @@ import './config/di-container.js'; // MUST be first for DI
 import { createApp } from './config/express.config.js';
 import { logger } from './utils/logger.util.js';
 import { PrismaClient } from '@prisma/client';
+import { validateEnvVars } from './config/security.config.js';
 
 /**
  * Server Entry Point
  *
  * Initializes and starts the Express server
  */
+
+// Validate environment variables at startup (security best practice)
+validateEnvVars();
 
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const HOST = process.env.HOST ?? '0.0.0.0';
