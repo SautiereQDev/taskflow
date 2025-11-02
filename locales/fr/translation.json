@@ -43,6 +43,23 @@
     "description": "Description",
     "status": "Statut",
     "priority": "Priorité",
+    "edit": {
+      "title": "Modifier la tâche",
+      "subtitle": "Mettez à jour les informations de la tâche"
+    },
+    "form": {
+      "title": "Titre",
+      "titlePlaceholder": "Entrez le titre de la tâche",
+      "titleHint": "Le titre doit être clair et descriptif",
+      "description": "Description",
+      "descriptionPlaceholder": "Décrivez la tâche en détail",
+      "status": "Statut",
+      "priority": "Priorité",
+      "dueDate": "Date d'échéance",
+      "assignee": "Assigner à",
+      "submit": "Enregistrer",
+      "cancel": "Annuler"
+    },
     "dueDate": "Date d'échéance",
     "assignee": "Assigné à",
     "creator": "Créé par",

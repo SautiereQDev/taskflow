@@ -43,6 +43,23 @@
     "description": "Description",
     "status": "Status",
     "priority": "Priority",
+    "edit": {
+      "title": "Edit Task",
+      "subtitle": "Update task information"
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "Enter task title",
+      "titleHint": "The title should be clear and descriptive",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the task in detail",
+      "status": "Status",
+      "priority": "Priority",
+      "dueDate": "Due Date",
+      "assignee": "Assign to",
+      "submit": "Save",
+      "cancel": "Cancel"
+    },
     "dueDate": "Due date",
     "assignee": "Assigned to",
     "creator": "Created by",
