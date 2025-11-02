@@ -99,5 +99,40 @@
       "supportTitle": "Need help?",
       "supportEmail": "Contact Support"
     }
+  },
+  "tasks": {
+    "edit": {
+      "title": "Edit Task",
+      "subtitle": "Modify the task information below",
+      "deleteConfirm": "Are you sure you want to delete this task? This action cannot be undone.",
+      "info": "Changes will be applied immediately. All team members will be notified of important changes."
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "e.g. Implement authentication system",
+      "titleHint": "Minimum 3 characters, maximum 200",
+      "description": "Description",
+      "descriptionPlaceholder": "Detailed task description...",
+      "descriptionHint": "Describe the task details (optional)",
+      "status": "Status",
+      "priority": "Priority",
+      "assignee": "Assigned to",
+      "noAssignee": "Unassigned",
+      "assigneeHint": "Choose a team member",
+      "dueDate": "Due Date",
+      "dueDateHint": "Deadline date and time (optional)"
+    },
+    "status": {
+      "todo": "To Do",
+      "inProgress": "In Progress",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    }
   }
 }

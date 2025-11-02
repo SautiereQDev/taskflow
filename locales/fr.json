@@ -99,5 +99,40 @@
       "supportTitle": "Besoin d'aide ?",
       "supportEmail": "Contactez le support"
     }
+  },
+  "tasks": {
+    "edit": {
+      "title": "Modifier la tâche",
+      "subtitle": "Modifiez les informations de la tâche ci-dessous",
+      "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.",
+      "info": "Les modifications seront appliquées immédiatement. Tous les membres de l'équipe seront notifiés des changements importants."
+    },
+    "form": {
+      "title": "Titre",
+      "titlePlaceholder": "Ex: Implémenter le système d'authentification",
+      "titleHint": "Minimum 3 caractères, maximum 200",
+      "description": "Description",
+      "descriptionPlaceholder": "Description détaillée de la tâche...",
+      "descriptionHint": "Décrivez les détails de la tâche (optionnel)",
+      "status": "Statut",
+      "priority": "Priorité",
+      "assignee": "Assignée à",
+      "noAssignee": "Non assignée",
+      "assigneeHint": "Choisissez un membre de l'équipe",
+      "dueDate": "Date d'échéance",
+      "dueDateHint": "Date et heure limite (optionnel)"
+    },
+    "status": {
+      "todo": "À faire",
+      "inProgress": "En cours",
+      "done": "Terminée",
+      "cancelled": "Annulée"
+    },
+    "priority": {
+      "low": "Basse",
+      "medium": "Moyenne",
+      "high": "Haute",
+      "urgent": "Urgente"
+    }
   }
 }

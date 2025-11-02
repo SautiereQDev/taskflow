@@ -16,6 +16,7 @@ import { QueryBus } from '@application/queries/QueryBus.js';
 import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
 import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
 import { GetTaskByIdQuery } from '@application/queries/tasks/GetTaskByIdQuery.js';
+import { GetAllUsersQuery } from '@application/queries/users/GetAllUsersQuery.js';
 import {
   CreateTaskCommand,
   type CreateTaskCommandInput,
@@ -163,12 +164,24 @@ export class TaskController {
     const { id } = req.params;
 
     // Get task data
-    const query = new GetTaskByIdQuery(id);
-    const task = await this.queryBus.execute(GetTaskByIdQuery, query);
+    const taskQuery = new GetTaskByIdQuery(id);
+    const taskResult = await this.queryBus.execute(GetTaskByIdQuery, taskQuery);
+    const task = taskResult as Task;
 
-    // Render form
+    // Get users for assignee dropdown
+    const usersQuery = new GetAllUsersQuery(1, 100);
+    const usersResult = await this.queryBus.execute(GetAllUsersQuery, usersQuery);
+
+    // Format dueDate for datetime-local input
+    const formattedTask = {
+      ...task,
+      dueDate: task.dueDate ? new Date(task.dueDate).toISOString().slice(0, 16) : '',
+    };
+
+    // Render edit form
     renderOrPartial(req, res, 'pages/tasks/edit', 'partials/tasks/task-form', {
-      task,
+      task: formattedTask,
+      users: (usersResult as { users: unknown[] }).users,
       user: req.user,
     });
   }
