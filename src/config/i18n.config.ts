@@ -13,6 +13,8 @@ import * as i18nextHttpMiddleware from 'i18next-http-middleware';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import type { Request, Response, NextFunction } from 'express';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -63,7 +65,27 @@ await i18next
  * i18n middleware for Express
  * Attaches i18next to request object
  */
-export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next);
+export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
+  // Attach translation function to res.locals for EJS
+  removeLngFromUrl: false,
+});
+
+/**
+ * Attach translation functions to res.locals for templates
+ * Must be used after i18nMiddleware
+ */
+export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunction): void {
+  // @ts-expect-error - i18next adds t() to request
+  res.locals.t = (req as { t: (key: string) => string }).t.bind(req);
+  // @ts-expect-error - i18next adds t() to request
+  res.locals.__ = (req as { t: (key: string) => string }).t.bind(req);
+  // @ts-expect-error - i18next adds language/lng to request
+  res.locals.locale =
+    (req as { language?: string; lng?: string }).language ??
+    (req as { language?: string; lng?: string }).lng ??
+    'fr';
+  next();
+}
 
 /**
  * Language detector middleware

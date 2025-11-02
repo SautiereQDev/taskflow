@@ -13,7 +13,7 @@ import { htmxMiddleware } from '@presentation/middleware/htmx.middleware.js';
 import { errorHandler, notFoundHandler } from '@presentation/middleware/error.middleware.js';
 import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js';
 import { performanceMonitoring } from '@presentation/middleware/performance.middleware.js';
-import { i18nMiddleware } from '@config/i18n.config.js';
+import { i18nMiddleware, i18nLocalsMiddleware } from '@config/i18n.config.js';
 import routes from '@presentation/routes/index.js';
 import { logger } from '@utils/logger.util.js';
 import { helmetConfig, csrfConfig } from '@config/security.config.js';
@@ -129,6 +129,7 @@ export function createApp(): Express {
   app.use(performanceMonitoring); // Track TTFB and response times
   app.use(htmxMiddleware);
   app.use(i18nMiddleware);
+  app.use(i18nLocalsMiddleware); // Attach i18n functions to res.locals for EJS
   app.use(globalLimiter);
 
   // Health Checks

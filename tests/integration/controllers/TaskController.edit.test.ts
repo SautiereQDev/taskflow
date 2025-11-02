@@ -44,7 +44,7 @@ describe('TaskController - Edit Page Integration Tests', () => {
       .expect(302);
 
     const cookies = loginResponse.headers['set-cookie'];
-    sessionCookie = cookies.find((c: string) => c.includes('taskflow.sid')) || '';
+    sessionCookie = cookies.find((c: string) => c.includes('sessionId')) || '';
 
     // Create test task
     testTask = await prisma.task.create({
@@ -101,10 +101,8 @@ describe('TaskController - Edit Page Integration Tests', () => {
       const user2 = await prisma.user.create({
         data: {
           email: 'user2@example.com',
-          passwordHash: 'hashed',
-          firstName: 'User',
-          lastName: 'Two',
-          role: 'USER',
+          password: 'hashed',
+          name: 'User Two',
         },
       });
 

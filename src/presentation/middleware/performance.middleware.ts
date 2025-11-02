@@ -108,7 +108,10 @@ export function performanceMonitoring(req: Request, res: Response, next: NextFun
  * );
  * ```
  */
-export async function trackQuery<T>(queryName: string, queryFn: () => Promise<T>): Promise<T> {
+export async function trackQuery<T>(
+  queryName: string,
+  queryFn: () => Promise<T>
+): Promise<T> {
   const startTime = Date.now();
 
   try {

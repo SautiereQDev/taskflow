@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#6366f1">
 
 <!-- Title -->
-<title><%= title %> | TaskFlow</title>
+<title><%= typeof pageTitle !== 'undefined' ? pageTitle : (typeof title !== 'undefined' ? title : 'TaskFlow') %> | TaskFlow</title>
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">

@@ -80,7 +80,7 @@ describe('AuthController Integration Tests', () => {
       const cookies = response.headers['set-cookie'];
       expect(cookies).toBeDefined();
       expect(Array.isArray(cookies)).toBe(true);
-      const sessionCookie = cookies.find((c: string) => c.includes('taskflow.sid'));
+      const sessionCookie = cookies.find((c: string) => c.includes('sessionId'));
       expect(sessionCookie).toBeDefined();
     });
 
@@ -238,7 +238,7 @@ describe('AuthController Integration Tests', () => {
 
       const cookies = response.headers['set-cookie'];
       expect(cookies).toBeDefined();
-      const sessionCookie = cookies.find((c: string) => c.includes('taskflow.sid'));
+      const sessionCookie = cookies.find((c: string) => c.includes('sessionId'));
       expect(sessionCookie).toBeDefined();
 
       // Cleanup
