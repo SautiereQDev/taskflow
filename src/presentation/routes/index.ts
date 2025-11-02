@@ -12,8 +12,10 @@ import authRoutes from './auth.routes.js';
 import taskRoutes from './task.routes.js';
 import userRoutes from './user.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
+import { DiagnosticController } from '../controllers/DiagnosticController.js';
 
 const router = Router();
+const diagnosticController = new DiagnosticController();
 
 /**
  * Home page (public)
@@ -42,6 +44,17 @@ router.get('/health', (_req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
   });
+});
+
+/**
+ * Diagnostic endpoint (development only)
+ */
+router.get('/diagnostic', (req: Request, res: Response) => {
+  void diagnosticController.getDiagnosticPage(req, res);
+});
+
+router.get('/diagnostic/json', (req: Request, res: Response) => {
+  void diagnosticController.getDiagnosticJson(req, res);
 });
 
 export default router;

@@ -2568,9 +2568,221 @@ API Docs: OpenAPI 3.1
 
 ---
 
+## 🚨 PHASE 4 (URGENT): Frontend Implementation & Debugging
+
+**Status**: � **CRITIQUE** - Serveur doit rester actif
+**Date**: 2 novembre 2025
+**Priorité**: P0 - Blocage complet frontend
+
+### 📋 Problème Identifié
+
+**Symptômes**:
+- ❌ Aucun style appliqué dans le navigateur
+- ❌ Fonctionnalités frontend non fonctionnelles
+- ❌ Utilisateur ne peut pas utiliser l'interface
+
+**Diagnostic complet** (2 novembre 2025):
+```
+✅ Infrastructure présente et correcte:
+  - CSS généré: 143KB (Tailwind CSS 4 + DaisyUI 5.3.10)
+  - Views EJS: 62 fichiers avec classes Tailwind/DaisyUI
+  - HTMX 1.9.10: Chargé dans layout (unpkg CDN)
+  - Alpine.js 3.x: Chargé dans layout (jsdelivr CDN)
+  - Scripts JS: alpine-components.js, theme-init.js existants
+  - Express static: Correctement configuré (express.static('/public'))
+  
+❌ Cause root:
+  - SERVEUR EXPRESS NON DÉMARRÉ AU MOMENT DU TEST
+  - Utilisateur a testé sans lancer `npm run dev`
+  - Fichiers CSS/JS inaccessibles (pas de serveur HTTP)
+```
+
+### 🔧 Solution Immédiate
+
+**Étapes de résolution**:
+
+1. **Démarrer le serveur** (OBLIGATOIRE):
+```bash
+npm run dev
+```
+
+2. **Vérifier le serveur écoute sur 0.0.0.0:3001**:
+```bash
+# Dans les logs, vous devez voir:
+[INFO] Server started {"port":3001,"host":"0.0.0.0","env":"development"}
+```
+
+3. **Tester l'accès aux fichiers statiques**:
+```bash
+curl -I http://localhost:3001/css/output.css
+# Doit retourner HTTP/1.1 200 OK
+```
+
+4. **Ouvrir le navigateur**:
+```
+http://localhost:3001
+```
+
+5. **Vérifier la console navigateur**:
+   - F12 → Console
+   - Aucune erreur 404 pour CSS/JS
+   - HTMX/Alpine.js chargés sans erreur
+
+### 📝 Configuration Requise
+
+**Fichier `.env`** (UPDATED):
+```bash
+# Changé de "localhost" à "0.0.0.0" pour accessibilité réseau
+HOST=0.0.0.0
+PORT=3001
+NODE_ENV=development
+DATABASE_URL="postgresql://taskflow:taskflow_dev_password@localhost:5433/taskflow_dev?schema=public"
+SESSION_SECRET=bdEX"rOUw)f+\]Sq-p|bFivPEMtP(L}.Gceve6x#'d.q/FpJ'3'Xc0[):ok9-Pea
+```
+
+### ✅ Checklist Vérification Frontend
+
+- [x] **4.1** CSS généré (143KB) ✅
+- [x] **4.2** Views EJS avec Tailwind classes ✅
+- [x] **4.3** HTMX 1.9.10 chargé dans layout ✅
+- [x] **4.4** Alpine.js 3.x chargé dans layout ✅
+- [x] **4.5** Express static middleware configuré ✅
+- [x] **4.6** Scripts JS (alpine-components.js, theme-init.js) ✅
+- [ ] **4.7** Serveur Express démarré (`npm run dev`) ⚠️ **ACTION UTILISATEUR**
+- [ ] **4.8** Navigateur charge CSS sans 404
+- [ ] **4.9** HTMX détecté dans DevTools (hx-* attributes)
+- [ ] **4.10** Alpine.js détecté dans DevTools (x-data attributes)
+- [ ] **4.11** Theme switcher fonctionne
+- [ ] **4.12** Filtres tâches fonctionnent (HTMX)
+- [ ] **4.13** Modal dialogs fonctionnent (Alpine.js)
+- [ ] **4.14** Formulaires soumettent correctement
+
+### 🎯 Plan d'Action Post-Démarrage
+
+**Phase 4.1 - Vérification Infrastructure** (15 min):
+- [x] ✅ Vérifier CSS accessible (`/css/output.css`)
+- [ ] Vérifier JS accessibles (`/js/*.js`)
+- [ ] Vérifier favicon/images accessible
+- [ ] Tester health check (`/health`, `/ready`)
+
+**Phase 4.2 - Test Fonctionnalités Essentielles** (30 min):
+- [ ] Page login affichée avec styles
+- [ ] Page dashboard affichée avec stats
+- [ ] Page tasks affichée avec liste
+- [ ] Navigation header fonctionne
+- [ ] Flash messages s'affichent correctement
+
+**Phase 4.3 - Test HTMX** (30 min):
+- [ ] Filtres tasks (requête HTMX partielle)
+- [ ] Pagination tasks (requête HTMX)
+- [ ] Création task (soumission HTMX)
+- [ ] Édition task inline (HTMX swap)
+- [ ] Suppression task (HTMX delete)
+
+**Phase 4.4 - Test Alpine.js** (30 min):
+- [ ] Theme switcher (Alpine x-data)
+- [ ] Modal dialogs (Alpine x-show)
+- [ ] Dropdown menus (Alpine @click)
+- [ ] Search filter (Alpine x-model)
+- [ ] Toast notifications (Alpine events)
+
+**Phase 4.5 - Test Responsive** (20 min):
+- [ ] Mobile (320px - 480px)
+- [ ] Tablet (768px - 1024px)
+- [ ] Desktop (1280px+)
+- [ ] Glassmorphism effects visible
+
+**Phase 4.6 - Test Accessibilité** (30 min):
+- [ ] Navigation clavier complète
+- [ ] Screen reader compatible (test NVDA)
+- [ ] Contraste couleurs ≥ 4.5:1
+- [ ] Focus visible sur éléments interactifs
+
+**Phase 4.7 - Corrections Bugs** (variable):
+- [ ] Fixer composants Alpine.js défectueux
+- [ ] Corriger routes HTMX manquantes
+- [ ] Ajuster styles glassmorphism
+- [ ] Optimiser requêtes HTMX
+
+### 🔍 Debugging Guide
+
+**Si CSS ne charge pas**:
+```bash
+# 1. Vérifier le fichier existe
+ls -lh public/css/output.css
+
+# 2. Vérifier le serveur sert les fichiers statiques
+curl -I http://localhost:3001/css/output.css
+
+# 3. Vérifier dans le navigateur (F12 → Network)
+# Filtrer par "output.css", vérifier statut 200
+
+# 4. Vider le cache navigateur
+# Ctrl+Shift+R (Chrome/Firefox)
+```
+
+**Si HTMX ne fonctionne pas**:
+```javascript
+// Console navigateur (F12 → Console)
+htmx.version // Doit afficher "1.9.10"
+htmx.config // Afficher la configuration
+
+// Activer debug mode
+htmx.config.debug = true;
+
+// Vérifier événements HTMX
+document.body.addEventListener('htmx:beforeRequest', (e) => console.log('HTMX Request:', e.detail));
+document.body.addEventListener('htmx:afterRequest', (e) => console.log('HTMX Response:', e.detail));
+```
+
+**Si Alpine.js ne fonctionne pas**:
+```javascript
+// Console navigateur
+Alpine.version // Doit afficher "3.x.x"
+
+// Vérifier composants Alpine
+Alpine.store('theme') // Tester store si existant
+
+// Debug mode Alpine
+window.Alpine.debug = true;
+```
+
+### 📊 Métriques de Succès
+
+**Performance**:
+- [ ] TTFB < 200ms (Server-Side Rendering)
+- [ ] FCP < 1.5s (First Contentful Paint)
+- [ ] LCP < 2.5s (Largest Contentful Paint)
+- [ ] TTI < 2.5s (Time to Interactive)
+
+**Lighthouse Scores** (objectif):
+- [ ] Performance: ≥90
+- [ ] Accessibility: ≥95
+- [ ] Best Practices: ≥95
+- [ ] SEO: ≥95
+
+**Bundle Size**:
+- [ ] CSS: ~140KB (Tailwind + DaisyUI)
+- [ ] JS: <50KB (HTMX + Alpine.js + custom)
+- [ ] Total initial load: <250KB
+
+### 🚀 Étapes Suivantes
+
+**Après correction frontend**:
+1. Reprendre Sprint 1 Task 1.4 (tests command/query handlers)
+2. Continuer l'implémentation CQRS complète
+3. Augmenter couverture tests à 60%
+4. Implémenter features avancées (Phase 11)
+
+---
+
+**🚨 IMPORTANT: Le serveur DOIT rester actif pendant le développement. Exécuter `npm run dev` dans un terminal dédié.**
+
+---
+
 **🚀 Cette roadmap est votre guide complet pour construire TaskFlow avec une architecture SSR pure moderne utilisant HTMX + Alpine.js !**
 
-**Prochaine étape**: Commencer par la Phase 0 - Setup Initial
+**Prochaine étape**: ✅ Phase 0-3 COMPLÉTÉES → 🔴 **URGENT: Phase 4 Frontend Debugging** → Continuer Phase 1.4 Tests
 
 **Différences clés avec la version précédente** :
 - ✅ HTMX pour mises à jour partielles (pas de React/Vue)
