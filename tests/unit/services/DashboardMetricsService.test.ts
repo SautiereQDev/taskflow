@@ -715,9 +715,7 @@ describe('DashboardMetricsService', () => {
       await service.getUserMetrics(userId);
 
       // Assert
-      expect(mockTaskRepository.findAll).toHaveBeenCalledWith(1, 1000, {
-        assigneeId: userId,
-      });
+      expect(mockTaskRepository.findAll).toHaveBeenCalledWith({ assigneeId: userId }, 1, 1000);
     });
   });
 

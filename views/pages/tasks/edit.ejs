@@ -1,5 +1,5 @@
 <!-- Task Edit Page -->
-<% 
+<%
   const pageTitle = __('tasks.edit.title');
   const breadcrumbs = [
     { label: __('common.home'), url: '/' },
@@ -50,8 +50,8 @@
           <%= __('tasks.edit.subtitle') %>
         </p>
       </div>
-      <a 
-        href="/tasks/<%= task.id %>" 
+      <a
+        href="/tasks/<%= task.id %>"
         class="btn btn-ghost btn-sm md:btn-md"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@
 
     <!-- Edit Form Card -->
     <div class="glass p-6 md:p-8 rounded-box">
-      <form 
+      <form
         hx-patch="/tasks/<%= task.id %>"
         hx-target="body"
         hx-swap="outerHTML"
@@ -85,15 +85,15 @@
             </span>
             <span class="label-text-alt tf-text-muted" x-text="`${title.length}/200`">0/200</span>
           </label>
-          <input 
-            type="text" 
-            id="title" 
-            name="title" 
+          <input
+            type="text"
+            id="title"
+            name="title"
             value="<%= task.title %>"
             x-model="title"
             class="input input-bordered w-full"
             placeholder="<%= __('tasks.form.titlePlaceholder') %>"
-            required 
+            required
             minlength="3"
             maxlength="200"
           />
@@ -112,9 +112,9 @@
             </span>
             <span class="label-text-alt tf-text-muted" x-text="`${description.length}/2000`">0/2000</span>
           </label>
-          <textarea 
-            id="description" 
-            name="description" 
+          <textarea
+            id="description"
+            name="description"
             x-model="description"
             class="textarea textarea-bordered h-32 w-full"
             placeholder="<%= __('tasks.form.descriptionPlaceholder') %>"
@@ -136,9 +136,9 @@
                 <%= __('tasks.form.status') %> <span class="text-error">*</span>
               </span>
             </label>
-            <select 
-              id="status" 
-              name="status" 
+            <select
+              id="status"
+              name="status"
               class="select select-bordered w-full"
               required
             >
@@ -164,9 +164,9 @@
                 <%= __('tasks.form.priority') %>
               </span>
             </label>
-            <select 
-              id="priority" 
-              name="priority" 
+            <select
+              id="priority"
+              name="priority"
               class="select select-bordered w-full"
             >
               <option value="LOW" <%= task.priority === 'LOW' ? 'selected' : '' %>>
@@ -194,17 +194,17 @@
                 <%= __('tasks.form.assignee') %>
               </span>
             </label>
-            <select 
-              id="assigneeId" 
-              name="assigneeId" 
+            <select
+              id="assigneeId"
+              name="assigneeId"
               class="select select-bordered w-full"
             >
               <option value="">
                 <%= __('tasks.form.noAssignee') %>
               </option>
               <% users.forEach(u => { %>
-                <option 
-                  value="<%= u.id %>" 
+                <option
+                  value="<%= u.id %>"
                   <%= task.assigneeId === u.id ? 'selected' : '' %>
                 >
                   <%= u.firstName %> <%= u.lastName %> (<%= u.email %>)
@@ -225,10 +225,10 @@
                 <%= __('tasks.form.dueDate') %>
               </span>
             </label>
-            <input 
-              type="datetime-local" 
-              id="dueDate" 
-              name="dueDate" 
+            <input
+              type="datetime-local"
+              id="dueDate"
+              name="dueDate"
               value="<%= task.dueDate || '' %>"
               class="input input-bordered w-full"
             />
@@ -242,8 +242,8 @@
 
         <!-- Form Actions -->
         <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-base-content/10">
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             class="btn btn-primary flex-1"
             :disabled="isSubmitting"
           >
@@ -254,8 +254,8 @@
             <%= __('common.save') %>
           </button>
 
-          <a 
-            href="/tasks/<%= task.id %>" 
+          <a
+            href="/tasks/<%= task.id %>"
             class="btn btn-ghost flex-1"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -264,7 +264,7 @@
             <%= __('common.cancel') %>
           </a>
 
-          <button 
+          <button
             type="button"
             class="btn btn-outline btn-error"
             onclick="if(confirm('<%= __('tasks.edit.deleteConfirm') %>')) {

@@ -14,7 +14,7 @@
         hx-target="body"
         hx-indicator="#settings-submit"
         class="space-y-6">
-    
+
     <!-- Appearance Section -->
     <div class="glass p-6 rounded-lg">
       <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -23,19 +23,19 @@
         </svg>
         <%= __('settings.appearance.title') %>
       </h2>
-      
+
       <div class="form-control w-full">
         <label class="label">
           <span class="label-text font-medium"><%= __('settings.appearance.theme') %></span>
           <span class="label-text-alt"><%= __('settings.appearance.themeHint') %></span>
         </label>
-        
+
         <div class="flex gap-4 flex-wrap" x-data="{ selectedTheme: '<%= theme %>' }">
           <!-- Light Theme -->
           <label class="cursor-pointer">
-            <input type="radio" 
-                   name="theme" 
-                   value="light" 
+            <input type="radio"
+                   name="theme"
+                   value="light"
                    <%= theme === 'light' ? 'checked' : '' %>
                    x-model="selectedTheme"
                    class="radio radio-primary hidden" />
@@ -50,9 +50,9 @@
 
           <!-- Dark Theme -->
           <label class="cursor-pointer">
-            <input type="radio" 
-                   name="theme" 
-                   value="dark" 
+            <input type="radio"
+                   name="theme"
+                   value="dark"
                    <%= theme === 'dark' ? 'checked' : '' %>
                    x-model="selectedTheme"
                    class="radio radio-primary hidden" />
@@ -85,19 +85,19 @@
         </svg>
         <%= __('settings.language.title') %>
       </h2>
-      
+
       <div class="form-control w-full">
         <label class="label">
           <span class="label-text font-medium"><%= __('settings.language.preferred') %></span>
           <span class="label-text-alt"><%= __('settings.language.hint') %></span>
         </label>
-        
+
         <div class="flex gap-4 flex-wrap" x-data="{ selectedLocale: '<%= locale %>' }">
           <!-- French -->
           <label class="cursor-pointer">
-            <input type="radio" 
-                   name="locale" 
-                   value="fr" 
+            <input type="radio"
+                   name="locale"
+                   value="fr"
                    <%= locale === 'fr' ? 'checked' : '' %>
                    x-model="selectedLocale"
                    class="radio radio-primary hidden" />
@@ -110,9 +110,9 @@
 
           <!-- English -->
           <label class="cursor-pointer">
-            <input type="radio" 
-                   name="locale" 
-                   value="en" 
+            <input type="radio"
+                   name="locale"
+                   value="en"
                    <%= locale === 'en' ? 'checked' : '' %>
                    x-model="selectedLocale"
                    class="radio radio-primary hidden" />
@@ -135,7 +135,7 @@
         <%= __('settings.notifications.title') %>
         <span class="badge badge-sm badge-ghost">Bientôt</span>
       </h2>
-      
+
       <p class="text-sm text-base-content/50 mb-4">
         <%= __('settings.notifications.coming') %>
       </p>
@@ -147,14 +147,14 @@
             <span class="label-text"><%= __('settings.notifications.email') %></span>
           </label>
         </div>
-        
+
         <div class="form-control">
           <label class="label cursor-pointer justify-start gap-3">
             <input type="checkbox" class="toggle toggle-primary" disabled />
             <span class="label-text"><%= __('settings.notifications.browser') %></span>
           </label>
         </div>
-        
+
         <div class="form-control">
           <label class="label cursor-pointer justify-start gap-3">
             <input type="checkbox" class="toggle toggle-primary" disabled />
@@ -173,7 +173,7 @@
         <%= __('settings.privacy.title') %>
         <span class="badge badge-sm badge-ghost">Bientôt</span>
       </h2>
-      
+
       <p class="text-sm text-base-content/50 mb-4">
         <%= __('settings.privacy.coming') %>
       </p>
@@ -193,7 +193,7 @@
       <a href="/dashboard" class="btn btn-ghost">
         <%= __('common.cancel') %>
       </a>
-      <button type="submit" 
+      <button type="submit"
               id="settings-submit"
               class="btn btn-primary gap-2">
         <span class="htmx-indicator loading loading-spinner loading-sm"></span>
