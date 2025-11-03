@@ -179,10 +179,15 @@ export class TaskController {
     };
 
     // Render edit form
-    renderOrPartial(req, res, 'pages/tasks/edit', 'partials/tasks/task-form', {
+    // Note: For now, render full page for both regular and HTMX requests
+    // TODO: Create partials/tasks/task-form.ejs for true partial updates
+    res.render('pages/tasks/edit', {
       task: formattedTask,
       users: (usersResult as { users: unknown[] }).users,
       user: req.user,
+      t: req.t.bind(req),
+      __: req.__.bind(req),
+      locale: req.locale,
     });
   }
 

@@ -9,6 +9,7 @@ import supertest from 'supertest';
 import { getTestApp, getTestPrisma, cleanupTestApp } from './test-app.factory.js';
 import { createTestUser, cleanupTestUsers, TEST_CREDENTIALS } from './auth.helpers.js';
 import type { User, Task } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 import { PasswordHashingService } from '@application/services/PasswordHashingService.js';
 
 describe('TaskController - Edit Page Integration Tests', () => {
@@ -107,7 +108,7 @@ describe('TaskController - Edit Page Integration Tests', () => {
           email: 'user2@example.com',
           password: hashedPassword,
           name: 'User Two',
-          role: 'USER',
+          role: UserRole.USER,
           isActive: true,
         },
       });
@@ -166,7 +167,8 @@ describe('TaskController - Edit Page Integration Tests', () => {
       // Check delete button exists
       expect(response.text).toContain('btn-error');
       expect(response.text).toContain('confirm(');
-      expect(response.text).toMatch(/DELETE.*\/tasks\/${testTask.id}/i);
+      expect(response.text).toContain(`DELETE`);
+      expect(response.text).toContain(`/tasks/${testTask.id}`);
       expect(response.text).toContain('htmx.ajax');
     });
 

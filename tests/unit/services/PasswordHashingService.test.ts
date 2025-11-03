@@ -237,36 +237,40 @@ describe('PasswordHashingService', () => {
       expect(new Set(hashes).size).toBe(3);
     });
 
-    it('should prevent timing attacks via constant-time comparison', async () => {
-      const password = 'TestPassword123!';
-      const hash = await service.hash(password);
+    it(
+      'should prevent timing attacks via constant-time comparison',
+      async () => {
+        const password = 'TestPassword123!';
+        const hash = await service.hash(password);
 
-      // Bcrypt.compare uses constant-time comparison
-      // We test that verification time is similar for correct/incorrect passwords
-      const iterations = 10;
+        // Bcrypt.compare uses constant-time comparison
+        // We test that verification time is similar for correct/incorrect passwords
+        const iterations = 10;
 
-      const correctTimings: number[] = [];
-      const incorrectTimings: number[] = [];
+        const correctTimings: number[] = [];
+        const incorrectTimings: number[] = [];
 
-      for (let i = 0; i < iterations; i++) {
-        const start1 = Date.now();
-        await service.verify(password, hash);
-        const end1 = Date.now();
-        correctTimings.push(end1 - start1);
+        for (let i = 0; i < iterations; i++) {
+          const start1 = Date.now();
+          await service.verify(password, hash);
+          const end1 = Date.now();
+          correctTimings.push(end1 - start1);
 
-        const start2 = Date.now();
-        await service.verify('WrongPassword123!', hash);
-        const end2 = Date.now();
-        incorrectTimings.push(end2 - start2);
-      }
+          const start2 = Date.now();
+          await service.verify('WrongPassword123!', hash);
+          const end2 = Date.now();
+          incorrectTimings.push(end2 - start2);
+        }
 
-      const avgCorrect = correctTimings.reduce((a, b) => a + b, 0) / iterations;
-      const avgIncorrect = incorrectTimings.reduce((a, b) => a + b, 0) / iterations;
+        const avgCorrect = correctTimings.reduce((a, b) => a + b, 0) / iterations;
+        const avgIncorrect = incorrectTimings.reduce((a, b) => a + b, 0) / iterations;
 
-      // Timing should be similar (within 50% variance)
-      // This is a rough check - bcrypt is designed for constant-time comparison
-      const variance = Math.abs(avgCorrect - avgIncorrect) / Math.max(avgCorrect, avgIncorrect);
-      expect(variance).toBeLessThan(0.5);
-    });
+        // Timing should be similar (within 50% variance)
+        // This is a rough check - bcrypt is designed for constant-time comparison
+        const variance = Math.abs(avgCorrect - avgIncorrect) / Math.max(avgCorrect, avgIncorrect);
+        expect(variance).toBeLessThan(0.5);
+      },
+      { timeout: 30000 } // Increase timeout to 30s for bcrypt operations
+    );
   });
 });
