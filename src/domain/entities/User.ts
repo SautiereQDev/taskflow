@@ -23,6 +23,8 @@ export class User {
     private _name: string,
     private _role: UserRole,
     private _isActive: boolean,
+    private _avatar: string | null,
+    private _locale: string | null,
     private readonly _createdAt: Date,
     private _updatedAt: Date
   ) {}
@@ -33,19 +35,21 @@ export class User {
    * @param props - User properties
    * @returns User instance
    */
-  static create(props: {
-    id: string;
-    email: Email;
-    password: Password;
-    name: string;
-    role?: UserRole;
-    isActive?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }): User {
-    if (!props.id?.trim()) {
-      throw new TypeError('User ID is required');
-    }
+  static create(
+    props: {
+      email: Email;
+      password: Password;
+      name: string;
+      role?: UserRole;
+      isActive?: boolean;
+      avatar?: string | null;
+      locale?: string | null;
+      createdAt?: Date;
+      updatedAt?: Date;
+    },
+    id?: string
+  ): User {
+    const newId = id ?? crypto.randomUUID();
 
     if (!props.name?.trim()) {
       throw new TypeError('User name is required');
@@ -61,12 +65,14 @@ export class User {
 
     const now = new Date();
     return new User(
-      props.id.trim(),
+      newId.trim(),
       props.email,
       props.password,
       props.name.trim(),
       props.role ?? UserRole.MEMBER,
       props.isActive ?? true,
+      props.avatar ?? null,
+      props.locale ?? 'fr',
       props.createdAt ?? now,
       props.updatedAt ?? now
     );
@@ -97,6 +103,14 @@ export class User {
     return this._isActive;
   }
 
+  get avatar(): string | null {
+    return this._avatar;
+  }
+
+  get locale(): string | null {
+    return this._locale;
+  }
+
   get createdAt(): Date {
     return new Date(this._createdAt);
   }
@@ -122,6 +136,22 @@ export class User {
     }
 
     this._name = name.trim();
+    this._updatedAt = new Date();
+  }
+
+  /**
+   * Update user avatar
+   */
+  updateAvatar(avatar: string | null): void {
+    this._avatar = avatar;
+    this._updatedAt = new Date();
+  }
+
+  /**
+   * Update user locale
+   */
+  updateLocale(locale: string): void {
+    this._locale = locale;
     this._updatedAt = new Date();
   }
 
@@ -209,6 +239,8 @@ export class User {
     name: string;
     role: UserRole;
     isActive: boolean;
+    avatar: string | null;
+    locale: string | null;
     createdAt: Date;
     updatedAt: Date;
   } {
@@ -219,6 +251,8 @@ export class User {
       name: this._name,
       role: this._role,
       isActive: this._isActive,
+      avatar: this._avatar,
+      locale: this._locale,
       createdAt: new Date(this._createdAt),
       updatedAt: new Date(this._updatedAt),
     };

@@ -65,6 +65,7 @@ import { AuthController } from '../presentation/controllers/auth.controller.js';
 import { DashboardController } from '../presentation/controllers/dashboard.controller.js';
 import { TaskController } from '../presentation/controllers/task.controller.js';
 import { UserController } from '../presentation/controllers/user.controller.js';
+import { AdminController } from '../presentation/controllers/admin.controller.js';
 
 /**
  * Register Infrastructure Services
@@ -171,6 +172,7 @@ container.registerSingleton(AuthController);
 container.registerSingleton(DashboardController);
 container.registerSingleton(TaskController);
 container.registerSingleton(UserController);
+container.registerSingleton(AdminController);
 
 /**
  * Helper function to get repository instances

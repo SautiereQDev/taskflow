@@ -12,6 +12,7 @@ import authRoutes from './auth.routes.js';
 import taskRoutes from './task.routes.js';
 import userRoutes from './user.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
+import adminRoutes from './admin.routes.js';
 import { DiagnosticController } from '../controllers/DiagnosticController.js';
 
 const router = Router();
@@ -34,6 +35,7 @@ router.get('/', (req: Request, res: Response) => {
 router.use('/auth', authRoutes);
 router.use('/tasks', taskRoutes);
 router.use('/dashboard', dashboardRoutes);
+router.use('/users', adminRoutes);
 router.use('/', userRoutes); // Profile and settings at root level
 
 /**
@@ -49,12 +51,14 @@ router.get('/health', (_req, res) => {
 /**
  * Diagnostic endpoint (development only)
  */
-router.get('/diagnostic', (req: Request, res: Response) => {
-  void diagnosticController.getDiagnosticPage(req, res);
-});
+if (process.env.NODE_ENV === 'development') {
+  router.get('/diagnostic', (req: Request, res: Response) => {
+    void diagnosticController.getDiagnosticPage(req, res);
+  });
 
-router.get('/diagnostic/json', (req: Request, res: Response) => {
-  void diagnosticController.getDiagnosticJson(req, res);
-});
+  router.get('/diagnostic/json', (req: Request, res: Response) => {
+    void diagnosticController.getDiagnosticJson(req, res);
+  });
+}
 
 export default router;

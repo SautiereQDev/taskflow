@@ -15,8 +15,21 @@ import {
   UpdateUserCommand,
   type UpdateUserCommandInput,
 } from '@application/commands/users/UpdateUserCommand.js';
+import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
+import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
+import type { IUserDto } from '@application/dtos/UserDto.js';
 import { renderOrPartial, htmxTrigger, htmxRefresh } from '@presentation/utils/response.helpers.js';
+import {
+  toTaskListItemViewModel,
+  type ICurrentUserContext,
+} from '@presentation/view-models/index.js';
 import type { IAuthenticatedRequest } from './auth.controller.js';
+
+const ROLE_DISPLAY: Record<string, { label: string; color: string }> = {
+  ADMIN: { label: 'Administrateur', color: 'badge-error' },
+  MANAGER: { label: 'Manager', color: 'badge-warning' },
+  MEMBER: { label: 'Membre', color: 'badge-info' },
+};
 
 /**
  * UserController
@@ -39,13 +52,39 @@ export class UserController {
   async profile(req: IAuthenticatedRequest, res: Response): Promise<void> {
     const userId = req.user!.id;
 
-    // Get user data
-    const query = new GetUserByIdQuery(userId);
-    const user = await this.queryBus.execute(GetUserByIdQuery, query);
+    const currentUserContext = this.getCurrentUserContext(req);
+
+    // Load profile data and task statistics concurrently
+    const [user, assignedTasks, createdTasks] = await Promise.all([
+      this.queryBus.execute<IUserDto>(GetUserByIdQuery, new GetUserByIdQuery(userId)),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ assigneeId: userId, limit: 5 })
+      ),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ creatorId: userId, limit: 1 })
+      ),
+    ]);
+
+    const profileView = this.buildProfileViewModel(
+      user,
+      {
+        assigned: assignedTasks.total,
+        created: createdTasks.total,
+      },
+      currentUserContext
+    );
+
+    const recentTasks = assignedTasks.items.map((task) =>
+      toTaskListItemViewModel(task, currentUserContext)
+    );
 
     // Render profile
-    renderOrPartial(req, res, 'pages/users/profile', 'partials/user/profile-view', {
-      user,
+    renderOrPartial(req, res, 'pages/users/profile', 'pages/users/profile', {
+      user: profileView,
+      recentTasks,
+      title: 'Mon profil - TaskFlow',
     });
   }
 
@@ -59,12 +98,17 @@ export class UserController {
     const userId = req.user!.id;
 
     // Get user data
-    const query = new GetUserByIdQuery(userId);
-    const user = await this.queryBus.execute(GetUserByIdQuery, query);
+    const user = await this.queryBus.execute<IUserDto>(
+      GetUserByIdQuery,
+      new GetUserByIdQuery(userId)
+    );
+
+    const formModel = this.buildProfileFormModel(user);
 
     // Render edit form
-    renderOrPartial(req, res, 'pages/user/edit', 'partials/user/profile-form', {
-      user,
+    renderOrPartial(req, res, 'pages/users/profile-edit', 'pages/users/profile-edit', {
+      user: formModel,
+      title: 'Modifier mon profil - TaskFlow',
     });
   }
 
@@ -113,10 +157,11 @@ export class UserController {
     const currentLocale = req.session.locale ?? 'fr';
 
     // Render settings
-    renderOrPartial(req, res, 'pages/user/settings', 'partials/user/settings-form', {
+    renderOrPartial(req, res, 'pages/user/settings', 'pages/user/settings', {
       user: req.user,
       theme: currentTheme,
       locale: currentLocale,
+      title: 'Paramètres - TaskFlow',
     });
   }
 
@@ -147,5 +192,68 @@ export class UserController {
     } else {
       res.redirect('/settings');
     }
+  }
+
+  private getCurrentUserContext(req: IAuthenticatedRequest): ICurrentUserContext | null {
+    if (!req.user) {
+      return null;
+    }
+
+    return {
+      id: req.user.id,
+      role: req.user.role,
+    };
+  }
+
+  private buildProfileViewModel(
+    user: IUserDto,
+    taskTotals: { assigned: number; created: number },
+    currentUser: ICurrentUserContext | null
+  ): Record<string, unknown> {
+    const roleDisplay = ROLE_DISPLAY[user.role] ?? ROLE_DISPLAY.MEMBER;
+    const isCurrentUser = currentUser?.id === user.id;
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      isActive: user.isActive,
+      role: {
+        value: user.role,
+        label: roleDisplay.label,
+        color: roleDisplay.color,
+      },
+      createdAt: {
+        raw: user.createdAt,
+        formatted: this.formatDate(user.createdAt),
+      },
+      updatedAt: {
+        raw: user.updatedAt,
+        formatted: this.formatDate(user.updatedAt),
+      },
+      taskCount: {
+        created: taskTotals.created,
+        assigned: taskTotals.assigned,
+      },
+      canEdit: isCurrentUser,
+      isCurrentUser,
+    };
+  }
+
+  private buildProfileFormModel(user: IUserDto): Record<string, unknown> {
+    return {
+      id: user.id,
+      name: user.name,
+      avatar: user.avatar ?? '',
+      locale: user.locale ?? 'fr',
+    };
+  }
+
+  private formatDate(date: Date): string {
+    return new Intl.DateTimeFormat('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(date);
   }
 }

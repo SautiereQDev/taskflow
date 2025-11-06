@@ -86,10 +86,7 @@ export class PrismaUserRepository implements IUserRepository {
     const data = UserMapper.toPrisma(user);
 
     const createdUser = await this.prismaService.client.user.create({
-      data: {
-        ...data,
-        locale: 'fr', // Default locale
-      },
+      data,
     });
 
     return UserMapper.toDomain(createdUser);

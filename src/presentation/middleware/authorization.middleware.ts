@@ -140,3 +140,40 @@ export function requireAdminOrOwner(paramName = 'userId') {
     next();
   };
 }
+
+/**
+ * Middleware factory to require one of a set of roles
+ *
+ * Throws 403 if user's role is not in the allowed list.
+ *
+ * @param allowedRoles - Array of allowed UserRole enums
+ * @returns Express middleware function
+ *
+ * @example
+ * ```typescript
+ * router.get('/reports',
+ *   requireAuth,
+ *   requireRole([UserRole.ADMIN, UserRole.MANAGER]),
+ *   reportsController.get
+ * );
+ * ```
+ */
+export function requireRole(allowedRoles: UserRole[]) {
+  return (req: IAuthenticatedRequest, _res: Response, next: NextFunction): void => {
+    if (!req.user) {
+      throw new AppError('User not authenticated', 401);
+    }
+
+    const userRole = req.user.role as UserRole;
+
+    if (!allowedRoles.includes(userRole)) {
+      throw new AppError(`Access denied: requires one of [${allowedRoles.join(', ')}]`, 403, {
+        userId: req.user.id,
+        requiredRoles: allowedRoles,
+        actualRole: userRole,
+      });
+    }
+
+    next();
+  };
+}

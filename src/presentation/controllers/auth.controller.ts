@@ -58,7 +58,9 @@ export class AuthController {
    * @param res - Express response
    */
   loginPage(req: Request, res: Response): void {
-    renderOrPartial(req, res, 'pages/auth/login', 'partials/auth/login-form');
+    renderOrPartial(req, res, 'pages/auth/login', 'pages/auth/login', {
+      title: 'Connexion - TaskFlow',
+    });
   }
 
   /**
@@ -126,7 +128,9 @@ export class AuthController {
    * @param res - Express response
    */
   registerPage(req: Request, res: Response): void {
-    renderOrPartial(req, res, 'pages/auth/register', 'partials/auth/register-form');
+    renderOrPartial(req, res, 'pages/auth/register', 'pages/auth/register', {
+      title: 'Inscription - TaskFlow',
+    });
   }
 
   /**

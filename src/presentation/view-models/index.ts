@@ -21,3 +21,10 @@
 export { TaskViewModel, type ITaskViewModel } from './task.view-model.js';
 export { UserViewModel, type IUserViewModel } from './user.view-model.js';
 export { DashboardViewModel, type IDashboardViewModel } from './dashboard.view-model.js';
+export {
+  toTaskListItemViewModel,
+  toTaskDetailViewModel,
+  type ITaskListItemViewModel,
+  type ITaskDetailViewModel,
+  type ICurrentUserContext,
+} from './task.presenter.js';

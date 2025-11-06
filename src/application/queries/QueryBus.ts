@@ -29,7 +29,7 @@ import type { IQueryHandler } from './IQueryHandler.js';
  * // Parallel queries
  * const [stats, tasks] = await queryBus.executeMany<[IStatsDto, ITaskDto[]]>([
  *   [GetDashboardStatsQuery, new GetDashboardStatsQuery()],
- *   [GetAllTasksQuery, new GetAllTasksQuery(1, 10)]
+ *   [GetAllTasksQuery, new GetAllTasksQuery({ page: 1, limit: 10 })]
  * ]);
  * ```
  */
@@ -82,7 +82,7 @@ export class QueryBus {
    *   [IUserDto, ITaskDto[], IDashboardStatsDto]
    * >([
    *   [GetUserByIdQuery, new GetUserByIdQuery('user-123')],
-   *   [GetAllTasksQuery, new GetAllTasksQuery(1, 10)],
+   *   [GetAllTasksQuery, new GetAllTasksQuery({ page: 1, limit: 10 })],
    *   [GetDashboardStatsQuery, new GetDashboardStatsQuery()]
    * ]);
    * ```

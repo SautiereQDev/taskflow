@@ -20,16 +20,20 @@ export class UserMapper {
     const email = Email.create(prismaUser.email);
     const password = Password.fromHash(prismaUser.password);
 
-    return User.create({
-      id: prismaUser.id,
-      email,
-      password,
-      name: prismaUser.name,
-      role: this.mapRoleToDomain(prismaUser.role),
-      isActive: prismaUser.isActive,
-      createdAt: prismaUser.createdAt,
-      updatedAt: prismaUser.updatedAt,
-    });
+    return User.create(
+      {
+        email,
+        password,
+        name: prismaUser.name,
+        role: this.mapRoleToDomain(prismaUser.role),
+        isActive: prismaUser.isActive,
+        avatar: prismaUser.avatar,
+        locale: prismaUser.locale,
+        createdAt: prismaUser.createdAt,
+        updatedAt: prismaUser.updatedAt,
+      },
+      prismaUser.id
+    );
   }
 
   /**
@@ -38,7 +42,7 @@ export class UserMapper {
    * @param user - Domain User entity
    * @returns Plain object for Prisma operations
    */
-  static toPrisma(user: User): Omit<PrismaUser, 'createdAt' | 'updatedAt' | 'avatar' | 'locale'> {
+  static toPrisma(user: User): Omit<PrismaUser, 'createdAt' | 'updatedAt'> {
     return {
       id: user.id,
       email: user.email.value,
@@ -46,7 +50,37 @@ export class UserMapper {
       name: user.name,
       role: this.mapRoleToPrisma(user.role),
       isActive: user.isActive,
+      avatar: user.avatar,
+      locale: user.locale,
     };
+  }
+
+  /**
+   * Map Domain User entity to a partial Prisma object for updates
+   *
+   * @param user - Domain User entity
+   * @returns Partial object for Prisma update operations
+   */
+  static toPrismaUpdate(user: Partial<User> & { id: string }): Omit<
+    Partial<PrismaUser>,
+    'createdAt' | 'updatedAt' | 'id' | 'email' | 'password'
+  > & {
+    role?: PrismaUserRole;
+  } {
+    const data: Omit<
+      Partial<PrismaUser>,
+      'createdAt' | 'updatedAt' | 'id' | 'email' | 'password'
+    > & {
+      role?: PrismaUserRole;
+    } = {};
+
+    if (user.name) data.name = user.name;
+    if (user.isActive !== undefined) data.isActive = user.isActive;
+    if (user.avatar) data.avatar = user.avatar;
+    if (user.locale) data.locale = user.locale;
+    if (user.role) data.role = this.mapRoleToPrisma(user.role);
+
+    return data;
   }
 
   /**

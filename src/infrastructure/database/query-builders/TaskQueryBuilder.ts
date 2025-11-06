@@ -1,4 +1,6 @@
-import type { Prisma, TaskStatus, TaskPriority } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
+import type { TaskStatus } from '../../../domain/value-objects/TaskStatus.js';
+import type { TaskPriority } from '../../../domain/value-objects/TaskPriority.js';
 
 /**
  * Task Query Builder
@@ -83,44 +85,109 @@ export class TaskQueryBuilder {
    * @returns Combined Prisma where clause
    */
   static buildFilters(filters: {
-    status?: TaskStatus;
-    priority?: TaskPriority;
+    status?: TaskStatus | TaskStatus[];
+    priority?: TaskPriority | TaskPriority[];
     assigneeId?: string;
     creatorId?: string;
     isOverdue?: boolean;
+    dueDateFilter?: 'overdue' | 'today' | 'week';
     search?: string;
   }): Prisma.TaskWhereInput {
-    const where: Prisma.TaskWhereInput = {};
+    const conditions: Prisma.TaskWhereInput[] = [];
 
     if (filters.status !== undefined) {
-      where.status = filters.status;
+      if (Array.isArray(filters.status)) {
+        conditions.push({ status: { in: filters.status } });
+      } else {
+        conditions.push({ status: filters.status });
+      }
     }
 
     if (filters.priority !== undefined) {
-      where.priority = filters.priority;
+      if (Array.isArray(filters.priority)) {
+        conditions.push({ priority: { in: filters.priority } });
+      } else {
+        conditions.push({ priority: filters.priority });
+      }
     }
 
     if (filters.assigneeId !== undefined) {
-      where.assigneeId = filters.assigneeId;
+      conditions.push({ assigneeId: filters.assigneeId });
     }
 
     if (filters.creatorId !== undefined) {
-      where.creatorId = filters.creatorId;
+      conditions.push({ creatorId: filters.creatorId });
     }
 
     if (filters.isOverdue) {
-      where.dueDate = { lt: new Date() };
-      where.status = { notIn: ['DONE', 'CANCELLED'] };
+      conditions.push({
+        dueDate: { lt: new Date() },
+      });
+      conditions.push({
+        status: { notIn: ['DONE', 'CANCELLED'] },
+      });
+    }
+
+    if (filters.dueDateFilter) {
+      const now = new Date();
+      const startOfToday = new Date(now);
+      startOfToday.setHours(0, 0, 0, 0);
+
+      switch (filters.dueDateFilter) {
+        case 'overdue':
+          conditions.push({
+            dueDate: { lt: startOfToday },
+          });
+          conditions.push({
+            status: { notIn: ['DONE', 'CANCELLED'] },
+          });
+          break;
+        case 'today': {
+          const endOfToday = new Date(startOfToday);
+          endOfToday.setHours(23, 59, 59, 999);
+          conditions.push({
+            dueDate: {
+              gte: startOfToday,
+              lte: endOfToday,
+            },
+          });
+          break;
+        }
+        case 'week': {
+          const endOfWeek = new Date(startOfToday);
+          endOfWeek.setDate(endOfWeek.getDate() + 7);
+          endOfWeek.setHours(23, 59, 59, 999);
+          conditions.push({
+            dueDate: {
+              gte: startOfToday,
+              lte: endOfWeek,
+            },
+          });
+          break;
+        }
+        default:
+          break;
+      }
     }
 
     if (filters.search) {
-      where.OR = [
-        { title: { contains: filters.search, mode: 'insensitive' } },
-        { description: { contains: filters.search, mode: 'insensitive' } },
-      ];
+      conditions.push({
+        OR: [
+          { title: { contains: filters.search, mode: 'insensitive' } },
+          { description: { contains: filters.search, mode: 'insensitive' } },
+        ],
+      });
     }
 
-    return where;
+    if (conditions.length === 0) {
+      return {};
+    }
+
+    if (conditions.length === 1) {
+      return conditions[0];
+    }
+
+    return { AND: conditions };
   }
 
   /**

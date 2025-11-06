@@ -101,17 +101,48 @@ export function errorHandler(
 /**
  * 404 Not Found Handler
  *
- * Catches requests to undefined routes
+ * Catches requests to undefined routes and renders a 404 page.
+ * It ensures that all necessary variables are available for the layout,
+ * even for unauthenticated requests.
  *
  * @param req - Express request object
- * @param _res - Express response object (unused)
+ * @param res - Express response object
  * @param next - Express next function
  */
-export function notFoundHandler(req: Request, _res: Response, next: NextFunction): void {
+export function notFoundHandler(req: Request, res: Response, next: NextFunction): void {
+  // Ignore requests for static assets to avoid false positives
+  if (/\.(css|js|png|jpg|jpeg|gif|ico|svg)$/.exec(req.path)) {
+    return next();
+  }
+
   const error = new AppError(`Route not found: ${req.method} ${req.path}`, 404, {
     method: req.method,
     path: req.path,
   });
 
-  next(error);
+  // For HTML requests, render the 404 page
+  if (req.accepts('html')) {
+    // Provide safe defaults for template variables that might be missing
+    const user = req.user ?? null;
+    const t = req.t ?? ((key: string) => key);
+    const __ = req.__ ?? ((key: string) => key);
+    const locale = req.language ?? 'fr';
+
+    res.status(404).render('pages/error/404', {
+      layout: 'layouts/main',
+      title: t('errors.notFound'),
+      error,
+      t,
+      __,
+      locale,
+      user,
+      messages: { success: [], error: [], info: [] },
+      activeRoute: 'error',
+      metaDescription: 'Page not found',
+      pageTitle: '404 Not Found',
+    });
+  } else {
+    // For API requests, pass the error to the main error handler
+    next(error);
+  }
 }

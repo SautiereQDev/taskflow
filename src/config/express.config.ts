@@ -9,11 +9,13 @@ import pinoHttp from 'pino-http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PrismaClient } from '@prisma/client';
+import expressLayouts from 'express-ejs-layouts';
 import { htmxMiddleware } from '@presentation/middleware/htmx.middleware.js';
 import { errorHandler, notFoundHandler } from '@presentation/middleware/error.middleware.js';
 import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js';
 import { performanceMonitoring } from '@presentation/middleware/performance.middleware.js';
 import { i18nMiddleware, i18nLocalsMiddleware } from '@config/i18n.config.js';
+import { attachUser } from '@presentation/middleware/authentication.middleware.js';
 import routes from '@presentation/routes/index.js';
 import { logger } from '@utils/logger.util.js';
 import { helmetConfig, csrfConfig } from '@config/security.config.js';
@@ -121,6 +123,8 @@ export function createApp(): Express {
   // View Engine (EJS)
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '../../views'));
+  app.use(expressLayouts);
+  app.set('layout', 'layouts/main');
 
   // Static Files
   app.use(express.static(path.join(__dirname, '../../public')));
@@ -130,6 +134,7 @@ export function createApp(): Express {
   app.use(htmxMiddleware);
   app.use(i18nMiddleware);
   app.use(i18nLocalsMiddleware); // Attach i18n functions to res.locals for EJS
+  app.use(attachUser); // Attach user to request if authenticated
   app.use(globalLimiter);
 
   // Health Checks
@@ -150,7 +155,7 @@ export function createApp(): Express {
   // Application Routes
   app.use('/', routes);
 
-  // Error Handling
+  // Error Handling must be last
   app.use(notFoundHandler);
   app.use(errorHandler);
 

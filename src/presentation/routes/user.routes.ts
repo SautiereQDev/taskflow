@@ -20,18 +20,15 @@ import { apiLimiter } from '@presentation/middleware/rate-limit.middleware.js';
 const router = Router();
 const userController = container.resolve(UserController);
 
-// All user routes require authentication
-router.use(requireAuth);
-
 /**
  * GET /profile - View user profile
  */
-router.get('/profile', userController.profile.bind(userController));
+router.get('/profile', requireAuth, userController.profile.bind(userController));
 
 /**
  * GET /profile/edit - Render profile edit form
  */
-router.get('/profile/edit', userController.updateProfilePage.bind(userController));
+router.get('/profile/edit', requireAuth, userController.updateProfilePage.bind(userController));
 
 /**
  * PATCH /profile - Update user profile
@@ -39,6 +36,7 @@ router.get('/profile/edit', userController.updateProfilePage.bind(userController
  */
 router.patch(
   '/profile',
+  requireAuth,
   apiLimiter,
   updateProfileValidation,
   handleValidationErrors,
@@ -48,7 +46,7 @@ router.patch(
 /**
  * GET /settings - View user settings
  */
-router.get('/settings', userController.settings.bind(userController));
+router.get('/settings', requireAuth, userController.settings.bind(userController));
 
 /**
  * PATCH /settings - Update user settings (theme, locale)
@@ -56,6 +54,7 @@ router.get('/settings', userController.settings.bind(userController));
  */
 router.patch(
   '/settings',
+  requireAuth,
   apiLimiter,
   updateSettingsValidation,
   handleValidationErrors,

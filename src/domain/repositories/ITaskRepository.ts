@@ -6,11 +6,12 @@ import type { TaskPriority } from '../value-objects/TaskPriority.js';
  * Task Query Filters
  */
 export interface ITaskFilters {
-  status?: TaskStatus;
-  priority?: TaskPriority;
+  status?: TaskStatus | TaskStatus[];
+  priority?: TaskPriority | TaskPriority[];
   assigneeId?: string;
   creatorId?: string;
   isOverdue?: boolean;
+  dueDateFilter?: 'overdue' | 'today' | 'week';
   search?: string;
 }
 

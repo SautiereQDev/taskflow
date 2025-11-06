@@ -34,7 +34,11 @@ export function renderOrPartial(
   data: Record<string, unknown> = {}
 ): void {
   const view = req.isHtmx ? partialView : fullView;
-  res.render(view, data);
+  if (req.isHtmx) {
+    res.render(view, { ...data, layout: false });
+  } else {
+    res.render(view, data);
+  }
 }
 
 /**

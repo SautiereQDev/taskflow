@@ -28,5 +28,6 @@ export interface IUserSummaryDto {
   email: string;
   role: string;
   isActive: boolean;
-  avatar?: string;
+  avatar: string | null;
+  locale: string | null;
 }

@@ -31,12 +31,14 @@ export interface ITaskDto {
 export interface ITaskListItemDto {
   id: string;
   title: string;
+  creatorId: string;
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: Date | null;
   assignee: {
     id: string;
     name: string;
+    email: string;
     avatar: string | null;
   } | null;
 }
