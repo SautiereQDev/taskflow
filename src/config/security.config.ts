@@ -13,7 +13,7 @@ import { type RateLimitRequestHandler, rateLimit } from 'express-rate-limit';
  * Helmet Security Headers Configuration
  *
  * Implements defense-in-depth approach with multiple security layers:
- * - Content Security Policy (CSP) - Prevent XSS attacks
+ * - Content
  * - HSTS - Force HTTPS connections
  * - Frame options - Prevent clickjacking
  * - Content type sniffing protection
@@ -29,7 +29,9 @@ export const helmetConfig: HelmetOptions = {
       scriptSrc: [
         "'self'",
         "'unsafe-inline'", // Required for HTMX, Alpine.js (TODO: migrate to nonce)
-        'https://unpkg.com', // CDN for HTMX, Alpine.js
+        "'unsafe-eval'", // Required for Alpine.js expressions
+        'https://unpkg.com', // CDN for HTMX
+        'https://cdn.jsdelivr.net', // CDN for Alpine.js
       ],
       styleSrc: [
         "'self'",
