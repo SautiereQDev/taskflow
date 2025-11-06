@@ -49,6 +49,19 @@
     "warning": "Attention",
     "info": "Information"
   },
+  "a11y": {
+    "skipToContent": "Aller au contenu principal",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "loading": "Chargement en cours, veuillez patienter",
+    "imageAlt": "Image",
+    "required": "Champ obligatoire",
+    "openInNewTab": "Ouvrir dans un nouvel onglet",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "currentPage": "Page actuelle",
+    "pageOf": "Page {{current}} sur {{total}}"
+  },
   "settings": {
     "title": "Paramètres",
     "subtitle": "Personnalisez votre expérience TaskFlow",

@@ -2584,6 +2584,33 @@ video {
   }
 }
 
+@layer daisyui.component {
+
+  .skeleton {
+    border-radius: var(--radius-box);
+    background-color: var(--color-base-300);
+    will-change: background-position;
+    background-image: linear-gradient( 105deg, #0000 0% 40%, var(--color-base-100) 50%, #0000 60% 100% );
+    background-size: 200% auto;
+    background-repeat: no-repeat;
+    background-position-x: -50%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .skeleton {
+      transition-duration: 15s;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    .skeleton {
+      animation: skeleton 1.8s ease-in-out infinite;
+    }
+  }
+}
+
 @keyframes skeleton {
 
   0% {
@@ -4978,6 +5005,26 @@ video {
   width: 100%;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-1\/3 {
+  width: 33.333333%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
+.w-5\/6 {
+  width: 83.333333%;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -5061,6 +5108,17 @@ video {
 
 .animate-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse {
+
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-pointer {

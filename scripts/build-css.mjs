@@ -33,7 +33,7 @@ async function build() {
     if (existsSync(OUTPUT)) {
       const content = readFileSync(OUTPUT, 'utf-8');
       const size = (content.length / 1024).toFixed(2);
-      
+
       // Verify DaisyUI classes are present
       const hasDaisyUI = content.includes('.btn') || content.includes('daisyUI');
       console.log(`✅ Built successfully! Size: ${size} KB`);

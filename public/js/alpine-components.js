@@ -141,11 +141,11 @@ document.addEventListener('alpine:init', () => {
 
   /**
    * Filters Panel Component
-   * Manages collapsible filter sidebar
+   * Manages collapsible filter sidebar with persistence
    */
   Alpine.data('filtersPanel', () => ({
-    open: true,
-    filters: {},
+    open: Alpine.$persist(true).as('filtersPanel_open'),
+    filters: Alpine.$persist({}).as('taskFilters'),
 
     toggle() {
       this.open = !this.open;
@@ -153,14 +153,19 @@ document.addEventListener('alpine:init', () => {
 
     reset() {
       this.filters = {};
+      // Trigger HTMX to reload with no filters
+      htmx.ajax('GET', '/tasks', {
+        target: '#task-list-container',
+        swap: 'innerHTML',
+      });
     },
 
     apply() {
       // Trigger HTMX request with filters as query params
       const params = new URLSearchParams(this.filters);
       htmx.ajax('GET', `/tasks?${params.toString()}`, {
-        target: '#task-list',
-        swap: 'outerHTML',
+        target: '#task-list-container',
+        swap: 'innerHTML',
       });
     },
   }));

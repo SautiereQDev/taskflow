@@ -1,0 +1,65 @@
+<%
+/**
+ * Skeleton Loading Component
+ * Displays placeholder content while data loads
+ *
+ * Props:
+ *  - type: 'card' | 'list' | 'text' | 'avatar' (default: 'card')
+ *  - count: number - Number of skeleton items to show (default: 3)
+ */
+
+const type = typeof type !== 'undefined' ? type : 'card';
+const count = typeof count !== 'undefined' ? count : 3;
+%>
+
+<% if (type === 'card') { %>
+  <div class="space-y-4" role="status" aria-label="Chargement en cours">
+    <% for (let i = 0; i < count; i++) { %>
+      <div class="glass-light p-6 rounded-lg animate-pulse">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 bg-base-300 rounded-full shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 bg-base-300 rounded w-3/4"></div>
+            <div class="h-3 bg-base-300 rounded w-1/2"></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="h-3 bg-base-300 rounded"></div>
+          <div class="h-3 bg-base-300 rounded w-5/6"></div>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <div class="h-6 w-16 bg-base-300 rounded-full"></div>
+          <div class="h-6 w-16 bg-base-300 rounded-full"></div>
+        </div>
+      </div>
+    <% } %>
+    <span class="sr-only">Chargement des tâches...</span>
+  </div>
+<% } else if (type === 'list') { %>
+  <div class="space-y-3" role="status" aria-label="Chargement en cours">
+    <% for (let i = 0; i < count; i++) { %>
+      <div class="flex items-center gap-3 p-4 glass-light rounded-lg animate-pulse">
+        <div class="w-4 h-4 bg-base-300 rounded"></div>
+        <div class="flex-1 h-4 bg-base-300 rounded"></div>
+        <div class="w-20 h-6 bg-base-300 rounded-full"></div>
+      </div>
+    <% } %>
+    <span class="sr-only">Chargement...</span>
+  </div>
+<% } else if (type === 'text') { %>
+  <div class="space-y-2 animate-pulse" role="status" aria-label="Chargement en cours">
+    <% for (let i = 0; i < count; i++) { %>
+      <div class="h-4 bg-base-300 rounded <%= i === count - 1 ? 'w-2/3' : '' %>"></div>
+    <% } %>
+    <span class="sr-only">Chargement...</span>
+  </div>
+<% } else if (type === 'avatar') { %>
+  <div class="flex gap-4 animate-pulse" role="status" aria-label="Chargement en cours">
+    <div class="w-16 h-16 bg-base-300 rounded-full"></div>
+    <div class="flex-1 space-y-2">
+      <div class="h-4 bg-base-300 rounded w-1/3"></div>
+      <div class="h-3 bg-base-300 rounded w-1/2"></div>
+    </div>
+    <span class="sr-only">Chargement du profil...</span>
+  </div>
+<% } %>

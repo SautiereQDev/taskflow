@@ -49,6 +49,19 @@
     "warning": "Warning",
     "info": "Information"
   },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "loading": "Loading, please wait",
+    "imageAlt": "Image",
+    "required": "Required field",
+    "openInNewTab": "Open in new tab",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "currentPage": "Current page",
+    "pageOf": "Page {{current}} of {{total}}"
+  },
   "settings": {
     "title": "Settings",
     "subtitle": "Customize your TaskFlow experience",
