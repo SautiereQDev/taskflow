@@ -1,10 +1,10 @@
 /**
- * PostCSS Configuration for Tailwind CSS v4
- * v4 uses @tailwindcss/postcss plugin (included with tailwindcss package)
+ * PostCSS Configuration for Tailwind CSS v3 + DaisyUI
  */
 export default {
   plugins: {
-    '@tailwindcss/postcss': {},
+    'postcss-import': {},
+    tailwindcss: {},
     autoprefixer: {},
   },
 };
