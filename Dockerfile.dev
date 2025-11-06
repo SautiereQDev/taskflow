@@ -7,10 +7,10 @@ WORKDIR /app
 RUN apk add --no-cache \
     g++ \
     make \
+    netcat-openbsd \
     openssl \
     openssl-dev \
-    python3 \
-    netcat-openbsd
+    python3
 
 # Copy package files
 COPY package*.json ./
@@ -23,7 +23,7 @@ COPY tsconfig.json ./
 COPY vitest.config.ts ./
 COPY eslint.config.ts ./
 COPY postcss.config.js ./
-COPY loader.mjs ./
+COPY tailwind.config.ts ./
 
 # Copy scripts
 COPY scripts ./scripts
