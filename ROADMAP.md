@@ -14,6 +14,22 @@
 ------
 
 
+## ✅ Sprint Frontend 01 – Stabilisation & UX (nov. 2025)
+
+**Objectif général** : rendre l'interface TaskFlow exploitable (styles chargés, UX cohérente, interactions HTMX stables) en posant les jalons du backlog front.
+
+### État d'avancement
+- [x] Activer le layout global (`express-ejs-layouts`) et copier `public/`, `views/`, `locales/` dans `dist/` pour servir Tailwind/DaisyUI en build.
+- [x] Construire les presenters Task (liste/détail) + enrichir `TaskController` afin d'exposer filtres, assignees et métadonnées.
+- [x] Refonte des vues Tâches (liste, détail, formulaire) : badges DaisyUI, actions HTMX, formulaires Alpine réactifs.
+- [ ] Instrumenter la télémétrie front (Web Vitals + événements HTMX) et harmoniser les toasts de feedback.
+- [ ] Couvrir le parcours critique via Playwright (création → édition → complétion → suppression).
+
+### Prochaines étapes (horizon 1-2 semaines)
+1. Pagination et filtres combinés full HTMX (statut, priorité, assignee, recherche) avec rendu partiel performant.
+2. Prototype du board Kanban (drag & drop progressif avec Alpine + HTMX) synchronisé aux statuts.
+3. Documentation design system (`docs/ui`) : tokens, composants DaisyUI, snippets EJS.
+
 
 ## 📊 Vue d'ensemble du projet## 📊 Vue d'ensemble du projet
 
