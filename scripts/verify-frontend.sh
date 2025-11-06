@@ -63,20 +63,20 @@ echo "📄 Checking EJS templates..."
 if [ -d "views" ]; then
     TEMPLATE_COUNT=$(find views -name "*.ejs" | wc -l)
     check_pass "Found $TEMPLATE_COUNT EJS templates"
-    
+
     # Check critical templates
     if [ -f "views/layouts/main.ejs" ]; then
         check_pass "Main layout exists"
     else
         check_fail "Main layout missing"
     fi
-    
+
     if [ -f "views/partials/head.ejs" ]; then
         check_pass "Head partial exists"
     else
         check_fail "Head partial missing"
     fi
-    
+
     if [ -f "views/pages/tasks/list.ejs" ]; then
         check_pass "Task list page exists"
     else
@@ -108,14 +108,14 @@ echo ""
 echo "⚙️  Checking Express configuration..."
 if [ -f "src/config/express.config.ts" ]; then
     check_pass "Express config file exists"
-    
+
     # Check for static files middleware
     if grep -q "express.static" src/config/express.config.ts; then
         check_pass "Static files middleware configured"
     else
         check_fail "Static files middleware not found"
     fi
-    
+
     # Check for EJS view engine
     if grep -q "view engine.*ejs" src/config/express.config.ts; then
         check_pass "EJS view engine configured"
@@ -160,7 +160,7 @@ echo ""
 echo "🌐 Checking server status..."
 if curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/health | grep -q "200"; then
     check_pass "Server is running on port 3001"
-    
+
     # Check if CSS is accessible
     if curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/css/output.css | grep -q "200"; then
         check_pass "CSS file is accessible via HTTP"
@@ -177,20 +177,20 @@ echo ""
 echo "📦 Checking dependencies..."
 if [ -d "node_modules" ]; then
     check_pass "Node modules installed"
-    
+
     # Check critical dependencies
     if [ -d "node_modules/express" ]; then
         check_pass "Express installed"
     else
         check_fail "Express not installed"
     fi
-    
+
     if [ -d "node_modules/ejs" ]; then
         check_pass "EJS installed"
     else
         check_fail "EJS not installed"
     fi
-    
+
     if [ -d "node_modules/tailwindcss" ]; then
         check_pass "Tailwind CSS installed"
     else
@@ -206,14 +206,14 @@ echo ""
 echo "🔐 Checking environment configuration..."
 if [ -f ".env" ]; then
     check_pass ".env file exists"
-    
+
     if grep -q "PORT=" .env; then
         PORT=$(grep "PORT=" .env | cut -d '=' -f2)
         check_pass "PORT configured: $PORT"
     else
         check_warn "PORT not configured in .env"
     fi
-    
+
     if grep -q "HOST=" .env; then
         HOST=$(grep "HOST=" .env | cut -d '=' -f2)
         check_pass "HOST configured: $HOST"
