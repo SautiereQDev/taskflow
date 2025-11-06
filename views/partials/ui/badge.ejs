@@ -9,19 +9,18 @@
  *  - size: 'sm' | 'md' | 'lg' (default: 'md')
  *  - outline: boolean - outline style (default: false)
  *
- * Usage:
- *  <%- include('../partials/ui/badge', { text: 'Urgent', variant: 'badge-error', size: 'lg' }) %>
+ * Usage: include('../partials/ui/badge', { text: 'Urgent', variant: 'badge-error', size: 'lg' })
  */
 
-const text = typeof text !== 'undefined' ? text : '';
-const variant = typeof variant !== 'undefined' ? variant : 'badge-ghost';
-const size = typeof size !== 'undefined' ? size : 'md';
-const outline = typeof outline !== 'undefined' ? outline : false;
+const badgeText = typeof text !== 'undefined' ? text : '';
+const badgeVariant = typeof variant !== 'undefined' ? variant : 'badge-ghost';
+const badgeSize = typeof size !== 'undefined' ? size : 'md';
+const badgeOutline = typeof outline !== 'undefined' ? outline : false;
 
-const sizeClass = size === 'sm' ? 'badge-sm' : size === 'lg' ? 'badge-lg' : '';
-const outlineClass = outline ? 'badge-outline' : '';
+const sizeClass = badgeSize === 'sm' ? 'badge-sm' : badgeSize === 'lg' ? 'badge-lg' : '';
+const outlineClass = badgeOutline ? 'badge-outline' : '';
 %>
 
-<span class="badge <%= variant %> <%= sizeClass %> <%= outlineClass %>">
-  <%= text %>
+<span class="badge <%= badgeVariant %> <%= sizeClass %> <%= outlineClass %>">
+  <%= badgeText %>
 </span>
