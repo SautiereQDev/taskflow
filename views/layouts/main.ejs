@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="<%= locale || 'fr' %>" data-theme="taskflowLight">
 <head>
-  <%- include('../partials/head', { title: title || 'TaskFlow' }) %>
+  <%- include('../partials/head', { title: typeof title !== 'undefined' ? title : 'TaskFlow' }) %>
 </head>
-<body class="min-h-screen bg-base-100 transition-colors duration-300">
-  <%- include('../partials/header') %>
+<body class="min-h-screen bg-base-100 font-sans antialiased transition-colors duration-300">
+  <div class="tf-app-shell">
+    <%- include('../partials/header') %>
 
-  <main class="container mx-auto px-4 py-8 min-h-[calc(100vh-16rem)]">
-    <%- include('../partials/flash-messages') %>
-    <%- body %>
-  </main>
+    <main class="tf-main tf-stack">
+      <%- include('../partials/flash-messages') %>
+      <%- body %>
+    </main>
 
-  <%- include('../partials/footer') %>
+    <%- include('../partials/footer') %>
+  </div>
 
   <!-- Toast Notifications (Alpine.js) -->
   <%- include('../partials/toast-notifications') %>

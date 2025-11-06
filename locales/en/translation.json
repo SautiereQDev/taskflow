@@ -13,7 +13,42 @@
     "filter": "Filter",
     "yes": "Yes",
     "no": "No",
-    "or": "or"
+    "or": "or",
+    "close": "Close"
+  },
+  "theme": {
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "tasks": "Tasks",
+    "users": "Users",
+    "account": "Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "footer": {
+    "tagline": "Modern collaborative task management",
+    "copyright": "© {{year}} TaskFlow. All rights reserved.",
+    "product": "Product",
+    "about": "About",
+    "features": "Features",
+    "roadmap": "Roadmap",
+    "changelog": "Changelog",
+    "support": "Support",
+    "help": "Help",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "status": "Status",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "licenses": "Licenses"
   },
   "auth": {
     "login": "Login",
@@ -85,13 +120,85 @@
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome, {{name}}!",
+    "subtitle": "You are tracking {{total}} task(s) with {{open}} active.",
     "stats": "Statistics",
     "totalTasks": "Total tasks",
     "completedTasks": "Completed tasks",
     "inProgressTasks": "In progress tasks",
     "overdueTasks": "Overdue tasks",
     "recentActivity": "Recent activity",
-    "teamCapacity": "Team capacity"
+    "teamCapacity": "Team capacity",
+    "actions": {
+      "newTask": "New task",
+      "viewTasks": "View tasks"
+    },
+    "emptyState": {
+      "title": "Kick-start your workspace",
+      "description": "Create your first task, assign it to a teammate, and start tracking progress right from this dashboard.",
+      "primaryAction": "Create a task",
+      "secondaryAction": "Browse examples"
+    },
+    "cards": {
+      "total": "Total tasks",
+      "openTasks": "{{value}} active task(s)",
+      "inProgress": "In progress",
+      "inProgressHint": "{{value}} task(s) assigned to you",
+      "completed": "Completed",
+      "completedHint": "{{value}} this week",
+      "overdue": "Overdue",
+      "overdueHint": "Needs attention"
+    },
+    "progress": {
+      "title": "Overall progress",
+      "subtitle": "Completion rate across all tasks",
+      "completion": "Completed",
+      "createdThisWeek": "Created (last 7 days)",
+      "completedThisWeek": "Completed (last 7 days)",
+      "activeUsers": "Active members"
+    },
+    "alerts": {
+      "title": "Key alerts",
+      "overdue": "{{value}} overdue task(s)",
+      "overdueHint": "Prioritize these items to stay on track.",
+      "inProgress": "{{value}} task(s) in progress",
+      "inProgressHint": "Monitor milestones to avoid delays.",
+      "activeUsers": "{{value}} active member(s)",
+      "activeUsersHint": "Keep an eye on team workload."
+    },
+    "distribution": {
+      "status": "Status breakdown",
+      "priority": "Priority breakdown"
+    },
+    "sections": {
+      "highlighted": "Priority tasks",
+      "highlightedEmpty": "No priority tasks right now.",
+      "upcoming": "Coming up",
+      "upcomingEmpty": "No upcoming due dates.",
+      "viewAll": "View all",
+      "overdue": "Overdue",
+      "dueToday": "Due today",
+      "dueTomorrow": "Due tomorrow",
+      "noDueDate": "No due date",
+      "myWork": "My work",
+      "myWorkEmpty": "No tasks assigned to you.",
+      "summaryTotal": "Total",
+      "summaryInProgress": "In progress",
+      "summaryTodo": "To do",
+      "summaryOverdue": "Overdue"
+    },
+    "teamCapacity": {
+      "title": "Team capacity",
+      "subtitle": "Workload and completion rate overview per teammate.",
+      "manage": "Manage members",
+      "columns": {
+        "member": "Member",
+        "assigned": "Assigned",
+        "completed": "Completed",
+        "overdue": "Overdue",
+        "completion": "Completion rate"
+      },
+      "empty": "No active teammates yet."
+    }
   },
   "user": {
     "profile": "Profile",
@@ -109,6 +216,38 @@
     "languages": {
       "fr": "Français",
       "en": "English"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your TaskFlow experience",
+    "save": "Save changes",
+    "info": "Your preferences are saved automatically and synced across all your devices.",
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "themeHint": "Choose the interface appearance",
+      "light": "Light",
+      "dark": "Dark",
+      "themeSync": "Theme is synced with system preferences"
+    },
+    "language": {
+      "title": "Language",
+      "preferred": "Preferred language",
+      "hint": "Choose your display language"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "coming": "Notifications will be available in an upcoming version.",
+      "email": "Email notifications",
+      "browser": "Browser notifications",
+      "taskAssigned": "When a task is assigned to me"
+    },
+    "privacy": {
+      "title": "Privacy and security",
+      "coming": "Privacy settings will be available soon.",
+      "changePassword": "Change password",
+      "deleteAccount": "Delete account"
     }
   },
   "errors": {

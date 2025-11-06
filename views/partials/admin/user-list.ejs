@@ -1,0 +1,48 @@
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><span class="badge badge-ghost"><%= user.role %></span></td>
+          <td>
+            <% if (user.isActive) { %>
+              <span class="badge badge-success">Active</span>
+            <% } else { %>
+              <span class="badge badge-error">Inactive</span>
+            <% } %>
+          </td>
+          <td>
+            <a href="/users/<%= user.id %>" class="btn btn-sm btn-ghost">View</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<% if (pagination && pagination.totalPages > 1) { %>
+  <div class="flex justify-center mt-4">
+    <div class="btn-group">
+      <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+        <a href="/users?page=<%= i %>"
+           class="btn <%= i === pagination.page ? 'btn-active' : '' %>"
+           hx-get="/users?page=<%= i %>"
+           hx-target="#user-list"
+           hx-swap="outerHTML">
+          <%= i %>
+        </a>
+      <% } %>
+    </div>
+  </div>
+<% } %>

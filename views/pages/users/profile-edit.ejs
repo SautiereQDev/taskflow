@@ -1,0 +1,77 @@
+<%
+  const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
+  const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
+%>
+
+<div class="max-w-3xl mx-auto space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <a href="/profile" class="btn btn-ghost btn-sm gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour
+    </a>
+    <h1 class="text-3xl font-bold">Modifier mon profil</h1>
+  </div>
+
+  <form method="POST"
+        action="/profile"
+        hx-patch="/profile"
+        hx-target="#profile-form-feedback"
+        hx-swap="outerHTML"
+        class="space-y-6">
+    <input type="hidden" name="_method" value="PATCH" />
+
+    <div class="glass p-6 rounded-lg space-y-4">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Nom complet</span>
+        </label>
+        <input type="text"
+               name="name"
+               value="<%= user.name %>"
+               minlength="2"
+               maxlength="100"
+               class="input input-bordered w-full"
+               required />
+        <span class="label-text-alt text-base-content/60 mt-2">
+          Ce nom sera visible par votre équipe.
+        </span>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Avatar (URL)</span>
+        </label>
+        <input type="url"
+               name="avatar"
+               value="<%= currentAvatar %>"
+               placeholder="https://…"
+               class="input input-bordered w-full" />
+        <span class="label-text-alt text-base-content/60 mt-2">
+          Laissez vide pour utiliser les initiales.
+        </span>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-semibold">Langue</span>
+        </label>
+        <select name="locale" class="select select-bordered w-full">
+          <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>Français</option>
+          <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>English</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3">
+      <a href="/profile" class="btn btn-ghost">Annuler</a>
+      <button type="submit" class="btn btn-primary">
+        Mettre à jour
+      </button>
+    </div>
+  </form>
+
+  <div id="profile-form-feedback"></div>
+</div>

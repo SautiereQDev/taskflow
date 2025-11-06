@@ -27,7 +27,7 @@
       const warnCount = checks.filter(c => c.status === 'warn').length;
       const allPassed = failedCount === 0;
     %>
-    
+
     <div class="alert <%= allPassed ? 'alert-success' : 'alert-error' %> mb-8">
       <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
         <% if (allPassed) { %>
@@ -65,7 +65,7 @@
     <!-- Detailed Checks -->
     <div class="space-y-4">
       <h2 class="text-2xl font-bold mb-4">Detailed Checks</h2>
-      
+
       <% checks.forEach(check => { %>
         <div class="card bg-base-200 shadow-xl">
           <div class="card-body">
@@ -82,7 +82,7 @@
                   <%= check.name %>
                 </h3>
                 <p class="mt-2 text-base-content/70"><%= check.message %></p>
-                
+
                 <% if (check.details) { %>
                   <div class="mt-4">
                     <div class="collapse collapse-arrow bg-base-100">

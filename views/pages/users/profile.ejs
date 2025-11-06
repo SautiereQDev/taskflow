@@ -41,7 +41,8 @@
           <!-- Actions -->
           <% if (user.canEdit) { %>
             <div class="flex flex-col gap-2 mt-6">
-              <a href="/users/<%= user.id %>/edit" class="btn btn-primary btn-sm w-full">
+              <a href="<%= user.isCurrentUser ? '/profile/edit' : '/users/' + user.id + '/edit' %>"
+                 class="btn btn-primary btn-sm w-full">
                 Modifier le profil
               </a>
               <% if (!user.isCurrentUser) { %>
