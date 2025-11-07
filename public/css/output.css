@@ -4723,6 +4723,86 @@ svg:not([stroke-width]) {
   opacity: 1;
 }
 
+/* Layout Utilities */
+
+.tf-app-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.tf-main {
+  flex: 1 1 0%;
+}
+
+.tf-stack > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.tf-container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+
+  .tf-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .tf-container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .tf-container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+
+  .tf-container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+
+  .tf-container {
+    max-width: 1536px;
+  }
+}
+
+.tf-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+
+  .tf-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .tf-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -5051,6 +5131,10 @@ svg:not([stroke-width]) {
 
 .max-w-5xl {
   max-width: 64rem;
+}
+
+.max-w-7xl {
+  max-width: 80rem;
 }
 
 .max-w-md {
@@ -6128,6 +6212,11 @@ svg:not([stroke-width]) {
   .sm\:justify-between {
     justify-content: space-between;
   }
+
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -6229,6 +6318,11 @@ svg:not([stroke-width]) {
 
   .lg\:justify-between {
     justify-content: space-between;
+  }
+
+  .lg\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 

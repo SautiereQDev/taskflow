@@ -113,6 +113,27 @@
   .htmx-request .htmx-indicator {
     @apply opacity-100;
   }
+
+  /* Layout Utilities */
+  .tf-app-shell {
+    @apply min-h-screen flex flex-col;
+  }
+
+  .tf-main {
+    @apply flex-1;
+  }
+
+  .tf-stack {
+    @apply space-y-6;
+  }
+
+  .tf-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .tf-aside {
+    @apply w-64 bg-base-200 p-4;
+  }
 }
 
 @layer utilities {
