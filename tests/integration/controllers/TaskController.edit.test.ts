@@ -7,7 +7,11 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import supertest from 'supertest';
 import { getTestApp, getTestPrisma, cleanupTestApp } from './test-app.factory.js';
-import { createTestUser, cleanupTestUsers, TEST_CREDENTIALS } from './auth.helpers.js';
+import {
+  cleanupTestUsers,
+  TEST_CREDENTIALS,
+  createTestUserForIntegration,
+} from './auth.helpers.js';
 import type { User, Task } from '@prisma/client';
 import { UserRole } from '@prisma/client';
 import { PasswordHashingService } from '@application/services/PasswordHashingService.js';
@@ -34,7 +38,7 @@ describe('TaskController - Edit Page Integration Tests', () => {
     await cleanupTestUsers(prisma);
 
     // Create test user
-    testUser = await createTestUser(prisma, TEST_CREDENTIALS.user);
+    testUser = await createTestUserForIntegration(prisma, TEST_CREDENTIALS.user);
 
     // Login to get session cookie
     const loginResponse = await supertest(app)

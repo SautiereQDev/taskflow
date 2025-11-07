@@ -110,7 +110,7 @@
           <div class="mt-2 text-3xl font-bold"><%= stats.inProgressTasks %></div>
           <div class="mt-2 text-sm text-base-content/60">
             <%= typeof t === 'function'
-              ? t('dashboard.cards.inProgressHint')
+              ? t('dashboard.cards.inProgressHint', { value: myAssignmentsSummary.inProgress })
               : `${myAssignmentsSummary.inProgress} tâche(s) vous sont assignées` %>
           </div>
         </div>

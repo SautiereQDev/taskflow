@@ -31,8 +31,43 @@ dev: ## Lance le serveur
 build: ## Compile le projet
 	$(NPM) run build
 
-test: ## Lance les tests
+test: ## Lance les tests unitaires uniquement
 	$(VITEST) run
+
+test_integration: ## Lance les tests avec base de données PostgreSQL
+	@echo "$(YELLOW)Lancement des tests d'intégration avec PostgreSQL...$(NC)"
+	$(NPM) run test:integration
+	@echo "$(GREEN)✓ Tests d'intégration terminés$(NC)"
+
+test_coverage: ## Lance les tests avec couverture
+	$(NPM) run test:coverage
+
+test_watch: ## Lance les tests en mode watch
+	$(NPM) run test:watch
+
+test_ui: ## Lance les tests avec interface graphique
+	$(NPM) run test:ui
+
+# Test Database Management
+test_db_start: ## Démarre la base de données de test
+	@echo "$(YELLOW)Démarrage de la base de données de test...$(NC)"
+	$(NPM) run test:db:start
+	@echo "$(GREEN)✓ Base de données de test démarrée$(NC)"
+
+test_db_stop: ## Arrête la base de données de test
+	@echo "$(YELLOW)Arrêt de la base de données de test...$(NC)"
+	$(NPM) run test:db:stop
+	@echo "$(GREEN)✓ Base de données de test arrêtée$(NC)"
+
+test_db_reset: ## Reset la base de données de test
+	@echo "$(YELLOW)Reset de la base de données de test...$(NC)"
+	$(NPM) run test:db:reset
+	@echo "$(GREEN)✓ Base de données de test resettée$(NC)"
+
+test_db_clean: ## Nettoie les volumes de la base de données de test
+	@echo "$(YELLOW)Nettoyage des volumes de test...$(NC)"
+	$(NPM) run test:db:clean
+	@echo "$(GREEN)✓ Volumes nettoyés$(NC)"
 
 lint: ## Vérifie le code
 	$(ESLINT) . --ext .ts

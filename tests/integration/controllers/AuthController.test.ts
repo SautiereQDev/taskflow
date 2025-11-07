@@ -5,7 +5,12 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import supertest from 'supertest';
 import { getTestApp, getTestPrisma, cleanupTestApp } from './test-app.factory.js';
-import { createTestUser, cleanupTestUsers, TEST_CREDENTIALS } from './auth.helpers.js';
+import {
+  createTestUser,
+  cleanupTestUsers,
+  TEST_CREDENTIALS,
+  createTestUserForIntegration,
+} from './auth.helpers.js';
 
 describe('AuthController Integration Tests', () => {
   const app = getTestApp();
@@ -85,7 +90,7 @@ describe('AuthController Integration Tests', () => {
     });
 
     it('should reject login for inactive user', async () => {
-      const user = await createTestUser(prisma, TEST_CREDENTIALS.user);
+      const user = await createTestUserForIntegration(prisma, TEST_CREDENTIALS.user);
       // Deactivate user
       await prisma.user.update({ where: { id: user.id }, data: { isActive: false } });
 

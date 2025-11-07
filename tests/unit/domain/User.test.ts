@@ -32,14 +32,16 @@ async function createUserEntity(overrides?: {
   const email = Email.create(overrides?.email ?? `user${userCounter}@test.com`);
   const password = await Password.create(overrides?.password ?? `Password${userCounter}!`);
 
-  return User.create({
-    id: overrides?.id ?? `user-${userCounter}`,
-    email,
-    password,
-    name: overrides?.name ?? `Test User ${userCounter}`,
-    role: overrides?.role ?? UserRole.MEMBER,
-    isActive: overrides?.isActive ?? true,
-  });
+  return User.create(
+    {
+      email,
+      password,
+      name: overrides?.name ?? `Test User ${userCounter}`,
+      role: overrides?.role ?? UserRole.MEMBER,
+      isActive: overrides?.isActive ?? true,
+    },
+    overrides?.id ?? `user-${userCounter}`
+  );
 }
 
 describe('User Entity', () => {
@@ -455,6 +457,8 @@ describe('User Entity', () => {
         name: 'Test User',
         role: UserRole.ADMIN,
         isActive: true,
+        avatar: null,
+        locale: 'fr',
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
       });

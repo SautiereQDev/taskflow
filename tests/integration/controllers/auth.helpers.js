@@ -100,3 +100,34 @@ export async function cleanupTestUsers(prisma) {
     },
   });
 }
+
+/**
+ * Create a test user in the database (returns Prisma user for integration tests)
+ *
+ * @param prisma - Prisma client instance
+ * @param credentials - User credentials
+ * @returns Created Prisma user object
+ */
+export async function createTestUserForIntegration(prisma, credentials) {
+  const passwordHasher = new PasswordHashingService();
+  const hashedPassword = await passwordHasher.hash(credentials.password);
+
+  return await prisma.user.create({
+    data: {
+      name: credentials.name,
+      email: credentials.email,
+      password: hashedPassword,
+      role: credentials.role,
+      isActive: true,
+    },
+  });
+}
+
+/**
+ * Clean up test sessions
+ *
+ * @param prisma - Prisma client instance
+ */
+export async function cleanupTestSessions(prisma) {
+  await prisma.$executeRaw`DELETE FROM session WHERE expire < NOW()`;
+}

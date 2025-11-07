@@ -96,18 +96,22 @@ export async function createAuthenticatedAgent(
 }
 
 /**
- * Clean up test users from database
+ * Create a test user in the database (returns Prisma user for integration tests)
  */
-export async function cleanupTestUsers(prisma: PrismaClient): Promise<void> {
-  await prisma.user.deleteMany({
-    where: {
-      email: {
-        in: [
-          TEST_CREDENTIALS.admin.email,
-          TEST_CREDENTIALS.user.email,
-          TEST_CREDENTIALS.manager.email,
-        ],
-      },
+export async function createTestUserForIntegration(
+  prisma: PrismaClient,
+  credentials: (typeof TEST_CREDENTIALS)[keyof typeof TEST_CREDENTIALS]
+): Promise<import('@prisma/client').User> {
+  const passwordHasher = new PasswordHashingService();
+  const hashedPassword = await passwordHasher.hash(credentials.password);
+
+  return await prisma.user.create({
+    data: {
+      name: credentials.name,
+      email: credentials.email,
+      password: hashedPassword,
+      role: credentials.role,
+      isActive: true,
     },
   });
 }

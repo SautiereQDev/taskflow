@@ -14,27 +14,29 @@ document.addEventListener('alpine:init', () => {
 
     init() {
       // Initialize from saved theme
-      const current = window.themeUtils.getSavedTheme();
-      this.isDark = current === window.themeUtils.THEME_DARK;
+      const current = globalThis.themeUtils.getSavedTheme();
+      this.isDark = current === globalThis.themeUtils.THEME_DARK;
 
       // Watch for external theme changes (e.g., from another tab)
-      window.addEventListener('storage', (e) => {
-        if (e.key === window.themeUtils.STORAGE_KEY) {
-          this.isDark = e.newValue === window.themeUtils.THEME_DARK;
+      globalThis.addEventListener('storage', (e) => {
+        if (e.key === globalThis.themeUtils.STORAGE_KEY) {
+          this.isDark = e.newValue === globalThis.themeUtils.THEME_DARK;
         }
       });
     },
 
     toggle() {
       this.isDark = !this.isDark;
-      const newTheme = this.isDark ? window.themeUtils.THEME_DARK : window.themeUtils.THEME_LIGHT;
+      const newTheme = this.isDark
+        ? globalThis.themeUtils.THEME_DARK
+        : globalThis.themeUtils.THEME_LIGHT;
 
       // Apply theme
-      window.themeUtils.applyTheme(newTheme);
+      globalThis.themeUtils.applyTheme(newTheme);
 
       // Save to localStorage
       try {
-        localStorage.setItem(window.themeUtils.STORAGE_KEY, newTheme);
+        localStorage.setItem(globalThis.themeUtils.STORAGE_KEY, newTheme);
       } catch (error) {
         console.error('Failed to save theme:', error);
       }
@@ -180,7 +182,7 @@ document.addEventListener('alpine:init', () => {
 
     init() {
       // Listen for custom flash events
-      window.addEventListener('show-flash', (event) => {
+      globalThis.addEventListener('show-flash', (event) => {
         this.show(event.detail.text, event.detail.type || 'info');
       });
 
@@ -295,14 +297,14 @@ document.addEventListener('alpine:init', () => {
         this.originalValue = this.value;
 
         // Show success toast
-        window.dispatchEvent(
+        globalThis.dispatchEvent(
           new CustomEvent('show-flash', {
             detail: { type: 'success', text: 'Modifications enregistrées' },
           })
         );
       } catch (error) {
         this.error = error.message;
-        window.dispatchEvent(
+        globalThis.dispatchEvent(
           new CustomEvent('show-flash', {
             detail: { type: 'error', text: 'Erreur lors de la sauvegarde' },
           })
@@ -414,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = JSON.parse(triggerHeader);
         if (data.showError) {
           // Dispatch custom event for flash message system
-          window.dispatchEvent(
+          globalThis.dispatchEvent(
             new CustomEvent('show-flash', {
               detail: { type: 'error', text: data.showError },
             })
@@ -433,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const data = JSON.parse(triggerHeader);
         if (data.showSuccess) {
-          window.dispatchEvent(
+          globalThis.dispatchEvent(
             new CustomEvent('show-flash', {
               detail: { type: 'success', text: data.showSuccess },
             })
