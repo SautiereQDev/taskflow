@@ -14,17 +14,25 @@ import userRoutes from './user.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
 import adminRoutes from './admin.routes.js';
 import { DiagnosticController } from '../controllers/DiagnosticController.js';
+import { attachUser } from '../middleware/authentication.middleware.js';
 
 const router = Router();
 const diagnosticController = new DiagnosticController();
 
 /**
- * Home page (public)
+ * Home page - redirects authenticated users to dashboard, shows landing page for guests
  */
-router.get('/', (req: Request, res: Response) => {
+router.get('/', attachUser, (req: Request, res: Response) => {
+  // If user is authenticated, redirect to dashboard
+  if ((req as { user?: unknown }).user) {
+    res.redirect('/dashboard');
+    return;
+  }
+
+  // Show landing page for unauthenticated users
   res.render('pages/home', {
     title: 'TaskFlow - Modern Task Management',
-    user: (req as { user?: unknown }).user,
+    user: undefined,
     locale: req.session.locale ?? 'fr',
   });
 });
