@@ -9,10 +9,11 @@ pnpm-debug.log*
 /dist
 /.tsbuildinfo
 
-# Env
+# Environment files
 .env
 .env.*
 !.env.example
+.env.docker
 
 # Tests
 coverage/

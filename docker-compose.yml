@@ -6,15 +6,15 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER: taskflow
-      POSTGRES_PASSWORD: taskflow_dev_password
-      POSTGRES_DB: taskflow_dev
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U taskflow -d taskflow_dev"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,15 +26,15 @@ services:
     ports:
       - "5434:5432"
     environment:
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
-      POSTGRES_DB: taskflow_test
+      POSTGRES_USER: ${TEST_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${TEST_POSTGRES_DB}
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
     networks:
       - app-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U test -d taskflow_test"]
+      test: ["CMD-SHELL", "pg_isready -U ${TEST_POSTGRES_USER} -d ${TEST_POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -51,14 +51,16 @@ services:
       - "3000:3000"
     environment:
       DOCKER_ENV: "true"
-      DATABASE_URL: "postgresql://taskflow:taskflow_dev_password@db:5432/taskflow_dev?schema=public"
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public"
       NODE_ENV: development
-      SESSION_SECRET: bdEX"rOUw)f+\]Sq-p|bFivPEMtP(L}.Gceve6x#'d.q/FpJ'3'Xc0[):ok9-Pea
+      SESSION_SECRET: ${SESSION_SECRET}
       SESSION_MAX_AGE: 86400000
       PORT: 3000
       HOST: 0.0.0.0
       LOG_LEVEL: info
       SEED_DATABASE: "true"
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: 24h
     volumes:
       - ./prisma:/app/prisma
     networks:
