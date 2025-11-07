@@ -1,126 +1,65 @@
 <footer class="glass mt-auto border-t border-base-300">
   <div class="container mx-auto px-4 py-8">
+    <div class="footer text-base-content">
+      <!-- Brand Column -->
+      <aside>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 fill-current text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+        <p class="font-bold">
+          TaskFlow
+          <br/>
+          <span class="font-normal opacity-70"><%= __('footer.tagline') %></span>
+        </p>
+        <p class="text-xs opacity-60">
+          <%= __('footer.copyright', { year: new Date().getFullYear() }) %>
+        </p>
+      </aside>
 
-  x-data="{ messages: <%= JSON.stringify(typeof messages !== 'undefined' ? messages : []) %> }"    <div class="footer text-base-content">
-
-  x-init="$watch('messages', value => {      <!-- Brand Column -->
-
-    value.forEach((msg, index) => {      <aside>
-
-      setTimeout(() => {        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 fill-current text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-        messages.splice(index, 1);          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-
-      }, 5000); // Auto-dismiss after 5 seconds        </svg>
-
-    });        <p class="font-bold">
-
-  })"          TaskFlow
-
-  class="toast toast-top toast-end z-[100]"          <br/>
-
->          <span class="font-normal opacity-70"><%= __('footer.tagline') %></span>
-
-  <template x-for="(message, index) in messages" :key="index">        </p>
-
-    <div        <p class="text-xs opacity-60">
-
-      x-show="true"          <%= __('footer.copyright', { year: new Date().getFullYear() }) %>
-
-      x-transition:enter="transition ease-out duration-300"        </p>
-
-      x-transition:enter-start="opacity-0 transform translate-x-full"      </aside>
-
-      x-transition:enter-end="opacity-100 transform translate-x-0"
-
-      x-transition:leave="transition ease-in duration-200"      <!-- Product Column -->
-
-      x-transition:leave-start="opacity-100"      <nav>
-
-      x-transition:leave-end="opacity-0"        <header class="footer-title"><%= __('footer.product') %></header>
-
-      class="alert shadow-lg glass-heavy max-w-md"        <a href="/about" class="link link-hover"><%= __('footer.about') %></a>
-
-      :class="{        <a href="/features" class="link link-hover"><%= __('footer.features') %></a>
-
-        'alert-success': message.type === 'success',        <a href="/roadmap" class="link link-hover"><%= __('footer.roadmap') %></a>
-
-        'alert-error': message.type === 'error',        <a href="/changelog" class="link link-hover"><%= __('footer.changelog') %></a>
-
-        'alert-warning': message.type === 'warning',      </nav>
-
-        'alert-info': message.type === 'info'
-
-      }"      <!-- Support Column -->
-
-      role="alert"      <nav>
-
-    >        <header class="footer-title"><%= __('footer.support') %></header>
-
-      <!-- Icon based on message type -->        <a href="/help" class="link link-hover"><%= __('footer.help') %></a>
-
-      <svg x-show="message.type === 'success'" xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">        <a href="/contact" class="link link-hover"><%= __('footer.contact') %></a>
-
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />        <a href="/faq" class="link link-hover"><%= __('footer.faq') %></a>
-
-      </svg>        <a href="/status" class="link link-hover"><%= __('footer.status') %></a>
-
-      <svg x-show="message.type === 'error'" xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">      </nav>
-
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-
-      </svg>      <!-- Legal Column -->
-
-      <svg x-show="message.type === 'warning'" xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">      <nav>
-
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />        <header class="footer-title"><%= __('footer.legal') %></header>
-
-      </svg>        <a href="/privacy" class="link link-hover"><%= __('footer.privacy') %></a>
-
-      <svg x-show="message.type === 'info'" xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">        <a href="/terms" class="link link-hover"><%= __('footer.terms') %></a>
-
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />        <a href="/cookies" class="link link-hover"><%= __('footer.cookies') %></a>
-
-      </svg>        <a href="/licenses" class="link link-hover"><%= __('footer.licenses') %></a>
-
+      <!-- Product Column -->
+      <nav>
+        <header class="footer-title"><%= __('footer.product') %></header>
+        <a href="/about" class="link link-hover"><%= __('footer.about') %></a>
+        <a href="/features" class="link link-hover"><%= __('footer.features') %></a>
+        <a href="/roadmap" class="link link-hover"><%= __('footer.roadmap') %></a>
+        <a href="/changelog" class="link link-hover"><%= __('footer.changelog') %></a>
       </nav>
 
-      <!-- Message text -->    </div>
+      <!-- Support Column -->
+      <nav>
+        <header class="footer-title"><%= __('footer.support') %></header>
+        <a href="/help" class="link link-hover"><%= __('footer.help') %></a>
+        <a href="/contact" class="link link-hover"><%= __('footer.contact') %></a>
+        <a href="/faq" class="link link-hover"><%= __('footer.faq') %></a>
+        <a href="/status" class="link link-hover"><%= __('footer.status') %></a>
+      </nav>
 
-      <div class="flex-1">
+      <!-- Legal Column -->
+      <nav>
+        <header class="footer-title"><%= __('footer.legal') %></header>
+        <a href="/privacy" class="link link-hover"><%= __('footer.privacy') %></a>
+        <a href="/terms" class="link link-hover"><%= __('footer.terms') %></a>
+        <a href="/cookies" class="link link-hover"><%= __('footer.cookies') %></a>
+        <a href="/licenses" class="link link-hover"><%= __('footer.licenses') %></a>
+      </nav>
+    </div>
 
-        <span x-text="message.text"></span>    <!-- Social & Version -->
-
-      </div>    <div class="divider"></div>
-
+    <!-- Social & Version -->
+    <div class="divider"></div>
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm opacity-70">
-
-      <!-- Close button -->      <div class="flex gap-4">
-
-      <button        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link link-hover flex items-center gap-1">
-
-        @click="messages.splice(index, 1)"          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-
-        class="btn btn-ghost btn-sm btn-circle"            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-
-        aria-label="<%= __('common.close') %>"          </svg>
-
-      >          GitHub
-
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">        </a>
-
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="link link-hover flex items-center gap-1">
-
-        </svg>          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-
-      </button>            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-
-    </div>          </svg>
-
-  </template>          Twitter
-
-</div>        </a>
-
+      <div class="flex gap-4">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link link-hover flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="link link-hover flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+          </svg>
+          Twitter
+        </a>
       </div>
       <div class="text-xs">
         <span class="badge badge-ghost">v1.0.0</span>
