@@ -8,6 +8,17 @@
 @tailwind utilities;
 
 @layer components {
+  /* SVG Icons - Fix clipping and sizing issues */
+  svg {
+    @apply flex-shrink-0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  svg:not([stroke-width]) {
+    stroke-width: 2;
+  }
+
   /* Glass Surface Utilities */
   .glass-light {
     background: rgba(255, 255, 255, 0.05);
@@ -87,6 +98,11 @@
 
   .badge-glass {
     @apply px-3 py-1 text-sm font-medium inline-flex items-center gap-1 rounded-full;
+  }
+
+  /* Avatar fix - prevent distortion */
+  .avatar .rounded-full {
+    @apply aspect-square flex items-center justify-center;
   }
 
   /* HTMX States */

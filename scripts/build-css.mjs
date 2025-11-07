@@ -27,7 +27,8 @@ async function build() {
 
   try {
     const { stdout, stderr } = await execAsync(cmd);
-    if (stderr && !stderr.includes('Done') && !stderr.includes('Compiled')) console.warn('⚠️', stderr);
+    if (stderr && !stderr.includes('Done') && !stderr.includes('Compiled'))
+      console.warn('⚠️', stderr);
     if (stdout) console.log(stdout);
 
     if (existsSync(OUTPUT)) {
