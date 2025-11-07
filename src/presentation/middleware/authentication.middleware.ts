@@ -99,7 +99,7 @@ export async function requireAuth(
  */
 export async function attachUser(
   req: IAuthenticatedRequest,
-  _res: Response,
+  res: Response,
   next: NextFunction
 ): Promise<void> {
   const userId = req.session.userId;
@@ -121,6 +121,9 @@ export async function attachUser(
         role: user.role,
         isActive: user.isActive,
       };
+
+      // Make user available to all views (including layout)
+      res.locals.user = req.user;
     }
   } catch (error) {
     // Silent fail - user just won't be attached

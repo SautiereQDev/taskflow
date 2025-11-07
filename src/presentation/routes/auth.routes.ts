@@ -55,4 +55,9 @@ router.post(
  */
 router.post('/logout', authController.logout.bind(authController));
 
+/**
+ * GET /auth/logout - Logout current user (for links)
+ */
+router.get('/logout', authController.logout.bind(authController));
+
 export default router;

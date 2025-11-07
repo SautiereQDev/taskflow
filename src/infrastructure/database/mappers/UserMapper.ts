@@ -51,7 +51,7 @@ export class UserMapper {
       role: this.mapRoleToPrisma(user.role),
       isActive: user.isActive,
       avatar: user.avatar,
-      locale: user.locale,
+      locale: user.locale ?? 'fr',
     };
   }
 

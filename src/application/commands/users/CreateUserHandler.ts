@@ -5,7 +5,6 @@
  */
 
 import { injectable, inject } from 'tsyringe';
-import { randomUUID } from 'node:crypto';
 import type { ICommandHandler } from '../ICommandHandler.js';
 import type { CreateUserCommand } from './CreateUserCommand.js';
 import type { IUserRepository } from '../../../domain/repositories/IUserRepository.js';
@@ -34,7 +33,6 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand, Use
 
     // Create user entity with generated ID
     const user = User.create({
-      id: randomUUID(),
       name: command.name,
       email: Email.create(command.email),
       password: Password.fromHash(hashedPassword),
