@@ -48,6 +48,16 @@
     min-height: 2.75rem; /* 44px minimum touch target */
   }
 
+  /* Dark theme enhancement for focus states */
+  [data-theme="dark"] .btn {
+    @apply focus-visible:ring-offset-base-100 focus-visible:ring-primary;
+  }
+
+  /* Dark theme enhancement for all buttons - better contrast */
+  [data-theme="dark"] .btn:not(.btn-ghost):not(.btn-outline) {
+    @apply shadow-lg;
+  }
+
   /* Button sizing with proper spacing */
   .btn-lg {
     @apply px-6 py-3.5 text-base;
@@ -66,9 +76,17 @@
 
   /* Primary button - High emphasis */
   .btn-primary {
-    @apply bg-primary text-primary-content shadow-sm;
-    @apply hover:brightness-110 hover:shadow-md hover:scale-[1.02];
+    @apply bg-primary text-primary-content shadow-md;
+    @apply hover:brightness-110 hover:shadow-lg hover:scale-[1.02];
     @apply active:scale-[0.98];
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for primary buttons */
+  [data-theme="dark"] .btn-primary {
+    @apply shadow-lg;
+    @apply hover:shadow-xl hover:brightness-125;
+    border: 1px solid rgba(var(--p), 0.4);
   }
 
   /* Secondary/Outline button - Medium emphasis */
@@ -78,22 +96,111 @@
     @apply active:scale-[0.98];
   }
 
+  /* Dark theme enhancement for outline buttons */
+  [data-theme="dark"] .btn-outline {
+    @apply shadow-md;
+    @apply hover:bg-opacity-10 hover:shadow-lg;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  [data-theme="dark"] .btn-outline:hover {
+    border-color: rgba(var(--p), 0.8);
+  }
+
   /* Ghost button - Low emphasis */
   .btn-ghost {
     @apply bg-transparent hover:bg-base-200;
     @apply active:bg-base-300;
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for ghost buttons */
+  [data-theme="dark"] .btn-ghost {
+    @apply hover:shadow-md;
+  }
+
+  [data-theme="dark"] .btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   /* Error/Danger button */
   .btn-error {
-    @apply bg-error text-error-content shadow-sm;
-    @apply hover:brightness-110 hover:shadow-md hover:scale-[1.02];
+    @apply bg-error text-error-content shadow-md;
+    @apply hover:brightness-110 hover:shadow-lg hover:scale-[1.02];
     @apply active:scale-[0.98];
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for error buttons */
+  [data-theme="dark"] .btn-error {
+    @apply shadow-lg;
+    @apply hover:shadow-xl hover:brightness-125;
+    border: 1px solid rgba(var(--er), 0.4);
   }
 
   .btn-outline.btn-error {
     @apply bg-transparent border-2 border-error text-error;
-    @apply hover:bg-error hover:text-error-content;
+    @apply hover:bg-error hover:text-error-content hover:shadow-lg;
+  }
+
+  /* Dark theme enhancement for outline error buttons */
+  [data-theme="dark"] .btn-outline.btn-error {
+    @apply shadow-md;
+    @apply hover:shadow-xl;
+    border-color: rgba(var(--er), 0.6);
+  }
+
+  /* Success button */
+  .btn-success {
+    @apply bg-success text-success-content shadow-md;
+    @apply hover:brightness-110 hover:shadow-lg hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for success buttons */
+  [data-theme="dark"] .btn-success {
+    @apply shadow-lg;
+    @apply hover:shadow-xl hover:brightness-125;
+    border: 1px solid rgba(var(--su), 0.4);
+  }
+
+  /* Warning button */
+  .btn-warning {
+    @apply bg-warning text-warning-content shadow-md;
+    @apply hover:brightness-110 hover:shadow-lg hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for warning buttons */
+  [data-theme="dark"] .btn-warning {
+    @apply shadow-lg;
+    @apply hover:shadow-xl hover:brightness-125;
+    border: 1px solid rgba(var(--wa), 0.4);
+  }
+
+  /* Info button */
+  .btn-info {
+    @apply bg-info text-info-content shadow-md;
+    @apply hover:brightness-110 hover:shadow-lg hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply border border-transparent;
+  }
+
+  /* Dark theme enhancement for info buttons */
+  [data-theme="dark"] .btn-info {
+    @apply shadow-lg;
+    @apply hover:shadow-xl hover:brightness-125;
+    border: 1px solid rgba(var(--in), 0.4);
+  }
+
+  /* Dark theme enhancement for disabled buttons - more visible */
+  [data-theme="dark"] .btn:disabled,
+  [data-theme="dark"] .btn.disabled {
+    @apply opacity-60;
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   /* Button groups - proper spacing */
@@ -115,6 +222,16 @@
   .btn-circle.btn-sm {
     min-width: 2.25rem; /* 36px */
     min-height: 2.25rem;
+  }
+
+  /* Dark theme enhancement for circular buttons */
+  [data-theme="dark"] .btn-circle:not(.btn-ghost) {
+    @apply shadow-lg;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  [data-theme="dark"] .btn-circle.btn-ghost:hover {
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   /* Loading state */
