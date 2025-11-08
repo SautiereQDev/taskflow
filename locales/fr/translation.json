@@ -14,7 +14,8 @@
     "yes": "Oui",
     "no": "Non",
     "or": "ou",
-    "close": "Fermer"
+    "close": "Fermer",
+    "update": "Mettre à jour"
   },
   "theme": {
     "switchToLight": "Passer au thème clair",
@@ -276,6 +277,20 @@
     "languages": {
       "fr": "Français",
       "en": "English"
+    }
+  },
+  "profile": {
+    "edit": {
+      "title": "Modifier mon profil",
+      "titleAdmin": "Modifier l'utilisateur",
+      "fullName": "Nom complet",
+      "fullNameHint": "Ce nom sera visible par votre équipe.",
+      "avatar": "Avatar (URL)",
+      "avatarPlaceholder": "https://…",
+      "avatarHint": "Laissez vide pour utiliser les initiales.",
+      "language": "Langue",
+      "languageFr": "Français",
+      "languageEn": "English"
     }
   },
   "settings": {
