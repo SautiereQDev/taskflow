@@ -1,74 +1,96 @@
 <%
   const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
   const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
+  // Detect context: is this admin editing or user self-editing?
+  const isAdminContext = req.path.startsWith('/users/') && !req.path.startsWith('/profile');
+  const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
+  const formAction = isAdminContext ? `/users/${user.id}` : '/profile';
+  const pageTitle = isAdminContext ? `${t('profile.edit.titleAdmin')} - ${user.name}` : t('profile.edit.title');
 %>
 
 <div class="max-w-3xl mx-auto space-y-6">
   <!-- Header -->
-  <div class="flex items-center justify-between">
-    <a href="/profile" class="btn btn-ghost btn-sm gap-2">
+  <div class="flex items-center justify-between mb-6">
+    <a href="<%= backUrl %>" class="btn btn-ghost btn-sm gap-2 hover:glass-light transition-all">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
-      Retour
+      <%= t('common.back') %>
     </a>
-    <h1 class="text-3xl font-bold">Modifier mon profil</h1>
+    <h1 class="text-3xl font-bold tf-text-primary"><%= pageTitle %></h1>
   </div>
 
   <form method="POST"
-        action="/profile"
-        hx-patch="/profile"
+        action="<%= formAction %>"
+        hx-patch="<%= formAction %>"
         hx-target="#profile-form-feedback"
         hx-swap="outerHTML"
         class="space-y-6">
     <input type="hidden" name="_method" value="PATCH" />
 
-    <div class="glass p-6 rounded-lg space-y-4">
+    <!-- Form Card with Glassmorphism -->
+    <div class="glass p-8 rounded-2xl space-y-6">
+      <!-- Full Name Field -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold">Nom complet</span>
+          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.fullName') %></span>
         </label>
         <input type="text"
                name="name"
                value="<%= user.name %>"
                minlength="2"
                maxlength="100"
-               class="input input-bordered w-full"
+               class="input input-bordered w-full transition-all duration-200 focus:glass-hover"
                required />
-        <span class="label-text-alt text-base-content/60 mt-2">
-          Ce nom sera visible par votre équipe.
-        </span>
+        <label class="label">
+          <span class="label-text-alt tf-text-muted">
+            <%= t('profile.edit.fullNameHint') %>
+          </span>
+        </label>
       </div>
 
+      <!-- Avatar URL Field -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold">Avatar (URL)</span>
+          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.avatar') %></span>
         </label>
         <input type="url"
                name="avatar"
                value="<%= currentAvatar %>"
-               placeholder="https://…"
-               class="input input-bordered w-full" />
-        <span class="label-text-alt text-base-content/60 mt-2">
-          Laissez vide pour utiliser les initiales.
-        </span>
+               placeholder="<%= t('profile.edit.avatarPlaceholder') %>"
+               class="input input-bordered w-full transition-all duration-200 focus:glass-hover" />
+        <label class="label">
+          <span class="label-text-alt tf-text-muted">
+            <%= t('profile.edit.avatarHint') %>
+          </span>
+        </label>
       </div>
 
+      <!-- Language Select -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold">Langue</span>
+          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.language') %></span>
         </label>
-        <select name="locale" class="select select-bordered w-full">
-          <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>Français</option>
-          <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>English</option>
+        <select name="locale" class="select select-bordered w-full transition-all duration-200 focus:glass-hover">
+          <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
+            <%= t('profile.edit.languageFr') %>
+          </option>
+          <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>
+            <%= t('profile.edit.languageEn') %>
+          </option>
         </select>
       </div>
     </div>
 
+    <!-- Action Buttons with Glassmorphism -->
     <div class="flex justify-end gap-3">
-      <a href="/profile" class="btn btn-ghost">Annuler</a>
-      <button type="submit" class="btn btn-primary">
-        Mettre à jour
+      <a href="<%= backUrl %>" 
+         class="btn btn-ghost glass-light hover:glass transition-all duration-200">
+        <%= t('common.cancel') %>
+      </a>
+      <button type="submit" 
+              class="btn btn-primary glass hover:glass-heavy transition-all duration-200 shadow-lg hover:shadow-xl">
+        <%= t('common.update') %>
       </button>
     </div>
   </form>

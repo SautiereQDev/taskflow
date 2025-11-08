@@ -48,7 +48,23 @@
       "error": "Erreur",
       "success": "Succès",
       "warning": "Attention",
-      "info": "Information"
+      "info": "Information",
+      "update": "Mettre à jour",
+      "back": "Retour"
+    },
+    "profile": {
+      "edit": {
+        "title": "Modifier mon profil",
+        "titleAdmin": "Modifier l'utilisateur",
+        "fullName": "Nom complet",
+        "fullNameHint": "Ce nom sera visible par votre équipe.",
+        "avatar": "Avatar (URL)",
+        "avatarPlaceholder": "https://…",
+        "avatarHint": "Laissez vide pour utiliser les initiales.",
+        "language": "Langue",
+        "languageFr": "Français",
+        "languageEn": "English"
+      }
     },
     "a11y": {
       "skipToContent": "Aller au contenu principal",

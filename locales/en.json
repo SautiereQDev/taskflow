@@ -48,7 +48,23 @@
       "error": "Error",
       "success": "Success",
       "warning": "Warning",
-      "info": "Information"
+      "info": "Information",
+      "update": "Update",
+      "back": "Back"
+    },
+    "profile": {
+      "edit": {
+        "title": "Edit my profile",
+        "titleAdmin": "Edit user",
+        "fullName": "Full name",
+        "fullNameHint": "This name will be visible to your team.",
+        "avatar": "Avatar (URL)",
+        "avatarPlaceholder": "https://…",
+        "avatarHint": "Leave empty to use initials.",
+        "language": "Language",
+        "languageFr": "Français",
+        "languageEn": "English"
+      }
     },
     "a11y": {
       "skipToContent": "Skip to main content",
