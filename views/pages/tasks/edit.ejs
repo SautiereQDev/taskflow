@@ -1,6 +1,5 @@
 <!-- Task Edit Page -->
 <%
-  const pageTitle = __('tasks.edit.title');
   const breadcrumbs = [
     { label: __('common.home'), url: '/' },
     { label: __('tasks.title'), url: '/tasks' },
@@ -9,60 +8,50 @@
   ];
 %>
 
-<!DOCTYPE html>
-<html lang="<%= locale %>" data-theme="light">
-<head>
-  <%- include('../../partials/head', { pageTitle }) %>
-</head>
-<body class="tf-app-shell">
-  <!-- Header -->
-  <%- include('../../partials/header', { user, currentPage: 'tasks' }) %>
+<div class="max-w-5xl mx-auto space-y-6">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumbs text-sm tf-text-secondary mb-6">
+    <ul class="flex items-center gap-2 flex-wrap">
+      <% breadcrumbs.forEach((crumb, index) => { %>
+        <li class="flex items-center gap-2">
+          <% if (index > 0) { %>
+            <span class="text-base-content/30">/</span>
+          <% } %>
+          <% if (crumb.url) { %>
+            <a href="<%= crumb.url %>" class="hover:tf-text-primary transition-colors">
+              <%= crumb.label %>
+            </a>
+          <% } else { %>
+            <span class="tf-text-primary font-medium"><%= crumb.label %></span>
+          <% } %>
+        </li>
+      <% }); %>
+    </ul>
+  </nav>
 
-  <!-- Main Content -->
-  <main class="tf-main tf-stack">
-    <!-- Breadcrumb -->
-    <nav class="breadcrumbs text-sm tf-text-secondary mb-4">
-      <ul class="flex items-center gap-2 flex-wrap">
-        <% breadcrumbs.forEach((crumb, index) => { %>
-          <li class="flex items-center gap-2">
-            <% if (index > 0) { %>
-              <span class="text-base-content/30">/</span>
-            <% } %>
-            <% if (crumb.url) { %>
-              <a href="<%= crumb.url %>" class="hover:tf-text-primary transition-colors">
-                <%= crumb.label %>
-              </a>
-            <% } else { %>
-              <span class="tf-text-primary font-medium"><%= crumb.label %></span>
-            <% } %>
-          </li>
-        <% }); %>
-      </ul>
-    </nav>
-
-    <!-- Page Header -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-      <div>
-        <h1 class="text-3xl md:text-4xl font-bold tf-text-primary mb-2">
-          <%= __('tasks.edit.title') %>
-        </h1>
-        <p class="tf-text-secondary text-base md:text-lg">
-          <%= __('tasks.edit.subtitle') %>
-        </p>
-      </div>
-      <a
-        href="/tasks/<%= task.id %>"
-        class="btn btn-ghost btn-sm md:btn-md"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-        <%= __('common.cancel') %>
-      </a>
+  <!-- Page Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-bold tf-text-primary mb-2">
+        <%= __('tasks.edit.title') %>
+      </h1>
+      <p class="tf-text-secondary text-base md:text-lg">
+        <%= __('tasks.edit.subtitle') %>
+      </p>
     </div>
+    <a
+      href="/tasks/<%= task.id %>"
+      class="btn btn-ghost btn-sm md:btn-md"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      <%= __('common.cancel') %>
+    </a>
+  </div>
 
-    <!-- Edit Form Card -->
-    <div class="glass p-6 md:p-8 rounded-box">
+  <!-- Edit Form Card -->
+  <div class="glass p-6 md:p-8 rounded-box"
       <form
         hx-patch="/tasks/<%= task.id %>"
         hx-target="body"
@@ -284,7 +273,7 @@
     </div>
 
     <!-- Info Card -->
-    <div class="alert alert-info glass-light mt-6">
+    <div class="alert alert-info glass-light">
       <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
@@ -295,9 +284,5 @@
         </div>
       </div>
     </div>
-  </main>
-
-  <!-- Footer -->
-  <%- include('../../partials/footer') %>
-</body>
-</html>
+  </div>
+</div>
