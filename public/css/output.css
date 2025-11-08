@@ -5101,6 +5101,45 @@ svg:not([stroke-width]) {
   --tw-text-opacity: 0.6;
 }
 
+/* Dark theme typography improvements - Better contrast for WCAG AA */
+
+[data-theme="dark"] .tf-text-secondary {
+  --tw-text-opacity: 0.9;
+}
+
+[data-theme="dark"] .tf-text-muted {
+  --tw-text-opacity: 0.75;
+}
+
+/* Dark theme improvements for inline opacity classes */
+
+[data-theme="dark"] .text-base-content\/80 {
+    opacity: 0.9 !important;
+  }
+
+[data-theme="dark"] .text-base-content\/70 {
+    opacity: 0.85 !important;
+  }
+
+[data-theme="dark"] .text-base-content\/60 {
+    opacity: 0.75 !important;
+  }
+
+[data-theme="dark"] .text-base-content\/50 {
+    opacity: 0.65 !important;
+  }
+
+/* Dark theme improvements for prose content */
+
+[data-theme="dark"] .prose {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+[data-theme="dark"] .prose-sm,
+  [data-theme="dark"] .prose-base {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -6467,6 +6506,10 @@ svg:not([stroke-width]) {
   --tw-text-opacity: 0.8;
 }
 
+[data-theme="dark"] .hover\:tf-text-secondary:hover {
+  --tw-text-opacity: 0.9;
+}
+
 @layer daisyui.component {
 
   .focus\:card:focus {
@@ -7028,6 +7071,11 @@ svg:not([stroke-width]) {
       --btn-p: 1rem;
       --size: calc(var(--size-field, 0.25rem) * 10);
     }
+  }
+
+  
+  [data-theme="dark"] .md\:prose-base {
+    color: rgba(255, 255, 255, 0.9);
   }
 }
 
