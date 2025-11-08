@@ -309,19 +309,12 @@
                const percent = metrics.totalTasks > 0
                  ? Math.round((item.count / metrics.totalTasks) * 100)
                  : 0;
-               const statusKey = item.status.toLowerCase().replace('_', '');
-               const badgeClass = item.status === 'TODO' ? 'badge-info' :
-                                 item.status === 'IN_PROGRESS' ? 'badge-warning' :
-                                 item.status === 'DONE' ? 'badge-success' : 'badge-neutral';
-               const barClass = item.status === 'TODO' ? 'bg-info' :
-                               item.status === 'IN_PROGRESS' ? 'bg-warning' :
-                               item.status === 'DONE' ? 'bg-success' : 'bg-neutral';
           %>
             <div class="flex items-center gap-3">
-              <span class="badge <%= badgeClass %> badge-sm"><%= t(`tasks.status.${statusKey}`) %></span>
+              <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
               <div class="flex-1">
                 <div class="h-2 rounded-full bg-base-200">
-                  <div class="h-2 rounded-full <%= barClass %>"
+                  <div class="h-2 rounded-full <%= item.bar %>"
                        style="width: <%= percent %>%"></div>
                 </div>
               </div>
@@ -344,19 +337,12 @@
                const percent = metrics.totalTasks > 0
                  ? Math.round((item.count / metrics.totalTasks) * 100)
                  : 0;
-               const priorityKey = item.priority.toLowerCase();
-               const badgeClass = item.priority === 'LOW' ? 'badge-info' :
-                                 item.priority === 'MEDIUM' ? 'badge-warning' :
-                                 item.priority === 'HIGH' ? 'badge-error' : 'badge-error';
-               const barClass = item.priority === 'LOW' ? 'bg-info' :
-                               item.priority === 'MEDIUM' ? 'bg-warning' :
-                               item.priority === 'HIGH' ? 'bg-error' : 'bg-error';
           %>
             <div class="flex items-center gap-3">
-              <span class="badge <%= badgeClass %> badge-sm"><%= t(`tasks.priority.${priorityKey}`) %></span>
+              <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
               <div class="flex-1">
                 <div class="h-2 rounded-full bg-base-200">
-                  <div class="h-2 rounded-full <%= barClass %>"
+                  <div class="h-2 rounded-full <%= item.bar %>"
                        style="width: <%= percent %>%"></div>
                 </div>
               </div>
