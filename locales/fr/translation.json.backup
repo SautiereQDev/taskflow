@@ -127,123 +127,7 @@
     "inProgressTasks": "Tâches en cours",
     "overdueTasks": "Tâches en retard",
     "recentActivity": "Activité récente",
-    "hero": {
-      "greeting": "Bonjour{{#if name}}, {{name}}{{/if}}",
-      "wave": "👋",
-      "subtitle": "Vous avez {{total}} tâche(s) au total, dont {{active}} active(s).",
-      "status": "Prêt à travailler",
-      "highPerformer": "Excellente performance",
-      "stats": {
-        "tasks": "Tâches totales",
-        "completed": "Terminées",
-        "inProgress": "En cours"
-      },
-      "progress": {
-        "title": "Votre progression",
-        "completed": "Terminées",
-        "remaining": "Restantes",
-        "ariaLabel": "Taux de complétion des tâches"
-      },
-      "actions": {
-        "create": "Créer une tâche",
-        "viewActive": "Voir les actives",
-        "viewUrgent": "Voir les urgentes",
-        "viewReports": "Voir les rapports",
-        "newTask": {
-          "title": "Nouvelle tâche",
-          "subtitle": "Créer et assigner",
-          "aria": "Créer une nouvelle tâche"
-        },
-        "viewTasks": {
-          "title": "Voir les tâches",
-          "subtitle": "Gérer et suivre",
-          "aria": "Voir toutes les tâches"
-        }
-      },
-      "achievements": {
-        "title": "Vos succès",
-        "completed": "{{count}} tâche(s) cette semaine",
-        "onTime": "Aucune tâche en retard",
-        "teamPlayer": "{{count}} membres actifs"
-      },
-      "quote": {
-        "text": "La productivité n'est pas tout faire, mais faire ce qui compte.",
-        "author": "Gestion de projet moderne"
-      }
-    },
-    "metrics": {
-      "title": "Métriques clés",
-      "updated": "Mis à jour à {{time}}"
-    },
-    "cards": {
-      "total": "Tâches totales",
-      "active": "Actives",
-      "inProgress": "En cours",
-      "inProgressHint": "{{value}} tâche(s) vous sont assignées",
-      "completed": "Terminées",
-      "completedHint": "{{value}} cette semaine",
-      "overdue": "En retard",
-      "overdueHint": "À traiter rapidement",
-      "assignedToYou": "Vous sont assignées",
-      "thisWeek": "Cette semaine",
-      "needsAttention": "Nécessite attention",
-      "urgent": "Urgent",
-      "good": "Parfait",
-      "total.progressAria": "Pourcentage de tâches actives"
-    },
-    "progress": {
-      "title": "Progression générale",
-      "subtitle": "Taux de complétion basé sur l'ensemble des tâches",
-      "completion": "Terminé",
-      "completionRate": "Taux de complétion",
-      "createdThisWeek": "Créées (7 derniers jours)",
-      "completedThisWeek": "Terminées (7 derniers jours)",
-      "activeUsers": "Membres actifs"
-    },
-    "alerts": {
-      "title": "Points d'attention",
-      "overdue": "{{value}} tâche(s) en retard",
-      "overdueHint": "Priorisez ces tâches pour maintenir le rythme.",
-      "inProgress": "{{value}} tâche(s) en cours",
-      "inProgressHint": "Suivez les jalons pour éviter les retards.",
-      "activeUsers": "{{value}} membre(s) actifs",
-      "activeUsersHint": "Surveillez la charge de travail de l'équipe."
-    },
-    "distribution": {
-      "status": "Répartition par statut",
-      "priority": "Répartition par priorité"
-    },
-    "sections": {
-      "taskStreams": "Flux de tâches",
-      "highlighted": "Tâches prioritaires",
-      "highlightedEmpty": "Aucune tâche prioritaire pour le moment.",
-      "upcoming": "À venir",
-      "upcomingEmpty": "Aucune échéance imminente.",
-      "viewAll": "Voir tout",
-      "overdue": "En retard",
-      "dueToday": "À faire aujourd'hui",
-      "dueTomorrow": "Pour demain",
-      "noDueDate": "Pas d'échéance",
-      "myWork": "Mes tâches",
-      "myWorkEmpty": "Aucune tâche ne vous est assignée.",
-      "summaryTotal": "Total",
-      "summaryInProgress": "En cours",
-      "summaryTodo": "À faire",
-      "summaryOverdue": "En retard"
-    },
-    "teamCapacity": {
-      "title": "Capacité de l'équipe",
-      "subtitle": "Vue d'ensemble de la charge de travail et du taux de complétion par membre.",
-      "manage": "Gérer les membres",
-      "empty": "Aucun membre actif pour le moment.",
-      "columns": {
-        "member": "Membre",
-        "assigned": "Assignées",
-        "completed": "Terminées",
-        "overdue": "En retard",
-        "completion": "Taux de complétion"
-      }
-    },
+    "teamCapacity": "Capacité de l'équipe",
     "actions": {
       "newTask": "Nouvelle tâche",
       "viewTasks": "Voir les tâches"
@@ -253,6 +137,67 @@
       "description": "Créez une tâche, assignez-la à un membre de votre équipe et suivez sa progression depuis ce tableau de bord.",
       "primaryAction": "Créer une tâche",
       "secondaryAction": "Voir les exemples"
+    },
+    "cards": {
+      "total": "Tâches totales",
+      "openTasks": "{{value}} tâche(s) actives",
+      "inProgress": "En cours",
+      "inProgressHint": "{{value}} tâche(s) vous sont assignées",
+      "completed": "Terminées",
+      "completedHint": "{{value}} cette semaine",
+      "overdue": "En retard",
+      "overdueHint": "À traiter rapidement"
+    },
+    "progress": {
+      "title": "Progression générale",
+      "subtitle": "Taux de complétion basé sur l’ensemble des tâches",
+      "completion": "Terminé",
+      "createdThisWeek": "Créées (7 derniers jours)",
+      "completedThisWeek": "Terminées (7 derniers jours)",
+      "activeUsers": "Membres actifs"
+    },
+    "alerts": {
+      "title": "Points d’attention",
+      "overdue": "{{value}} tâche(s) en retard",
+      "overdueHint": "Priorisez ces tâches pour maintenir le rythme.",
+      "inProgress": "{{value}} tâche(s) en cours",
+      "inProgressHint": "Suivez les jalons pour éviter les retards.",
+      "activeUsers": "{{value}} membre(s) actifs",
+      "activeUsersHint": "Surveillez la charge de travail de l’équipe."
+    },
+    "distribution": {
+      "status": "Répartition par statut",
+      "priority": "Répartition par priorité"
+    },
+    "sections": {
+      "highlighted": "Tâches prioritaires",
+      "highlightedEmpty": "Aucune tâche prioritaire pour le moment.",
+      "upcoming": "À venir",
+      "upcomingEmpty": "Aucune échéance imminente.",
+      "viewAll": "Voir tout",
+      "overdue": "En retard",
+      "dueToday": "À faire aujourd’hui",
+      "dueTomorrow": "Pour demain",
+      "noDueDate": "Pas d’échéance",
+      "myWork": "Mes tâches",
+      "myWorkEmpty": "Aucune tâche ne vous est assignée.",
+      "summaryTotal": "Total",
+      "summaryInProgress": "En cours",
+      "summaryTodo": "À faire",
+      "summaryOverdue": "En retard"
+    },
+    "teamCapacity": {
+      "title": "Capacité de l’équipe",
+      "subtitle": "Vue d’ensemble de la charge de travail et du taux de complétion par membre.",
+      "manage": "Gérer les membres",
+      "columns": {
+        "member": "Membre",
+        "assigned": "Assignées",
+        "completed": "Terminées",
+        "overdue": "En retard",
+        "completion": "Taux de complétion"
+      },
+      "empty": "Aucun membre actif pour le moment."
     }
   },
   "user": {

@@ -134,6 +134,32 @@
   .tf-aside {
     @apply w-64 bg-base-200 p-4;
   }
+
+  /* Typography Utilities */
+  .tf-text-primary {
+    @apply text-base-content;
+  }
+
+  .tf-text-secondary {
+    @apply text-base-content text-opacity-80;
+  }
+
+  .tf-text-muted {
+    @apply text-base-content text-opacity-60;
+  }
+
+  /* Dark theme typography variants */
+  [data-theme='taskflowDark'] .tf-text-primary {
+    @apply text-base-content;
+  }
+
+  [data-theme='taskflowDark'] .tf-text-secondary {
+    @apply text-base-content text-opacity-80;
+  }
+
+  [data-theme='taskflowDark'] .tf-text-muted {
+    @apply text-base-content text-opacity-60;
+  }
 }
 
 @layer utilities {

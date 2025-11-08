@@ -1,151 +1,267 @@
 {
-  "nav": {
-    "dashboard": "Dashboard",
-    "tasks": "Tasks",
-    "users": "Users",
-    "account": "My Account",
-    "profile": "Profile",
-    "settings": "Settings",
-    "login": "Login",
-    "register": "Sign Up",
-    "logout": "Logout"
-  },
-  "footer": {
-    "tagline": "Modern collaborative task management",
-    "copyright": "© {{year}} TaskFlow. All rights reserved.",
-    "product": "Product",
-    "about": "About",
-    "features": "Features",
-    "roadmap": "Roadmap",
-    "changelog": "Changelog",
-    "support": "Support",
-    "help": "Help",
-    "contact": "Contact",
-    "faq": "FAQ",
-    "status": "Status",
-    "legal": "Legal",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "cookies": "Cookies",
-    "licenses": "Licenses"
-  },
-  "theme": {
-    "switchToLight": "Switch to light theme",
-    "switchToDark": "Switch to dark theme"
-  },
-  "common": {
-    "close": "Close",
-    "cancel": "Cancel",
-    "save": "Save",
-    "delete": "Delete",
-    "edit": "Edit",
-    "create": "Create",
-    "search": "Search",
-    "filter": "Filter",
-    "sort": "Sort",
-    "loading": "Loading...",
-    "error": "Error",
-    "success": "Success",
-    "warning": "Warning",
-    "info": "Information"
-  },
-  "a11y": {
-    "skipToContent": "Skip to main content",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "loading": "Loading, please wait",
-    "imageAlt": "Image",
-    "required": "Required field",
-    "openInNewTab": "Open in new tab",
-    "previousPage": "Previous page",
-    "nextPage": "Next page",
-    "currentPage": "Current page",
-    "pageOf": "Page {{current}} of {{total}}"
-  },
-  "settings": {
-    "title": "Settings",
-    "subtitle": "Customize your TaskFlow experience",
-    "save": "Save changes",
-    "info": "Your preferences are automatically synced across all your devices.",
-    "appearance": {
-      "title": "Appearance",
-      "theme": "Theme",
-      "themeHint": "Choose your interface theme",
-      "light": "Light",
-      "dark": "Dark",
-      "themeSync": "Theme is synced with the header switcher"
+  "translation": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "tasks": "Tasks",
+      "users": "Users",
+      "account": "My Account",
+      "profile": "Profile",
+      "settings": "Settings",
+      "login": "Login",
+      "register": "Sign Up",
+      "logout": "Logout"
     },
-    "language": {
-      "title": "Language",
-      "preferred": "Preferred language",
-      "hint": "Select your language"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "coming": "Notifications will be available in a future version.",
-      "email": "Email notifications",
-      "browser": "Browser notifications",
-      "taskAssigned": "New task assigned"
-    },
-    "privacy": {
-      "title": "Privacy & Security",
-      "coming": "Privacy options coming soon.",
-      "changePassword": "Change password",
-      "deleteAccount": "Delete account"
-    }
-  },
-  "errors": {
-    "404": {
-      "title": "Page Not Found",
-      "message": "Sorry, the page you're looking for doesn't exist or has been moved.",
-      "searchPlaceholder": "Search for a page...",
-      "homeButton": "Back to Home",
-      "backButton": "Previous Page",
-      "helpfulLinks": "Helpful links:"
-    },
-    "500": {
-      "title": "Server Error",
-      "message": "An unexpected error occurred. Our team has been notified and is working to fix the issue.",
-      "homeButton": "Back to Home",
-      "retryButton": "Retry",
-      "detailsTitle": "Error Details (development)",
-      "supportTitle": "Need help?",
-      "supportEmail": "Contact Support"
-    }
-  },
-  "tasks": {
-    "edit": {
-      "title": "Edit Task",
-      "subtitle": "Modify the task information below",
-      "deleteConfirm": "Are you sure you want to delete this task? This action cannot be undone.",
-      "info": "Changes will be applied immediately. All team members will be notified of important changes."
-    },
-    "form": {
-      "title": "Title",
-      "titlePlaceholder": "e.g. Implement authentication system",
-      "titleHint": "Minimum 3 characters, maximum 200",
-      "description": "Description",
-      "descriptionPlaceholder": "Detailed task description...",
-      "descriptionHint": "Describe the task details (optional)",
+    "footer": {
+      "tagline": "Modern collaborative task management",
+      "copyright": "© {{year}} TaskFlow. All rights reserved.",
+      "product": "Product",
+      "about": "About",
+      "features": "Features",
+      "roadmap": "Roadmap",
+      "changelog": "Changelog",
+      "support": "Support",
+      "help": "Help",
+      "contact": "Contact",
+      "faq": "FAQ",
       "status": "Status",
-      "priority": "Priority",
-      "assignee": "Assigned to",
-      "noAssignee": "Unassigned",
-      "assigneeHint": "Choose a team member",
-      "dueDate": "Due Date",
-      "dueDateHint": "Deadline date and time (optional)"
+      "legal": "Legal",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookies",
+      "licenses": "Licenses"
     },
-    "status": {
-      "todo": "To Do",
-      "inProgress": "In Progress",
-      "done": "Done",
-      "cancelled": "Cancelled"
+    "theme": {
+      "switchToLight": "Switch to light theme",
+      "switchToDark": "Switch to dark theme"
     },
-    "priority": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "urgent": "Urgent"
+    "common": {
+      "close": "Close",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "search": "Search",
+      "filter": "Filter",
+      "sort": "Sort",
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "warning": "Warning",
+      "info": "Information"
+    },
+    "a11y": {
+      "skipToContent": "Skip to main content",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "loading": "Loading, please wait",
+      "imageAlt": "Image",
+      "required": "Required field",
+      "openInNewTab": "Open in new tab",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "currentPage": "Current page",
+      "pageOf": "Page {{current}} of {{total}}"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Customize your TaskFlow experience",
+      "save": "Save changes",
+      "info": "Your preferences are automatically synced across all your devices.",
+      "appearance": {
+        "title": "Appearance",
+        "theme": "Theme",
+        "themeHint": "Choose your interface theme",
+        "light": "Light",
+        "dark": "Dark",
+        "themeSync": "Theme is synced with the header switcher"
+      },
+      "language": {
+        "title": "Language",
+        "preferred": "Preferred language",
+        "hint": "Select your language"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "coming": "Notifications will be available in a future version.",
+        "email": "Email notifications",
+        "browser": "Browser notifications",
+        "taskAssigned": "New task assigned"
+      },
+      "privacy": {
+        "title": "Privacy & Security",
+        "coming": "Privacy options coming soon.",
+        "changePassword": "Change password",
+        "deleteAccount": "Delete account"
+      }
+    },
+    "errors": {
+      "404": {
+        "title": "Page Not Found",
+        "message": "Sorry, the page you're looking for doesn't exist or has been moved.",
+        "searchPlaceholder": "Search for a page...",
+        "homeButton": "Back to Home",
+        "backButton": "Previous Page",
+        "helpfulLinks": "Helpful links:"
+      },
+      "500": {
+        "title": "Server Error",
+        "message": "An unexpected error occurred. Our team has been notified and is working to fix the issue.",
+        "homeButton": "Back to Home",
+        "retryButton": "Retry",
+        "detailsTitle": "Error Details (development)",
+        "supportTitle": "Need help?",
+        "supportEmail": "Contact Support"
+      }
+    },
+    "tasks": {
+      "edit": {
+        "title": "Edit Task",
+        "subtitle": "Modify the task information below",
+        "deleteConfirm": "Are you sure you want to delete this task? This action cannot be undone.",
+        "info": "Changes will be applied immediately. All team members will be notified of important changes."
+      },
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "e.g. Implement authentication system",
+        "titleHint": "Minimum 3 characters, maximum 200",
+        "description": "Description",
+        "descriptionPlaceholder": "Detailed task description...",
+        "descriptionHint": "Describe the task details (optional)",
+        "status": "Status",
+        "priority": "Priority",
+        "assignee": "Assigned to",
+        "noAssignee": "Unassigned",
+        "assigneeHint": "Choose a team member",
+        "dueDate": "Due Date",
+        "dueDateHint": "Deadline date and time (optional)"
+      },
+      "status": {
+        "todo": "To Do",
+        "inProgress": "In Progress",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "priority": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "urgent": "Urgent"
+      }
+    },
+    "dashboard": {
+      "hero": {
+        "greeting": "Hello{{#if name}}, {{name}}{{/if}}",
+        "wave": "👋",
+        "subtitle": "You have {{total}} task(s) total, {{active}} active.",
+        "status": "Ready to work",
+        "highPerformer": "Excellent performance",
+        "stats": {
+          "tasks": "Total Tasks",
+          "completed": "Completed",
+          "inProgress": "In Progress"
+        },
+        "progress": {
+          "title": "Your progress",
+          "completed": "Completed",
+          "remaining": "Remaining",
+          "ariaLabel": "Task completion rate"
+        },
+        "actions": {
+          "create": "Create task",
+          "viewActive": "View active",
+          "viewUrgent": "View urgent",
+          "viewReports": "View reports",
+          "newTask": {
+            "title": "New task",
+            "subtitle": "Create and assign",
+            "aria": "Create a new task"
+          },
+          "viewTasks": {
+            "title": "View tasks",
+            "subtitle": "Manage and track",
+            "aria": "View all tasks"
+          }
+        },
+        "achievements": {
+          "title": "Your achievements",
+          "completed": "{{count}} task(s) this week",
+          "onTime": "No overdue tasks",
+          "teamPlayer": "{{count}} active members"
+        },
+        "quote": {
+          "text": "Productivity is not about doing everything, but doing what matters.",
+          "author": "Modern project management"
+        }
+      },
+      "metrics": {
+        "title": "Key Metrics",
+        "updated": "Updated at {{time}}"
+      },
+      "cards": {
+        "total": "Total Tasks",
+        "active": "Active",
+        "inProgress": "In Progress",
+        "completed": "Completed",
+        "overdue": "Overdue",
+        "assignedToYou": "Assigned to you",
+        "thisWeek": "This week",
+        "needsAttention": "Needs attention",
+        "urgent": "Urgent",
+        "good": "Good",
+        "total.progressAria": "Percentage of active tasks"
+      },
+      "progress": {
+        "title": "Overall Progress",
+        "completionRate": "Completion Rate",
+        "createdThisWeek": "Created (last 7 days)",
+        "completedThisWeek": "Completed (last 7 days)",
+        "activeUsers": "Active Members"
+      },
+      "alerts": {
+        "title": "Attention Points",
+        "overdue": "{{value}} overdue task(s)",
+        "overdueHint": "Prioritize these tasks to maintain momentum.",
+        "inProgress": "{{value}} task(s) in progress",
+        "inProgressHint": "Follow milestones to avoid delays.",
+        "activeUsers": "{{value}} active member(s)",
+        "activeUsersHint": "Monitor team workload."
+      },
+      "distribution": {
+        "status": "Distribution by Status",
+        "priority": "Distribution by Priority"
+      },
+      "sections": {
+        "taskStreams": "Task Streams",
+        "highlighted": "Priority Tasks",
+        "upcoming": "Upcoming",
+        "myWork": "My Tasks",
+        "viewAll": "View all",
+        "highlightedEmpty": "No priority tasks at the moment.",
+        "upcomingEmpty": "No upcoming deadlines.",
+        "myWorkEmpty": "No tasks assigned to you.",
+        "overdue": "Overdue",
+        "dueToday": "Due today",
+        "dueTomorrow": "Due tomorrow",
+        "noDueDate": "No deadline",
+        "summaryTotal": "Total",
+        "summaryInProgress": "In Progress",
+        "summaryTodo": "To Do",
+        "summaryOverdue": "Overdue"
+      },
+      "teamCapacity": {
+        "title": "Team Capacity",
+        "subtitle": "Overview of workload and completion rate per member.",
+        "manage": "Manage members",
+        "empty": "No active members at the moment.",
+        "columns": {
+          "member": "Member",
+          "assigned": "Assigned",
+          "completed": "Completed",
+          "overdue": "Overdue",
+          "completion": "Completion Rate"
+        }
+      }
     }
   }
 }

@@ -1,151 +1,267 @@
 {
-  "nav": {
-    "dashboard": "Tableau de bord",
-    "tasks": "Tâches",
-    "users": "Utilisateurs",
-    "account": "Mon compte",
-    "profile": "Profil",
-    "settings": "Paramètres",
-    "login": "Connexion",
-    "register": "S'inscrire",
-    "logout": "Déconnexion"
-  },
-  "footer": {
-    "tagline": "Gestion de tâches moderne et collaborative",
-    "copyright": "© {{year}} TaskFlow. Tous droits réservés.",
-    "product": "Produit",
-    "about": "À propos",
-    "features": "Fonctionnalités",
-    "roadmap": "Roadmap",
-    "changelog": "Changelog",
-    "support": "Support",
-    "help": "Aide",
-    "contact": "Contact",
-    "faq": "FAQ",
-    "status": "Statut",
-    "legal": "Légal",
-    "privacy": "Confidentialité",
-    "terms": "Conditions",
-    "cookies": "Cookies",
-    "licenses": "Licences"
-  },
-  "theme": {
-    "switchToLight": "Passer au thème clair",
-    "switchToDark": "Passer au thème sombre"
-  },
-  "common": {
-    "close": "Fermer",
-    "cancel": "Annuler",
-    "save": "Enregistrer",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "create": "Créer",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "sort": "Trier",
-    "loading": "Chargement...",
-    "error": "Erreur",
-    "success": "Succès",
-    "warning": "Attention",
-    "info": "Information"
-  },
-  "a11y": {
-    "skipToContent": "Aller au contenu principal",
-    "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu",
-    "loading": "Chargement en cours, veuillez patienter",
-    "imageAlt": "Image",
-    "required": "Champ obligatoire",
-    "openInNewTab": "Ouvrir dans un nouvel onglet",
-    "previousPage": "Page précédente",
-    "nextPage": "Page suivante",
-    "currentPage": "Page actuelle",
-    "pageOf": "Page {{current}} sur {{total}}"
-  },
-  "settings": {
-    "title": "Paramètres",
-    "subtitle": "Personnalisez votre expérience TaskFlow",
-    "save": "Enregistrer les modifications",
-    "info": "Vos préférences sont synchronisées automatiquement sur tous vos appareils.",
-    "appearance": {
-      "title": "Apparence",
-      "theme": "Thème",
-      "themeHint": "Choisissez le thème de l'interface",
-      "light": "Clair",
-      "dark": "Sombre",
-      "themeSync": "Le thème est synchronisé avec le sélecteur dans l'en-tête"
+  "translation": {
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "tasks": "Tâches",
+      "users": "Utilisateurs",
+      "account": "Mon compte",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "login": "Connexion",
+      "register": "S'inscrire",
+      "logout": "Déconnexion"
     },
-    "language": {
-      "title": "Langue",
-      "preferred": "Langue préférée",
-      "hint": "Sélectionnez votre langue"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "coming": "Les notifications seront disponibles dans une prochaine version.",
-      "email": "Notifications par email",
-      "browser": "Notifications navigateur",
-      "taskAssigned": "Nouvelle tâche assignée"
-    },
-    "privacy": {
-      "title": "Confidentialité et sécurité",
-      "coming": "Options de confidentialité à venir prochainement.",
-      "changePassword": "Changer le mot de passe",
-      "deleteAccount": "Supprimer le compte"
-    }
-  },
-  "errors": {
-    "404": {
-      "title": "Page introuvable",
-      "message": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
-      "searchPlaceholder": "Rechercher une page...",
-      "homeButton": "Retour à l'accueil",
-      "backButton": "Page précédente",
-      "helpfulLinks": "Liens utiles :"
-    },
-    "500": {
-      "title": "Erreur serveur",
-      "message": "Une erreur inattendue s'est produite. Nos équipes ont été notifiées et travaillent à résoudre le problème.",
-      "homeButton": "Retour à l'accueil",
-      "retryButton": "Réessayer",
-      "detailsTitle": "Détails de l'erreur (développement)",
-      "supportTitle": "Besoin d'aide ?",
-      "supportEmail": "Contactez le support"
-    }
-  },
-  "tasks": {
-    "edit": {
-      "title": "Modifier la tâche",
-      "subtitle": "Modifiez les informations de la tâche ci-dessous",
-      "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.",
-      "info": "Les modifications seront appliquées immédiatement. Tous les membres de l'équipe seront notifiés des changements importants."
-    },
-    "form": {
-      "title": "Titre",
-      "titlePlaceholder": "Ex: Implémenter le système d'authentification",
-      "titleHint": "Minimum 3 caractères, maximum 200",
-      "description": "Description",
-      "descriptionPlaceholder": "Description détaillée de la tâche...",
-      "descriptionHint": "Décrivez les détails de la tâche (optionnel)",
+    "footer": {
+      "tagline": "Gestion de tâches moderne et collaborative",
+      "copyright": "© {{year}} TaskFlow. Tous droits réservés.",
+      "product": "Produit",
+      "about": "À propos",
+      "features": "Fonctionnalités",
+      "roadmap": "Roadmap",
+      "changelog": "Changelog",
+      "support": "Support",
+      "help": "Aide",
+      "contact": "Contact",
+      "faq": "FAQ",
       "status": "Statut",
-      "priority": "Priorité",
-      "assignee": "Assignée à",
-      "noAssignee": "Non assignée",
-      "assigneeHint": "Choisissez un membre de l'équipe",
-      "dueDate": "Date d'échéance",
-      "dueDateHint": "Date et heure limite (optionnel)"
+      "legal": "Légal",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "cookies": "Cookies",
+      "licenses": "Licences"
     },
-    "status": {
-      "todo": "À faire",
-      "inProgress": "En cours",
-      "done": "Terminée",
-      "cancelled": "Annulée"
+    "theme": {
+      "switchToLight": "Passer au thème clair",
+      "switchToDark": "Passer au thème sombre"
     },
-    "priority": {
-      "low": "Basse",
-      "medium": "Moyenne",
-      "high": "Haute",
-      "urgent": "Urgente"
+    "common": {
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "delete": "Supprimer",
+      "edit": "Modifier",
+      "create": "Créer",
+      "search": "Rechercher",
+      "filter": "Filtrer",
+      "sort": "Trier",
+      "loading": "Chargement...",
+      "error": "Erreur",
+      "success": "Succès",
+      "warning": "Attention",
+      "info": "Information"
+    },
+    "a11y": {
+      "skipToContent": "Aller au contenu principal",
+      "openMenu": "Ouvrir le menu",
+      "closeMenu": "Fermer le menu",
+      "loading": "Chargement en cours, veuillez patienter",
+      "imageAlt": "Image",
+      "required": "Champ obligatoire",
+      "openInNewTab": "Ouvrir dans un nouvel onglet",
+      "previousPage": "Page précédente",
+      "nextPage": "Page suivante",
+      "currentPage": "Page actuelle",
+      "pageOf": "Page {{current}} sur {{total}}"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Personnalisez votre expérience TaskFlow",
+      "save": "Enregistrer les modifications",
+      "info": "Vos préférences sont synchronisées automatiquement sur tous vos appareils.",
+      "appearance": {
+        "title": "Apparence",
+        "theme": "Thème",
+        "themeHint": "Choisissez le thème de l'interface",
+        "light": "Clair",
+        "dark": "Sombre",
+        "themeSync": "Le thème est synchronisé avec le sélecteur dans l'en-tête"
+      },
+      "language": {
+        "title": "Langue",
+        "preferred": "Langue préférée",
+        "hint": "Sélectionnez votre langue"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "coming": "Les notifications seront disponibles dans une prochaine version.",
+        "email": "Notifications par email",
+        "browser": "Notifications navigateur",
+        "taskAssigned": "Nouvelle tâche assignée"
+      },
+      "privacy": {
+        "title": "Confidentialité et sécurité",
+        "coming": "Options de confidentialité à venir prochainement.",
+        "changePassword": "Changer le mot de passe",
+        "deleteAccount": "Supprimer le compte"
+      }
+    },
+    "errors": {
+      "404": {
+        "title": "Page introuvable",
+        "message": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
+        "searchPlaceholder": "Rechercher une page...",
+        "homeButton": "Retour à l'accueil",
+        "backButton": "Page précédente",
+        "helpfulLinks": "Liens utiles :"
+      },
+      "500": {
+        "title": "Erreur serveur",
+        "message": "Une erreur inattendue s'est produite. Nos équipes ont été notifiées et travaillent à résoudre le problème.",
+        "homeButton": "Retour à l'accueil",
+        "retryButton": "Réessayer",
+        "detailsTitle": "Détails de l'erreur (développement)",
+        "supportTitle": "Besoin d'aide ?",
+        "supportEmail": "Contactez le support"
+      }
+    },
+    "tasks": {
+      "edit": {
+        "title": "Modifier la tâche",
+        "subtitle": "Modifiez les informations de la tâche ci-dessous",
+        "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.",
+        "info": "Les modifications seront appliquées immédiatement. Tous les membres de l'équipe seront notifiés des changements importants."
+      },
+      "form": {
+        "title": "Titre",
+        "titlePlaceholder": "Ex: Implémenter le système d'authentification",
+        "titleHint": "Minimum 3 caractères, maximum 200",
+        "description": "Description",
+        "descriptionPlaceholder": "Description détaillée de la tâche...",
+        "descriptionHint": "Décrivez les détails de la tâche (optionnel)",
+        "status": "Statut",
+        "priority": "Priorité",
+        "assignee": "Assignée à",
+        "noAssignee": "Non assignée",
+        "assigneeHint": "Choisissez un membre de l'équipe",
+        "dueDate": "Date d'échéance",
+        "dueDateHint": "Date et heure limite (optionnel)"
+      },
+      "status": {
+        "todo": "À faire",
+        "inprogress": "En cours",
+        "done": "Terminée",
+        "cancelled": "Annulée"
+      },
+      "priority": {
+        "low": "Basse",
+        "medium": "Moyenne",
+        "high": "Haute",
+        "urgent": "Urgente"
+      }
+    },
+    "dashboard": {
+      "hero": {
+        "greeting": "Bonjour{{#if name}}, {{name}}{{/if}}",
+        "wave": "👋",
+        "subtitle": "Vous avez {{total}} tâche(s) au total, dont {{active}} active(s).",
+        "status": "Prêt à travailler",
+        "highPerformer": "Excellente performance",
+        "stats": {
+          "tasks": "Tâches totales",
+          "completed": "Terminées",
+          "inProgress": "En cours"
+        },
+        "progress": {
+          "title": "Votre progression",
+          "completed": "Terminées",
+          "remaining": "Restantes",
+          "ariaLabel": "Taux de complétion des tâches"
+        },
+        "actions": {
+          "create": "Créer une tâche",
+          "viewActive": "Voir les actives",
+          "viewUrgent": "Voir les urgentes",
+          "viewReports": "Voir les rapports",
+          "newTask": {
+            "title": "Nouvelle tâche",
+            "subtitle": "Créer et assigner",
+            "aria": "Créer une nouvelle tâche"
+          },
+          "viewTasks": {
+            "title": "Voir les tâches",
+            "subtitle": "Gérer et suivre",
+            "aria": "Voir toutes les tâches"
+          }
+        },
+        "achievements": {
+          "title": "Vos succès",
+          "completed": "{{count}} tâche(s) cette semaine",
+          "onTime": "Aucune tâche en retard",
+          "teamPlayer": "{{count}} membres actifs"
+        },
+        "quote": {
+          "text": "La productivité n'est pas tout faire, mais faire ce qui compte.",
+          "author": "Gestion de projet moderne"
+        }
+      },
+      "metrics": {
+        "title": "Métriques clés",
+        "updated": "Mis à jour à {{time}}"
+      },
+      "cards": {
+        "total": "Tâches totales",
+        "active": "Actives",
+        "inProgress": "En cours",
+        "completed": "Terminées",
+        "overdue": "En retard",
+        "assignedToYou": "Vous sont assignées",
+        "thisWeek": "Cette semaine",
+        "needsAttention": "Nécessite attention",
+        "urgent": "Urgent",
+        "good": "Parfait",
+        "total.progressAria": "Pourcentage de tâches actives"
+      },
+      "progress": {
+        "title": "Progression générale",
+        "completionRate": "Taux de complétion",
+        "createdThisWeek": "Créées (7 derniers jours)",
+        "completedThisWeek": "Terminées (7 derniers jours)",
+        "activeUsers": "Membres actifs"
+      },
+      "alerts": {
+        "title": "Points d'attention",
+        "overdue": "{{value}} tâche(s) en retard",
+        "overdueHint": "Priorisez ces tâches pour maintenir le rythme.",
+        "inProgress": "{{value}} tâche(s) en cours",
+        "inProgressHint": "Suivez les jalons pour éviter les retards.",
+        "activeUsers": "{{value}} membre(s) actifs",
+        "activeUsersHint": "Surveillez la charge de travail de l'équipe."
+      },
+      "distribution": {
+        "status": "Répartition par statut",
+        "priority": "Répartition par priorité"
+      },
+      "sections": {
+        "taskStreams": "Flux de tâches",
+        "highlighted": "Tâches prioritaires",
+        "upcoming": "À venir",
+        "myWork": "Mes tâches",
+        "viewAll": "Voir tout",
+        "highlightedEmpty": "Aucune tâche prioritaire pour le moment.",
+        "upcomingEmpty": "Aucune échéance imminente.",
+        "myWorkEmpty": "Aucune tâche ne vous est assignée.",
+        "overdue": "En retard",
+        "dueToday": "À faire aujourd'hui",
+        "dueTomorrow": "Pour demain",
+        "noDueDate": "Pas d'échéance",
+        "summaryTotal": "Total",
+        "summaryInProgress": "En cours",
+        "summaryTodo": "À faire",
+        "summaryOverdue": "En retard"
+      },
+      "teamCapacity": {
+        "title": "Capacité de l'équipe",
+        "subtitle": "Vue d'ensemble de la charge de travail et du taux de complétion par membre.",
+        "manage": "Gérer les membres",
+        "empty": "Aucun membre actif pour le moment.",
+        "columns": {
+          "member": "Membre",
+          "assigned": "Assignées",
+          "completed": "Terminées",
+          "overdue": "En retard",
+          "completion": "Taux de complétion"
+        }
+      }
     }
   }
 }
