@@ -1,99 +1,99 @@
 <div class="flex justify-center mt-8">
-  <div class="join">
-    <!-- Previous Button -->
-    <% if (pagination.currentPage > 1) { %>
-      <button class="join-item btn btn-sm"
-              hx-get="/tasks?page=<%= pagination.currentPage - 1 %>"
-              hx-target="#task-list-container"
-              hx-indicator="#pagination-indicator">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-    <% } else { %>
-      <button class="join-item btn btn-sm btn-disabled">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-    <% } %>
+ <div class="join">
+ <!-- Previous Button -->
+ <% if (pagination.currentPage > 1) { %>
+ <button class="join-item btn btn-sm"
+ hx-get="/tasks?page=<%= pagination.currentPage - 1 %>"
+ hx-target="#task-list-container"
+ hx-indicator="#pagination-indicator">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+ </svg>
+ </button>
+ <% } else { %>
+ <button class="join-item btn btn-sm btn-disabled">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+ </svg>
+ </button>
+ <% } %>
 
-    <!-- Page Numbers -->
-    <%
-      const maxVisiblePages = 5;
-      let startPage = Math.max(1, pagination.currentPage - Math.floor(maxVisiblePages / 2));
-      let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
+ <!-- Page Numbers -->
+ <%
+ const maxVisiblePages = 5;
+ let startPage = Math.max(1, pagination.currentPage - Math.floor(maxVisiblePages / 2));
+ let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
 
-      if (endPage - startPage + 1 < maxVisiblePages) {
-        startPage = Math.max(1, endPage - maxVisiblePages + 1);
-      }
+ if (endPage - startPage + 1 < maxVisiblePages) {
+ startPage = Math.max(1, endPage - maxVisiblePages + 1);
+ }
 
-      // Show first page if not visible
-      if (startPage > 1) {
-    %>
-      <button class="join-item btn btn-sm"
-              hx-get="/tasks?page=1"
-              hx-target="#task-list-container"
-              hx-indicator="#pagination-indicator">
-        1
-      </button>
-      <% if (startPage > 2) { %>
-        <button class="join-item btn btn-sm btn-disabled">...</button>
-      <% } %>
-    <% } %>
+ // Show first page if not visible
+ if (startPage > 1) {
+ %>
+ <button class="join-item btn btn-sm"
+ hx-get="/tasks?page=1"
+ hx-target="#task-list-container"
+ hx-indicator="#pagination-indicator">
+ 1
+ </button>
+ <% if (startPage > 2) { %>
+ <button class="join-item btn btn-sm btn-disabled">...</button>
+ <% } %>
+ <% } %>
 
-    <!-- Page buttons -->
-    <% for (let page = startPage; page <= endPage; page++) { %>
-      <button class="join-item btn btn-sm <%= page === pagination.currentPage ? 'btn-active' : '' %>"
-              <% if (page !== pagination.currentPage) { %>
-                hx-get="/tasks?page=<%= page %>"
-                hx-target="#task-list-container"
-                hx-indicator="#pagination-indicator"
-              <% } %>>
-        <%= page %>
-      </button>
-    <% } %>
+ <!-- Page buttons -->
+ <% for (let page = startPage; page <= endPage; page++) { %>
+ <button class="join-item btn btn-sm <%= page === pagination.currentPage ? 'btn-active' : '' %>"
+ <% if (page !== pagination.currentPage) { %>
+ hx-get="/tasks?page=<%= page %>"
+ hx-target="#task-list-container"
+ hx-indicator="#pagination-indicator"
+ <% } %>>
+ <%= page %>
+ </button>
+ <% } %>
 
-    <!-- Show last page if not visible -->
-    <% if (endPage < pagination.totalPages) { %>
-      <% if (endPage < pagination.totalPages - 1) { %>
-        <button class="join-item btn btn-sm btn-disabled">...</button>
-      <% } %>
-      <button class="join-item btn btn-sm"
-              hx-get="/tasks?page=<%= pagination.totalPages %>"
-              hx-target="#task-list-container"
-              hx-indicator="#pagination-indicator">
-        <%= pagination.totalPages %>
-      </button>
-    <% } %>
+ <!-- Show last page if not visible -->
+ <% if (endPage < pagination.totalPages) { %>
+ <% if (endPage < pagination.totalPages - 1) { %>
+ <button class="join-item btn btn-sm btn-disabled">...</button>
+ <% } %>
+ <button class="join-item btn btn-sm"
+ hx-get="/tasks?page=<%= pagination.totalPages %>"
+ hx-target="#task-list-container"
+ hx-indicator="#pagination-indicator">
+ <%= pagination.totalPages %>
+ </button>
+ <% } %>
 
-    <!-- Next Button -->
-    <% if (pagination.currentPage < pagination.totalPages) { %>
-      <button class="join-item btn btn-sm"
-              hx-get="/tasks?page=<%= pagination.currentPage + 1 %>"
-              hx-target="#task-list-container"
-              hx-indicator="#pagination-indicator">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    <% } else { %>
-      <button class="join-item btn btn-sm btn-disabled">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    <% } %>
-  </div>
+ <!-- Next Button -->
+ <% if (pagination.currentPage < pagination.totalPages) { %>
+ <button class="join-item btn btn-sm"
+ hx-get="/tasks?page=<%= pagination.currentPage + 1 %>"
+ hx-target="#task-list-container"
+ hx-indicator="#pagination-indicator">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+ </svg>
+ </button>
+ <% } else { %>
+ <button class="join-item btn btn-sm btn-disabled">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+ </svg>
+ </button>
+ <% } %>
+ </div>
 
-  <!-- Loading Indicator -->
-  <span id="pagination-indicator" class="htmx-indicator ml-4">
-    <span class="loading loading-spinner loading-sm"></span>
-  </span>
+ <!-- Loading Indicator -->
+ <span id="pagination-indicator" class="htmx-indicator ml-4">
+ <span class="loading loading-spinner loading-sm"></span>
+ </span>
 </div>
 
 <!-- Page Info -->
 <div class="text-center text-sm text-base-content/70 mt-4">
-  Page <%= pagination.currentPage %> sur <%= pagination.totalPages %>
-  (<%= pagination.total %> tâche<%= pagination.total > 1 ? 's' : '' %>)
+ Page <%= pagination.currentPage %> sur <%= pagination.totalPages %>
+ (<%= pagination.total %> tâche<%= pagination.total > 1 ? 's' : '' %>)
 </div>

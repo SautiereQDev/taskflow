@@ -4,13 +4,13 @@
  * User avatar with initials or image
  *
  * Props:
- *  - name: string - User name (for initials)
- *  - image: string (optional) - Avatar image URL
- *  - size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
- *  - online: boolean - show online indicator (default: false)
+ * - name: string - User name (for initials)
+ * - image: string (optional) - Avatar image URL
+ * - size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
+ * - online: boolean - show online indicator (default: false)
  *
  * Usage:
- *  <%- include('../partials/ui/avatar', { name: 'John Doe', size: 'lg', online: true }) %>
+ * <%- include('../partials/ui/avatar', { name: 'John Doe', size: 'lg', online: true }) %>
  */
 
 const name = typeof name !== 'undefined' ? name : '';
@@ -21,20 +21,20 @@ const online = typeof online !== 'undefined' ? online : false;
 const initials = name.split(' ').map(n => n.charAt(0)).slice(0, 2).join('').toUpperCase();
 
 const sizeClass = size === 'xs' ? 'w-6 h-6 text-xs'
-                : size === 'sm' ? 'w-8 h-8 text-sm'
-                : size === 'lg' ? 'w-12 h-12 text-lg'
-                : size === 'xl' ? 'w-16 h-16 text-2xl'
-                : 'w-10 h-10 text-base';
+ : size === 'sm' ? 'w-8 h-8 text-sm'
+ : size === 'lg' ? 'w-12 h-12 text-lg'
+ : size === 'xl' ? 'w-16 h-16 text-2xl'
+ : 'w-10 h-10 text-base';
 
 const onlineClass = online ? 'online' : '';
 %>
 
 <div class="avatar placeholder <%= onlineClass %>">
-  <div class="bg-primary text-primary-content rounded-full <%= sizeClass %>">
-    <% if (image) { %>
-      <img src="<%= image %>" alt="<%= name %>" />
-    <% } else { %>
-      <span class="font-semibold"><%= initials %></span>
-    <% } %>
-  </div>
+ <div class="bg-primary text-primary-content rounded-full <%= sizeClass %>">
+ <% if (image) { %>
+ <img src="<%= image %>" alt="<%= name %>" />
+ <% } else { %>
+ <span class="font-semibold"><%= initials %></span>
+ <% } %>
+ </div>
 </div>

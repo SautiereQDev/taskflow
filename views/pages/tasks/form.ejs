@@ -1,71 +1,71 @@
 <%
-  const currentTask = task || null;
-  const isEdit = mode === 'edit' || (currentTask && currentTask.id);
-  const baseTitle = currentTask?.title ?? '';
-  const baseDescription = currentTask?.description ?? '';
-  const escapeForXData = (value) =>
-    value
-      .replace(/\\/g, '\\\\')
-      .replace(/`/g, '\\`')
-      .replace(/'/g, "\\'")
-      .replace(/\n/g, '\\n');
-  const escapedTitle = escapeForXData(baseTitle);
-  const escapedDescription = escapeForXData(baseDescription);
-  const heading = isEdit ? 'Modifier la tâche' : 'Nouvelle tâche';
-  const subheading = isEdit
-    ? 'Mettez à jour les informations et notifiez votre équipe en un clic.'
-    : 'Créez une tâche et assignez-la à un membre de votre équipe.';
-  const backHref = isEdit && currentTask ? `/tasks/${currentTask.id}` : '/tasks';
-  const htmxConfig = isEdit && currentTask
-    ? { method: 'patch', action: `/tasks/${currentTask.id}`, target: 'body', swap: 'outerHTML' }
-    : { method: 'post', action: '/tasks', target: 'body' };
+ const currentTask = task || null;
+ const isEdit = mode === 'edit' || (currentTask && currentTask.id);
+ const baseTitle = currentTask?.title ?? '';
+ const baseDescription = currentTask?.description ?? '';
+ const escapeForXData = (value) =>
+ value
+ .replace(/\\/g, '\\\\')
+ .replace(/`/g, '\\`')
+ .replace(/'/g, "\\'")
+ .replace(/\n/g, '\\n');
+ const escapedTitle = escapeForXData(baseTitle);
+ const escapedDescription = escapeForXData(baseDescription);
+ const heading = isEdit ? 'Modifier la tâche' : 'Nouvelle tâche';
+ const subheading = isEdit
+ ? 'Mettez à jour les informations et notifiez votre équipe en un clic.'
+ : 'Créez une tâche et assignez-la à un membre de votre équipe.';
+ const backHref = isEdit && currentTask ? `/tasks/${currentTask.id}` : '/tasks';
+ const htmxConfig = isEdit && currentTask
+ ? { method: 'patch', action: `/tasks/${currentTask.id}`, target: 'body', swap: 'outerHTML' }
+ : { method: 'post', action: '/tasks', target: 'body' };
 %>
 
 <div class="max-w-2xl mx-auto space-y-6 tf-stack">
-  <% if (isEdit && currentTask) { %>
-    <nav class="breadcrumbs text-sm">
-      <ul>
-        <li><a href="/">Accueil</a></li>
-        <li><a href="/tasks">Tâches</a></li>
-        <li><a href="/tasks/<%= currentTask.id %>"><%= currentTask.title %></a></li>
-        <li>Modifier</li>
-      </ul>
-    </nav>
-  <% } %>
+ <% if (isEdit && currentTask) { %>
+ <nav class="breadcrumbs text-sm">
+ <ul>
+ <li><a href="/">Accueil</a></li>
+ <li><a href="/tasks">Tâches</a></li>
+ <li><a href="/tasks/<%= currentTask.id %>"><%= currentTask.title %></a></li>
+ <li>Modifier</li>
+ </ul>
+ </nav>
+ <% } %>
 
-  <div class="flex items-center justify-between">
-    <a href="<%= backHref %>" class="btn btn-ghost btn-sm gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Retour
-    </a>
-    <% if (!isEdit) { %>
-      <a href="/tasks" class="btn btn-ghost btn-sm">Voir toutes les tâches</a>
-    <% } %>
-  </div>
+ <div class="flex items-center justify-between">
+ <a href="<%= backHref %>" class="btn btn-ghost btn-sm gap-2">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+ </svg>
+ Retour
+ </a>
+ <% if (!isEdit) { %>
+ <a href="/tasks" class="btn btn-ghost btn-sm">Voir toutes les tâches</a>
+ <% } %>
+ </div>
 
-  <div
-    class="bg-base-200 border border-base-content/10 shadow-md p-6 md:p-8 rounded-2xl space-y-6 shadow-lg tf-card"
-    x-data="{
-      isSubmitting: false,
-      title: '<%= escapedTitle %>',
-      description: '<%= escapedDescription %>'
-    }"
-  >
-    <header class="space-y-2">
-      <h1 class="text-3xl font-bold text-base-content tf-text-primary"><%= heading %></h1>
-      <p class="text-base-content/70 tf-text-secondary"><%= subheading %></p>
-    </header>
+ <div
+ class="bg-base-200 border border-base-content/10 shadow-p-6 md:p-8 rounded-2xl space-y-6 tf-card"
+ x-data="{
+ isSubmitting: false,
+ title: '<%= escapedTitle %>',
+ description: '<%= escapedDescription %>'
+ }"
+ >
+ <header class="space-y-2">
+ <h1 class="text-3xl font-bold text-base-content tf-text-primary"><%= heading %></h1>
+ <p class="text-base-content/70 tf-text-secondary"><%= subheading %></p>
+ </header>
 
-    <%- include('../../partials/tasks/task-form', {
-      task: currentTask,
-      users: users || [],
-      mode: isEdit ? 'edit' : 'create',
-      action: isEdit && currentTask ? `/tasks/${currentTask.id}/edit` : '/tasks',
-      htmx: htmxConfig,
-      submitText: isEdit ? 'Enregistrer les modifications' : 'Créer la tâche',
-      backUrl: backHref
-    }) %>
-  </div>
+ <%- include('../../partials/tasks/task-form', {
+ task: currentTask,
+ users: users || [],
+ mode: isEdit ? 'edit' : 'create',
+ action: isEdit && currentTask ? `/tasks/${currentTask.id}/edit` : '/tasks',
+ htmx: htmxConfig,
+ submitText: isEdit ? 'Enregistrer les modifications' : 'Créer la tâche',
+ backUrl: backHref
+ }) %>
+ </div>
 </div>

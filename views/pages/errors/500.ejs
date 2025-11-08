@@ -1,113 +1,113 @@
 <div class="min-h-screen flex items-center justify-center px-4">
-  <div class="text-center max-w-2xl w-full">
-    <div class="bg-base-200 border border-base-content/10 shadow-md p-8 md:p-12 rounded-2xl">
-      <!-- Error Icon -->
-      <div class="text-8xl mb-6" role="img" aria-label="<%= __('errors.500.title') %>">⚠️</div>
+ <div class="text-center max-w-2xl w-full">
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-8 md:p-12 rounded-2xl">
+ <!-- Error Icon -->
+ <div class="text-8xl mb-6" role="img" aria-label="<%= __('errors.500.title') %>">⚠️</div>
 
-      <!-- Error Code -->
-      <h1 class="text-7xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-error to-warning bg-clip-text text-transparent">
-        500
-      </h1>
+ <!-- Error Code -->
+ <h1 class="text-7xl md:text-8xl font-bold mb-4 bg-from-error to-warning text-transparent">
+ 500
+ </h1>
 
-      <!-- Error Message -->
-      <h2 class="text-2xl md:text-3xl font-bold mb-4 tf-text-primary">
-        <%= __('errors.500.title') %>
-      </h2>
+ <!-- Error Message -->
+ <h2 class="text-2xl md:text-3xl font-bold mb-4 tf-text-primary">
+ <%= __('errors.500.title') %>
+ </h2>
 
-      <p class="tf-text-secondary mb-8 text-lg">
-        <%= __('errors.500.message') %>
-      </p>
+ <p class="tf-text-secondary mb-8 text-lg">
+ <%= __('errors.500.message') %>
+ </p>
 
-      <!-- Status Indicator -->
-      <div class="mb-8 inline-flex items-center gap-3 px-6 py-3 bg-base-100 border border-base-content/10 rounded-full">
-        <span class="relative flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-warning"></span>
-        </span>
-        <span class="text-sm font-medium tf-text-secondary">
-          <%= locale === 'fr' ? 'Investigation en cours...' : 'Investigating...' %>
-        </span>
-      </div>
+ <!-- Status Indicator -->
+ <div class="mb-8 inline-flex items-center gap-3 px-6 py-3 bg-base-100 border border-base-content/10 rounded-full">
+ <span class="relative flex h-3 w-3">
+ <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning opacity-75"></span>
+ <span class="relative inline-flex rounded-full h-3 w-3 bg-warning"></span>
+ </span>
+ <span class="text-sm font-medium tf-text-secondary">
+ <%= locale === 'fr' ? 'Investigation en cours...' : 'Investigating...' %>
+ </span>
+ </div>
 
-      <!-- Actions -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-        <a href="/" class="btn btn-primary gap-2 shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          <%= __('errors.500.homeButton') %>
-        </a>
+ <!-- Actions -->
+ <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+ <a href="/" class="btn btn-primary gap-2 shadow-lg">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+ </svg>
+ <%= __('errors.500.homeButton') %>
+ </a>
 
-        <button onclick="location.reload()" class="btn btn-ghost gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <%= __('errors.500.retryButton') %>
-        </button>
-      </div>
+ <button onclick="location.reload()" class="btn btn-ghost gap-2">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+ </svg>
+ <%= __('errors.500.retryButton') %>
+ </button>
+ </div>
 
-      <!-- Error Details (only show in development) -->
-      <% if (typeof error !== 'undefined' && error && process.env.NODE_ENV === 'development') { %>
-        <div class="mt-8 bg-base-100 border border-base-content/10 p-4 rounded-xl text-left" x-data="{ expanded: false }">
-          <details @toggle="expanded = !expanded">
-            <summary class="cursor-pointer font-semibold text-sm mb-2 flex items-center justify-between hover:tf-text-primary transition-colors">
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <%= __('errors.500.detailsTitle') %>
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 transition-transform duration-200 flex-shrink-0"
-                :class="{ 'rotate-180': expanded }"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </summary>
-            <div class="text-xs tf-text-secondary mt-3 overflow-auto max-h-60 p-3 bg-base-200/50 rounded-lg">
-              <div class="font-mono whitespace-pre-wrap break-words"><%= error.stack || error.message %></div>
-            </div>
-          </details>
-        </div>
-      <% } %>
+ <!-- Error Details (only show in development) -->
+ <% if (typeof error !== 'undefined' && error && process.env.NODE_ENV === 'development') { %>
+ <div class="mt-8 bg-base-100 border border-base-content/10 p-4 rounded-xl text-left" x-data="{ expanded: false }">
+ <details @toggle="expanded = !expanded">
+ <summary class="cursor-pointer font-semibold text-sm mb-2 flex items-center justify-between hover:tf-text-primary transition-colors">
+ <span>
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+ </svg>
+ <%= __('errors.500.detailsTitle') %>
+ </span>
+ <svg
+ xmlns="http://www.w3.org/2000/svg"
+ class="h-5 w-5 transition-transform duration-200 flex-shrink-0"
+ :class="{ 'rotate-180': expanded }"
+ fill="none"
+ viewBox="0 0 24 24"
+ stroke="currentColor"
+ stroke-width="2"
+ >
+ <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+ </svg>
+ </summary>
+ <div class="text-xs tf-text-secondary mt-3 overflow-auto max-h-60 p-3 bg-base-200/50 rounded-lg">
+ <div class="font-mono whitespace-pre-wrap break-words"><%= error.stack || error.message %></div>
+ </div>
+ </details>
+ </div>
+ <% } %>
 
-      <!-- Support Info -->
-      <div class="mt-12 pt-8 border-t border-base-300/50">
-        <p class="text-sm tf-text-secondary mb-3">
-          <%= __('errors.500.supportTitle') %>
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="mailto:support@taskflow.com" class="link link-primary text-sm flex items-center gap-2 hover:link-secondary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <%= __('errors.500.supportEmail') %>
-          </a>
-          <span class="tf-text-muted text-sm">•</span>
-          <a href="<%= __('footer.status') !== 'Status' ? '/status' : 'https://status.taskflow.com' %>" class="link link-primary text-sm flex items-center gap-2 hover:link-secondary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <%= __('footer.status') %>
-          </a>
-        </div>
-      </div>
-    </div>
+ <!-- Support Info -->
+ <div class="mt-12 pt-8 border-t border-base-300/50">
+ <p class="text-sm tf-text-secondary mb-3">
+ <%= __('errors.500.supportTitle') %>
+ </p>
+ <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+ <a href="mailto:support@taskflow.com" class="link link-primary text-sm flex items-center gap-2 hover:link-secondary transition-colors">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+ </svg>
+ <%= __('errors.500.supportEmail') %>
+ </a>
+ <span class="tf-text-muted text-sm">•</span>
+ <a href="<%= __('footer.status') !== 'Status' ? '/status' : 'https://status.taskflow.com' %>" class="link link-primary text-sm flex items-center gap-2 hover:link-secondary transition-colors">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+ </svg>
+ <%= __('footer.status') %>
+ </a>
+ </div>
+ </div>
+ </div>
 
-    <!-- Additional Info Card -->
-    <div class="mt-6 bg-base-100 border border-base-content/10 p-4 rounded-xl text-sm">
-      <p class="tf-text-secondary">
-        <% if (locale === 'fr') { %>
-          🔧 <strong>En attendant:</strong> Vous pouvez essayer de rafraîchir la page ou revenir plus tard. Nos équipes techniques sont sur le coup !
-        <% } else { %>
-          🔧 <strong>In the meantime:</strong> You can try refreshing the page or come back later. Our technical team is on it!
-        <% } %>
-      </p>
-    </div>
-  </div>
+ <!-- Additional Info Card -->
+ <div class="mt-6 bg-base-100 border border-base-content/10 p-4 rounded-xl text-sm">
+ <p class="tf-text-secondary">
+ <% if (locale === 'fr') { %>
+ 🔧 <strong>En attendant:</strong> Vous pouvez essayer de rafraîchir la page ou revenir plus tard. Nos équipes techniques sont sur le coup !
+ <% } else { %>
+ 🔧 <strong>In the meantime:</strong> You can try refreshing the page or come back later. Our technical team is on it!
+ <% } %>
+ </p>
+ </div>
+ </div>
 </div>

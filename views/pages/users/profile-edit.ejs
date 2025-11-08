@@ -1,99 +1,97 @@
 <%
-  const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
-  const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
-  // Context is passed from controller (isAdminContext variable)
-  // isAdminContext: true = admin editing user, false = user editing own profile
-  const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
-  const formAction = isAdminContext ? `/users/${user.id}` : '/profile';
-  const pageTitle = isAdminContext ? `${__('profile.edit.titleAdmin')} - ${user.name}` : __('profile.edit.title');
+ const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
+ const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
+ // Context is passed from controller (isAdminContext variable)
+ // isAdminContext: true = admin editing user, false = user editing own profile
+ const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
+ const formAction = isAdminContext ? `/users/${user.id}` : '/profile';
+ const pageTitle = isAdminContext ? `${__('profile.edit.titleAdmin')} - ${user.name}` : __('profile.edit.title');
 %>
 
 <div class="max-w-3xl mx-auto space-y-6">
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-6">
-    <a href="<%= backUrl %>" class="btn btn-ghost btn-sm gap-2 hover:bg-base-100 border border-base-content/10 transition-all">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      <%= __('common.back') %>
-    </a>
-    <h1 class="text-3xl font-bold tf-text-primary"><%= pageTitle %></h1>
-  </div>
+ <!-- Header -->
+ <div class="flex items-center justify-between mb-6">
+ <a href="<%= backUrl %>" class="btn btn-ghost btn-sm">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+ </svg>
+ <%= __('common.back') %>
+ </a>
+ <h1 class="text-3xl font-bold tf-text-primary"><%= pageTitle %></h1>
+ </div>
 
-  <form method="POST"
-        action="<%= formAction %>"
-        hx-patch="<%= formAction %>"
-        hx-target="#profile-form-feedback"
-        hx-swap="outerHTML"
-        class="space-y-6">
-    <input type="hidden" name="_method" value="PATCH" />
+ <form method="POST"
+ action="<%= formAction %>"
+ hx-patch="<%= formAction %>"
+ hx-target="#profile-form-feedback"
+ hx-swap="outerHTML"
+ class="space-y-6">
+ <input type="hidden" name="_method" value="PATCH" />
 
-    
-    <div class="bg-base-200 border border-base-content/10 shadow-md p-8 rounded-2xl space-y-6">
-      <!-- Full Name Field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.fullName') %></span>
-        </label>
-        <input type="text"
-               name="name"
-               value="<%= user.name %>"
-               minlength="2"
-               maxlength="100"
-               class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors"
-               required />
-        <label class="label">
-          <span class="label-text-alt tf-text-muted">
-            <%= __('profile.edit.fullNameHint') %>
-          </span>
-        </label>
-      </div>
+ 
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-8 rounded-2xl space-y-6">
+ <!-- Full Name Field -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.fullName') %></span>
+ </label>
+ <input type="text"
+ name="name"
+ value="<%= user.name %>"
+ minlength="2"
+ maxlength="100"
+ class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors"
+ required />
+ <label class="label">
+ <span class="label-text-alt tf-text-muted">
+ <%= __('profile.edit.fullNameHint') %>
+ </span>
+ </label>
+ </div>
 
-      <!-- Avatar URL Field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.avatar') %></span>
-        </label>
-        <input type="url"
-               name="avatar"
-               value="<%= currentAvatar %>"
-               placeholder="<%= __('profile.edit.avatarPlaceholder') %>"
-               class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors" />
-        <label class="label">
-          <span class="label-text-alt tf-text-muted">
-            <%= __('profile.edit.avatarHint') %>
-          </span>
-        </label>
-      </div>
+ <!-- Avatar URL Field -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.avatar') %></span>
+ </label>
+ <input type="url"
+ name="avatar"
+ value="<%= currentAvatar %>"
+ placeholder="<%= __('profile.edit.avatarPlaceholder') %>"
+ class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors" />
+ <label class="label">
+ <span class="label-text-alt tf-text-muted">
+ <%= __('profile.edit.avatarHint') %>
+ </span>
+ </label>
+ </div>
 
-      <!-- Language Select -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.language') %></span>
-        </label>
-        <select name="locale" class="select select-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors">
-          <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
-            <%= __('profile.edit.languageFr') %>
-          </option>
-          <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>
-            <%= __('profile.edit.languageEn') %>
-          </option>
-        </select>
-      </div>
-    </div>
+ <!-- Language Select -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.language') %></span>
+ </label>
+ <select name="locale" class="select select-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors">
+ <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
+ <%= __('profile.edit.languageFr') %>
+ </option>
+ <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>
+ <%= __('profile.edit.languageEn') %>
+ </option>
+ </select>
+ </div>
+ </div>
 
-    
-    <div class="flex justify-end gap-3">
-      <a href="<%= backUrl %>"
-         class="btn btn-ghost bg-base-100 border border-base-content/10 hover:bg-base-200 border border-base-content/10 shadow-md transition-all duration-200">
-        <%= __('common.cancel') %>
-      </a>
-      <button type="submit"
-              class="btn btn-primary bg-base-200 border border-base-content/10 shadow-md hover:bg-base-300 border border-base-content/10 shadow-lg transition-all duration-200 shadow-lg hover:shadow-xl">
-        <%= __('common.update') %>
-      </button>
-    </div>
-  </form>
+ 
+ <div class="btn-group justify-end mt-6">
+ <a href="<%= backUrl %>" class="btn btn-ghost">
+ <%= __('common.cancel') %>
+ </a>
+ <button type="submit" class="btn btn-primary">
+ <%= __('common.update') %>
+ </button>
+ </div>
+ </form>
 
-  <div id="profile-form-feedback"></div>
+ <div id="profile-form-feedback"></div>
 </div>

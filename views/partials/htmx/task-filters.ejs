@@ -1,204 +1,204 @@
 <div class="bg-base-100 border border-base-content/10 p-6 rounded-lg">
-  <h2 class="text-lg font-bold mb-4">Filtres</h2>
+ <h2 class="text-lg font-bold mb-4">Filtres</h2>
 
-  <form id="filters-form"
-        hx-get="/tasks"
-        hx-target="#task-list-container"
-        hx-trigger="change, submit"
-        hx-indicator="#filter-indicator"
-        class="space-y-6">
+ <form id="filters-form"
+ hx-get="/tasks"
+ hx-target="#task-list-container"
+ hx-trigger="change, submit"
+ hx-indicator="#filter-indicator"
+ class="space-y-6">
 
-    <!-- Search -->
-    <div class="form-control">
-      <label for="search" class="label">
-        <span class="label-text font-semibold">Recherche</span>
-      </label>
-      <input
-        type="text"
-        id="search"
-        name="search"
-        value="<%= filters.search || '' %>"
-        placeholder="Titre de la tâche..."
-        class="input input-bordered w-full"
-      />
-    </div>
+ <!-- Search -->
+ <div class="form-control">
+ <label for="search" class="label">
+ <span class="label-text font-semibold">Recherche</span>
+ </label>
+ <input
+ type="text"
+ id="search"
+ name="search"
+ value="<%= filters.search || '' %>"
+ placeholder="Titre de la tâche..."
+ class="input input-bordered w-full"
+ />
+ </div>
 
-    <!-- Status -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text font-semibold">Statut</span>
-      </label>
-      <div class="space-y-2">
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="status"
-            value="TODO"
-            class="checkbox checkbox-sm"
-            <%= filters.status && filters.status.includes('TODO') ? 'checked' : '' %>
-          />
-          <span class="label-text">À faire</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="status"
-            value="IN_PROGRESS"
-            class="checkbox checkbox-sm"
-            <%= filters.status && filters.status.includes('IN_PROGRESS') ? 'checked' : '' %>
-          />
-          <span class="label-text">En cours</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="status"
-            value="DONE"
-            class="checkbox checkbox-sm"
-            <%= filters.status && filters.status.includes('DONE') ? 'checked' : '' %>
-          />
-          <span class="label-text">Terminée</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="status"
-            value="CANCELLED"
-            class="checkbox checkbox-sm"
-            <%= filters.status && filters.status.includes('CANCELLED') ? 'checked' : '' %>
-          />
-          <span class="label-text">Annulée</span>
-        </label>
-      </div>
-    </div>
+ <!-- Status -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold">Statut</span>
+ </label>
+ <div class="space-y-2">
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="status"
+ value="TODO"
+ class="checkbox checkbox-sm"
+ <%= filters.status && filters.status.includes('TODO') ? 'checked' : '' %>
+ />
+ <span class="label-text">À faire</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="status"
+ value="IN_PROGRESS"
+ class="checkbox checkbox-sm"
+ <%= filters.status && filters.status.includes('IN_PROGRESS') ? 'checked' : '' %>
+ />
+ <span class="label-text">En cours</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="status"
+ value="DONE"
+ class="checkbox checkbox-sm"
+ <%= filters.status && filters.status.includes('DONE') ? 'checked' : '' %>
+ />
+ <span class="label-text">Terminée</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="status"
+ value="CANCELLED"
+ class="checkbox checkbox-sm"
+ <%= filters.status && filters.status.includes('CANCELLED') ? 'checked' : '' %>
+ />
+ <span class="label-text">Annulée</span>
+ </label>
+ </div>
+ </div>
 
-    <!-- Priority -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text font-semibold">Priorité</span>
-      </label>
-      <div class="space-y-2">
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="priority"
-            value="URGENT"
-            class="checkbox checkbox-sm checkbox-error"
-            <%= filters.priority && filters.priority.includes('URGENT') ? 'checked' : '' %>
-          />
-          <span class="label-text">Urgente</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="priority"
-            value="HIGH"
-            class="checkbox checkbox-sm checkbox-warning"
-            <%= filters.priority && filters.priority.includes('HIGH') ? 'checked' : '' %>
-          />
-          <span class="label-text">Haute</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="priority"
-            value="MEDIUM"
-            class="checkbox checkbox-sm checkbox-info"
-            <%= filters.priority && filters.priority.includes('MEDIUM') ? 'checked' : '' %>
-          />
-          <span class="label-text">Moyenne</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="checkbox"
-            name="priority"
-            value="LOW"
-            class="checkbox checkbox-sm"
-            <%= filters.priority && filters.priority.includes('LOW') ? 'checked' : '' %>
-          />
-          <span class="label-text">Basse</span>
-        </label>
-      </div>
-    </div>
+ <!-- Priority -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold">Priorité</span>
+ </label>
+ <div class="space-y-2">
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="priority"
+ value="URGENT"
+ class="checkbox checkbox-sm checkbox-error"
+ <%= filters.priority && filters.priority.includes('URGENT') ? 'checked' : '' %>
+ />
+ <span class="label-text">Urgente</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="priority"
+ value="HIGH"
+ class="checkbox checkbox-sm checkbox-warning"
+ <%= filters.priority && filters.priority.includes('HIGH') ? 'checked' : '' %>
+ />
+ <span class="label-text">Haute</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="priority"
+ value="MEDIUM"
+ class="checkbox checkbox-sm checkbox-info"
+ <%= filters.priority && filters.priority.includes('MEDIUM') ? 'checked' : '' %>
+ />
+ <span class="label-text">Moyenne</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="checkbox"
+ name="priority"
+ value="LOW"
+ class="checkbox checkbox-sm"
+ <%= filters.priority && filters.priority.includes('LOW') ? 'checked' : '' %>
+ />
+ <span class="label-text">Basse</span>
+ </label>
+ </div>
+ </div>
 
-    <!-- Assignee -->
-    <% if (users && users.length > 0) { %>
-      <div class="form-control">
-        <label for="assigneeId" class="label">
-          <span class="label-text font-semibold">Assignée à</span>
-        </label>
-        <select id="assigneeId" name="assigneeId" class="select select-bordered select-sm w-full">
-          <option value="">Tous</option>
-          <% users.forEach(user => { %>
-            <option value="<%= user.id %>" <%= filters.assigneeId === user.id ? 'selected' : '' %>>
-              <%= user.name %>
-            </option>
-          <% }) %>
-        </select>
-      </div>
-    <% } %>
+ <!-- Assignee -->
+ <% if (users && users.length > 0) { %>
+ <div class="form-control">
+ <label for="assigneeId" class="label">
+ <span class="label-text font-semibold">Assignée à</span>
+ </label>
+ <select id="assigneeId" name="assigneeId" class="select select-bordered select-sm w-full">
+ <option value="">Tous</option>
+ <% users.forEach(user => { %>
+ <option value="<%= user.id %>" <%= filters.assigneeId === user.id ? 'selected' : '' %>>
+ <%= user.name %>
+ </option>
+ <% }) %>
+ </select>
+ </div>
+ <% } %>
 
-    <!-- Due Date Filter -->
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text font-semibold">Échéance</span>
-      </label>
-      <div class="space-y-2">
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="radio"
-            name="dueDateFilter"
-            value=""
-            class="radio radio-sm"
-            <%= !filters.dueDateFilter ? 'checked' : '' %>
-          />
-          <span class="label-text">Toutes</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="radio"
-            name="dueDateFilter"
-            value="overdue"
-            class="radio radio-sm radio-error"
-            <%= filters.dueDateFilter === 'overdue' ? 'checked' : '' %>
-          />
-          <span class="label-text">En retard</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="radio"
-            name="dueDateFilter"
-            value="today"
-            class="radio radio-sm radio-warning"
-            <%= filters.dueDateFilter === 'today' ? 'checked' : '' %>
-          />
-          <span class="label-text">Aujourd'hui</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-3">
-          <input
-            type="radio"
-            name="dueDateFilter"
-            value="week"
-            class="radio radio-sm"
-            <%= filters.dueDateFilter === 'week' ? 'checked' : '' %>
-          />
-          <span class="label-text">Cette semaine</span>
-        </label>
-      </div>
-    </div>
+ <!-- Due Date Filter -->
+ <div class="form-control">
+ <label class="label">
+ <span class="label-text font-semibold">Échéance</span>
+ </label>
+ <div class="space-y-2">
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="radio"
+ name="dueDateFilter"
+ value=""
+ class="radio radio-sm"
+ <%= !filters.dueDateFilter ? 'checked' : '' %>
+ />
+ <span class="label-text">Toutes</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="radio"
+ name="dueDateFilter"
+ value="overdue"
+ class="radio radio-sm radio-error"
+ <%= filters.dueDateFilter === 'overdue' ? 'checked' : '' %>
+ />
+ <span class="label-text">En retard</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="radio"
+ name="dueDateFilter"
+ value="today"
+ class="radio radio-sm radio-warning"
+ <%= filters.dueDateFilter === 'today' ? 'checked' : '' %>
+ />
+ <span class="label-text">Aujourd'hui</span>
+ </label>
+ <label class="label cursor-pointer justify-start gap-3">
+ <input
+ type="radio"
+ name="dueDateFilter"
+ value="week"
+ class="radio radio-sm"
+ <%= filters.dueDateFilter === 'week' ? 'checked' : '' %>
+ />
+ <span class="label-text">Cette semaine</span>
+ </label>
+ </div>
+ </div>
 
-    <!-- Actions -->
-    <div class="flex gap-2">
-      <button type="submit" class="btn btn-primary btn-sm flex-1">
-        <span id="filter-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
-        Appliquer
-      </button>
-      <button type="reset"
-              class="btn btn-ghost btn-sm"
-              hx-get="/tasks"
-              hx-target="#task-list-container">
-        Réinitialiser
-      </button>
-    </div>
-  </form>
+ <!-- Actions -->
+ <div class="flex gap-2">
+ <button type="submit" class="btn btn-primary btn-sm flex-1">
+ <span id="filter-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
+ Appliquer
+ </button>
+ <button type="reset"
+ class="btn btn-ghost btn-sm"
+ hx-get="/tasks"
+ hx-target="#task-list-container">
+ Réinitialiser
+ </button>
+ </div>
+ </form>
 </div>

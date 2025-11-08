@@ -4,22 +4,22 @@
  * Dropdown select field with options
  *
  * Props:
- *  - label: string - Field label
- *  - name: string - Select name attribute
- *  - options: array - Options array [{ value, label }]
- *  - value: string (optional) - Selected value
- *  - error: string (optional) - Error message
- *  - required: boolean (default: false)
- *  - placeholder: string (optional) - Placeholder option
+ * - label: string - Field label
+ * - name: string - Select name attribute
+ * - options: array - Options array [{ value, label }]
+ * - value: string (optional) - Selected value
+ * - error: string (optional) - Error message
+ * - required: boolean (default: false)
+ * - placeholder: string (optional) - Placeholder option
  *
  * Usage:
- *  <%- include('../partials/ui/forms/select', {
- *    label: 'Status',
- *    name: 'status',
- *    options: [{ value: 'TODO', label: 'À faire' }, ...],
- *    value: task.status,
- *    required: true
- *  }) %>
+ * <%- include('../partials/ui/forms/select', {
+ * label: 'Status',
+ * name: 'status',
+ * options: [{ value: 'TODO', label: 'À faire' }, ...],
+ * value: task.status,
+ * required: true
+ * }) %>
  */
 
 const label = typeof label !== 'undefined' ? label : '';
@@ -33,36 +33,36 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
 %>
 
 <div class="form-control w-full">
-  <label class="label">
-    <span class="label-text font-semibold">
-      <%= label %>
-      <% if (required) { %>
-        <span class="text-error">*</span>
-      <% } %>
-    </span>
-  </label>
+ <label class="label">
+ <span class="label-text font-semibold">
+ <%= label %>
+ <% if (required) { %>
+ <span class="text-error">*</span>
+ <% } %>
+ </span>
+ </label>
 
-  <select
-    name="<%= name %>"
-    id="<%= name %>"
-    class="select-bg-base-200 border border-base-content/10 shadow-md select w-full <%= error ? 'select-error' : '' %>"
-    <%= required ? 'required' : '' %>
-    <%= disabled ? 'disabled' : '' %>
-  >
-    <% if (placeholder) { %>
-      <option value="" disabled <%= !value ? 'selected' : '' %>><%= placeholder %></option>
-    <% } %>
+ <select
+ name="<%= name %>"
+ id="<%= name %>"
+ class="select-bg-base-200 border border-base-content/10 shadow-md select w-full <%= error ? 'select-error' : '' %>"
+ <%= required ? 'required' : '' %>
+ <%= disabled ? 'disabled' : '' %>
+ >
+ <% if (placeholder) { %>
+ <option value="" disabled <%= !value ? 'selected' : '' %>><%= placeholder %></option>
+ <% } %>
 
-    <% options.forEach(opt => { %>
-      <option value="<%= opt.value %>" <%= value === opt.value ? 'selected' : '' %>>
-        <%= opt.label %>
-      </option>
-    <% }) %>
-  </select>
+ <% options.forEach(opt => { %>
+ <option value="<%= opt.value %>" <%= value === opt.value ? 'selected' : '' %>>
+ <%= opt.label %>
+ </option>
+ <% }) %>
+ </select>
 
-  <% if (error) { %>
-    <label class="label">
-      <span class="label-text-alt text-error"><%= error %></span>
-    </label>
-  <% } %>
+ <% if (error) { %>
+ <label class="label">
+ <span class="label-text-alt text-error"><%= error %></span>
+ </label>
+ <% } %>
 </div>

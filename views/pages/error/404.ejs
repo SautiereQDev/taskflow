@@ -1,28 +1,28 @@
 <div class="text-center py-10">
-  <h1 class="text-4xl font-bold"><%= t('errors.notFound') %></h1>
-  <p class="text-lg mt-2"><%= t('errors.tryAgainLater') %></p>
+ <h1 class="text-4xl font-bold"><%= t('errors.notFound') %></h1>
+ <p class="text-lg mt-2"><%= t('errors.tryAgainLater') %></p>
 </div>
 
 <div class="tf-container py-10">
-  <div class="text-center">
-    <h1 class="text-6xl font-bold text-primary">404</h1>
-    <p class="mt-4 text-lg tf-text-secondary">
-      <%= t('errors.notFound') %>
-    </p>
-    <p class="mt-2 tf-text-muted">
-      <%= t('errors.somethingWentWrong') %>
-    </p>
-    <div class="mt-8">
-      <a href="/" class="btn btn-primary">
-        <i class="fas fa-home mr-2"></i>
-        <%= t('nav.dashboard') %>
-      </a>
-    </div>
-    <% if (error && process.env.NODE_ENV !== 'production') { %>
-      <div class="mt-6 text-left p-4 bg-base-200 rounded-lg bg-base-100 border border-base-content/10">
-        <h3 class="font-bold">Error Details:</h3>
-        <pre class="text-xs whitespace-pre-wrap"><%= JSON.stringify(error, null, 2) %></pre>
-      </div>
-    <% } %>
-  </div>
+ <div class="text-center">
+ <h1 class="text-6xl font-bold text-primary">404</h1>
+ <p class="mt-4 text-lg tf-text-secondary">
+ <%= t('errors.notFound') %>
+ </p>
+ <p class="mt-2 tf-text-muted">
+ <%= t('errors.somethingWentWrong') %>
+ </p>
+ <div class="mt-8">
+ <a href="/" class="btn btn-primary">
+ <i class="fas fa-home mr-2"></i>
+ <%= t('nav.dashboard') %>
+ </a>
+ </div>
+ <% if (error && process.env.NODE_ENV !== 'production') { %>
+ <div class="mt-6 text-left p-4 bg-base-100 rounded-lg border border-base-content/10">
+ <h3 class="font-bold">Error Details:</h3>
+ <pre class="text-xs whitespace-pre-wrap"><%= JSON.stringify(error, null, 2) %></pre>
+ </div>
+ <% } %>
+ </div>
 </div>

@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="<%= locale || 'fr' %>" data-theme="taskflowLight">
 <head>
-  <%- include('../partials/head', { title: typeof title !== 'undefined' ? title : 'TaskFlow' }) %>
+ <%- include('../partials/head', { title: typeof title !== 'undefined' ? title : 'TaskFlow' }) %>
 </head>
 <body class="min-h-screen bg-base-100 font-sans antialiased transition-colors duration-300">
-  <!-- Skip to main content link for accessibility -->
-  <a href="#main-content" class="skip-link">
-    <%= typeof __=== 'function' ? __('a11y.skipToContent') : 'Aller au contenu principal' %>
-  </a>
+ <!-- Skip to main content link for accessibility -->
+ <a href="#main-content" class="skip-link">
+ <%= typeof __=== 'function' ? __('a11y.skipToContent') : 'Aller au contenu principal' %>
+ </a>
 
-  <div class="tf-app-shell">
-    <%- include('../partials/header') %>
+ <div class="tf-app-shell">
+ <%- include('../partials/header') %>
 
-    <main id="main-content" class="tf-main tf-stack py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full" tabindex="-1">
-      <%- include('../partials/flash-messages') %>
-      <%- body %>
-    </main>
+ <main id="main-content" class="tf-main tf-stack py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full" tabindex="-1">
+ <%- include('../partials/flash-messages') %>
+ <%- body %>
+ </main>
 
-    <%- include('../partials/footer') %>
-  </div>
+ <%- include('../partials/footer') %>
+ </div>
 
-  <!-- Toast Notifications (Alpine.js) -->
-  <%- include('../partials/toast-notifications') %>
+ <!-- Toast Notifications (Alpine.js) -->
+ <%- include('../partials/toast-notifications') %>
 
-  <!-- HTMX 1.9.10 - Dynamic content updates -->
-  <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+ <!-- HTMX 1.9.10 - Dynamic content updates -->
+ <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 
-  <!-- HTMX Extensions -->
-  <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
+ <!-- HTMX Extensions -->
+ <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
 
-  <!-- Alpine.js 3.x - Interactive components with plugins -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+ <!-- Alpine.js 3.x - Interactive components with plugins -->
+ <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+ <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+ <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+ <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Theme initialization (runs before Alpine) -->
-  <script src="/js/theme-init.js"></script>
+ <!-- Theme initialization (runs before Alpine) -->
+ <script src="/js/theme-init.js"></script>
 
-  <!-- Alpine.js components (theme, modal, toast, etc.) -->
-  <script src="/js/alpine-components.js"></script>
+ <!-- Alpine.js components (theme, modal, toast, etc.) -->
+ <script src="/js/alpine-components.js"></script>
 </body>
 </html>

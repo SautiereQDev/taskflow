@@ -1,94 +1,94 @@
 <header class="bg-base-200 border border-base-content/10 shadow-md sticky top-0 z-50 border-b border-base-300">
-  <div class="container mx-auto px-4">
-    <nav class="navbar min-h-16">
-      <!-- Logo & Brand -->
-      <div class="navbar-start">
-        <a href="/" class="btn btn-ghost text-xl font-bold gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-          </svg>
-          <span class="hidden sm:inline">TaskFlow</span>
-        </a>
-      </div>
+ <div class="container mx-auto px-4">
+ <nav class="navbar min-h-16">
+ <!-- Logo & Brand -->
+ <div class="navbar-start">
+ <a href="/" class="btn btn-ghost text-xl font-bold gap-2">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+ </svg>
+ <span class="hidden sm:inline">TaskFlow</span>
+ </a>
+ </div>
 
-      <!-- Navigation Links (Center) -->
-      <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 gap-1">
-          <% if (typeof user !== 'undefined' && user) { %>
-            <li><a href="/dashboard" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'dashboard' ? 'active' : '' %>"><%= __('nav.dashboard') %></a></li>
-            <li><a href="/tasks" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'tasks' ? 'active' : '' %>"><%= __('nav.tasks') %></a></li>
-            <% if (user.role === 'ADMIN' || user.role === 'MANAGER') { %>
-              <li><a href="/users" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'users' ? 'active' : '' %>"><%= __('nav.users') %></a></li>
-            <% } %>
-          <% } %>
-        </ul>
-      </div>
+ <!-- Navigation Links (Center) -->
+ <div class="navbar-center hidden lg:flex">
+ <ul class="menu menu-horizontal px-1 gap-1">
+ <% if (typeof user !== 'undefined' && user) { %>
+ <li><a href="/dashboard" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'dashboard' ? 'active' : '' %>"><%= __('nav.dashboard') %></a></li>
+ <li><a href="/tasks" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'tasks' ? 'active' : '' %>"><%= __('nav.tasks') %></a></li>
+ <% if (user.role === 'ADMIN' || user.role === 'MANAGER') { %>
+ <li><a href="/users" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'users' ? 'active' : '' %>"><%= __('nav.users') %></a></li>
+ <% } %>
+ <% } %>
+ </ul>
+ </div>
 
-      <!-- User Menu & Theme Switcher (Right) -->
-      <div class="navbar-end gap-2">
-        <!-- Theme Switcher -->
-        <div x-data="themeSwitch">
-          <button
-            @click="toggle"
-            class="btn btn-ghost btn-circle"
-            :aria-label="isDark ? '<%= __('theme.switchToLight') %>' : '<%= __('theme.switchToDark') %>'"
-          >
-            <!-- Sun Icon (light mode) -->
-            <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <!-- Moon Icon (dark mode) -->
-            <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </button>
-        </div>
+ <!-- User Menu & Theme Switcher (Right) -->
+ <div class="navbar-end gap-2">
+ <!-- Theme Switcher -->
+ <div x-data="themeSwitch">
+ <button
+ @click="toggle"
+ class="btn btn-ghost btn-circle"
+ :aria-label="isDark ? '<%= __('theme.switchToLight') %>' : '<%= __('theme.switchToDark') %>'"
+ >
+ <!-- Sun Icon (light mode) -->
+ <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+ </svg>
+ <!-- Moon Icon (dark mode) -->
+ <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+ </svg>
+ </button>
+ </div>
 
-        <% if (typeof user !== 'undefined' && user) { %>
-          <!-- Mobile Menu Toggle -->
-          <div class="dropdown dropdown-end lg:hidden">
-            <label tabindex="0" class="btn btn-ghost btn-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 shadow-lg rounded-box w-52">
-              <li><a href="/dashboard"><%= __('nav.dashboard') %></a></li>
-              <li><a href="/tasks"><%= __('nav.tasks') %></a></li>
-              <% if (user.role === 'ADMIN' || user.role === 'MANAGER') { %>
-                <li><a href="/users"><%= __('nav.users') %></a></li>
-              <% } %>
-              <li class="menu-title"><%= __('nav.account') %></li>
-              <li><a href="/profile"><%= __('nav.profile') %></a></li>
-              <li><a href="/settings"><%= __('nav.settings') %></a></li>
-              <li><a href="/auth/logout" class="text-error"><%= __('nav.logout') %></a></li>
-            </ul>
-          </div>
+ <% if (typeof user !== 'undefined' && user) { %>
+ <!-- Mobile Menu Toggle -->
+ <div class="dropdown dropdown-end lg:hidden">
+ <label tabindex="0" class="btn btn-ghost btn-circle">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+ </svg>
+ </label>
+ <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 rounded-box w-52">
+ <li><a href="/dashboard"><%= __('nav.dashboard') %></a></li>
+ <li><a href="/tasks"><%= __('nav.tasks') %></a></li>
+ <% if (user.role === 'ADMIN' || user.role === 'MANAGER') { %>
+ <li><a href="/users"><%= __('nav.users') %></a></li>
+ <% } %>
+ <li class="menu-title"><%= __('nav.account') %></li>
+ <li><a href="/profile"><%= __('nav.profile') %></a></li>
+ <li><a href="/settings"><%= __('nav.settings') %></a></li>
+ <li><a href="/auth/logout" class="text-error"><%= __('nav.logout') %></a></li>
+ </ul>
+ </div>
 
-          <!-- User Dropdown (Desktop) -->
-          <div class="dropdown dropdown-end hidden lg:block">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 h-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
-                <span class="text-sm font-semibold"><%= user.name.substring(0, 2).toUpperCase() %></span>
-              </div>
-            </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 shadow-lg rounded-box w-52">
-              <li class="menu-title">
-                <span class="font-semibold"><%= user.name %></span>
-                <span class="text-xs opacity-70"><%= user.email %></span>
-              </li>
-              <li><a href="/profile"><%= __('nav.profile') %></a></li>
-              <li><a href="/settings"><%= __('nav.settings') %></a></li>
-              <li><hr class="my-1"></li>
-              <li><a href="/auth/logout" class="text-error"><%= __('nav.logout') %></a></li>
-            </ul>
-          </div>
-        <% } else { %>
-          <!-- Not authenticated -->
-          <a href="/auth/login" class="btn btn-ghost"><%= __('nav.login') %></a>
-          <a href="/auth/register" class="btn btn-primary"><%= __('nav.register') %></a>
-        <% } %>
-      </div>
-    </nav>
-  </div>
+ <!-- User Dropdown (Desktop) -->
+ <div class="dropdown dropdown-end hidden lg:block">
+ <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+ <div class="w-10 h-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
+ <span class="text-sm font-semibold"><%= user.name.substring(0, 2).toUpperCase() %></span>
+ </div>
+ </label>
+ <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 rounded-box w-52">
+ <li class="menu-title">
+ <span class="font-semibold"><%= user.name %></span>
+ <span class="text-xs opacity-70"><%= user.email %></span>
+ </li>
+ <li><a href="/profile"><%= __('nav.profile') %></a></li>
+ <li><a href="/settings"><%= __('nav.settings') %></a></li>
+ <li><hr class="my-1"></li>
+ <li><a href="/auth/logout" class="text-error"><%= __('nav.logout') %></a></li>
+ </ul>
+ </div>
+ <% } else { %>
+ <!-- Not authenticated -->
+ <a href="/auth/login" class="btn btn-ghost"><%= __('nav.login') %></a>
+ <a href="/auth/register" class="btn btn-primary"><%= __('nav.register') %></a>
+ <% } %>
+ </div>
+ </nav>
+ </div>
 </header>

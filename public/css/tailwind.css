@@ -37,6 +37,139 @@
     @apply px-3 py-1 text-sm font-medium inline-flex items-center gap-1 rounded-full;
   }
 
+  /* Modern Button System - 2025 Best Practices */
+  
+  /* Base button styles (applied to all buttons) */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply font-medium rounded-lg transition-all duration-200;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    min-height: 2.75rem; /* 44px minimum touch target */
+  }
+
+  /* Button sizing with proper spacing */
+  .btn-lg {
+    @apply px-6 py-3.5 text-base;
+    min-height: 3.25rem; /* 52px */
+  }
+
+  .btn:not(.btn-sm):not(.btn-lg) {
+    @apply px-5 py-2.5 text-sm;
+    min-height: 2.75rem; /* 44px */
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+    min-height: 2.25rem; /* 36px */
+  }
+
+  /* Primary button - High emphasis */
+  .btn-primary {
+    @apply bg-primary text-primary-content shadow-sm;
+    @apply hover:brightness-110 hover:shadow-md hover:scale-[1.02];
+    @apply active:scale-[0.98];
+  }
+
+  /* Secondary/Outline button - Medium emphasis */
+  .btn-outline {
+    @apply bg-transparent border-2 border-current shadow-sm;
+    @apply hover:bg-base-200 hover:border-primary hover:text-primary hover:shadow-md;
+    @apply active:scale-[0.98];
+  }
+
+  /* Ghost button - Low emphasis */
+  .btn-ghost {
+    @apply bg-transparent hover:bg-base-200;
+    @apply active:bg-base-300;
+  }
+
+  /* Error/Danger button */
+  .btn-error {
+    @apply bg-error text-error-content shadow-sm;
+    @apply hover:brightness-110 hover:shadow-md hover:scale-[1.02];
+    @apply active:scale-[0.98];
+  }
+
+  .btn-outline.btn-error {
+    @apply bg-transparent border-2 border-error text-error;
+    @apply hover:bg-error hover:text-error-content;
+  }
+
+  /* Button groups - proper spacing */
+  .btn-group {
+    @apply flex flex-wrap gap-3;
+  }
+
+  .btn-group > .btn {
+    @apply flex-1 min-w-fit;
+  }
+
+  /* Icon buttons - circular with proper sizing */
+  .btn-circle {
+    @apply rounded-full p-0 aspect-square;
+    min-width: 2.75rem; /* 44px */
+    min-height: 2.75rem;
+  }
+
+  .btn-circle.btn-sm {
+    min-width: 2.25rem; /* 36px */
+    min-height: 2.25rem;
+  }
+
+  /* Loading state */
+  .btn.loading {
+    @apply relative text-transparent pointer-events-none;
+  }
+
+  .btn.loading::after {
+    content: '';
+    @apply absolute inset-0 m-auto;
+    @apply w-5 h-5 border-2 border-current border-t-transparent rounded-full;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Button spacing utilities */
+  .btn-spacing {
+    @apply space-x-3;
+  }
+
+  /* Card action buttons */
+  .card-actions {
+    @apply flex flex-wrap gap-2 mt-4;
+  }
+
+  .card-actions > .btn {
+    @apply flex-shrink-0;
+  }
+
+  /* Stat card utility - for dashboard stats */
+  .stat-card {
+    @apply bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6;
+    @apply transition-all duration-300;
+    @apply hover:scale-105 hover:shadow-xl;
+  }
+
+  .stat-card-primary:hover {
+    @apply border-primary/30;
+  }
+
+  .stat-card-warning:hover {
+    @apply border-warning/30;
+  }
+
+  .stat-card-success:hover {
+    @apply border-success/30;
+  }
+
+  .stat-card-error:hover {
+    @apply border-error/30;
+  }
+
   /* Avatar fix - prevent distortion */
   .avatar .rounded-full {
     @apply aspect-square flex items-center justify-center;

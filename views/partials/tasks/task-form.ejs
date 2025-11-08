@@ -1,155 +1,153 @@
 <%
-  const isEdit = mode === 'edit';
-  const formAction = typeof action !== 'undefined' ? action : isEdit && task ? `/tasks/${task.id}/edit` : '/tasks';
-  const htmxConfig = typeof htmx !== 'undefined' && htmx ? htmx : {};
-  const htmxMethod = htmxConfig.method || (isEdit ? 'patch' : 'post');
-  const htmxAction = htmxConfig.action || (isEdit && task ? `/tasks/${task.id}` : '/tasks');
-  const htmxTarget = htmxConfig.target || 'body';
-  const htmxSwap = htmxConfig.swap;
-  const submitLabel = typeof submitText !== 'undefined' ? submitText : isEdit ? 'Mettre à jour' : 'Créer la tâche';
-  const cancelUrl = typeof backUrl !== 'undefined' ? backUrl : isEdit && task ? `/tasks/${task.id}` : '/tasks';
-  const taskTitle = task?.title ?? '';
-  const taskDescription = task?.description ?? '';
-  const taskStatus = task?.status ?? 'TODO';
-  const taskPriority = task?.priority ?? 'MEDIUM';
-  const taskAssigneeId = task?.assigneeId ?? '';
-  const taskDueDate = task?.dueDate ?? '';
+ const isEdit = mode === 'edit';
+ const formAction = typeof action !== 'undefined' ? action : isEdit && task ? `/tasks/${task.id}/edit` : '/tasks';
+ const htmxConfig = typeof htmx !== 'undefined' && htmx ? htmx : {};
+ const htmxMethod = htmxConfig.method || (isEdit ? 'patch' : 'post');
+ const htmxAction = htmxConfig.action || (isEdit && task ? `/tasks/${task.id}` : '/tasks');
+ const htmxTarget = htmxConfig.target || 'body';
+ const htmxSwap = htmxConfig.swap;
+ const submitLabel = typeof submitText !== 'undefined' ? submitText : isEdit ? 'Mettre à jour' : 'Créer la tâche';
+ const cancelUrl = typeof backUrl !== 'undefined' ? backUrl : isEdit && task ? `/tasks/${task.id}` : '/tasks';
+ const taskTitle = task?.title ?? '';
+ const taskDescription = task?.description ?? '';
+ const taskStatus = task?.status ?? 'TODO';
+ const taskPriority = task?.priority ?? 'MEDIUM';
+ const taskAssigneeId = task?.assigneeId ?? '';
+ const taskDueDate = task?.dueDate ?? '';
 %>
 <form
-  method="POST"
-  action="<%= formAction %>"
-  class="space-y-6"
-  hx-target="<%= htmxTarget %>"
-  hx-indicator="#task-submit-indicator"
-  <% if (htmxSwap) { %> hx-swap="<%= htmxSwap %>" <% } %>
-  hx-<%= htmxMethod %>="<%= htmxAction %>"
-  @htmx:before-request="isSubmitting = true"
-  @htmx:after-request="isSubmitting = false"
+ method="POST"
+ action="<%= formAction %>"
+ class="space-y-6"
+ hx-target="<%= htmxTarget %>"
+ hx-indicator="#task-submit-indicator"
+ <% if (htmxSwap) { %> hx-swap="<%= htmxSwap %>" <% } %>
+ hx-<%= htmxMethod %>="<%= htmxAction %>"
+ @htmx:before-request="isSubmitting = true"
+ @htmx:after-request="isSubmitting = false"
 >
-  <!-- Title -->
-  <div class="form-control w-full">
-    <label class="label" for="title">
-      <span class="label-text font-semibold">Titre <span class="text-error">*</span></span>
-      <span class="label-text-alt text-base-content/50" x-text="`${title.length}/200`"><%= taskTitle.length %>/200</span>
-    </label>
-    <input
-      type="text"
-      id="title"
-      name="title"
-      value="<%= taskTitle %>"
-      class="input input-bordered w-full"
-      placeholder="Ex: Préparer la livraison de la fonctionnalité"
-      minlength="3"
-      maxlength="200"
-      required
-      x-model="title"
-    />
-  </div>
+ <!-- Title -->
+ <div class="form-control w-full">
+ <label class="label" for="title">
+ <span class="label-text font-semibold">Titre <span class="text-error">*</span></span>
+ <span class="label-text-alt text-base-content/50" x-text="`${title.length}/200`"><%= taskTitle.length %>/200</span>
+ </label>
+ <input
+ type="text"
+ id="title"
+ name="title"
+ value="<%= taskTitle %>"
+ class="input input-bordered w-full"
+ placeholder="Ex: Préparer la livraison de la fonctionnalité"
+ minlength="3"
+ maxlength="200"
+ required
+ x-model="title"
+ />
+ </div>
 
-  <!-- Description -->
-  <div class="form-control">
-    <label class="label" for="description">
-      <span class="label-text font-semibold">Description</span>
-      <span class="label-text-alt text-base-content/50" x-text="`${description.length}/2000`"><%= taskDescription.length %>/2000</span>
-    </label>
-    <textarea
-      id="description"
-      name="description"
-      class="textarea textarea-bordered w-full h-32"
-      maxlength="2000"
-      placeholder="Ajoutez des détails pour contextualiser la tâche..."
-      x-model="description"
-    ><%= taskDescription %></textarea>
-  </div>
+ <!-- Description -->
+ <div class="form-control">
+ <label class="label" for="description">
+ <span class="label-text font-semibold">Description</span>
+ <span class="label-text-alt text-base-content/50" x-text="`${description.length}/2000`"><%= taskDescription.length %>/2000</span>
+ </label>
+ <textarea
+ id="description"
+ name="description"
+ class="textarea textarea-bordered w-full h-32"
+ maxlength="2000"
+ placeholder="Ajoutez des détails pour contextualiser la tâche..."
+ x-model="description"
+ ><%= taskDescription %></textarea>
+ </div>
 
-  <div class="grid md:grid-cols-2 gap-6">
-    <!-- Status -->
-    <div class="form-control">
-      <label class="label" for="status">
-        <span class="label-text font-semibold">Statut</span>
-      </label>
-      <select id="status" name="status" class="select select-bordered w-full" required>
-        <option value="TODO" <%= taskStatus === 'TODO' ? 'selected' : '' %>>À faire</option>
-        <option value="IN_PROGRESS" <%= taskStatus === 'IN_PROGRESS' ? 'selected' : '' %>>En cours</option>
-        <option value="DONE" <%= taskStatus === 'DONE' ? 'selected' : '' %>>Terminée</option>
-        <option value="CANCELLED" <%= taskStatus === 'CANCELLED' ? 'selected' : '' %>>Annulée</option>
-      </select>
-    </div>
+ <div class="grid md:grid-cols-2 gap-6">
+ <!-- Status -->
+ <div class="form-control">
+ <label class="label" for="status">
+ <span class="label-text font-semibold">Statut</span>
+ </label>
+ <select id="status" name="status" class="select select-bordered w-full" required>
+ <option value="TODO" <%= taskStatus === 'TODO' ? 'selected' : '' %>>À faire</option>
+ <option value="IN_PROGRESS" <%= taskStatus === 'IN_PROGRESS' ? 'selected' : '' %>>En cours</option>
+ <option value="DONE" <%= taskStatus === 'DONE' ? 'selected' : '' %>>Terminée</option>
+ <option value="CANCELLED" <%= taskStatus === 'CANCELLED' ? 'selected' : '' %>>Annulée</option>
+ </select>
+ </div>
 
-    <!-- Priority -->
-    <div class="form-control">
-      <label class="label" for="priority">
-        <span class="label-text font-semibold">Priorité</span>
-      </label>
-      <select id="priority" name="priority" class="select select-bordered w-full" required>
-        <option value="LOW" <%= taskPriority === 'LOW' ? 'selected' : '' %>>Basse</option>
-        <option value="MEDIUM" <%= taskPriority === 'MEDIUM' ? 'selected' : '' %>>Moyenne</option>
-        <option value="HIGH" <%= taskPriority === 'HIGH' ? 'selected' : '' %>>Haute</option>
-        <option value="URGENT" <%= taskPriority === 'URGENT' ? 'selected' : '' %>>Urgente</option>
-      </select>
-    </div>
-  </div>
+ <!-- Priority -->
+ <div class="form-control">
+ <label class="label" for="priority">
+ <span class="label-text font-semibold">Priorité</span>
+ </label>
+ <select id="priority" name="priority" class="select select-bordered w-full" required>
+ <option value="LOW" <%= taskPriority === 'LOW' ? 'selected' : '' %>>Basse</option>
+ <option value="MEDIUM" <%= taskPriority === 'MEDIUM' ? 'selected' : '' %>>Moyenne</option>
+ <option value="HIGH" <%= taskPriority === 'HIGH' ? 'selected' : '' %>>Haute</option>
+ <option value="URGENT" <%= taskPriority === 'URGENT' ? 'selected' : '' %>>Urgente</option>
+ </select>
+ </div>
+ </div>
 
-  <div class="grid md:grid-cols-2 gap-6">
-    <!-- Assignee -->
-    <div class="form-control">
-      <label class="label" for="assigneeId">
-        <span class="label-text font-semibold">Assignée à</span>
-      </label>
-      <select id="assigneeId" name="assigneeId" class="select select-bordered w-full">
-        <option value="">Non assignée / No assignee</option>
-        <% (users || []).forEach((user) => { %>
-          <option value="<%= user.id %>" <%= taskAssigneeId === user.id ? 'selected' : '' %>>
-            <%= user.name %> (<%= user.email %>)
-          </option>
-        <% }) %>
-      </select>
-    </div>
+ <div class="grid md:grid-cols-2 gap-6">
+ <!-- Assignee -->
+ <div class="form-control">
+ <label class="label" for="assigneeId">
+ <span class="label-text font-semibold">Assignée à</span>
+ </label>
+ <select id="assigneeId" name="assigneeId" class="select select-bordered w-full">
+ <option value="">Non assignée / No assignee</option>
+ <% (users || []).forEach((user) => { %>
+ <option value="<%= user.id %>" <%= taskAssigneeId === user.id ? 'selected' : '' %>>
+ <%= user.name %> (<%= user.email %>)
+ </option>
+ <% }) %>
+ </select>
+ </div>
 
-    <!-- Due Date -->
-    <div class="form-control">
-      <label class="label" for="dueDate">
-        <span class="label-text font-semibold">Date d'échéance</span>
-      </label>
-      <input
-        type="datetime-local"
-        id="dueDate"
-        name="dueDate"
-        value="<%= taskDueDate %>"
-        class="input input-bordered w-full"
-      />
-    </div>
-  </div>
+ <!-- Due Date -->
+ <div class="form-control">
+ <label class="label" for="dueDate">
+ <span class="label-text font-semibold">Date d'échéance</span>
+ </label>
+ <input
+ type="datetime-local"
+ id="dueDate"
+ name="dueDate"
+ value="<%= taskDueDate %>"
+ class="input input-bordered w-full"
+ />
+ </div>
+ </div>
 
-  <div class="flex flex-col md:flex-row gap-3 pt-4">
-    <button type="submit" class="btn btn-primary flex-1 gap-2" :disabled="isSubmitting">
-      <span id="task-submit-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
-      <%= submitLabel %>
-    </button>
-    <a href="<%= cancelUrl %>" class="btn btn-ghost flex-1">
-      Annuler
-    </a>
-  </div>
+ <div class="btn-group pt-6">
+ <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+ <span id="task-submit-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
+ <%= submitLabel %>
+ </button>
+ <a href="<%= cancelUrl %>" class="btn btn-ghost">
+ Annuler
+ </a>
+ </div>
 
-  <% if (isEdit && task) { %>
-    <div class="alert alert-info bg-base-100 border border-base-content/10 mt-6">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 9v2m0 4h.01m-.01-10a9 9 0 11-9 9 9 9 0 019-9z" />
-      </svg>
-      <span>Les modifications sont enregistrées côté serveur via HTMX. Ce formulaire reste fonctionnel sans JavaScript.</span>
-    </div>
+ <% if (isEdit && task) { %>
+ <div class="alert alert-info bg-base-100 border border-base-content/10 mt-6">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 9v2m0 4h.01m-.01-10a9 9 0 11-9 9 9 9 0 019-9z" />
+ </svg>
+ <span>Les modifications sont enregistrées côté serveur via HTMX. Ce formulaire reste fonctionnel sans JavaScript.</span>
+ </div>
 
-    <div class="flex items-center justify-end mt-4">
-      <button
-        type="button"
-        class="btn btn-outline btn-error gap-2"
-        onclick="if(confirm('Voulez-vous vraiment supprimer cette tâche ?')) { htmx.ajax('DELETE', '/tasks/<%= task.id %>', { target: 'body', swap: 'outerHTML' }); }"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-        </svg>
-        Supprimer la tâche
-      </button>
-    </div>
-  <% } %>
+ <div class="mt-6 pt-4 border-t border-base-content/10">
+ <button type="button" class="btn btn-outline btn-error btn-sm"
+ onclick="if(confirm('Voulez-vous vraiment supprimer cette tâche ?')) { htmx.ajax('DELETE', '/tasks/<%= task.id %>', { target: 'body', swap: 'outerHTML' }); }"
+ >
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+ </svg>
+ Supprimer la tâche
+ </button>
+ </div>
+ <% } %>
 </form>

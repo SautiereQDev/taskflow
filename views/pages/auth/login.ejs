@@ -1,80 +1,80 @@
 <div class="min-h-[calc(100vh-20rem)] flex items-center justify-center">
-  <div class="w-full max-w-md">
-    <div class="bg-base-300 border border-base-content/10 shadow-lg p-6 rounded-xl">
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold mb-2">Connexion</h1>
-        <p class="text-base-content/70">Connectez-vous à votre compte</p>
-      </div>
+ <div class="w-full max-w-md">
+ <div class="bg-base-300 border border-base-content/10 shadow-lg p-6 rounded-xl">
+ <div class="text-center mb-8">
+ <h1 class="text-3xl font-bold mb-2">Connexion</h1>
+ <p class="text-base-content/70">Connectez-vous à votre compte</p>
+ </div>
 
-      <form method="POST" action="/auth/login" class="space-y-4">
-        <!-- Email Field -->
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text font-semibold">
-              Email
-              <span class="text-error">*</span>
-            </span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
-            placeholder="nom@example.com"
-            class="input-bg-base-200 border border-base-content/10 shadow-md input w-full <%= typeof errors !== 'undefined' && errors.email ? 'input-error' : '' %>"
-            required
-          />
-          <% if (typeof errors !== 'undefined' && errors.email) { %>
-            <label class="label">
-              <span class="label-text-alt text-error"><%= errors.email %></span>
-            </label>
-          <% } %>
-        </div>
+ <form method="POST" action="/auth/login" class="space-y-4">
+ <!-- Email Field -->
+ <div class="form-control w-full">
+ <label class="label">
+ <span class="label-text font-semibold">
+ Email
+ <span class="text-error">*</span>
+ </span>
+ </label>
+ <input
+ type="email"
+ name="email"
+ id="email"
+ value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
+ placeholder="nom@example.com"
+ class="input-bg-base-200 border border-base-content/10 shadow-md input w-full <%= typeof errors !== 'undefined' && errors.email ? 'input-error' : '' %>"
+ required
+ />
+ <% if (typeof errors !== 'undefined' && errors.email) { %>
+ <label class="label">
+ <span class="label-text-alt text-error"><%= errors.email %></span>
+ </label>
+ <% } %>
+ </div>
 
-        <!-- Password Field -->
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text font-semibold">
-              Mot de passe
-              <span class="text-error">*</span>
-            </span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="••••••••"
-            class="input-bg-base-200 border border-base-content/10 shadow-md input w-full <%= typeof errors !== 'undefined' && errors.password ? 'input-error' : '' %>"
-            required
-          />
-          <% if (typeof errors !== 'undefined' && errors.password) { %>
-            <label class="label">
-              <span class="label-text-alt text-error"><%= errors.password %></span>
-            </label>
-          <% } %>
-        </div>
+ <!-- Password Field -->
+ <div class="form-control w-full">
+ <label class="label">
+ <span class="label-text font-semibold">
+ Mot de passe
+ <span class="text-error">*</span>
+ </span>
+ </label>
+ <input
+ type="password"
+ name="password"
+ id="password"
+ placeholder="••••••••"
+ class="input-bg-base-200 border border-base-content/10 shadow-md input w-full <%= typeof errors !== 'undefined' && errors.password ? 'input-error' : '' %>"
+ required
+ />
+ <% if (typeof errors !== 'undefined' && errors.password) { %>
+ <label class="label">
+ <span class="label-text-alt text-error"><%= errors.password %></span>
+ </label>
+ <% } %>
+ </div>
 
-        <div class="flex items-center justify-between">
-          <label class="label cursor-pointer gap-2">
-            <input type="checkbox" name="rememberMe" class="checkbox checkbox-primary checkbox-sm" />
-            <span class="label-text">Se souvenir de moi</span>
-          </label>
-          <a href="/auth/forgot-password" class="link link-primary text-sm">Mot de passe oublié ?</a>
-        </div>
+ <div class="flex items-center justify-between">
+ <label class="label cursor-pointer gap-2">
+ <input type="checkbox" name="rememberMe" class="checkbox checkbox-primary checkbox-sm" />
+ <span class="label-text">Se souvenir de moi</span>
+ </label>
+ <a href="/auth/forgot-password" class="link link-primary text-sm">Mot de passe oublié ?</a>
+ </div>
 
-        <button type="submit" class="btn btn-primary w-full">
-          Se connecter
-        </button>
-      </form>
+ <button type="submit" class="btn btn-primary w-full">
+ Se connecter
+ </button>
+ </form>
 
-      <div class="divider">OU</div>
+ <div class="divider">OU</div>
 
-      <div class="text-center">
-        <p class="text-sm">
-          Pas encore de compte ?
-          <a href="/auth/register" class="link link-primary">S'inscrire</a>
-        </p>
-      </div>
-    </div>
-  </div>
+ <div class="text-center">
+ <p class="text-sm">
+ Pas encore de compte ?
+ <a href="/auth/register" class="link link-primary">S'inscrire</a>
+ </p>
+ </div>
+ </div>
+ </div>
 </div>

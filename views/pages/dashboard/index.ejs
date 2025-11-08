@@ -1,608 +1,608 @@
 <%-
-  include('../../partials/dashboard/hero')
+ include('../../partials/dashboard/hero')
 %>
 
 <!-- Dashboard Main Content -->
 <main class="tf-main tf-stack space-y-8 p-6 md:p-8">
 
-  <!-- Key Metrics Section -->
-  <section aria-labelledby="metrics-title" class="space-y-6">
-    <div class="flex items-center justify-between">
-      <h2 id="metrics-title" class="text-3xl font-bold tf-text-primary">
-        <%= t('dashboard.metrics.title') %>
-      </h2>
-    </div>
+ <!-- Key Metrics Section -->
+ <section aria-labelledby="metrics-title" class="space-y-6">
+ <div class="flex items-center justify-between">
+ <h2 id="metrics-title" class="text-3xl font-bold tf-text-primary">
+ <%= t('dashboard.metrics.title') %>
+ </h2>
+ </div>
 
-    <!-- Metrics Grid -->
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-      <!-- Total Tasks Card -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md group rounded-2xl p-6 shadow-sm border border-base-200 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary/30"
-           role="region"
-           aria-labelledby="total-tasks-title">
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="rounded-xl bg-primary/10 p-3 text-primary group-hover:bg-primary/20 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <div>
-              <h3 id="total-tasks-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
-                <%= t('dashboard.cards.total') %>
-              </h3>
-              <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.totalTasks %></div>
-            </div>
-          </div>
+ <!-- Metrics Grid -->
+ <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+ <!-- Total Tasks Card -->
+ <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary/30"
+ role="region"
+ aria-labelledby="total-tasks-title">
+ <div class="space-y-3">
+ <div class="flex items-center gap-3">
+ <div class="rounded-xl bg-primary/10 p-3 text-primary group-hover:bg-primary/20 transition-colors duration-300">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+ </svg>
+ </div>
+ <div>
+ <h3 id="total-tasks-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
+ <%= t('dashboard.cards.total') %>
+ </h3>
+ <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.totalTasks %></div>
+ </div>
+ </div>
 
-          <!-- Répartition des tâches -->
-          <div class="flex items-center justify-between text-xs tf-text-muted">
-            <div class="flex items-center gap-1">
-              <div class="w-2 h-2 rounded-full bg-info"></div>
-              <span><%= stats.todoTasks %> TODO</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <div class="w-2 h-2 rounded-full bg-warning"></div>
-              <span><%= stats.inProgressTasks %> En cours</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <div class="w-2 h-2 rounded-full bg-success"></div>
-              <span><%= stats.doneTasks %> Faites</span>
-            </div>
-          </div>
-        </div>
-      </div>
+ <!-- Répartition des tâches -->
+ <div class="flex items-center justify-between text-xs tf-text-muted">
+ <div class="flex items-center gap-1">
+ <div class="w-2 h-2 rounded-full bg-info"></div>
+ <span><%= stats.todoTasks %> TODO</span>
+ </div>
+ <div class="flex items-center gap-1">
+ <div class="w-2 h-2 rounded-full bg-warning"></div>
+ <span><%= stats.inProgressTasks %> En cours</span>
+ </div>
+ <div class="flex items-center gap-1">
+ <div class="w-2 h-2 rounded-full bg-success"></div>
+ <span><%= stats.doneTasks %> Faites</span>
+ </div>
+ </div>
+ </div>
+ </div>
 
-      <!-- In Progress Card -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md group rounded-2xl p-6 shadow-sm border border-base-200 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-warning/30"
-           role="region"
-           aria-labelledby="in-progress-title">
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="rounded-xl bg-warning/10 p-3 text-warning group-hover:bg-warning/20 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-            </div>
-            <div>
-              <h3 id="in-progress-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
-                <%= t('dashboard.cards.inProgress') %>
-              </h3>
-              <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.inProgressTasks %></div>
-            </div>
-          </div>
+ <!-- In Progress Card -->
+ <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-warning/30"
+ role="region"
+ aria-labelledby="in-progress-title">
+ <div class="space-y-3">
+ <div class="flex items-center gap-3">
+ <div class="rounded-xl bg-warning/10 p-3 text-warning group-hover:bg-warning/20 transition-colors duration-300">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+ </svg>
+ </div>
+ <div>
+ <h3 id="in-progress-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
+ <%= t('dashboard.cards.inProgress') %>
+ </h3>
+ <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.inProgressTasks %></div>
+ </div>
+ </div>
 
-          <div class="space-y-2">
-            <div class="flex justify-between text-sm">
-              <span class="tf-text-secondary">
-                <%= t('dashboard.cards.assignedToYou') %>
-              </span>
-              <span class="font-medium tf-text-primary"><%= myAssignmentsSummary.inProgress %></span>
-            </div>
-            <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
-              <div class="bg-warning h-2 rounded-full transition-all duration-1000 ease-out"
-                   style="width: <%= Math.min(stats.inProgressTasks > 0 ? (myAssignmentsSummary.inProgress / stats.inProgressTasks) * 100 : 0, 100) %>%">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+ <div class="space-y-2">
+ <div class="flex justify-between text-sm">
+ <span class="tf-text-secondary">
+ <%= t('dashboard.cards.assignedToYou') %>
+ </span>
+ <span class="font-medium tf-text-primary"><%= myAssignmentsSummary.inProgress %></span>
+ </div>
+ <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
+ <div class="bg-warning h-2 rounded-full transition-all duration-1000 ease-out"
+ style="width: <%= Math.min(stats.inProgressTasks > 0 ? (myAssignmentsSummary.inProgress / stats.inProgressTasks) * 100 : 0, 100) %>%">
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
 
-      <!-- Completed Card -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md group rounded-2xl p-6 shadow-sm border border-base-200 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-success/30"
-           role="region"
-           aria-labelledby="completed-title">
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="rounded-xl bg-success/10 p-3 text-success group-hover:bg-success/20 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 id="completed-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
-                <%= t('dashboard.cards.completed') %>
-              </h3>
-              <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.doneTasks %></div>
-            </div>
-          </div>
+ <!-- Completed Card -->
+ <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-success/30"
+ role="region"
+ aria-labelledby="completed-title">
+ <div class="space-y-3">
+ <div class="flex items-center gap-3">
+ <div class="rounded-xl bg-success/10 p-3 text-success group-hover:bg-success/20 transition-colors duration-300">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+ </svg>
+ </div>
+ <div>
+ <h3 id="completed-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
+ <%= t('dashboard.cards.completed') %>
+ </h3>
+ <div class="text-3xl font-bold tf-text-primary mt-1"><%= stats.doneTasks %></div>
+ </div>
+ </div>
 
-          <div class="space-y-2">
-            <div class="flex justify-between text-sm">
-              <span class="tf-text-secondary">
-                <%= t('dashboard.cards.thisWeek') %>
-              </span>
-              <span class="font-medium tf-text-primary"><%= insights.completedThisWeek %></span>
-            </div>
-            <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
-              <div class="bg-success h-2 rounded-full transition-all duration-1000 ease-out"
-                   style="width: <%= Math.min(insights.completedThisWeek > 0 ? (insights.completedThisWeek / 10) * 100 : 0, 100) %>%">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+ <div class="space-y-2">
+ <div class="flex justify-between text-sm">
+ <span class="tf-text-secondary">
+ <%= t('dashboard.cards.thisWeek') %>
+ </span>
+ <span class="font-medium tf-text-primary"><%= insights.completedThisWeek %></span>
+ </div>
+ <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
+ <div class="bg-success h-2 rounded-full transition-all duration-1000 ease-out"
+ style="width: <%= Math.min(insights.completedThisWeek > 0 ? (insights.completedThisWeek / 10) * 100 : 0, 100) %>%">
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
 
-      <!-- Overdue Card -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md group rounded-2xl p-6 shadow-sm border border-base-200 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-error/30"
-           role="region"
-           aria-labelledby="overdue-title">
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="rounded-xl bg-error/10 p-3 text-error group-hover:bg-error/20 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0" />
-              </svg>
-            </div>
-            <div>
-              <h3 id="overdue-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
-                <%= t('dashboard.cards.overdue') %>
-              </h3>
-              <div class="text-3xl font-bold tf-text-primary mt-1 <%= stats.overdueTasks > 0 ? 'text-error' : '' %>">
-                <%= stats.overdueTasks %>
-              </div>
-            </div>
-          </div>
+ <!-- Overdue Card -->
+ <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-error/30"
+ role="region"
+ aria-labelledby="overdue-title">
+ <div class="space-y-3">
+ <div class="flex items-center gap-3">
+ <div class="rounded-xl bg-error/10 p-3 text-error group-hover:bg-error/20 transition-colors duration-300">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0" />
+ </svg>
+ </div>
+ <div>
+ <h3 id="overdue-title" class="text-sm font-medium uppercase tracking-wide tf-text-muted">
+ <%= t('dashboard.cards.overdue') %>
+ </h3>
+ <div class="text-3xl font-bold tf-text-primary mt-1 <%= stats.overdueTasks > 0 ? 'text-error' : '' %>">
+ <%= stats.overdueTasks %>
+ </div>
+ </div>
+ </div>
 
-          <div class="space-y-2">
-            <div class="flex justify-between text-sm">
-              <span class="tf-text-secondary">
-                <%= t('dashboard.cards.assignedToYou') %>
-              </span>
-              <span class="font-medium <%= myAssignmentsSummary.overdue > 0 ? 'text-error' : 'tf-text-primary' %>">
-                <%= myAssignmentsSummary.overdue %>
-              </span>
-            </div>
-            <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
-              <div class="bg-error h-2 rounded-full transition-all duration-1000 ease-out"
-                   style="width: <%= Math.min(stats.overdueTasks > 0 ? (myAssignmentsSummary.overdue / stats.overdueTasks) * 100 : 0, 100) %>%">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+ <div class="space-y-2">
+ <div class="flex justify-between text-sm">
+ <span class="tf-text-secondary">
+ <%= t('dashboard.cards.assignedToYou') %>
+ </span>
+ <span class="font-medium <%= myAssignmentsSummary.overdue > 0 ? 'text-error' : 'tf-text-primary' %>">
+ <%= myAssignmentsSummary.overdue %>
+ </span>
+ </div>
+ <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
+ <div class="bg-error h-2 rounded-full transition-all duration-1000 ease-out"
+ style="width: <%= Math.min(stats.overdueTasks > 0 ? (myAssignmentsSummary.overdue / stats.overdueTasks) * 100 : 0, 100) %>%">
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
 
-  <!-- Progress Overview and Alerts Section -->
-  <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+ <!-- Progress Overview and Alerts Section -->
+ <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
-    <!-- Progress Overview -->
-    <section aria-labelledby="progress-title" class="space-y-6">
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h2 id="progress-title" class="text-xl font-semibold tf-text-primary mb-4">
-          <%= t('dashboard.progress.title') %>
-        </h2>
+ <!-- Progress Overview -->
+ <section aria-labelledby="progress-title" class="space-y-6">
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h2 id="progress-title" class="text-xl font-semibold tf-text-primary mb-4">
+ <%= t('dashboard.progress.title') %>
+ </h2>
 
-        <!-- Taux de complétion avec barre de progression -->
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium tf-text-muted uppercase">
-              <%= t('dashboard.progress.completionRate') %>
-            </span>
-            <span class="text-2xl font-bold tf-text-primary"><%= stats.completionRate %>%</span>
-          </div>
-          <progress class="progress progress-primary w-full" value="<%= stats.completionRate %>"
-                    max="100" aria-label="<%= t('dashboard.progress.completionRate') %>"></progress>
-        </div>
+ <!-- Taux de complétion avec barre de progression -->
+ <div class="space-y-3">
+ <div class="flex items-center justify-between">
+ <span class="text-sm font-medium tf-text-muted uppercase">
+ <%= t('dashboard.progress.completionRate') %>
+ </span>
+ <span class="text-2xl font-bold tf-text-primary"><%= stats.completionRate %>%</span>
+ </div>
+ <progress class="progress progress-primary w-full" value="<%= stats.completionRate %>"
+ max="100" aria-label="<%= t('dashboard.progress.completionRate') %>"></progress>
+ </div>
 
-        <!-- Métriques hebdomadaires (vélocité de l'équipe) -->
-        <div class="mt-6 grid grid-cols-2 gap-4">
-          <div class="rounded-lg bg-base-200/50 p-4 text-center">
-            <div class="text-xs font-medium tf-text-muted uppercase mb-1">
-              <%= t('dashboard.progress.createdThisWeek') %>
-            </div>
-            <div class="text-2xl font-bold text-info"><%= insights.createdThisWeek %></div>
-            <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.newTasks') %></div>
-          </div>
+ <!-- Métriques hebdomadaires (vélocité de l'équipe) -->
+ <div class="mt-6 grid grid-cols-2 gap-4">
+ <div class="rounded-lg bg-base-200/50 p-4 text-center">
+ <div class="text-xs font-medium tf-text-muted uppercase mb-1">
+ <%= t('dashboard.progress.createdThisWeek') %>
+ </div>
+ <div class="text-2xl font-bold text-info"><%= insights.createdThisWeek %></div>
+ <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.newTasks') %></div>
+ </div>
 
-          <div class="rounded-lg bg-base-200/50 p-4 text-center">
-            <div class="text-xs font-medium tf-text-muted uppercase mb-1">
-              <%= t('dashboard.progress.completedThisWeek') %>
-            </div>
-            <div class="text-2xl font-bold text-success"><%= insights.completedThisWeek %></div>
-            <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.completedTasks') %></div>
-          </div>
-        </div>
+ <div class="rounded-lg bg-base-200/50 p-4 text-center">
+ <div class="text-xs font-medium tf-text-muted uppercase mb-1">
+ <%= t('dashboard.progress.completedThisWeek') %>
+ </div>
+ <div class="text-2xl font-bold text-success"><%= insights.completedThisWeek %></div>
+ <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.completedTasks') %></div>
+ </div>
+ </div>
 
-        <!-- Vélocité nette (si positive = on avance, si négative = backlog augmente) -->
-        <%
-          const netVelocity = insights.completedThisWeek - insights.createdThisWeek;
-          const isPositiveVelocity = netVelocity >= 0;
-        %>
-        <div class="mt-4 p-3 rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
-              <%= t('dashboard.progress.netVelocity') %>
-            </span>
-            <span class="text-lg font-bold <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
-              <%= isPositiveVelocity ? '+' : '' %><%= netVelocity %>
-            </span>
-          </div>
-          <div class="text-xs tf-text-muted mt-1">
-            <%= isPositiveVelocity
-              ? t('dashboard.progress.backlogDecreasing')
-              : t('dashboard.progress.backlogIncreasing') %>
-          </div>
-        </div>
-      </div>
-    </section>
+ <!-- Vélocité nette (si positive = on avance, si négative = backlog augmente) -->
+ <%
+ const netVelocity = insights.completedThisWeek - insights.createdThisWeek;
+ const isPositiveVelocity = netVelocity >= 0;
+ %>
+ <div class="mt-4 p-3 rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
+ <div class="flex items-center justify-between">
+ <span class="text-sm font-medium <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
+ <%= t('dashboard.progress.netVelocity') %>
+ </span>
+ <span class="text-lg font-bold <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
+ <%= isPositiveVelocity ? '+' : '' %><%= netVelocity %>
+ </span>
+ </div>
+ <div class="text-xs tf-text-muted mt-1">
+ <%= isPositiveVelocity
+ ? t('dashboard.progress.backlogDecreasing')
+ : t('dashboard.progress.backlogIncreasing') %>
+ </div>
+ </div>
+ </div>
+ </section>
 
-    <!-- Alerts and Notifications -->
-    <section aria-labelledby="alerts-title" class="space-y-6">
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h2 id="alerts-title" class="text-xl font-semibold tf-text-primary">
-          <%= t('dashboard.alerts.title') %>
-        </h2>
-        <div class="mt-4 space-y-4">
-          <div class="flex items-start gap-3">
-            <div class="rounded-full bg-error/10 p-2 text-error">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0" />
-              </svg>
-            </div>
-            <div>
-              <div class="font-medium tf-text-primary">
-                <%= t('dashboard.alerts.overdue', { value: insights.overdueTasks }) %>
-              </div>
-              <div class="text-sm tf-text-secondary">
-                <%= t('dashboard.alerts.overdueHint') %>
-              </div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <div class="rounded-full bg-warning/10 p-2 text-warning">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-            </div>
-            <div>
-              <div class="font-medium tf-text-primary">
-                <%= t('dashboard.alerts.inProgress', { value: stats.inProgressTasks }) %>
-              </div>
-              <div class="text-sm tf-text-secondary">
-                <%= t('dashboard.alerts.inProgressHint') %>
-              </div>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <div class="rounded-full bg-info/10 p-2 text-info">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 overflow-visible" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div>
-              <div class="font-medium tf-text-primary">
-                <%= t('dashboard.alerts.activeUsers', { value: insights.activeUsers }) %>
-              </div>
-              <div class="text-sm tf-text-secondary">
-                <%= t('dashboard.alerts.activeUsersHint') %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+ <!-- Alerts and Notifications -->
+ <section aria-labelledby="alerts-title" class="space-y-6">
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h2 id="alerts-title" class="text-xl font-semibold tf-text-primary">
+ <%= t('dashboard.alerts.title') %>
+ </h2>
+ <div class="mt-4 space-y-4">
+ <div class="flex items-start gap-3">
+ <div class="rounded-full bg-error/10 p-2 text-error">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
+ viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round"
+ d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0" />
+ </svg>
+ </div>
+ <div>
+ <div class="font-medium tf-text-primary">
+ <%= t('dashboard.alerts.overdue', { value: insights.overdueTasks }) %>
+ </div>
+ <div class="text-sm tf-text-secondary">
+ <%= t('dashboard.alerts.overdueHint') %>
+ </div>
+ </div>
+ </div>
+ <div class="flex items-start gap-3">
+ <div class="rounded-full bg-warning/10 p-2 text-warning">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
+ viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round"
+ d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+ </svg>
+ </div>
+ <div>
+ <div class="font-medium tf-text-primary">
+ <%= t('dashboard.alerts.inProgress', { value: stats.inProgressTasks }) %>
+ </div>
+ <div class="text-sm tf-text-secondary">
+ <%= t('dashboard.alerts.inProgressHint') %>
+ </div>
+ </div>
+ </div>
+ <div class="flex items-start gap-3">
+ <div class="rounded-full bg-info/10 p-2 text-info">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 overflow-visible" fill="none"
+ viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round"
+ d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+ </svg>
+ </div>
+ <div>
+ <div class="font-medium tf-text-primary">
+ <%= t('dashboard.alerts.activeUsers', { value: insights.activeUsers }) %>
+ </div>
+ <div class="text-sm tf-text-secondary">
+ <%= t('dashboard.alerts.activeUsersHint') %>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+ </div>
 
-  <!-- Distribution Section -->
-  <section aria-labelledby="distribution-title" class="space-y-6">
-    <div class="flex items-center justify-between">
-      <h2 id="distribution-title" class="text-3xl font-bold tf-text-primary">
-        <%= t('dashboard.distribution.title') %>
-      </h2>
-    </div>
+ <!-- Distribution Section -->
+ <section aria-labelledby="distribution-title" class="space-y-6">
+ <div class="flex items-center justify-between">
+ <h2 id="distribution-title" class="text-3xl font-bold tf-text-primary">
+ <%= t('dashboard.distribution.title') %>
+ </h2>
+ </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      <!-- Status Distribution -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h3 class="text-xl font-semibold tf-text-primary mb-4">
-          <%= t('dashboard.distribution.status') %>
-        </h3>
-        <div class="space-y-4">
-          <% statusDistribution.forEach((item) => {
-               const percent = metrics.totalTasks > 0
-                 ? Math.round((item.count / metrics.totalTasks) * 100)
-                 : 0;
-          %>
-            <div class="flex items-center gap-3">
-              <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
-              <div class="flex-1">
-                <div class="h-2 rounded-full bg-base-200">
-                  <div class="h-2 rounded-full <%= item.bar %>"
-                       style="width: <%= percent %>%"></div>
-                </div>
-              </div>
-              <div class="w-20 text-right text-sm font-medium tf-text-primary">
-                <%= item.count %>
-                <span class="tf-text-muted">(<%= percent %>%)</span>
-              </div>
-            </div>
-          <% }); %>
-        </div>
-      </div>
+ <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+ <!-- Status Distribution -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h3 class="text-xl font-semibold tf-text-primary mb-4">
+ <%= t('dashboard.distribution.status') %>
+ </h3>
+ <div class="space-y-4">
+ <% statusDistribution.forEach((item) => {
+ const percent = metrics.totalTasks > 0
+ ? Math.round((item.count / metrics.totalTasks) * 100)
+ : 0;
+ %>
+ <div class="flex items-center gap-3">
+ <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
+ <div class="flex-1">
+ <div class="h-2 rounded-full bg-base-200">
+ <div class="h-2 rounded-full <%= item.bar %>"
+ style="width: <%= percent %>%"></div>
+ </div>
+ </div>
+ <div class="w-20 text-right text-sm font-medium tf-text-primary">
+ <%= item.count %>
+ <span class="tf-text-muted">(<%= percent %>%)</span>
+ </div>
+ </div>
+ <% }); %>
+ </div>
+ </div>
 
-      <!-- Priority Distribution -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h3 class="text-xl font-semibold tf-text-primary mb-4">
-          <%= t('dashboard.distribution.priority') %>
-        </h3>
-        <div class="space-y-4">
-          <% priorityDistribution.forEach((item) => {
-               const percent = metrics.totalTasks > 0
-                 ? Math.round((item.count / metrics.totalTasks) * 100)
-                 : 0;
-          %>
-            <div class="flex items-center gap-3">
-              <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
-              <div class="flex-1">
-                <div class="h-2 rounded-full bg-base-200">
-                  <div class="h-2 rounded-full <%= item.bar %>"
-                       style="width: <%= percent %>%"></div>
-                </div>
-              </div>
-              <div class="w-20 text-right text-sm font-medium tf-text-primary">
-                <%= item.count %>
-                <span class="tf-text-muted">(<%= percent %>%)</span>
-              </div>
-            </div>
-          <% }); %>
-        </div>
-      </div>
-    </div>
-  </section>
+ <!-- Priority Distribution -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h3 class="text-xl font-semibold tf-text-primary mb-4">
+ <%= t('dashboard.distribution.priority') %>
+ </h3>
+ <div class="space-y-4">
+ <% priorityDistribution.forEach((item) => {
+ const percent = metrics.totalTasks > 0
+ ? Math.round((item.count / metrics.totalTasks) * 100)
+ : 0;
+ %>
+ <div class="flex items-center gap-3">
+ <span class="badge <%= item.badge %> badge-sm"><%= item.label %></span>
+ <div class="flex-1">
+ <div class="h-2 rounded-full bg-base-200">
+ <div class="h-2 rounded-full <%= item.bar %>"
+ style="width: <%= percent %>%"></div>
+ </div>
+ </div>
+ <div class="w-20 text-right text-sm font-medium tf-text-primary">
+ <%= item.count %>
+ <span class="tf-text-muted">(<%= percent %>%)</span>
+ </div>
+ </div>
+ <% }); %>
+ </div>
+ </div>
+ </div>
+ </section>
 
-  <!-- Task Streams Section -->
-  <section aria-labelledby="task-streams-title" class="space-y-6">
-    <div class="flex items-center justify-between">
-      <h2 id="task-streams-title" class="text-3xl font-bold tf-text-primary">
-        <%= t('dashboard.sections.taskStreams') %>
-      </h2>
-    </div>
+ <!-- Task Streams Section -->
+ <section aria-labelledby="task-streams-title" class="space-y-6">
+ <div class="flex items-center justify-between">
+ <h2 id="task-streams-title" class="text-3xl font-bold tf-text-primary">
+ <%= t('dashboard.sections.taskStreams') %>
+ </h2>
+ </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-      <!-- Highlighted Tasks -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-semibold tf-text-primary">
-            <%= t('dashboard.sections.highlighted') %>
-          </h3>
-          <a href="/tasks" class="btn btn-ghost btn-sm tf-text-primary hover:tf-text-secondary">
-            <%= t('dashboard.sections.viewAll') %>
-          </a>
-        </div>
-        <% if (highlightedTasks.length > 0) { %>
-          <div class="space-y-3">
-            <% highlightedTasks.forEach((task) => { %>
-              <a href="/tasks/<%= task.id %>"
-                 class="block rounded-lg border border-base-200 bg-base-100 p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-base-200">
-                <div class="flex items-start justify-between gap-3">
-                  <div>
-                    <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
-                    <div class="mt-2 flex flex-wrap gap-2">
-                      <%- include('../../partials/ui/badge', { text: task.status.label, variant: task.status.color }) %>
-                      <%- include('../../partials/ui/badge', { text: task.priority.label, variant: task.priority.color }) %>
-                    </div>
-                  </div>
-                  <% if (task.dueDate.formatted) { %>
-                    <div class="text-right text-xs tf-text-muted">
-                      <%= task.dueDate.formatted %>
-                    </div>
-                  <% } %>
-                </div>
-              </a>
-            <% }); %>
-          </div>
-        <% } else { %>
-          <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
-            <%= t('dashboard.sections.highlightedEmpty') %>
-          </div>
-        <% } %>
-      </div>
+ <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+ <!-- Highlighted Tasks -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <div class="flex items-center justify-between mb-4">
+ <h3 class="text-xl font-semibold tf-text-primary">
+ <%= t('dashboard.sections.highlighted') %>
+ </h3>
+ <a href="/tasks" class="btn btn-ghost btn-sm tf-text-primary hover:tf-text-secondary">
+ <%= t('dashboard.sections.viewAll') %>
+ </a>
+ </div>
+ <% if (highlightedTasks.length > 0) { %>
+ <div class="space-y-3">
+ <% highlightedTasks.forEach((task) => { %>
+ <a href="/tasks/<%= task.id %>"
+ class="block rounded-lg border border-base-200 bg-base-100 p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-base-200">
+ <div class="flex items-start justify-between gap-3">
+ <div>
+ <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
+ <div class="mt-2 flex flex-wrap gap-2">
+ <%- include('../../partials/ui/badge', { text: task.status.label, variant: task.status.color }) %>
+ <%- include('../../partials/ui/badge', { text: task.priority.label, variant: task.priority.color }) %>
+ </div>
+ </div>
+ <% if (task.dueDate.formatted) { %>
+ <div class="text-right text-xs tf-text-muted">
+ <%= task.dueDate.formatted %>
+ </div>
+ <% } %>
+ </div>
+ </a>
+ <% }); %>
+ </div>
+ <% } else { %>
+ <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
+ <%= t('dashboard.sections.highlightedEmpty') %>
+ </div>
+ <% } %>
+ </div>
 
-      <!-- Upcoming Tasks -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h3 class="text-xl font-semibold tf-text-primary mb-4">
-          <%= t('dashboard.sections.upcoming') %>
-        </h3>
-        <% if (upcomingTasks.length > 0) { %>
-          <div class="space-y-3">
-            <% upcomingTasks.forEach((task) => { %>
-              <a href="/tasks/<%= task.id %>"
-                 class="flex items-center justify-between gap-3 rounded-lg border border-base-200 bg-base-100 p-4 transition hover:border-warning/40 hover:bg-base-200">
-                <div>
-                  <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
-                  <div class="mt-2 flex flex-wrap gap-2 text-xs tf-text-secondary">
-                    <span><%= task.status.label %></span>
-                    <% if (task.dueDate.formatted) { %>
-                      <span>•</span>
-                      <span><%= task.dueDate.formatted %></span>
-                    <% } %>
-                  </div>
-                </div>
-                <div class="text-right text-sm">
-                  <% if (task.dueDate.isOverdue) { %>
-                    <span class="font-medium tf-text-primary">
-                      <%= t('dashboard.sections.overdue') %>
-                    </span>
-                  <% } else if (task.dueDate.isToday) { %>
-                    <span class="font-medium tf-text-primary">
-                      <%= t('dashboard.sections.dueToday') %>
-                    </span>
-                  <% } else if (task.dueDate.isTomorrow) { %>
-                    <span class="font-medium tf-text-primary">
-                      <%= t('dashboard.sections.dueTomorrow') %>
-                    </span>
-                  <% } else if (task.dueDate.formatted) { %>
-                    <span class="tf-text-secondary"><%= task.dueDate.formatted %></span>
-                  <% } else { %>
-                    <span class="tf-text-muted">
-                      <%= t('dashboard.sections.noDueDate') %>
-                    </span>
-                  <% } %>
-                  <% if (task.dueDate.relative) { %>
-                    <div class="text-xs tf-text-muted"><%= task.dueDate.relative %></div>
-                  <% } %>
-                </div>
-              </a>
-            <% }); %>
-          </div>
-        <% } else { %>
-          <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
-            <%= t('dashboard.sections.upcomingEmpty') %>
-          </div>
-        <% } %>
-      </div>
+ <!-- Upcoming Tasks -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h3 class="text-xl font-semibold tf-text-primary mb-4">
+ <%= t('dashboard.sections.upcoming') %>
+ </h3>
+ <% if (upcomingTasks.length > 0) { %>
+ <div class="space-y-3">
+ <% upcomingTasks.forEach((task) => { %>
+ <a href="/tasks/<%= task.id %>"
+ class="flex items-center justify-between gap-3 rounded-lg border border-base-200 bg-base-100 p-4 transition hover:border-warning/40 hover:bg-base-200">
+ <div>
+ <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
+ <div class="mt-2 flex flex-wrap gap-2 text-xs tf-text-secondary">
+ <span><%= task.status.label %></span>
+ <% if (task.dueDate.formatted) { %>
+ <span>•</span>
+ <span><%= task.dueDate.formatted %></span>
+ <% } %>
+ </div>
+ </div>
+ <div class="text-right text-sm">
+ <% if (task.dueDate.isOverdue) { %>
+ <span class="font-medium tf-text-primary">
+ <%= t('dashboard.sections.overdue') %>
+ </span>
+ <% } else if (task.dueDate.isToday) { %>
+ <span class="font-medium tf-text-primary">
+ <%= t('dashboard.sections.dueToday') %>
+ </span>
+ <% } else if (task.dueDate.isTomorrow) { %>
+ <span class="font-medium tf-text-primary">
+ <%= t('dashboard.sections.dueTomorrow') %>
+ </span>
+ <% } else if (task.dueDate.formatted) { %>
+ <span class="tf-text-secondary"><%= task.dueDate.formatted %></span>
+ <% } else { %>
+ <span class="tf-text-muted">
+ <%= t('dashboard.sections.noDueDate') %>
+ </span>
+ <% } %>
+ <% if (task.dueDate.relative) { %>
+ <div class="text-xs tf-text-muted"><%= task.dueDate.relative %></div>
+ <% } %>
+ </div>
+ </a>
+ <% }); %>
+ </div>
+ <% } else { %>
+ <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
+ <%= t('dashboard.sections.upcomingEmpty') %>
+ </div>
+ <% } %>
+ </div>
 
-      <!-- My Work -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
-        <h3 class="text-xl font-semibold tf-text-primary mb-4">
-          <%= t('dashboard.sections.myWork') %>
-        </h3>
-        <div class="grid grid-cols-2 gap-2 text-sm mb-4">
-          <div class="rounded-lg bg-base-200 p-3 text-center">
-            <div class="text-xs uppercase tf-text-muted">
-              <%= t('dashboard.sections.summaryTotal') %>
-            </div>
-            <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.total %></div>
-          </div>
-          <div class="rounded-lg bg-base-200 p-3 text-center">
-            <div class="text-xs uppercase tf-text-muted">
-              <%= t('dashboard.sections.summaryInProgress') %>
-            </div>
-            <div class="mt-1 text-xl font-semibold tf-text-primary">
-              <%= myAssignmentsSummary.inProgress %>
-            </div>
-          </div>
-          <div class="rounded-lg bg-base-200 p-3 text-center">
-            <div class="text-xs uppercase tf-text-muted">
-              <%= t('dashboard.sections.summaryTodo') %>
-            </div>
-            <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.todo %></div>
-          </div>
-          <div class="rounded-lg bg-base-200 p-3 text-center">
-            <div class="text-xs uppercase tf-text-muted">
-              <%= t('dashboard.sections.summaryOverdue') %>
-            </div>
-            <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.overdue %></div>
-          </div>
-        </div>
+ <!-- My Work -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <h3 class="text-xl font-semibold tf-text-primary mb-4">
+ <%= t('dashboard.sections.myWork') %>
+ </h3>
+ <div class="grid grid-cols-2 gap-2 text-sm mb-4">
+ <div class="rounded-lg bg-base-200 p-3 text-center">
+ <div class="text-xs uppercase tf-text-muted">
+ <%= t('dashboard.sections.summaryTotal') %>
+ </div>
+ <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.total %></div>
+ </div>
+ <div class="rounded-lg bg-base-200 p-3 text-center">
+ <div class="text-xs uppercase tf-text-muted">
+ <%= t('dashboard.sections.summaryInProgress') %>
+ </div>
+ <div class="mt-1 text-xl font-semibold tf-text-primary">
+ <%= myAssignmentsSummary.inProgress %>
+ </div>
+ </div>
+ <div class="rounded-lg bg-base-200 p-3 text-center">
+ <div class="text-xs uppercase tf-text-muted">
+ <%= t('dashboard.sections.summaryTodo') %>
+ </div>
+ <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.todo %></div>
+ </div>
+ <div class="rounded-lg bg-base-200 p-3 text-center">
+ <div class="text-xs uppercase tf-text-muted">
+ <%= t('dashboard.sections.summaryOverdue') %>
+ </div>
+ <div class="mt-1 text-xl font-semibold tf-text-primary"><%= myAssignmentsSummary.overdue %></div>
+ </div>
+ </div>
 
-        <% if (myAssignments.length > 0) { %>
-          <div class="space-y-3">
-            <% myAssignments.forEach((task) => { %>
-              <a href="/tasks/<%= task.id %>"
-                 class="flex items-center justify-between gap-3 rounded-lg border border-base-200 bg-base-100 p-4 transition hover:border-primary/40 hover:bg-base-200">
-                <div>
-                  <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
-                  <div class="mt-2 flex flex-wrap gap-2 text-xs tf-text-secondary">
-                    <span><%= task.status.label %></span>
-                    <% if (task.dueDate.formatted) { %>
-                      <span>•</span>
-                      <span><%= task.dueDate.formatted %></span>
-                    <% } %>
-                  </div>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 tf-text-muted"
-                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            <% }); %>
-          </div>
-        <% } else { %>
-          <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
-            <%= t('dashboard.sections.myWorkEmpty') %>
-          </div>
-        <% } %>
-      </div>
-    </div>
-  </section>
+ <% if (myAssignments.length > 0) { %>
+ <div class="space-y-3">
+ <% myAssignments.forEach((task) => { %>
+ <a href="/tasks/<%= task.id %>"
+ class="flex items-center justify-between gap-3 rounded-lg border border-base-200 bg-base-100 p-4 transition hover:border-primary/40 hover:bg-base-200">
+ <div>
+ <div class="font-medium leading-tight tf-text-primary"><%= task.title %></div>
+ <div class="mt-2 flex flex-wrap gap-2 text-xs tf-text-secondary">
+ <span><%= task.status.label %></span>
+ <% if (task.dueDate.formatted) { %>
+ <span>•</span>
+ <span><%= task.dueDate.formatted %></span>
+ <% } %>
+ </div>
+ </div>
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 tf-text-muted"
+ fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round"
+ d="M9 5l7 7-7 7" />
+ </svg>
+ </a>
+ <% }); %>
+ </div>
+ <% } else { %>
+ <div class="rounded-lg border border-dashed border-base-300 p-6 text-center text-sm tf-text-muted">
+ <%= t('dashboard.sections.myWorkEmpty') %>
+ </div>
+ <% } %>
+ </div>
+ </div>
+ </section>
 
-  <!-- Team Capacity Section -->
-  <section aria-labelledby="team-capacity-title" class="space-y-6">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-      <div>
-        <h2 id="team-capacity-title" class="text-3xl font-bold tf-text-primary">
-          <%= t('dashboard.teamCapacity.title') %>
-        </h2>
-        <p class="text-base tf-text-secondary mt-2">
-          <%= t('dashboard.teamCapacity.subtitle') %>
-        </p>
-      </div>
-      <a href="/users" class="btn btn-ghost btn-sm gap-2 tf-text-primary hover:tf-text-secondary">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 10a4 4 0 10-8 0m8 0a4 4 0 11-8 0m8 0v1a4 4 0 103.356 1.857M7 20h10" />
-        </svg>
-        <%= t('dashboard.teamCapacity.manage') %>
-      </a>
-    </div>
+ <!-- Team Capacity Section -->
+ <section aria-labelledby="team-capacity-title" class="space-y-6">
+ <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+ <div>
+ <h2 id="team-capacity-title" class="text-3xl font-bold tf-text-primary">
+ <%= t('dashboard.teamCapacity.title') %>
+ </h2>
+ <p class="text-base tf-text-secondary mt-2">
+ <%= t('dashboard.teamCapacity.subtitle') %>
+ </p>
+ </div>
+ <a href="/users" class="btn btn-ghost btn-sm gap-2 tf-text-primary hover:tf-text-secondary">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0 overflow-visible" fill="none"
+ viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+ <path stroke-linecap="round" stroke-linejoin="round"
+ d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 10a4 4 0 10-8 0m8 0a4 4 0 11-8 0m8 0v1a4 4 0 103.356 1.857M7 20h10" />
+ </svg>
+ <%= t('dashboard.teamCapacity.manage') %>
+ </a>
+ </div>
 
-    <% if (teamCapacity.length > 0) { %>
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6 overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th class="tf-text-primary font-semibold">
-                <%= t('dashboard.teamCapacity.columns.member') %>
-              </th>
-              <th class="text-center tf-text-primary font-semibold">
-                <%= t('dashboard.teamCapacity.columns.assigned') %>
-              </th>
-              <th class="text-center tf-text-primary font-semibold">
-                <%= t('dashboard.teamCapacity.columns.completed') %>
-              </th>
-              <th class="text-center tf-text-primary font-semibold">
-                <%= t('dashboard.teamCapacity.columns.overdue') %>
-              </th>
-              <th class="tf-text-primary font-semibold">
-                <%= t('dashboard.teamCapacity.columns.completion') %>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <% teamCapacity.forEach((member) => { %>
-              <tr class="<%= member.isCurrentUser ? 'bg-primary/5' : '' %>">
-                <td>
-                  <div class="flex flex-col">
-                    <span class="font-medium tf-text-primary"><%= member.name %></span>
-                    <% if (member.email) { %>
-                      <span class="text-xs tf-text-muted"><%= member.email %></span>
-                    <% } %>
-                  </div>
-                </td>
-                <td class="text-center font-medium tf-text-primary"><%= member.assigned %></td>
-                <td class="text-center font-medium tf-text-primary"><%= member.completed %></td>
-                <td class="text-center font-medium <%= member.overdue > 0 ? 'text-error' : 'tf-text-primary' %>">
-                  <%= member.overdue %>
-                </td>
-                <td>
-                  <div class="flex items-center gap-3">
-                    <progress class="progress progress-success w-32"
-                              value="<%= member.completionRate %>" max="100"></progress>
-                    <span class="text-sm font-semibold tf-text-primary"><%= member.completionRate %>%</span>
-                  </div>
-                </td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
-      </div>
-    <% } else { %>
-      <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-8 text-center tf-text-muted">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 10a4 4 0 10-8 0m8 0a4 4 0 11-8 0m8 0v1a4 4 0 103.356 1.857M7 20h10" />
-        </svg>
-        <p><%= t('dashboard.teamCapacity.empty') %></p>
-      </div>
-    <% } %>
-  </section>
+ <% if (teamCapacity.length > 0) { %>
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6 overflow-x-auto">
+ <table class="table w-full">
+ <thead>
+ <tr>
+ <th class="tf-text-primary font-semibold">
+ <%= t('dashboard.teamCapacity.columns.member') %>
+ </th>
+ <th class="text-center tf-text-primary font-semibold">
+ <%= t('dashboard.teamCapacity.columns.assigned') %>
+ </th>
+ <th class="text-center tf-text-primary font-semibold">
+ <%= t('dashboard.teamCapacity.columns.completed') %>
+ </th>
+ <th class="text-center tf-text-primary font-semibold">
+ <%= t('dashboard.teamCapacity.columns.overdue') %>
+ </th>
+ <th class="tf-text-primary font-semibold">
+ <%= t('dashboard.teamCapacity.columns.completion') %>
+ </th>
+ </tr>
+ </thead>
+ <tbody>
+ <% teamCapacity.forEach((member) => { %>
+ <tr class="<%= member.isCurrentUser ? 'bg-primary/5' : '' %>">
+ <td>
+ <div class="flex flex-col">
+ <span class="font-medium tf-text-primary"><%= member.name %></span>
+ <% if (member.email) { %>
+ <span class="text-xs tf-text-muted"><%= member.email %></span>
+ <% } %>
+ </div>
+ </td>
+ <td class="text-center font-medium tf-text-primary"><%= member.assigned %></td>
+ <td class="text-center font-medium tf-text-primary"><%= member.completed %></td>
+ <td class="text-center font-medium <%= member.overdue > 0 ? 'text-error' : 'tf-text-primary' %>">
+ <%= member.overdue %>
+ </td>
+ <td>
+ <div class="flex items-center gap-3">
+ <progress class="progress progress-success w-32"
+ value="<%= member.completionRate %>" max="100"></progress>
+ <span class="text-sm font-semibold tf-text-primary"><%= member.completionRate %>%</span>
+ </div>
+ </td>
+ </tr>
+ <% }); %>
+ </tbody>
+ </table>
+ </div>
+ <% } else { %>
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-8 text-center tf-text-muted">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 10a4 4 0 10-8 0m8 0a4 4 0 11-8 0m8 0v1a4 4 0 103.356 1.857M7 20h10" />
+ </svg>
+ <p><%= t('dashboard.teamCapacity.empty') %></p>
+ </div>
+ <% } %>
+ </section>
 </main>

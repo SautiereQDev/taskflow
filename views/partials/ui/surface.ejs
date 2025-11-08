@@ -4,17 +4,17 @@
  * Reusable container with glass effect
  *
  * Props:
- *  - variant: 'light' | 'normal' | 'heavy' (default: 'normal')
- *  - hover: boolean - enable hover effect (default: false)
- *  - extraClass: string - additional CSS classes
- *  - padding: boolean - add padding (default: true)
- *  - content: string - HTML content to render inside (use <%- content %>)
+ * - variant: 'light' | 'normal' | 'heavy' (default: 'normal')
+ * - hover: boolean - enable hover effect (default: false)
+ * - extraClass: string - additional CSS classes
+ * - padding: boolean - add padding (default: true)
+ * - content: string - HTML content to render inside (use <%- content %>)
  *
  * Usage:
- *  <% const surfaceContent = capture(() => { %>
- *    <h2>Content</h2>
- *  <% }); %>
- *  <%- include('../partials/ui/surface', { variant: 'heavy', content: surfaceContent }) %>
+ * <% const surfaceContent = capture(() => { %>
+ * <h2>Content</h2>
+ * <% }); %>
+ * <%- include('../partials/ui/surface', { variant: 'heavy', content: surfaceContent }) %>
  */
 
 const variant = typeof variant !== 'undefined' ? variant : 'normal';
@@ -24,12 +24,12 @@ const padding = typeof padding !== 'undefined' ? padding : true;
 const content = typeof content !== 'undefined' ? content : '';
 
 const glassClass = variant === 'light' ? 'glass-light'
-                 : variant === 'heavy' ? 'glass-heavy'
-                 : 'glass';
+ : variant === 'heavy' ? 'glass-heavy'
+ : 'glass';
 const hoverClass = hover ? 'glass-hover' : '';
 const paddingClass = padding ? 'p-6' : '';
 %>
 
 <div class="<%= glassClass %> <%= hoverClass %> <%= paddingClass %> <%= extraClass %> rounded-xl">
-  <%- content %>
+ <%- content %>
 </div>

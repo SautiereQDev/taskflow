@@ -1,138 +1,138 @@
 <div class="max-w-4xl mx-auto space-y-6">
-  <!-- Header -->
-  <div class="flex items-center gap-4">
-    <a href="/users" class="btn btn-ghost btn-sm gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Retour
-    </a>
-  </div>
+ <!-- Header -->
+ <div class="flex items-center gap-4">
+ <a href="/users" class="btn btn-ghost btn-sm gap-2">
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+ </svg>
+ Retour
+ </a>
+ </div>
 
-  <div class="grid lg:grid-cols-3 gap-6">
-    <!-- Profile Card -->
-    <div class="lg:col-span-1">
-      <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
-        <div class="text-center">
-          <!-- Avatar -->
-          <div class="flex justify-center mb-4">
-            <div class="avatar placeholder">
-              <div class="bg-neutral text-neutral-content rounded-full w-24 h-24">
-                <span class="text-3xl"><%= user.name.charAt(0).toUpperCase() %></span>
-              </div>
-            </div>
-          </div>
+ <div class="grid lg:grid-cols-3 gap-6">
+ <!-- Profile Card -->
+ <div class="lg:col-span-1">
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
+ <div class="text-center">
+ <!-- Avatar -->
+ <div class="flex justify-center mb-4">
+ <div class="avatar placeholder">
+ <div class="bg-neutral text-neutral-content rounded-full w-24 h-24">
+ <span class="text-3xl"><%= user.name.charAt(0).toUpperCase() %></span>
+ </div>
+ </div>
+ </div>
 
-          <!-- Name -->
-          <h2 class="text-2xl font-bold mb-1"><%= user.name %></h2>
+ <!-- Name -->
+ <h2 class="text-2xl font-bold mb-1"><%= user.name %></h2>
 
-          <!-- Role Badge -->
-          <div class="flex justify-center mb-4">
-            <span class="badge <%= user.role.color %>"><%= user.role.label %></span>
-          </div>
+ <!-- Role Badge -->
+ <div class="flex justify-center mb-4">
+ <span class="badge <%= user.role.color %>"><%= user.role.label %></span>
+ </div>
 
-          <!-- Status -->
-          <% if (user.isActive) { %>
-            <span class="badge badge-success mb-4">Actif</span>
-          <% } else { %>
-            <span class="badge badge-ghost mb-4">Inactif</span>
-          <% } %>
+ <!-- Status -->
+ <% if (user.isActive) { %>
+ <span class="badge badge-success mb-4">Actif</span>
+ <% } else { %>
+ <span class="badge badge-ghost mb-4">Inactif</span>
+ <% } %>
 
-          <!-- Actions -->
-          <% if (user.canEdit) { %>
-            <div class="flex flex-col gap-2 mt-6">
-              <a href="<%= user.isCurrentUser ? '/profile/edit' : '/users/' + user.id + '/edit' %>"
-                 class="btn btn-primary btn-sm w-full">
-                Modifier le profil
-              </a>
-              <% if (!user.isCurrentUser) { %>
-                <form method="POST" action="/users/<%= user.id %>/toggle-status"
-                      hx-post="/users/<%= user.id %>/toggle-status">
-                  <button type="submit" class="btn btn-ghost btn-sm w-full">
-                    <%= user.isActive ? 'Désactiver' : 'Activer' %>
-                  </button>
-                </form>
-              <% } %>
-            </div>
-          <% } %>
-        </div>
-      </div>
-    </div>
+ <!-- Actions -->
+ <% if (user.canEdit) { %>
+ <div class="flex flex-col gap-2 mt-6">
+ <a href="<%= user.isCurrentUser ? '/profile/edit' : '/users/' + user.id + '/edit' %>"
+ class="btn btn-primary btn-sm w-full">
+ Modifier le profil
+ </a>
+ <% if (!user.isCurrentUser) { %>
+ <form method="POST" action="/users/<%= user.id %>/toggle-status"
+ hx-post="/users/<%= user.id %>/toggle-status">
+ <button type="submit" class="btn btn-ghost btn-sm w-full">
+ <%= user.isActive ? 'Désactiver' : 'Activer' %>
+ </button>
+ </form>
+ <% } %>
+ </div>
+ <% } %>
+ </div>
+ </div>
+ </div>
 
-    <!-- Details -->
-    <div class="lg:col-span-2 space-y-6">
-      <!-- Info -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
-        <h3 class="text-xl font-bold mb-4">Informations</h3>
+ <!-- Details -->
+ <div class="lg:col-span-2 space-y-6">
+ <!-- Info -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
+ <h3 class="text-xl font-bold mb-4">Informations</h3>
 
-        <div class="space-y-4">
-          <div>
-            <div class="text-sm text-base-content/70 mb-1">Email</div>
-            <div class="font-medium"><%= user.email %></div>
-          </div>
+ <div class="space-y-4">
+ <div>
+ <div class="text-sm text-base-content/70 mb-1">Email</div>
+ <div class="font-medium"><%= user.email %></div>
+ </div>
 
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <div class="text-sm text-base-content/70 mb-1">Date d'inscription</div>
-              <div class="font-medium"><%= user.createdAt.formatted %></div>
-            </div>
-            <div>
-              <div class="text-sm text-base-content/70 mb-1">Dernière modification</div>
-              <div class="font-medium"><%= user.updatedAt.formatted %></div>
-            </div>
-          </div>
-        </div>
-      </div>
+ <div class="grid md:grid-cols-2 gap-4">
+ <div>
+ <div class="text-sm text-base-content/70 mb-1">Date d'inscription</div>
+ <div class="font-medium"><%= user.createdAt.formatted %></div>
+ </div>
+ <div>
+ <div class="text-sm text-base-content/70 mb-1">Dernière modification</div>
+ <div class="font-medium"><%= user.updatedAt.formatted %></div>
+ </div>
+ </div>
+ </div>
+ </div>
 
-      <!-- Task Stats -->
-      <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
-        <h3 class="text-xl font-bold mb-4">Statistiques des tâches</h3>
+ <!-- Task Stats -->
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
+ <h3 class="text-xl font-bold mb-4">Statistiques des tâches</h3>
 
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="stat bg-base-200 rounded-lg">
-            <div class="stat-title">Tâches créées</div>
-            <div class="stat-value text-3xl text-primary">
-              <%= user.taskCount ? user.taskCount.created : 0 %>
-            </div>
-          </div>
+ <div class="grid md:grid-cols-2 gap-4">
+ <div class="stat bg-base-200 rounded-lg">
+ <div class="stat-title">Tâches créées</div>
+ <div class="stat-value text-3xl text-primary">
+ <%= user.taskCount ? user.taskCount.created : 0 %>
+ </div>
+ </div>
 
-          <div class="stat bg-base-200 rounded-lg">
-            <div class="stat-title">Tâches assignées</div>
-            <div class="stat-value text-3xl text-secondary">
-              <%= user.taskCount ? user.taskCount.assigned : 0 %>
-            </div>
-          </div>
-        </div>
-      </div>
+ <div class="stat bg-base-200 rounded-lg">
+ <div class="stat-title">Tâches assignées</div>
+ <div class="stat-value text-3xl text-secondary">
+ <%= user.taskCount ? user.taskCount.assigned : 0 %>
+ </div>
+ </div>
+ </div>
+ </div>
 
-      <!-- Recent Tasks -->
-      <% if (typeof recentTasks !== 'undefined' && recentTasks && recentTasks.length > 0) { %>
-        <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold">Tâches récentes</h3>
-            <a href="/tasks?assigneeId=<%= user.id %>" class="link link-primary text-sm">
-              Voir toutes
-            </a>
-          </div>
+ <!-- Recent Tasks -->
+ <% if (typeof recentTasks !== 'undefined' && recentTasks && recentTasks.length > 0) { %>
+ <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
+ <div class="flex justify-between items-center mb-4">
+ <h3 class="text-xl font-bold">Tâches récentes</h3>
+ <a href="/tasks?assigneeId=<%= user.id %>" class="link link-primary text-sm">
+ Voir toutes
+ </a>
+ </div>
 
-          <div class="space-y-2">
-            <% recentTasks.forEach(task => { %>
-              <a href="/tasks/<%= task.id %>"
-                 class="flex items-center justify-between p-3 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
-                <div class="flex-1">
-                  <div class="font-medium"><%= task.title %></div>
-                  <div class="flex gap-2 mt-1">
-                    <%- include('../../partials/ui/badge', { text: task.status.label, variant: task.status.color }) %>
-                  </div>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            <% }) %>
-          </div>
-        </div>
-      <% } %>
-    </div>
-  </div>
+ <div class="space-y-2">
+ <% recentTasks.forEach(task => { %>
+ <a href="/tasks/<%= task.id %>"
+ class="flex items-center justify-between p-3 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
+ <div class="flex-1">
+ <div class="font-medium"><%= task.title %></div>
+ <div class="flex gap-2 mt-1">
+ <%- include('../../partials/ui/badge', { text: task.status.label, variant: task.status.color }) %>
+ </div>
+ </div>
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+ </svg>
+ </a>
+ <% }) %>
+ </div>
+ </div>
+ <% } %>
+ </div>
+ </div>
 </div>
