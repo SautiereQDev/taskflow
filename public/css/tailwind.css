@@ -1,6 +1,6 @@
 /**
  * TaskFlow - Main Stylesheet
- * Tailwind CSS 3.4 + DaisyUI 5.3.7 + Custom Glassmorphism Design System
+ * Tailwind CSS 3.4 + DaisyUI 5.3.7
  */
 
 @tailwind base;
@@ -19,72 +19,9 @@
     stroke-width: 2;
   }
 
-  /* Glass Surface Utilities */
-  .glass-light {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.25);
-    @apply rounded-xl;
-  }
-
-  .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    @apply rounded-xl;
-  }
-
-  .glass-heavy {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    @apply rounded-xl;
-  }
-
-  .glass-hover {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    @apply rounded-xl transition-all duration-300 ease-in-out cursor-pointer;
-  }
-
-  .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    transform: scale(1.02);
-  }
-
-  /* Dark theme variants */
-  [data-theme='taskflowDark'] .glass-light {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-
-  [data-theme='taskflowDark'] .glass {
-    background: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  [data-theme='taskflowDark'] .glass-heavy {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  [data-theme='taskflowDark'] .glass-hover {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  [data-theme='taskflowDark'] .glass-hover:hover {
-    background: rgba(0, 0, 0, 0.25);
-  }
-
   /* Components */
   .tf-card {
-    @apply p-6;
+    @apply p-6 bg-base-200 rounded-xl border border-base-300;
   }
 
   .btn-glass {
@@ -92,7 +29,7 @@
   }
 
   .input-glass {
-    @apply w-full px-4 py-3 rounded-lg border border-base-300;
+    @apply w-full px-4 py-3 rounded-lg border border-base-300 bg-base-100;
     @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
   }
 
@@ -147,19 +84,6 @@
   .tf-text-muted {
     @apply text-base-content text-opacity-60;
   }
-
-  /* Dark theme typography variants */
-  [data-theme='taskflowDark'] .tf-text-primary {
-    @apply text-base-content;
-  }
-
-  [data-theme='taskflowDark'] .tf-text-secondary {
-    @apply text-base-content text-opacity-80;
-  }
-
-  [data-theme='taskflowDark'] .tf-text-muted {
-    @apply text-base-content text-opacity-60;
-  }
 }
 
 @layer utilities {
@@ -167,3 +91,4 @@
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-50 focus-visible:ring-offset-2;
   }
 }
+
