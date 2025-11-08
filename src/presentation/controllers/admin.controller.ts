@@ -1,13 +1,18 @@
 import { injectable, inject } from 'tsyringe';
 import type { Request, Response } from 'express';
+import { CommandBus } from '@application/commands/CommandBus.js';
 import { QueryBus } from '@application/queries/QueryBus.js';
 import { GetAllUsersQuery } from '@application/queries/users/GetAllUsersQuery.js';
 import { GetUserByIdQuery } from '@application/queries/users/GetUserByIdQuery.js';
 import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
+import {
+  UpdateUserCommand,
+  type UpdateUserCommandInput,
+} from '@application/commands/users/UpdateUserCommand.js';
 import type { IPaginatedUsersDto } from '@application/queries/users/GetAllUsersHandler.js';
 import type { IUserDto } from '@application/dtos/UserDto.js';
 import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
-import { renderOrPartial } from '@presentation/utils/response.helpers.js';
+import { renderOrPartial, htmxTrigger } from '@presentation/utils/response.helpers.js';
 import {
   toTaskListItemViewModel,
   type ICurrentUserContext,
@@ -22,7 +27,10 @@ const ROLE_DISPLAY: Record<string, { label: string; color: string }> = {
 
 @injectable()
 export class AdminController {
-  constructor(@inject(QueryBus) private readonly queryBus: QueryBus) {}
+  constructor(
+    @inject(CommandBus) private readonly commandBus: CommandBus,
+    @inject(QueryBus) private readonly queryBus: QueryBus
+  ) {}
 
   async listUsers(req: Request, res: Response): Promise<void> {
     const page = Number.parseInt(req.query.page as string, 10) || 1;
@@ -92,6 +100,73 @@ export class AdminController {
       recentTasks,
       title: `${user.name} - TaskFlow`,
     });
+  }
+
+  /**
+   * GET /users/:id/edit - Render user edit form
+   *
+   * @param req - Express request with user ID in params
+   * @param res - Express response
+   */
+  async editUserPage(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const userId = req.params.id;
+
+    // Get user data
+    const user = await this.queryBus.execute<IUserDto>(
+      GetUserByIdQuery,
+      new GetUserByIdQuery(userId)
+    );
+
+    const formModel = this.buildProfileFormModel(user);
+
+    // Render edit form
+    renderOrPartial(req, res, 'pages/users/profile-edit', 'pages/users/profile-edit', {
+      user: formModel,
+      title: `Modifier ${user.name} - TaskFlow`,
+    });
+  }
+
+  /**
+   * PATCH /users/:id - Update user
+   *
+   * @param req - Express request with user data in body
+   * @param res - Express response
+   */
+  async updateUser(req: IAuthenticatedRequest, res: Response): Promise<void> {
+    const userId = req.params.id;
+    const updateData = req.body as Omit<UpdateUserCommandInput, 'userId'>;
+
+    // Execute command
+    const command = new UpdateUserCommand({
+      userId,
+      ...updateData,
+    });
+    await this.commandBus.execute(UpdateUserCommand, command);
+
+    // Set flash message
+    if (typeof req.flash === 'function') {
+      req.flash('success', 'User updated successfully!');
+    }
+
+    // Trigger or redirect
+    if (req.isHtmx) {
+      htmxTrigger(res, 'userUpdated');
+      res.status(200).send('<div class="alert alert-success">User updated!</div>');
+    } else {
+      res.redirect(`/users/${userId}`);
+    }
+  }
+
+  /**
+   * Build profile form model for editing
+   */
+  private buildProfileFormModel(user: IUserDto): Record<string, unknown> {
+    return {
+      id: user.id,
+      name: user.name,
+      avatar: user.avatar ?? '',
+      locale: user.locale ?? 'fr',
+    };
   }
 
   /**
