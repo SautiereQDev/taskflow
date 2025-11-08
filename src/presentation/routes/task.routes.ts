@@ -52,14 +52,15 @@ router.post(
 );
 
 /**
+ * GET /tasks/:id/edit - Render task edit form
+ * IMPORTANT: Must be before /:id to prevent Express from matching /:id with id="123/edit"
+ */
+router.get('/:id/edit', taskController.updatePage.bind(taskController));
+
+/**
  * GET /tasks/:id - Get task details
  */
 router.get('/:id', taskController.detail.bind(taskController));
-
-/**
- * GET /tasks/:id/edit - Render task edit form
- */
-router.get('/:id/edit', taskController.updatePage.bind(taskController));
 
 /**
  * PATCH /tasks/:id - Update task
