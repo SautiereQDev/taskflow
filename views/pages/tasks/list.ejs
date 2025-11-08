@@ -1,4 +1,4 @@
-<div class="flex flex-col lg:flex-row gap-6">
+<div class="flex flex-col lg:flex-row tf-gap-lg">
  <!-- Filters Sidebar -->
  <aside class="w-full lg:w-80 shrink-0" x-data="filtersPanel">
  <!-- Collapse Button (mobile) -->
@@ -26,9 +26,9 @@
  </aside>
 
  <!-- Main Content -->
- <main class="flex-1 space-y-6">
+ <main class="flex-1 tf-section">
  <!-- Header with Search -->
- <div class="space-y-4">
+ <div class="tf-group">
  <div class="flex justify-between items-center">
  <div>
  <h1 class="text-3xl font-bold">Mes tâches</h1>
@@ -36,7 +36,7 @@
  <span id="task-count"><%= pagination.total %></span> tâche(s) au total
  </p>
  </div>
- <a href="/tasks/new" class="btn btn-primary gap-2">
+ <a href="/tasks/new" class="btn btn-primary tf-gap-sm">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
  </svg>
@@ -51,7 +51,7 @@
  x-model="query"
  @input="search"
  placeholder="Rechercher une tâche..."
- class="input input-bordered flex-1" />
+ class="input input-bordered flex-1 tf-input-padding" />
  <button @click="clear"
  x-show="query.length > 0"
  class="btn btn-ghost btn-square">

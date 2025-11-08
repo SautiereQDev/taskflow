@@ -29,8 +29,23 @@
   }
 
   .input-glass {
-    @apply w-full px-4 py-3 rounded-lg border border-base-300 bg-base-100;
+    @apply w-full tf-input-padding rounded-lg border border-base-300 bg-base-100;
     @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+  }
+
+  .textarea-glass {
+    @apply w-full tf-input-padding rounded-lg border border-base-300 bg-base-100;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+    min-height: 5rem;
+  }
+
+  .select-glass {
+    @apply w-full tf-input-padding rounded-lg border border-base-300 bg-base-100;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+    @apply appearance-none bg-no-repeat bg-right pr-8;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-size: 1.5em 1.5em;
   }
 
   .badge-glass {
@@ -322,54 +337,72 @@
     @apply space-y-8;
   }
 
-  .tf-stack-sm {
-    @apply space-y-4;
-  }
-
-  .tf-stack-lg {
-    @apply space-y-12;
-  }
-
   .tf-container {
     @apply container mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  .tf-container-narrow {
-    @apply max-w-3xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  .tf-container-wide {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
   .tf-aside {
-    @apply w-64 bg-base-200 p-6;
+    @apply w-64 bg-base-200 p-4;
   }
 
-  /* Section Spacing */
+  /* Spacing Utilities - Consistent spacing system */
   .tf-section {
-    @apply py-12 px-4 sm:px-6 lg:px-8;
+    @apply space-y-6;
   }
 
-  .tf-section-sm {
-    @apply py-8 px-4 sm:px-6 lg:px-8;
+  .tf-group {
+    @apply space-y-4;
   }
 
-  .tf-section-lg {
-    @apply py-16 px-4 sm:px-6 lg:px-8;
+  .tf-items {
+    @apply space-y-3;
   }
 
-  /* Card/Surface Spacing */
+  .tf-compact {
+    @apply space-y-2;
+  }
+
+  /* Card padding utilities */
   .tf-card-padding {
-    @apply p-6 sm:p-8;
+    @apply p-6;
   }
 
   .tf-card-padding-sm {
-    @apply p-4 sm:p-6;
+    @apply p-4;
   }
 
-  .tf-card-padding-lg {
-    @apply p-8 sm:p-10;
+  .tf-card-padding-xs {
+    @apply p-3;
+  }
+
+  /* Input padding utilities - consistent internal spacing */
+  .tf-input-padding {
+    @apply px-3 py-2;
+  }
+
+  .tf-input-padding-sm {
+    @apply px-2 py-1.5;
+  }
+
+  .tf-input-padding-xs {
+    @apply px-1.5 py-1;
+  }
+
+  /* Gap utilities for consistent spacing */
+  .tf-gap-lg {
+    @apply gap-6;
+  }
+
+  .tf-gap {
+    @apply gap-4;
+  }
+
+  .tf-gap-sm {
+    @apply gap-3;
+  }
+
+  .tf-gap-xs {
+    @apply gap-2;
   }
 
   /* Typography Utilities */
@@ -455,121 +488,11 @@
     color: rgba(255, 255, 255, 0.9);
     opacity: 0.9;
   }
-
-  /* Grid and Flex Utilities */
-  .tf-grid {
-    @apply grid grid-cols-1 gap-6;
-  }
-
-  .tf-grid-sm {
-    @apply grid grid-cols-1 gap-4;
-  }
-
-  .tf-grid-lg {
-    @apply grid grid-cols-1 gap-8;
-  }
-
-  .tf-grid-2 {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
-  }
-
-  .tf-grid-3 {
-    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6;
-  }
-
-  .tf-grid-4 {
-    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6;
-  }
-
-  .tf-flex-between {
-    @apply flex items-center justify-between gap-4;
-  }
-
-  .tf-flex-center {
-    @apply flex items-center justify-center gap-4;
-  }
-
-  .tf-flex-stack {
-    @apply flex flex-col gap-4;
-  }
-
-  .tf-flex-inline {
-    @apply flex items-center gap-3;
-  }
-
-  /* Form Spacing */
-  .tf-form-group {
-    @apply space-y-6;
-  }
-
-  .tf-form-group-sm {
-    @apply space-y-4;
-  }
-
-  .tf-form-row {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
-  }
-
-  .tf-form-actions {
-    @apply flex flex-col sm:flex-row gap-4 sm:justify-end pt-6 mt-6 border-t border-base-content/10;
-  }
-
-  /* List Spacing */
-  .tf-list {
-    @apply space-y-4;
-  }
-
-  .tf-list-sm {
-    @apply space-y-2;
-  }
-
-  .tf-list-lg {
-    @apply space-y-6;
-  }
-
-  /* Divider Spacing */
-  .tf-divider {
-    @apply my-8 border-t border-base-content/10;
-  }
-
-  .tf-divider-sm {
-    @apply my-4 border-t border-base-content/10;
-  }
-
-  .tf-divider-lg {
-    @apply my-12 border-t border-base-content/10;
-  }
 }
 
 @layer utilities {
   .focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-50 focus-visible:ring-offset-2;
-  }
-
-  /* Responsive Spacing Utilities */
-  .spacing-responsive-sm {
-    @apply space-y-3 sm:space-y-4;
-  }
-
-  .spacing-responsive {
-    @apply space-y-4 sm:space-y-6;
-  }
-
-  .spacing-responsive-lg {
-    @apply space-y-6 sm:space-y-8 lg:space-y-10;
-  }
-
-  /* Gap Utilities for consistent spacing */
-  .gap-responsive-sm {
-    @apply gap-3 sm:gap-4;
-  }
-
-  .gap-responsive {
-    @apply gap-4 sm:gap-6;
-  }
-
-  .gap-responsive-lg {
-    @apply gap-6 sm:gap-8 lg:gap-10;
   }
 }
 

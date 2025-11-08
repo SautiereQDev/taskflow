@@ -24,7 +24,7 @@
  <input
  type="search"
  x-model="search"
- class="input input-bordered w-full pl-12 bg-base-100 border border-base-content/10"
+ class="input input-bordered w-full pl-12 bg-base-100 border border-base-content/10 tf-input-padding"
  :placeholder="'<%= __('errors.404.searchPlaceholder') %>'"
  @keyup.enter="window.location.href = search ? `/tasks?search=${encodeURIComponent(search)}` : '/dashboard'"
  >

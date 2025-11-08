@@ -3,10 +3,10 @@
 %>
 
 <!-- Dashboard Main Content -->
-<main class="tf-main tf-stack space-y-8 p-6 md:p-8">
+<main class="tf-main tf-stack tf-card-padding">
 
  <!-- Key Metrics Section -->
- <section aria-labelledby="metrics-title" class="space-y-6">
+ <section aria-labelledby="metrics-title" class="tf-section">
  <div class="flex items-center justify-between">
  <h2 id="metrics-title" class="text-3xl font-bold tf-text-primary">
  <%= t('dashboard.metrics.title') %>
@@ -14,14 +14,14 @@
  </div>
 
  <!-- Metrics Grid -->
- <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+ <div class="grid grid-cols-1 tf-gap md:grid-cols-2 xl:grid-cols-4">
  <!-- Total Tasks Card -->
- <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary/30"
+ <div class="bg-base-200 border border-base-content/10 shadow-group rounded-2xl tf-card-padding transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary/30"
  role="region"
  aria-labelledby="total-tasks-title">
- <div class="space-y-3">
- <div class="flex items-center gap-3">
- <div class="rounded-xl bg-primary/10 p-3 text-primary group-hover:bg-primary/20 transition-colors duration-300">
+ <div class="tf-compact">
+ <div class="flex items-center tf-gap-sm">
+ <div class="rounded-xl bg-primary/10 tf-card-padding-sm text-primary group-hover:bg-primary/20 transition-colors duration-300">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
  </svg>
@@ -36,15 +36,15 @@
 
  <!-- Répartition des tâches -->
  <div class="flex items-center justify-between text-xs tf-text-muted">
- <div class="flex items-center gap-1">
+ <div class="flex items-center tf-gap-xs">
  <div class="w-2 h-2 rounded-full bg-info"></div>
  <span><%= stats.todoTasks %> TODO</span>
  </div>
- <div class="flex items-center gap-1">
+ <div class="flex items-center tf-gap-xs">
  <div class="w-2 h-2 rounded-full bg-warning"></div>
  <span><%= stats.inProgressTasks %> En cours</span>
  </div>
- <div class="flex items-center gap-1">
+ <div class="flex items-center tf-gap-xs">
  <div class="w-2 h-2 rounded-full bg-success"></div>
  <span><%= stats.doneTasks %> Faites</span>
  </div>
@@ -53,12 +53,12 @@
  </div>
 
  <!-- In Progress Card -->
- <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-warning/30"
+ <div class="bg-base-200 border border-base-content/10 shadow-group rounded-2xl tf-card-padding transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-warning/30"
  role="region"
  aria-labelledby="in-progress-title">
- <div class="space-y-3">
- <div class="flex items-center gap-3">
- <div class="rounded-xl bg-warning/10 p-3 text-warning group-hover:bg-warning/20 transition-colors duration-300">
+ <div class="tf-compact">
+ <div class="flex items-center tf-gap-sm">
+ <div class="rounded-xl bg-warning/10 tf-card-padding-sm text-warning group-hover:bg-warning/20 transition-colors duration-300">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
  </svg>
@@ -71,7 +71,7 @@
  </div>
  </div>
 
- <div class="space-y-2">
+ <div class="tf-compact">
  <div class="flex justify-between text-sm">
  <span class="tf-text-secondary">
  <%= t('dashboard.cards.assignedToYou') %>
@@ -88,12 +88,12 @@
  </div>
 
  <!-- Completed Card -->
- <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-success/30"
+ <div class="bg-base-200 border border-base-content/10 shadow-group rounded-2xl tf-card-padding transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-success/30"
  role="region"
  aria-labelledby="completed-title">
- <div class="space-y-3">
- <div class="flex items-center gap-3">
- <div class="rounded-xl bg-success/10 p-3 text-success group-hover:bg-success/20 transition-colors duration-300">
+ <div class="tf-compact">
+ <div class="flex items-center tf-gap-sm">
+ <div class="rounded-xl bg-success/10 tf-card-padding-sm text-success group-hover:bg-success/20 transition-colors duration-300">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
  </svg>
@@ -106,7 +106,7 @@
  </div>
  </div>
 
- <div class="space-y-2">
+ <div class="tf-compact">
  <div class="flex justify-between text-sm">
  <span class="tf-text-secondary">
  <%= t('dashboard.cards.thisWeek') %>
@@ -123,12 +123,12 @@
  </div>
 
  <!-- Overdue Card -->
- <div class="bg-base-200 border border border-base-content/10 shadow-group rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-error/30"
+ <div class="bg-base-200 border border-base-content/10 shadow-group rounded-2xl tf-card-padding transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-error/30"
  role="region"
  aria-labelledby="overdue-title">
- <div class="space-y-3">
- <div class="flex items-center gap-3">
- <div class="rounded-xl bg-error/10 p-3 text-error group-hover:bg-error/20 transition-colors duration-300">
+ <div class="tf-compact">
+ <div class="flex items-center tf-gap-sm">
+ <div class="rounded-xl bg-error/10 tf-card-padding-sm text-error group-hover:bg-error/20 transition-colors duration-300">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0" />
  </svg>
@@ -143,7 +143,7 @@
  </div>
  </div>
 
- <div class="space-y-2">
+ <div class="tf-compact">
  <div class="flex justify-between text-sm">
  <span class="tf-text-secondary">
  <%= t('dashboard.cards.assignedToYou') %>
@@ -164,17 +164,17 @@
  </section>
 
  <!-- Progress Overview and Alerts Section -->
- <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+ <div class="grid grid-cols-1 tf-gap lg:grid-cols-2">
 
  <!-- Progress Overview -->
- <section aria-labelledby="progress-title" class="space-y-6">
- <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+ <section aria-labelledby="progress-title" class="tf-section">
+ <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl tf-card-padding">
  <h2 id="progress-title" class="text-xl font-semibold tf-text-primary mb-4">
  <%= t('dashboard.progress.title') %>
  </h2>
 
  <!-- Taux de complétion avec barre de progression -->
- <div class="space-y-3">
+ <div class="tf-compact">
  <div class="flex items-center justify-between">
  <span class="text-sm font-medium tf-text-muted uppercase">
  <%= t('dashboard.progress.completionRate') %>
@@ -186,8 +186,8 @@
  </div>
 
  <!-- Métriques hebdomadaires (vélocité de l'équipe) -->
- <div class="mt-6 grid grid-cols-2 gap-4">
- <div class="rounded-lg bg-base-200/50 p-4 text-center">
+ <div class="mt-6 grid grid-cols-2 tf-gap text-sm">
+ <div class="rounded-lg bg-base-200/50 tf-card-padding-sm text-center">
  <div class="text-xs font-medium tf-text-muted uppercase mb-1">
  <%= t('dashboard.progress.createdThisWeek') %>
  </div>
@@ -195,7 +195,7 @@
  <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.newTasks') %></div>
  </div>
 
- <div class="rounded-lg bg-base-200/50 p-4 text-center">
+ <div class="rounded-lg bg-base-200/50 tf-card-padding-sm text-center">
  <div class="text-xs font-medium tf-text-muted uppercase mb-1">
  <%= t('dashboard.progress.completedThisWeek') %>
  </div>
@@ -209,7 +209,7 @@
  const netVelocity = insights.completedThisWeek - insights.createdThisWeek;
  const isPositiveVelocity = netVelocity >= 0;
  %>
- <div class="mt-4 p-3 rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
+ <div class="mt-4 tf-card-padding-sm rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
  <div class="flex items-center justify-between">
  <span class="text-sm font-medium <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
  <%= t('dashboard.progress.netVelocity') %>

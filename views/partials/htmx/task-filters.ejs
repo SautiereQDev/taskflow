@@ -19,7 +19,7 @@
  name="search"
  value="<%= filters.search || '' %>"
  placeholder="Titre de la tâche..."
- class="input input-bordered w-full"
+ class="input input-bordered w-full tf-input-padding"
  />
  </div>
 
@@ -127,7 +127,7 @@
  <label for="assigneeId" class="label">
  <span class="label-text font-semibold">Assignée à</span>
  </label>
- <select id="assigneeId" name="assigneeId" class="select select-bordered select-sm w-full">
+ <select id="assigneeId" name="assigneeId" class="select select-bordered select-sm w-full tf-input-padding-sm">
  <option value="">Tous</option>
  <% users.forEach(user => { %>
  <option value="<%= user.id %>" <%= filters.assigneeId === user.id ? 'selected' : '' %>>

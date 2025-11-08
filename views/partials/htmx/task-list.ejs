@@ -1,5 +1,5 @@
 <% if (tasks && tasks.length > 0) { %>
- <div class="space-y-3">
+ <div class="tf-items">
  <% tasks.forEach(task => { %>
  <%- include('./task-item', { task: task }) %>
  <% }) %>
@@ -10,8 +10,8 @@
  <%- include('./pagination', { pagination: pagination }) %>
  <% } %>
 <% } else { %>
- <div class="text-center py-16">
- <div class="bg-base-100 border border-base-content/10 p-6 rounded-lg">
+ <div class="text-center tf-card-padding">
+ <div class="bg-base-100 border border-base-content/10 tf-card-padding rounded-lg">
  <div class="text-6xl mb-4">📋</div>
  <h3 class="text-xl font-bold mb-2">Aucune tâche trouvée</h3>
  <p class="text-base-content/70 mb-6">

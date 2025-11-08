@@ -1,8 +1,8 @@
 <div id="task-<%= task.id %>"
- class="bg-base-200 border border-base-content/10 shadow-md p-5 rounded-xl hover:shadow-lg transition-all duration-200"
+ class="bg-base-200 border border-base-content/10 shadow-md tf-card-padding-sm rounded-xl hover:shadow-lg transition-all duration-200"
  hx-swap-oob="true">
 
- <div class="flex items-start justify-between gap-4">
+ <div class="flex items-start justify-between tf-gap">
  <!-- Left: Task Info -->
  <div class="flex-1 min-w-0">
  <!-- Title -->
@@ -12,11 +12,11 @@
  </a>
 
  <!-- Badges -->
- <div class="flex flex-wrap gap-2 mb-3">
+ <div class="flex flex-wrap tf-gap-sm mb-3">
  <span class="badge badge-<%= task.status.color %>"><%= task.status.label %></span>
  <span class="badge badge-<%= task.priority.color %>"><%= task.priority.label %></span>
  <% if (task.dueDate && task.dueDate.formatted) { %>
- <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %> gap-1">
+ <span class="badge <%= task.dueDate.isOverdue ? 'badge-error' : 'badge-ghost' %> tf-gap-xs">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
  </svg>
@@ -27,7 +27,7 @@
 
  <!-- Assignee -->
  <% if (task.assignee) { %>
- <div class="flex items-center gap-2 text-sm text-base-content/70">
+ <div class="flex items-center tf-gap-sm text-sm text-base-content/70">
  <div class="avatar placeholder">
  <div class="bg-neutral text-neutral-content rounded-full w-6 h-6">
  <span class="text-xs"><%= task.assignee.initials %></span>
@@ -39,7 +39,7 @@
  </div>
 
  <!-- Right: Actions -->
- <div class="flex items-center gap-2">
+ <div class="flex items-center tf-gap-sm">
  <!-- Quick Actions -->
  <% if (task.canEdit) { %>
  <div class="dropdown dropdown-end">
@@ -48,7 +48,7 @@
  <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
  </svg>
  </label>
- <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-content/10 z-10">
+ <ul tabindex="0" class="dropdown-content menu tf-card-padding-sm shadow-lg bg-base-100 rounded-box w-52 border border-base-content/10 z-10">
  <li>
  <a href="/tasks/<%= task.id %>">
  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -40,7 +40,7 @@
  value="<%= user.name %>"
  minlength="2"
  maxlength="100"
- class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors"
+ class="input input-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300"
  required />
  <label class="label">
  <span class="label-text-alt tf-text-muted">
@@ -58,7 +58,7 @@
  name="avatar"
  value="<%= currentAvatar %>"
  placeholder="<%= __('profile.edit.avatarPlaceholder') %>"
- class="input input-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors" />
+ class="input input-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300" />
  <label class="label">
  <span class="label-text-alt tf-text-muted">
  <%= __('profile.edit.avatarHint') %>
@@ -71,7 +71,7 @@
  <label class="label">
  <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.language') %></span>
  </label>
- <select name="locale" class="select select-bordered w-full transition-all duration-200 focus:card bg-base-200 hover:bg-base-300 transition-colors">
+ <select name="locale" class="select select-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300">
  <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
  <%= __('profile.edit.languageFr') %>
  </option>

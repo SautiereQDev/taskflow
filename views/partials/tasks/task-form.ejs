@@ -37,7 +37,7 @@
  id="title"
  name="title"
  value="<%= taskTitle %>"
- class="input input-bordered w-full"
+ class="input input-bordered w-full tf-input-padding"
  placeholder="Ex: Préparer la livraison de la fonctionnalité"
  minlength="3"
  maxlength="200"
@@ -55,7 +55,7 @@
  <textarea
  id="description"
  name="description"
- class="textarea textarea-bordered w-full h-32"
+ class="textarea textarea-bordered w-full h-32 tf-input-padding"
  maxlength="2000"
  placeholder="Ajoutez des détails pour contextualiser la tâche..."
  x-model="description"
@@ -68,7 +68,7 @@
  <label class="label" for="status">
  <span class="label-text font-semibold">Statut</span>
  </label>
- <select id="status" name="status" class="select select-bordered w-full" required>
+ <select id="status" name="status" class="select select-bordered w-full tf-input-padding" required>
  <option value="TODO" <%= taskStatus === 'TODO' ? 'selected' : '' %>>À faire</option>
  <option value="IN_PROGRESS" <%= taskStatus === 'IN_PROGRESS' ? 'selected' : '' %>>En cours</option>
  <option value="DONE" <%= taskStatus === 'DONE' ? 'selected' : '' %>>Terminée</option>
@@ -81,7 +81,7 @@
  <label class="label" for="priority">
  <span class="label-text font-semibold">Priorité</span>
  </label>
- <select id="priority" name="priority" class="select select-bordered w-full" required>
+ <select id="priority" name="priority" class="select select-bordered w-full tf-input-padding" required>
  <option value="LOW" <%= taskPriority === 'LOW' ? 'selected' : '' %>>Basse</option>
  <option value="MEDIUM" <%= taskPriority === 'MEDIUM' ? 'selected' : '' %>>Moyenne</option>
  <option value="HIGH" <%= taskPriority === 'HIGH' ? 'selected' : '' %>>Haute</option>
@@ -96,7 +96,7 @@
  <label class="label" for="assigneeId">
  <span class="label-text font-semibold">Assignée à</span>
  </label>
- <select id="assigneeId" name="assigneeId" class="select select-bordered w-full">
+ <select id="assigneeId" name="assigneeId" class="select select-bordered w-full tf-input-padding">
  <option value="">Non assignée / No assignee</option>
  <% (users || []).forEach((user) => { %>
  <option value="<%= user.id %>" <%= taskAssigneeId === user.id ? 'selected' : '' %>>
@@ -116,7 +116,7 @@
  id="dueDate"
  name="dueDate"
  value="<%= taskDueDate %>"
- class="input input-bordered w-full"
+ class="input input-bordered w-full tf-input-padding"
  />
  </div>
  </div>
