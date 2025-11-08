@@ -16,4 +16,9 @@ router.use(requireAuth, requireRole([UserRole.ADMIN, UserRole.MANAGER]));
  */
 router.get('/', adminController.listUsers.bind(adminController));
 
+/**
+ * GET /users/:id - View user detail
+ */
+router.get('/:id', adminController.viewUser.bind(adminController));
+
 export default router;
