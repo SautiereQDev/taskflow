@@ -34,22 +34,19 @@
             </div>
           </div>
 
-          <div class="space-y-2">
-            <div class="flex justify-between text-sm">
-              <span class="tf-text-secondary">
-                <%= t('dashboard.cards.active') %>
-              </span>
-              <span class="font-medium tf-text-primary"><%= openTasks %></span>
+          <!-- Répartition des tâches -->
+          <div class="flex items-center justify-between text-xs tf-text-muted">
+            <div class="flex items-center gap-1">
+              <div class="w-2 h-2 rounded-full bg-info"></div>
+              <span><%= stats.todoTasks %> TODO</span>
             </div>
-            <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
-              <div class="bg-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                   style="width: <%= Math.min(stats.totalTasks > 0 ? (openTasks / stats.totalTasks) * 100 : 0, 100) %>%"
-                   role="progressbar"
-                   aria-valuenow="<%= stats.totalTasks > 0 ? Math.round((openTasks / stats.totalTasks) * 100) : 0 %>"
-                   aria-valuemin="0"
-                   aria-valuemax="100"
-                   aria-label="<%= t('dashboard.cards.total.progressAria') %>">
-              </div>
+            <div class="flex items-center gap-1">
+              <div class="w-2 h-2 rounded-full bg-warning"></div>
+              <span><%= stats.inProgressTasks %> En cours</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <div class="w-2 h-2 rounded-full bg-success"></div>
+              <span><%= stats.doneTasks %> Faites</span>
             </div>
           </div>
         </div>
@@ -149,17 +146,15 @@
           <div class="space-y-2">
             <div class="flex justify-between text-sm">
               <span class="tf-text-secondary">
-                <%= t('dashboard.cards.needsAttention') %>
+                <%= t('dashboard.cards.assignedToYou') %>
               </span>
-              <span class="font-medium <%= stats.overdueTasks > 0 ? 'text-error' : 'tf-text-primary' %>">
-                <%= stats.overdueTasks > 0
-                  ? t('dashboard.cards.urgent')
-                  : t('dashboard.cards.good') %>
+              <span class="font-medium <%= myAssignmentsSummary.overdue > 0 ? 'text-error' : 'tf-text-primary' %>">
+                <%= myAssignmentsSummary.overdue %>
               </span>
             </div>
             <div class="w-full bg-base-200 rounded-full h-2 overflow-hidden">
               <div class="bg-error h-2 rounded-full transition-all duration-1000 ease-out"
-                   style="width: <%= Math.min(stats.overdueTasks * 10, 100) %>%">
+                   style="width: <%= Math.min(stats.overdueTasks > 0 ? (myAssignmentsSummary.overdue / stats.overdueTasks) * 100 : 0, 100) %>%">
               </div>
             </div>
           </div>
@@ -174,37 +169,59 @@
     <!-- Progress Overview -->
     <section aria-labelledby="progress-title" class="space-y-6">
       <div class="glass rounded-2xl p-6">
-        <h2 id="progress-title" class="text-xl font-semibold tf-text-primary">
+        <h2 id="progress-title" class="text-xl font-semibold tf-text-primary mb-4">
           <%= t('dashboard.progress.title') %>
         </h2>
-        <div class="mt-4">
+        
+        <!-- Taux de complétion avec barre de progression -->
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-sm font-medium tf-text-muted uppercase">
               <%= t('dashboard.progress.completionRate') %>
             </span>
             <span class="text-2xl font-bold tf-text-primary"><%= stats.completionRate %>%</span>
           </div>
+          <progress class="progress progress-primary w-full" value="<%= stats.completionRate %>"
+                    max="100" aria-label="<%= t('dashboard.progress.completionRate') %>"></progress>
         </div>
-        <progress class="progress progress-primary mt-4 w-full" value="<%= stats.completionRate %>"
-                  max="100" aria-label="<%= t('dashboard.progress.completionRate') %>"></progress>
-        <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div class="text-center">
-            <div class="text-sm font-medium tf-text-muted uppercase">
+
+        <!-- Métriques hebdomadaires (vélocité de l'équipe) -->
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <div class="rounded-lg bg-base-200/50 p-4 text-center">
+            <div class="text-xs font-medium tf-text-muted uppercase mb-1">
               <%= t('dashboard.progress.createdThisWeek') %>
             </div>
-            <div class="mt-1 text-2xl font-semibold tf-text-primary"><%= insights.createdThisWeek %></div>
+            <div class="text-2xl font-bold text-info"><%= insights.createdThisWeek %></div>
+            <div class="text-xs tf-text-muted mt-1">Nouvelles tâches</div>
           </div>
-          <div class="text-center">
-            <div class="text-sm font-medium tf-text-muted uppercase">
+          
+          <div class="rounded-lg bg-base-200/50 p-4 text-center">
+            <div class="text-xs font-medium tf-text-muted uppercase mb-1">
               <%= t('dashboard.progress.completedThisWeek') %>
             </div>
-            <div class="mt-1 text-2xl font-semibold tf-text-primary"><%= insights.completedThisWeek %></div>
+            <div class="text-2xl font-bold text-success"><%= insights.completedThisWeek %></div>
+            <div class="text-xs tf-text-muted mt-1">Tâches terminées</div>
           </div>
-          <div class="text-center">
-            <div class="text-sm font-medium tf-text-muted uppercase">
-              <%= t('dashboard.progress.activeUsers') %>
-            </div>
-            <div class="mt-1 text-xl font-semibold tf-text-primary"><%= insights.activeUsers %></div>
+        </div>
+
+        <!-- Vélocité nette (si positive = on avance, si négative = backlog augmente) -->
+        <% 
+          const netVelocity = insights.completedThisWeek - insights.createdThisWeek;
+          const isPositiveVelocity = netVelocity >= 0;
+        %>
+        <div class="mt-4 p-3 rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
+              Vélocité nette cette semaine
+            </span>
+            <span class="text-lg font-bold <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
+              <%= isPositiveVelocity ? '+' : '' %><%= netVelocity %>
+            </span>
+          </div>
+          <div class="text-xs tf-text-muted mt-1">
+            <%= isPositiveVelocity 
+              ? 'Excellent ! Le backlog diminue.' 
+              : 'Attention : Le backlog augmente.' %>
           </div>
         </div>
       </div>

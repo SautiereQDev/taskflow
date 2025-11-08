@@ -5150,6 +5150,10 @@ svg:not([stroke-width]) {
   width: 100%;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
