@@ -5,7 +5,7 @@
   // isAdminContext: true = admin editing user, false = user editing own profile
   const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
   const formAction = isAdminContext ? `/users/${user.id}` : '/profile';
-  const pageTitle = isAdminContext ? `${t('profile.edit.titleAdmin')} - ${user.name}` : t('profile.edit.title');
+  const pageTitle = isAdminContext ? `${__('profile.edit.titleAdmin')} - ${user.name}` : __('profile.edit.title');
 %>
 
 <div class="max-w-3xl mx-auto space-y-6">
@@ -15,7 +15,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
-      <%= t('common.back') %>
+      <%= __('common.back') %>
     </a>
     <h1 class="text-3xl font-bold tf-text-primary"><%= pageTitle %></h1>
   </div>
@@ -33,7 +33,7 @@
       <!-- Full Name Field -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.fullName') %></span>
+          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.fullName') %></span>
         </label>
         <input type="text"
                name="name"
@@ -44,7 +44,7 @@
                required />
         <label class="label">
           <span class="label-text-alt tf-text-muted">
-            <%= t('profile.edit.fullNameHint') %>
+            <%= __('profile.edit.fullNameHint') %>
           </span>
         </label>
       </div>
@@ -52,16 +52,16 @@
       <!-- Avatar URL Field -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.avatar') %></span>
+          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.avatar') %></span>
         </label>
         <input type="url"
                name="avatar"
                value="<%= currentAvatar %>"
-               placeholder="<%= t('profile.edit.avatarPlaceholder') %>"
+               placeholder="<%= __('profile.edit.avatarPlaceholder') %>"
                class="input input-bordered w-full transition-all duration-200 focus:glass-hover" />
         <label class="label">
           <span class="label-text-alt tf-text-muted">
-            <%= t('profile.edit.avatarHint') %>
+            <%= __('profile.edit.avatarHint') %>
           </span>
         </label>
       </div>
@@ -69,14 +69,14 @@
       <!-- Language Select -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-semibold tf-text-primary"><%= t('profile.edit.language') %></span>
+          <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.language') %></span>
         </label>
         <select name="locale" class="select select-bordered w-full transition-all duration-200 focus:glass-hover">
           <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
-            <%= t('profile.edit.languageFr') %>
+            <%= __('profile.edit.languageFr') %>
           </option>
           <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>
-            <%= t('profile.edit.languageEn') %>
+            <%= __('profile.edit.languageEn') %>
           </option>
         </select>
       </div>
@@ -86,11 +86,11 @@
     <div class="flex justify-end gap-3">
       <a href="<%= backUrl %>" 
          class="btn btn-ghost glass-light hover:glass transition-all duration-200">
-        <%= t('common.cancel') %>
+        <%= __('common.cancel') %>
       </a>
       <button type="submit" 
               class="btn btn-primary glass hover:glass-heavy transition-all duration-200 shadow-lg hover:shadow-xl">
-        <%= t('common.update') %>
+        <%= __('common.update') %>
       </button>
     </div>
   </form>
