@@ -197,7 +197,12 @@
       "completionRate": "Taux de complétion",
       "createdThisWeek": "Créées (7 derniers jours)",
       "completedThisWeek": "Terminées (7 derniers jours)",
-      "activeUsers": "Membres actifs"
+      "activeUsers": "Membres actifs",
+      "newTasks": "Nouvelles tâches",
+      "completedTasks": "Tâches terminées",
+      "netVelocity": "Vélocité nette cette semaine",
+      "backlogDecreasing": "Excellent ! Le backlog diminue.",
+      "backlogIncreasing": "Attention : Le backlog augmente."
     },
     "alerts": {
       "title": "Points d'attention",
@@ -209,6 +214,7 @@
       "activeUsersHint": "Surveillez la charge de travail de l'équipe."
     },
     "distribution": {
+      "title": "Répartition",
       "status": "Répartition par statut",
       "priority": "Répartition par priorité"
     },

@@ -215,7 +215,12 @@
       "completionRate": "Completion Rate",
       "createdThisWeek": "Created (last 7 days)",
       "completedThisWeek": "Completed (last 7 days)",
-      "activeUsers": "Active Members"
+      "activeUsers": "Active Members",
+      "newTasks": "New tasks",
+      "completedTasks": "Completed tasks",
+      "netVelocity": "Net velocity this week",
+      "backlogDecreasing": "Excellent! Backlog decreasing.",
+      "backlogIncreasing": "Warning: Backlog increasing."
     },
     "alerts": {
       "title": "Attention Points",
@@ -227,6 +232,7 @@
       "activeUsersHint": "Monitor team workload."
     },
     "distribution": {
+      "title": "Distribution",
       "status": "Distribution by Status",
       "priority": "Distribution by Priority"
     },
