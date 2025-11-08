@@ -378,6 +378,41 @@
   [data-theme="dark"] .prose-base {
     color: rgba(255, 255, 255, 0.9);
   }
+
+  /* Dark theme improvements for alert components */
+  [data-theme="dark"] .alert {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  [data-theme="dark"] .alert-info {
+    background-color: rgba(var(--in), 0.15) !important;
+    border-color: rgba(var(--in), 0.3) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  [data-theme="dark"] .alert-success {
+    background-color: rgba(var(--su), 0.15) !important;
+    border-color: rgba(var(--su), 0.3) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  [data-theme="dark"] .alert-warning {
+    background-color: rgba(var(--wa), 0.15) !important;
+    border-color: rgba(var(--wa), 0.3) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  [data-theme="dark"] .alert-error {
+    background-color: rgba(var(--er), 0.15) !important;
+    border-color: rgba(var(--er), 0.3) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  /* Alert SVG icons in dark mode */
+  [data-theme="dark"] .alert svg {
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 0.9;
+  }
 }
 
 @layer utilities {
