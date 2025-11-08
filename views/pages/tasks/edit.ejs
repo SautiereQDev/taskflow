@@ -1,34 +1,6 @@
 <!-- Task Edit Page -->
-<%
-  const breadcrumbs = [
-    { label: __('common.home'), url: '/' },
-    { label: __('tasks.title'), url: '/tasks' },
-    { label: task.title, url: `/tasks/${task.id}` },
-    { label: __('tasks.edit.title'), url: null }
-  ];
-%>
 
 <div class="max-w-5xl mx-auto space-y-6">
-  <!-- Breadcrumb -->
-  <nav class="breadcrumbs text-sm tf-text-secondary mb-6">
-    <ul class="flex items-center gap-2 flex-wrap">
-      <% breadcrumbs.forEach((crumb, index) => { %>
-        <li class="flex items-center gap-2">
-          <% if (index > 0) { %>
-            <span class="text-base-content/30">/</span>
-          <% } %>
-          <% if (crumb.url) { %>
-            <a href="<%= crumb.url %>" class="hover:tf-text-primary transition-colors">
-              <%= crumb.label %>
-            </a>
-          <% } else { %>
-            <span class="tf-text-primary font-medium"><%= crumb.label %></span>
-          <% } %>
-        </li>
-      <% }); %>
-    </ul>
-  </nav>
-
   <!-- Page Header -->
   <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
     <div>
