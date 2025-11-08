@@ -123,6 +123,7 @@ export class AdminController {
     renderOrPartial(req, res, 'pages/users/profile-edit', 'pages/users/profile-edit', {
       user: formModel,
       title: `Modifier ${user.name} - TaskFlow`,
+      isAdminContext: true, // Admin editing user
     });
   }
 

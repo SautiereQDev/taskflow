@@ -109,6 +109,7 @@ export class UserController {
     renderOrPartial(req, res, 'pages/users/profile-edit', 'pages/users/profile-edit', {
       user: formModel,
       title: 'Modifier mon profil - TaskFlow',
+      isAdminContext: false, // User editing own profile
     });
   }
 

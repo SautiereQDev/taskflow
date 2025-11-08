@@ -1,8 +1,8 @@
 <%
   const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
   const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
-  // Detect context: is this admin editing or user self-editing?
-  const isAdminContext = req.path.startsWith('/users/') && !req.path.startsWith('/profile');
+  // Context is passed from controller (isAdminContext variable)
+  // isAdminContext: true = admin editing user, false = user editing own profile
   const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
   const formAction = isAdminContext ? `/users/${user.id}` : '/profile';
   const pageTitle = isAdminContext ? `${t('profile.edit.titleAdmin')} - ${user.name}` : t('profile.edit.title');
