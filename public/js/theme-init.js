@@ -8,8 +8,8 @@
   'use strict';
 
   const STORAGE_KEY = 'taskflow-theme';
-  const THEME_LIGHT = 'taskflowLight';
-  const THEME_DARK = 'taskflowDark';
+  const THEME_LIGHT = 'light';
+  const THEME_DARK = 'dark';
 
   /**
    * Get saved theme from localStorage or system preference
@@ -19,6 +19,13 @@
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === THEME_LIGHT || saved === THEME_DARK) {
         return saved;
+      }
+      // Handle legacy theme names (taskflowLight/taskflowDark)
+      if (saved === 'taskflowLight') {
+        return THEME_LIGHT;
+      }
+      if (saved === 'taskflowDark') {
+        return THEME_DARK;
       }
     } catch (error) {
       console.warn('Failed to read theme from localStorage:', error);
