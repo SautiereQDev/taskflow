@@ -30,9 +30,9 @@ const onlineClass = online ? 'online' : '';
 %>
 
 <div class="avatar placeholder <%= onlineClass %>">
- <div class="bg-primary text-primary-content rounded-full <%= sizeClass %>">
+ <div class="bg-primary text-primary-content rounded-full flex-shrink-0 <%= sizeClass %> flex items-center justify-center">
  <% if (image) { %>
- <img src="<%= image %>" alt="<%= name %>" />
+ <img src="<%= image %>" alt="<%= name %>" class="rounded-full" />
  <% } else { %>
  <span class="font-semibold"><%= initials %></span>
  <% } %>

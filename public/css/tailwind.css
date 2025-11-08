@@ -171,8 +171,16 @@
   }
 
   /* Avatar fix - prevent distortion */
+  .avatar {
+    @apply flex-shrink-0;
+  }
+
   .avatar .rounded-full {
-    @apply aspect-square flex items-center justify-center;
+    @apply aspect-square flex items-center justify-center flex-shrink-0;
+  }
+
+  .avatar img {
+    @apply w-full h-full object-cover;
   }
 
   /* HTMX States */
