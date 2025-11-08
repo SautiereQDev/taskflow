@@ -38,7 +38,7 @@
   }
 
   /* Modern Button System - 2025 Best Practices */
-  
+
   /* Base button styles (applied to all buttons) */
   .btn {
     @apply inline-flex items-center justify-center gap-2;
