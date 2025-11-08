@@ -1,6 +1,6 @@
 <div class="min-h-screen flex items-center justify-center px-4">
   <div class="text-center max-w-2xl w-full">
-    <div class="glass p-8 md:p-12 rounded-2xl">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-8 md:p-12 rounded-2xl">
       <!-- Error Icon -->
       <div class="text-8xl mb-6" role="img" aria-label="<%= __('errors.500.title') %>">⚠️</div>
 
@@ -19,7 +19,7 @@
       </p>
 
       <!-- Status Indicator -->
-      <div class="mb-8 inline-flex items-center gap-3 px-6 py-3 glass-light rounded-full">
+      <div class="mb-8 inline-flex items-center gap-3 px-6 py-3 bg-base-100 border border-base-content/10 rounded-full">
         <span class="relative flex h-3 w-3">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning opacity-75"></span>
           <span class="relative inline-flex rounded-full h-3 w-3 bg-warning"></span>
@@ -48,7 +48,7 @@
 
       <!-- Error Details (only show in development) -->
       <% if (typeof error !== 'undefined' && error && process.env.NODE_ENV === 'development') { %>
-        <div class="mt-8 glass-light p-4 rounded-xl text-left" x-data="{ expanded: false }">
+        <div class="mt-8 bg-base-100 border border-base-content/10 p-4 rounded-xl text-left" x-data="{ expanded: false }">
           <details @toggle="expanded = !expanded">
             <summary class="cursor-pointer font-semibold text-sm mb-2 flex items-center justify-between hover:tf-text-primary transition-colors">
               <span>
@@ -100,7 +100,7 @@
     </div>
 
     <!-- Additional Info Card -->
-    <div class="mt-6 glass-light p-4 rounded-xl text-sm">
+    <div class="mt-6 bg-base-100 border border-base-content/10 p-4 rounded-xl text-sm">
       <p class="tf-text-secondary">
         <% if (locale === 'fr') { %>
           🔧 <strong>En attendant:</strong> Vous pouvez essayer de rafraîchir la page ou revenir plus tard. Nos équipes techniques sont sur le coup !

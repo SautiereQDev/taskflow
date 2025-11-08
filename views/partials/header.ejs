@@ -1,4 +1,4 @@
-<header class="glass sticky top-0 z-50 border-b border-base-300">
+<header class="bg-base-200 border border-base-content/10 shadow-md sticky top-0 z-50 border-b border-base-300">
   <div class="container mx-auto px-4">
     <nav class="navbar min-h-16">
       <!-- Logo & Brand -->
@@ -52,7 +52,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content glass-heavy mt-3 p-2 shadow-lg rounded-box w-52">
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 shadow-lg rounded-box w-52">
               <li><a href="/dashboard"><%= __('nav.dashboard') %></a></li>
               <li><a href="/tasks"><%= __('nav.tasks') %></a></li>
               <% if (user.role === 'ADMIN' || user.role === 'MANAGER') { %>
@@ -72,7 +72,7 @@
                 <span class="text-sm font-semibold"><%= user.name.substring(0, 2).toUpperCase() %></span>
               </div>
             </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content glass-heavy mt-3 p-2 shadow-lg rounded-box w-52">
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 shadow-lg rounded-box w-52">
               <li class="menu-title">
                 <span class="font-semibold"><%= user.name %></span>
                 <span class="text-xs opacity-70"><%= user.email %></span>

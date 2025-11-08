@@ -42,7 +42,7 @@
 
   <!-- Empty State -->
   <% if (!hasTasks) { %>
-    <div class="glass rounded-xl border border-dashed border-base-300 bg-base-200/70 p-6 shadow-sm">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl border border-dashed border-base-300 bg-base-200/70 p-6 shadow-sm">
       <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 class="text-xl font-semibold">
@@ -74,7 +74,7 @@
 
   <!-- Key Metrics -->
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <div class="flex items-center justify-between">
         <div>
           <div class="text-sm font-medium uppercase tracking-wide text-base-content/60">
@@ -99,7 +99,7 @@
       </div>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <div class="flex items-center justify-between">
         <div>
           <div class="text-sm font-medium uppercase tracking-wide text-base-content/60">
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <div class="flex items-center justify-between">
         <div>
           <div class="text-sm font-medium uppercase tracking-wide text-base-content/60">
@@ -149,7 +149,7 @@
       </div>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <div class="flex items-center justify-between">
         <div>
           <div class="text-sm font-medium uppercase tracking-wide text-base-content/60">
@@ -177,7 +177,7 @@
 
   <!-- Progress & Insights -->
   <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200 xl:col-span-2">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200 xl:col-span-2">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 class="text-xl font-semibold">
@@ -230,7 +230,7 @@
       </div>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <h2 class="text-xl font-semibold">
         <%= typeof t === 'function'
           ? t('dashboard.alerts.title')
@@ -306,7 +306,7 @@
 
   <!-- Distribution -->
   <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <h2 class="text-xl font-semibold">
         <%= typeof t === 'function'
           ? t('dashboard.distribution.status')
@@ -335,7 +335,7 @@
         <% }) %>
       </div>
     </div>
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <h2 class="text-xl font-semibold">
         <%= typeof t === 'function'
           ? t('dashboard.distribution.priority')
@@ -367,7 +367,7 @@
 
   <!-- Task Streams -->
   <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-semibold">
           <%= typeof t === 'function'
@@ -411,7 +411,7 @@
       <% } %>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <h2 class="text-xl font-semibold">
         <%= typeof t === 'function'
           ? t('dashboard.sections.upcoming')
@@ -477,7 +477,7 @@
       <% } %>
     </div>
 
-    <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
       <h2 class="text-xl font-semibold">
         <%= typeof t === 'function'
           ? t('dashboard.sections.myWork')
@@ -554,7 +554,7 @@
   </div>
 
   <!-- Team Capacity -->
-  <div class="glass rounded-xl p-6 shadow-sm border border-base-200">
+  <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-6 shadow-sm border border-base-200">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       <div>
         <h2 class="text-xl font-semibold">

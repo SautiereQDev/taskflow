@@ -1,6 +1,6 @@
 /**
  * TaskFlow - Main Stylesheet
- * Tailwind CSS 3.4 + DaisyUI 5.3.7 + Custom Glassmorphism Design System
+ * Tailwind CSS 3.4 + DaisyUI 5.3.7
  */
 
 *, ::before, ::after {
@@ -4602,78 +4602,13 @@ svg:not([stroke-width]) {
     stroke-width: 2;
   }
 
-/* Glass Surface Utilities */
-
-.glass-light {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.25);
-    border-radius: 0.75rem;
-  }
-
-.glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 0.75rem;
-  }
-
-.glass-heavy {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    border-radius: 0.75rem;
-  }
-
-.glass-hover {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    cursor: pointer;
-    border-radius: 0.75rem;
-    transition-property: all;
-    transition-duration: 300ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-.glass-hover:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    transform: scale(1.02);
-  }
-
-/* Dark theme variants */
-
-[data-theme='taskflowDark'] .glass-light {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-
-[data-theme='taskflowDark'] .glass {
-    background: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-[data-theme='taskflowDark'] .glass-heavy {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-[data-theme='taskflowDark'] .glass-hover {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-[data-theme='taskflowDark'] .glass-hover:hover {
-    background: rgba(0, 0, 0, 0.25);
-  }
-
 /* Components */
 
 .tf-card {
+  border-radius: 0.75rem;
+  border-width: 1px;
+  border-color: var(--color-base-300);
+  background-color: var(--color-base-200);
   padding: 1.5rem;
 }
 
@@ -4682,6 +4617,7 @@ svg:not([stroke-width]) {
   border-radius: 0.5rem;
   border-width: 1px;
   border-color: var(--color-base-300);
+  background-color: var(--color-base-100);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
@@ -4815,22 +4751,6 @@ svg:not([stroke-width]) {
 }
 
 .tf-text-muted {
-  color: var(--color-base-content);
-  --tw-text-opacity: 0.6;
-}
-
-/* Dark theme typography variants */
-
-[data-theme='taskflowDark'] .tf-text-primary {
-  color: var(--color-base-content);
-}
-
-[data-theme='taskflowDark'] .tf-text-secondary {
-  color: var(--color-base-content);
-  --tw-text-opacity: 0.8;
-}
-
-[data-theme='taskflowDark'] .tf-text-muted {
   color: var(--color-base-content);
   --tw-text-opacity: 0.6;
 }
@@ -5828,6 +5748,12 @@ svg:not([stroke-width]) {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .outline {
   outline-style: solid;
 }
@@ -6223,45 +6149,6 @@ svg:not([stroke-width]) {
   }
 }
 
-.hover\:glass-light:hover {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.25);
-    border-radius: 0.75rem;
-  }
-
-.hover\:glass:hover {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 0.75rem;
-  }
-
-.hover\:glass-heavy:hover {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    border-radius: 0.75rem;
-  }
-
-[data-theme='taskflowDark'] .hover\:glass-light:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-
-[data-theme='taskflowDark'] .hover\:glass:hover {
-    background: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-[data-theme='taskflowDark'] .hover\:glass-heavy:hover {
-    background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
 .hover\:tf-text-primary:hover {
   color: var(--color-base-content);
 }
@@ -6271,40 +6158,557 @@ svg:not([stroke-width]) {
   --tw-text-opacity: 0.8;
 }
 
-[data-theme='taskflowDark'] .hover\:tf-text-primary:hover {
-  color: var(--color-base-content);
-}
+@layer daisyui.component {
 
-[data-theme='taskflowDark'] .hover\:tf-text-secondary:hover {
-  color: var(--color-base-content);
-  --tw-text-opacity: 0.8;
-}
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
 
-.focus\:glass-hover:focus {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
     cursor: pointer;
-    border-radius: 0.75rem;
-    transition-property: all;
-    transition-duration: 300ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
   }
 
-.focus\:glass-hover:focus:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
-    transform: scale(1.02);
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
   }
 
-[data-theme='taskflowDark'] .focus\:glass-hover:focus {
-    background: rgba(0, 0, 0, 0.2);
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
   }
 
-[data-theme='taskflowDark'] .focus\:glass-hover:focus:hover {
-    background: rgba(0, 0, 0, 0.25);
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
   }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+
+  .focus\:card:focus {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-box);
+    outline-width: 2px;
+    transition: outline 0.2s ease-in-out;
+    outline: 0 solid #0000;
+    outline-offset: 2px;
+  }
+
+  .focus\:card:focus:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+
+  @media (forced-colors: active) {
+
+    .focus\:card:focus:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .focus\:card:focus:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .focus\:card:focus :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+
+  .focus\:card:focus :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+
+  .focus\:card:focus figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .focus\:card:focus:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+
+  .focus\:card:focus:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+}
 
 @media (min-width: 768px) {
 
@@ -6335,6 +6739,10 @@ svg:not([stroke-width]) {
 
 .hover\:bg-base-300:hover {
   background-color: var(--color-base-300);
+}
+
+.hover\:bg-base-100:hover {
+  background-color: var(--color-base-100);
 }
 
 .hover\:text-primary:hover {
@@ -6561,3 +6969,4 @@ svg:not([stroke-width]) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+

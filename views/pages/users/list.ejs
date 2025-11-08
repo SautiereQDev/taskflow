@@ -16,7 +16,7 @@
   </div>
 
   <!-- Users Table -->
-  <div class="glass p-6 rounded-lg">
+  <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
     <div class="overflow-x-auto">
       <table class="table table-zebra w-full">
         <thead>
@@ -90,7 +90,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                       </svg>
                     </label>
-                    <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 glass">
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-52 bg-base-200 border border-base-content/10 shadow-md">
                       <li><a href="/users/<%= user.id %>">Voir profil</a></li>
                       <% if (user.canEdit) { %>
                         <li><a href="/users/<%= user.id %>/edit">Modifier</a></li>

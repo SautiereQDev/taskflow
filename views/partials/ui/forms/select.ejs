@@ -45,7 +45,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
   <select
     name="<%= name %>"
     id="<%= name %>"
-    class="select-glass select w-full <%= error ? 'select-error' : '' %>"
+    class="select-bg-base-200 border border-base-content/10 shadow-md select w-full <%= error ? 'select-error' : '' %>"
     <%= required ? 'required' : '' %>
     <%= disabled ? 'disabled' : '' %>
   >

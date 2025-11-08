@@ -16,7 +16,7 @@
         class="space-y-6">
 
     <!-- Appearance Section -->
-    <div class="glass p-6 rounded-lg">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
       <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
@@ -39,7 +39,7 @@
                    <%= theme === 'light' ? 'checked' : '' %>
                    x-model="selectedTheme"
                    class="radio radio-primary hidden" />
-            <div class="card glass glass-hover w-32 p-4 transition-all"
+            <div class="card bg-base-200 border border-base-content/10 shadow-md card bg-base-200 hover:bg-base-300 transition-colors w-32 p-4 transition-all"
                  :class="{ 'ring-2 ring-primary': selectedTheme === 'light' }">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -56,7 +56,7 @@
                    <%= theme === 'dark' ? 'checked' : '' %>
                    x-model="selectedTheme"
                    class="radio radio-primary hidden" />
-            <div class="card glass glass-hover w-32 p-4 transition-all"
+            <div class="card bg-base-200 border border-base-content/10 shadow-md card bg-base-200 hover:bg-base-300 transition-colors w-32 p-4 transition-all"
                  :class="{ 'ring-2 ring-primary': selectedTheme === 'dark' }">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Language Section -->
-    <div class="glass p-6 rounded-lg">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg">
       <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
@@ -101,7 +101,7 @@
                    <%= locale === 'fr' ? 'checked' : '' %>
                    x-model="selectedLocale"
                    class="radio radio-primary hidden" />
-            <div class="card glass glass-hover w-32 p-4 transition-all"
+            <div class="card bg-base-200 border border-base-content/10 shadow-md card bg-base-200 hover:bg-base-300 transition-colors w-32 p-4 transition-all"
                  :class="{ 'ring-2 ring-primary': selectedLocale === 'fr' }">
               <div class="text-4xl text-center mb-2">🇫🇷</div>
               <span class="text-center text-sm font-medium">Français</span>
@@ -116,7 +116,7 @@
                    <%= locale === 'en' ? 'checked' : '' %>
                    x-model="selectedLocale"
                    class="radio radio-primary hidden" />
-            <div class="card glass glass-hover w-32 p-4 transition-all"
+            <div class="card bg-base-200 border border-base-content/10 shadow-md card bg-base-200 hover:bg-base-300 transition-colors w-32 p-4 transition-all"
                  :class="{ 'ring-2 ring-primary': selectedLocale === 'en' }">
               <div class="text-4xl text-center mb-2">🇬🇧</div>
               <span class="text-center text-sm font-medium">English</span>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- Notifications Section (Future Feature) -->
-    <div class="glass p-6 rounded-lg opacity-60">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg opacity-60">
       <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -165,7 +165,7 @@
     </div>
 
     <!-- Privacy Section (Future Feature) -->
-    <div class="glass p-6 rounded-lg opacity-60">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-6 rounded-lg opacity-60">
       <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -203,7 +203,7 @@
   </form>
 
   <!-- Info Alert -->
-  <div class="alert alert-info glass">
+  <div class="alert alert-info bg-base-200 border border-base-content/10 shadow-md">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>

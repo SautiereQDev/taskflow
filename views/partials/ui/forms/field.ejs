@@ -50,7 +50,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
     id="<%= name %>"
     value="<%= value %>"
     placeholder="<%= placeholder %>"
-    class="input-glass input w-full <%= error ? 'input-error' : '' %>"
+    class="input-bg-base-200 border border-base-content/10 shadow-md input w-full <%= error ? 'input-error' : '' %>"
     <%= required ? 'required' : '' %>
     <%= disabled ? 'disabled' : '' %>
   />

@@ -46,7 +46,7 @@ const disabled = typeof disabled !== 'undefined' ? disabled : false;
     id="<%= name %>"
     rows="<%= rows %>"
     placeholder="<%= placeholder %>"
-    class="textarea-glass textarea w-full <%= error ? 'textarea-error' : '' %>"
+    class="textarea-bg-base-200 border border-base-content/10 shadow-md textarea w-full <%= error ? 'textarea-error' : '' %>"
     <%= required ? 'required' : '' %>
     <%= disabled ? 'disabled' : '' %>
   ><%= value %></textarea>

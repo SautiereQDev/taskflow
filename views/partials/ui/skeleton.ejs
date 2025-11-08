@@ -15,7 +15,7 @@ const count = typeof count !== 'undefined' ? count : 3;
 <% if (type === 'card') { %>
   <div class="space-y-4" role="status" aria-label="Chargement en cours">
     <% for (let i = 0; i < count; i++) { %>
-      <div class="glass-light p-6 rounded-lg animate-pulse">
+      <div class="bg-base-100 border border-base-content/10 p-6 rounded-lg animate-pulse">
         <div class="flex items-center gap-4 mb-4">
           <div class="w-12 h-12 bg-base-300 rounded-full shrink-0"></div>
           <div class="flex-1 space-y-2">
@@ -38,7 +38,7 @@ const count = typeof count !== 'undefined' ? count : 3;
 <% } else if (type === 'list') { %>
   <div class="space-y-3" role="status" aria-label="Chargement en cours">
     <% for (let i = 0; i < count; i++) { %>
-      <div class="flex items-center gap-3 p-4 glass-light rounded-lg animate-pulse">
+      <div class="flex items-center gap-3 p-4 bg-base-100 border border-base-content/10 rounded-lg animate-pulse">
         <div class="w-4 h-4 bg-base-300 rounded"></div>
         <div class="flex-1 h-4 bg-base-300 rounded"></div>
         <div class="w-20 h-6 bg-base-300 rounded-full"></div>

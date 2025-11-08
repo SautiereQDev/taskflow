@@ -1,4 +1,4 @@
-<section id="task-detail-card" class="glass p-6 md:p-8 rounded-2xl space-y-6 shadow-lg">
+<section id="task-detail-card" class="bg-base-200 border border-base-content/10 shadow-lg p-6 md:p-8 rounded-2xl space-y-6">
   <header class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
     <div class="space-y-4">
       <div class="space-y-2">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <% if (task.dueDate.isOverdue) { %>
-        <div class="alert alert-warning glass-light max-w-md">
+        <div class="alert alert-warning bg-base-100 border border-base-content/10 max-w-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 9v2m0 4h.01m-.01-10a9 9 0 11-9 9 9 9 0 019-9z" />
           </svg>
@@ -67,7 +67,7 @@
   </article>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="glass-light p-4 rounded-xl space-y-2">
+    <div class="bg-base-100 border border-base-content/10 p-4 rounded-xl space-y-2">
       <p class="text-xs uppercase tracking-wide text-base-content/60">Créée par</p>
       <div class="flex items-center gap-3">
         <div class="avatar placeholder">
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="glass-light p-4 rounded-xl space-y-2">
+    <div class="bg-base-100 border border-base-content/10 p-4 rounded-xl space-y-2">
       <p class="text-xs uppercase tracking-wide text-base-content/60">Assignée à</p>
       <% if (task.assignee) { %>
         <div class="flex items-center gap-3">
@@ -104,13 +104,13 @@
       <% } %>
     </div>
 
-    <div class="glass-light p-4 rounded-xl space-y-2">
+    <div class="bg-base-100 border border-base-content/10 p-4 rounded-xl space-y-2">
       <p class="text-xs uppercase tracking-wide text-base-content/60">Créée le</p>
       <p class="font-semibold"><%= task.createdAt.formatted %></p>
       <p class="text-sm text-base-content/60"><%= task.createdAt.relative %></p>
     </div>
 
-    <div class="glass-light p-4 rounded-xl space-y-2">
+    <div class="bg-base-100 border border-base-content/10 p-4 rounded-xl space-y-2">
       <p class="text-xs uppercase tracking-wide text-base-content/60">Dernière mise à jour</p>
       <p class="font-semibold"><%= task.updatedAt.formatted %></p>
       <p class="text-sm text-base-content/60"><%= task.updatedAt.relative %></p>

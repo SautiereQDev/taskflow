@@ -1,6 +1,6 @@
 <div class="min-h-screen flex items-center justify-center px-4">
   <div class="text-center max-w-2xl w-full">
-    <div class="glass p-8 md:p-12 rounded-2xl">
+    <div class="bg-base-200 border border-base-content/10 shadow-md p-8 md:p-12 rounded-2xl">
       <!-- Error Icon -->
       <div class="text-8xl mb-6" role="img" aria-label="<%= __('errors.404.title') %>">🔍</div>
 
@@ -24,7 +24,7 @@
           <input
             type="search"
             x-model="search"
-            class="input input-bordered w-full pl-12 glass-light"
+            class="input input-bordered w-full pl-12 bg-base-100 border border-base-content/10"
             :placeholder="'<%= __('errors.404.searchPlaceholder') %>'"
             @keyup.enter="window.location.href = search ? `/tasks?search=${encodeURIComponent(search)}` : '/dashboard'"
           >
@@ -84,7 +84,7 @@
     </div>
 
     <!-- Additional Help Card -->
-    <div class="mt-6 glass-light p-4 rounded-xl text-sm">
+    <div class="mt-6 bg-base-100 border border-base-content/10 p-4 rounded-xl text-sm">
       <p class="tf-text-secondary">
         💡 <strong><%= __('common.info') %>:</strong>
         <%= locale === 'fr' ? 'Essayez de rechercher ce que vous cherchiez dans la barre ci-dessus.' : 'Try searching for what you were looking for in the search bar above.' %>
