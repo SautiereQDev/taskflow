@@ -195,8 +195,7 @@
         }
       },
       "metrics": {
-        "title": "Key Metrics",
-        "updated": "Updated at {{time}}"
+        "title": "Key Metrics"
       },
       "cards": {
         "total": "Total Tasks",

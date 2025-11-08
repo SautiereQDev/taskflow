@@ -172,8 +172,7 @@
       }
     },
     "metrics": {
-      "title": "Métriques clés",
-      "updated": "Mis à jour à {{time}}"
+      "title": "Métriques clés"
     },
     "cards": {
       "total": "Tâches totales",
