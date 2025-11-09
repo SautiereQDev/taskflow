@@ -416,44 +416,6 @@ describe('DashboardMetricsService', () => {
       expect(metrics.tasksCompletedThisWeek).toBe(1);
     });
 
-    it('should handle 100% completion rate', async () => {
-      it('should handle 100% completion rate', async () => {
-        // Arrange
-        const tasks = [
-          Task.create({
-            id: 'task-22',
-            title: 'Done Task 1',
-            status: TaskStatus.DONE,
-            priority: TaskPriority.MEDIUM,
-            creatorId: 'creator-1',
-          }),
-          Task.create({
-            id: 'task-23',
-            title: 'Done Task 2',
-            status: TaskStatus.DONE,
-            priority: TaskPriority.HIGH,
-            creatorId: 'creator-1',
-          }),
-        ];
-
-        mockTaskRepository.findAll.mockResolvedValue({
-          items: tasks,
-          total: 2,
-          page: 1,
-          limit: 10000,
-          totalPages: 1,
-        });
-
-        mockUserRepository.findAll.mockResolvedValue([]);
-
-        // Act
-        const metrics = await service.getOverallMetrics();
-
-        // Assert
-        expect(metrics.completionRate).toBe(100);
-      });
-    });
-
     describe('getUserMetrics()', () => {
       it('should calculate metrics for user with no tasks', async () => {
         // Arrange

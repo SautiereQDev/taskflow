@@ -132,7 +132,7 @@ describe('CreateUserHandler', () => {
       vi.mocked(mockUserRepository.findByEmail).mockResolvedValue(null);
 
       const capturedUser = vi.fn();
-      vi.mocked(mockUserRepository.create).mockImplementation(async (user) => {
+      vi.mocked(mockUserRepository.create).mockImplementation((user) => {
         capturedUser(user);
         return user;
       });
@@ -159,7 +159,7 @@ describe('CreateUserHandler', () => {
       vi.mocked(mockUserRepository.findByEmail).mockResolvedValue(null);
 
       let capturedUserId: string | undefined;
-      vi.mocked(mockUserRepository.create).mockImplementation(async (user) => {
+      vi.mocked(mockUserRepository.create).mockImplementation((user) => {
         capturedUserId = user.id;
         return user;
       });
@@ -201,17 +201,17 @@ describe('CreateUserHandler', () => {
       const callOrder: string[] = [];
 
       const hashedPassword = '$2b$12$hash';
-      vi.mocked(mockPasswordHasher.hash).mockImplementation(async () => {
+      vi.mocked(mockPasswordHasher.hash).mockImplementation(() => {
         callOrder.push('hash');
         return hashedPassword;
       });
 
-      vi.mocked(mockUserRepository.findByEmail).mockImplementation(async () => {
+      vi.mocked(mockUserRepository.findByEmail).mockImplementation(() => {
         callOrder.push('findByEmail');
         return null;
       });
 
-      vi.mocked(mockUserRepository.create).mockImplementation(async (user) => {
+      vi.mocked(mockUserRepository.create).mockImplementation((user) => {
         callOrder.push('create');
         return user;
       });
