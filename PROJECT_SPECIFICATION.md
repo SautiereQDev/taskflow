@@ -269,7 +269,6 @@ model User {
   name             String
   password         String
   role             String   @default("USER") // USER | ADMIN
-  isActive         Boolean  @default(true)
   avatar           String?  // URL to avatar image
   themePreference  String?  @default("taskflowGlass") // taskflowGlass | taskflowGlassDark
   locale           String   @default("fr") // fr | en

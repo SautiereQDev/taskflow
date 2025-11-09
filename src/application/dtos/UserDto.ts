@@ -9,7 +9,6 @@ export interface IUserDto {
   name: string;
   email: string;
   role: string;
-  isActive: boolean;
   locale: string;
   createdAt: Date;
   updatedAt: Date;
@@ -26,6 +25,5 @@ export interface IUserSummaryDto {
   name: string;
   email: string;
   role: string;
-  isActive: boolean;
   locale: string | null;
 }

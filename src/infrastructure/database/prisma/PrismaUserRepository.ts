@@ -21,6 +21,16 @@ export class PrismaUserRepository implements IUserRepository {
   async findById(id: string): Promise<User | null> {
     const prismaUser = await this.prismaService.client.user.findUnique({
       where: { id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return prismaUser ? UserMapper.toDomain(prismaUser) : null;
@@ -32,6 +42,16 @@ export class PrismaUserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<User | null> {
     const prismaUser = await this.prismaService.client.user.findUnique({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return prismaUser ? UserMapper.toDomain(prismaUser) : null;
@@ -40,16 +60,22 @@ export class PrismaUserRepository implements IUserRepository {
   /**
    * Find all users with optional filters
    */
-  async findAll(filters?: {
-    role?: UserRole;
-    isActive?: boolean;
-    search?: string;
-  }): Promise<User[]> {
+  async findAll(filters?: { role?: UserRole; search?: string }): Promise<User[]> {
     const where = filters ? UserQueryBuilder.buildFilters(filters) : {};
 
     const prismaUsers = await this.prismaService.client.user.findMany({
       where,
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return prismaUsers.map((user) => UserMapper.toDomain(user));
@@ -62,18 +88,16 @@ export class PrismaUserRepository implements IUserRepository {
     const prismaUsers = await this.prismaService.client.user.findMany({
       where: UserQueryBuilder.byRole(role as never),
       orderBy: { name: 'asc' },
-    });
-
-    return prismaUsers.map((user) => UserMapper.toDomain(user));
-  }
-
-  /**
-   * Find active users
-   */
-  async findActive(): Promise<User[]> {
-    const prismaUsers = await this.prismaService.client.user.findMany({
-      where: UserQueryBuilder.active(),
-      orderBy: { name: 'asc' },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return prismaUsers.map((user) => UserMapper.toDomain(user));
@@ -87,6 +111,16 @@ export class PrismaUserRepository implements IUserRepository {
 
     const createdUser = await this.prismaService.client.user.create({
       data,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return UserMapper.toDomain(createdUser);
@@ -101,6 +135,16 @@ export class PrismaUserRepository implements IUserRepository {
     const updatedUser = await this.prismaService.client.user.update({
       where: { id: user.id },
       data,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+        locale: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return UserMapper.toDomain(updatedUser);
@@ -148,7 +192,7 @@ export class PrismaUserRepository implements IUserRepository {
   /**
    * Count users with optional filters
    */
-  async count(filters?: { role?: UserRole; isActive?: boolean }): Promise<number> {
+  async count(filters?: { role?: UserRole }): Promise<number> {
     const where = filters ? UserQueryBuilder.buildFilters(filters) : {};
 
     return this.prismaService.client.user.count({ where });

@@ -184,7 +184,6 @@ export class AdminController {
       id: user.id,
       name: user.name,
       email: user.email,
-      isActive: user.isActive,
       role: {
         value: user.role,
         label: roleDisplay.label,

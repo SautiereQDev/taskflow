@@ -58,7 +58,6 @@ describe('CreateUserHandler', () => {
         email: Email.create('john@example.com'),
         password: Password.fromHash(hashedPassword),
         role: UserRole.MANAGER,
-        isActive: true,
       });
 
       vi.mocked(mockUserRepository.create).mockResolvedValue(expectedUser);
@@ -69,7 +68,6 @@ describe('CreateUserHandler', () => {
       expect(result.name).toBe('John Doe');
       expect(result.email.value).toBe('john@example.com');
       expect(result.role).toBe(UserRole.MANAGER);
-      expect(result.isActive).toBe(true);
       expect(mockPasswordHasher.hash).toHaveBeenCalledWith('Password123');
       expect(mockUserRepository.create).toHaveBeenCalledOnce();
     });
@@ -87,7 +85,6 @@ describe('CreateUserHandler', () => {
         email: Email.create('existing@example.com'),
         password: Password.fromHash('$2b$12$hashed'),
         role: UserRole.MEMBER,
-        isActive: true,
       });
 
       vi.mocked(mockUserRepository.findByEmail).mockResolvedValue(existingUser);
@@ -114,7 +111,6 @@ describe('CreateUserHandler', () => {
         email: Email.create('jane@example.com'),
         password: Password.fromHash(hashedPassword),
         role: UserRole.MEMBER,
-        isActive: true,
       });
 
       vi.mocked(mockUserRepository.create).mockResolvedValue(expectedUser);
@@ -149,33 +145,6 @@ describe('CreateUserHandler', () => {
 
       const createdUser = capturedUser.mock.calls[0][0];
       expect(createdUser.password.value).toBe(hashedPassword);
-    });
-
-    it('should set user as active by default', async () => {
-      const command = new CreateUserCommand({
-        name: 'Active User',
-        email: 'active@example.com',
-        password: 'Password123',
-      });
-
-      const hashedPassword = '$2b$12$hash';
-      vi.mocked(mockPasswordHasher.hash).mockResolvedValue(hashedPassword);
-      vi.mocked(mockUserRepository.findByEmail).mockResolvedValue(null);
-
-      const expectedUser = User.create({
-        id: 'user-789',
-        name: 'Active User',
-        email: Email.create('active@example.com'),
-        password: Password.fromHash(hashedPassword),
-        role: UserRole.MEMBER,
-        isActive: true,
-      });
-
-      vi.mocked(mockUserRepository.create).mockResolvedValue(expectedUser);
-
-      const result = await handler.execute(command);
-
-      expect(result.isActive).toBe(true);
     });
 
     it('should generate unique ID for new user', async () => {

@@ -416,516 +416,436 @@ describe('DashboardMetricsService', () => {
       expect(metrics.tasksCompletedThisWeek).toBe(1);
     });
 
-    it('should count active users correctly', async () => {
-      // Arrange
-      const activeUser1 = User.create({
-        id: 'user-1',
-        name: 'Active User 1',
-        email: Email.create('active1@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-
-      const activeUser2 = User.create({
-        id: 'user-2',
-        name: 'Active User 2',
-        email: Email.create('active2@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-
-      const inactiveUser = User.create({
-        id: 'user-3',
-        name: 'Inactive User',
-        email: Email.create('inactive@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      inactiveUser.deactivate();
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: [],
-        total: 0,
-        page: 1,
-        limit: 10000,
-        totalPages: 0,
-      });
-
-      mockUserRepository.findAll.mockResolvedValue([activeUser1, activeUser2, inactiveUser]);
-
-      // Act
-      const metrics = await service.getOverallMetrics();
-
-      // Assert
-      expect(metrics.activeUsers).toBe(2); // Only active users
-    });
-
     it('should handle 100% completion rate', async () => {
-      // Arrange
-      const tasks = [
-        Task.create({
-          id: 'task-22',
-          title: 'Done Task 1',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.MEDIUM,
-          creatorId: 'creator-1',
-        }),
-        Task.create({
-          id: 'task-23',
-          title: 'Done Task 2',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.HIGH,
-          creatorId: 'creator-1',
-        }),
-      ];
+      it('should handle 100% completion rate', async () => {
+        // Arrange
+        const tasks = [
+          Task.create({
+            id: 'task-22',
+            title: 'Done Task 1',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.MEDIUM,
+            creatorId: 'creator-1',
+          }),
+          Task.create({
+            id: 'task-23',
+            title: 'Done Task 2',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.HIGH,
+            creatorId: 'creator-1',
+          }),
+        ];
 
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: tasks,
-        total: 2,
-        page: 1,
-        limit: 10000,
-        totalPages: 1,
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: tasks,
+          total: 2,
+          page: 1,
+          limit: 10000,
+          totalPages: 1,
+        });
+
+        mockUserRepository.findAll.mockResolvedValue([]);
+
+        // Act
+        const metrics = await service.getOverallMetrics();
+
+        // Assert
+        expect(metrics.completionRate).toBe(100);
       });
-
-      mockUserRepository.findAll.mockResolvedValue([]);
-
-      // Act
-      const metrics = await service.getOverallMetrics();
-
-      // Assert
-      expect(metrics.completionRate).toBe(100);
-    });
-  });
-
-  describe('getUserMetrics()', () => {
-    it('should calculate metrics for user with no tasks', async () => {
-      // Arrange
-      const userId = 'user-123';
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: [],
-        total: 0,
-        page: 1,
-        limit: 1000,
-        totalPages: 0,
-      });
-
-      // Act
-      const metrics: IUserProductivityMetrics = await service.getUserMetrics(userId);
-
-      // Assert
-      expect(metrics).toBeDefined();
-      expect(metrics.userId).toBe(userId);
-      expect(metrics.assignedTasks).toBe(0);
-      expect(metrics.completedTasks).toBe(0);
-      expect(metrics.overdueTasks).toBe(0);
-      expect(metrics.completionRate).toBe(0);
     });
 
-    it('should calculate user productivity metrics', async () => {
-      // Arrange
-      const userId = 'user-456';
-      const tasks = [
-        Task.create({
-          id: 'task-24',
-          title: 'Done Task',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.MEDIUM,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-        Task.create({
-          id: 'task-25',
-          title: 'In Progress Task',
-          status: TaskStatus.IN_PROGRESS,
-          priority: TaskPriority.HIGH,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-        Task.create({
-          id: 'task-26',
-          title: 'TODO Task',
-          status: TaskStatus.TODO,
-          priority: TaskPriority.LOW,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-      ];
+    describe('getUserMetrics()', () => {
+      it('should calculate metrics for user with no tasks', async () => {
+        // Arrange
+        const userId = 'user-123';
 
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: tasks,
-        total: 3,
-        page: 1,
-        limit: 1000,
-        totalPages: 1,
-      });
-
-      // Act
-      const metrics = await service.getUserMetrics(userId);
-
-      // Assert
-      expect(metrics.userId).toBe(userId);
-      expect(metrics.assignedTasks).toBe(3);
-      expect(metrics.completedTasks).toBe(1);
-      expect(metrics.completionRate).toBe(33); // 1 out of 3 = 33%
-    });
-
-    it('should calculate overdue tasks for user', async () => {
-      // Arrange
-      const userId = 'user-789';
-      const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 5);
-
-      const tasks = [
-        Task.create({
-          id: 'task-27',
-          title: 'Overdue Task 1',
-          status: TaskStatus.TODO,
-          priority: TaskPriority.HIGH,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-          dueDate: pastDate,
-        }),
-        Task.create({
-          id: 'task-28',
-          title: 'Overdue Task 2',
-          status: TaskStatus.IN_PROGRESS,
-          priority: TaskPriority.URGENT,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-          dueDate: pastDate,
-        }),
-        Task.create({
-          id: 'task-29',
-          title: 'Not Overdue',
-          status: TaskStatus.TODO,
-          priority: TaskPriority.MEDIUM,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-      ];
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: tasks,
-        total: 3,
-        page: 1,
-        limit: 1000,
-        totalPages: 1,
-      });
-
-      // Act
-      const metrics = await service.getUserMetrics(userId);
-
-      // Assert
-      expect(metrics.overdueTasks).toBe(2);
-    });
-
-    it('should not count completed overdue tasks', async () => {
-      // Arrange
-      const userId = 'user-999';
-      const pastDate = new Date();
-      pastDate.setDate(pastDate.getDate() - 10);
-
-      const tasks = [
-        Task.create({
-          id: 'task-30',
-          title: 'Overdue but Completed',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.HIGH,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-          dueDate: pastDate,
-        }),
-        Task.create({
-          id: 'task-31',
-          title: 'Overdue but Cancelled',
-          status: TaskStatus.CANCELLED,
-          priority: TaskPriority.MEDIUM,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-          dueDate: pastDate,
-        }),
-      ];
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: tasks,
-        total: 2,
-        page: 1,
-        limit: 1000,
-        totalPages: 1,
-      });
-
-      // Act
-      const metrics = await service.getUserMetrics(userId);
-
-      // Assert
-      expect(metrics.overdueTasks).toBe(0);
-    });
-
-    it('should calculate 100% completion rate', async () => {
-      // Arrange
-      const userId = 'user-complete';
-      const tasks = [
-        Task.create({
-          id: 'task-32',
-          title: 'Done 1',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.MEDIUM,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-        Task.create({
-          id: 'task-33',
-          title: 'Done 2',
-          status: TaskStatus.DONE,
-          priority: TaskPriority.HIGH,
-          creatorId: 'creator-1',
-          assigneeId: userId,
-        }),
-      ];
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: tasks,
-        total: 2,
-        page: 1,
-        limit: 1000,
-        totalPages: 1,
-      });
-
-      // Act
-      const metrics = await service.getUserMetrics(userId);
-
-      // Assert
-      expect(metrics.completionRate).toBe(100);
-    });
-
-    it('should filter tasks by assigneeId', async () => {
-      // Arrange
-      const userId = 'specific-user';
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: [],
-        total: 0,
-        page: 1,
-        limit: 1000,
-        totalPages: 0,
-      });
-
-      // Act
-      await service.getUserMetrics(userId);
-
-      // Assert
-      expect(mockTaskRepository.findAll).toHaveBeenCalledWith({ assigneeId: userId }, 1, 1000);
-    });
-  });
-
-  describe('getTeamCapacity()', () => {
-    it('should return empty array when no users', async () => {
-      // Arrange
-      mockUserRepository.findAll.mockResolvedValue([]);
-
-      // Act
-      const capacity = await service.getTeamCapacity();
-
-      // Assert
-      expect(capacity).toEqual([]);
-    });
-
-    it('should calculate capacity for all active users', async () => {
-      // Arrange
-      const user1 = User.create({
-        id: 'user-4',
-        name: 'User 1',
-        email: Email.create('user1@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      Object.defineProperty(user1, 'id', { value: 'user-1', writable: false });
-
-      const user2 = User.create({
-        id: 'user-5',
-        name: 'User 2',
-        email: Email.create('user2@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      Object.defineProperty(user2, 'id', { value: 'user-2', writable: false });
-
-      mockUserRepository.findAll.mockResolvedValue([user1, user2]);
-
-      // Mock getUserMetrics calls
-      mockTaskRepository.findAll
-        .mockResolvedValueOnce({
-          items: [
-            Task.create({
-              id: 'task-34',
-              title: 'Task 1',
-              status: TaskStatus.TODO,
-              priority: TaskPriority.MEDIUM,
-              creatorId: 'creator',
-              assigneeId: 'user-1',
-            }),
-          ],
-          total: 1,
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: [],
+          total: 0,
           page: 1,
           limit: 1000,
-          totalPages: 1,
-        })
-        .mockResolvedValueOnce({
-          items: [
-            Task.create({
-              id: 'task-35',
-              title: 'Task 2',
-              status: TaskStatus.TODO,
-              priority: TaskPriority.MEDIUM,
-              creatorId: 'creator',
-              assigneeId: 'user-2',
-            }),
-          ],
-          total: 1,
+          totalPages: 0,
+        });
+
+        // Act
+        const metrics: IUserProductivityMetrics = await service.getUserMetrics(userId);
+
+        // Assert
+        expect(metrics).toBeDefined();
+        expect(metrics.userId).toBe(userId);
+        expect(metrics.assignedTasks).toBe(0);
+        expect(metrics.completedTasks).toBe(0);
+        expect(metrics.overdueTasks).toBe(0);
+        expect(metrics.completionRate).toBe(0);
+      });
+
+      it('should calculate user productivity metrics', async () => {
+        // Arrange
+        const userId = 'user-456';
+        const tasks = [
+          Task.create({
+            id: 'task-24',
+            title: 'Done Task',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.MEDIUM,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+          Task.create({
+            id: 'task-25',
+            title: 'In Progress Task',
+            status: TaskStatus.IN_PROGRESS,
+            priority: TaskPriority.HIGH,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+          Task.create({
+            id: 'task-26',
+            title: 'TODO Task',
+            status: TaskStatus.TODO,
+            priority: TaskPriority.LOW,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+        ];
+
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: tasks,
+          total: 3,
           page: 1,
           limit: 1000,
           totalPages: 1,
         });
 
-      // Act
-      const capacity = await service.getTeamCapacity();
+        // Act
+        const metrics = await service.getUserMetrics(userId);
 
-      // Assert
-      expect(capacity).toHaveLength(2);
-      expect(capacity[0].userId).toBe('user-1');
-      expect(capacity[1].userId).toBe('user-2');
-    });
-
-    it('should exclude inactive users', async () => {
-      // Arrange
-      const activeUser = User.create({
-        id: 'user-6',
-        name: 'Active User',
-        email: Email.create('active@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      Object.defineProperty(activeUser, 'id', { value: 'active-user', writable: false });
-
-      const inactiveUser = User.create({
-        id: 'user-7',
-        name: 'Inactive User',
-        email: Email.create('inactive@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      inactiveUser.deactivate();
-
-      mockUserRepository.findAll.mockResolvedValue([activeUser, inactiveUser]);
-
-      mockTaskRepository.findAll.mockResolvedValue({
-        items: [],
-        total: 0,
-        page: 1,
-        limit: 1000,
-        totalPages: 0,
+        // Assert
+        expect(metrics.userId).toBe(userId);
+        expect(metrics.assignedTasks).toBe(3);
+        expect(metrics.completedTasks).toBe(1);
+        expect(metrics.completionRate).toBe(33); // 1 out of 3 = 33%
       });
 
-      // Act
-      const capacity = await service.getTeamCapacity();
+      it('should calculate overdue tasks for user', async () => {
+        // Arrange
+        const userId = 'user-789';
+        const pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - 5);
 
-      // Assert
-      expect(capacity).toHaveLength(1);
-      expect(capacity[0].userId).toBe('active-user');
-    });
+        const tasks = [
+          Task.create({
+            id: 'task-27',
+            title: 'Overdue Task 1',
+            status: TaskStatus.TODO,
+            priority: TaskPriority.HIGH,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+            dueDate: pastDate,
+          }),
+          Task.create({
+            id: 'task-28',
+            title: 'Overdue Task 2',
+            status: TaskStatus.IN_PROGRESS,
+            priority: TaskPriority.URGENT,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+            dueDate: pastDate,
+          }),
+          Task.create({
+            id: 'task-29',
+            title: 'Not Overdue',
+            status: TaskStatus.TODO,
+            priority: TaskPriority.MEDIUM,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+        ];
 
-    it('should sort by assigned tasks descending', async () => {
-      // Arrange
-      const user1 = User.create({
-        id: 'user-8',
-        name: 'User 1',
-        email: Email.create('user1@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      Object.defineProperty(user1, 'id', { value: 'user-1', writable: false });
-
-      const user2 = User.create({
-        id: 'user-9',
-        name: 'User 2',
-        email: Email.create('user2@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      Object.defineProperty(user2, 'id', { value: 'user-2', writable: false });
-
-      mockUserRepository.findAll.mockResolvedValue([user1, user2]);
-
-      // User 1 has 5 tasks, User 2 has 2 tasks
-      mockTaskRepository.findAll
-        .mockResolvedValueOnce({
-          items: new Array(5).fill(null).map(() =>
-            Task.create({
-              id: 'task-36',
-              title: 'Task',
-              status: TaskStatus.TODO,
-              priority: TaskPriority.MEDIUM,
-              creatorId: 'creator',
-              assigneeId: 'user-1',
-            })
-          ),
-          total: 5,
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: tasks,
+          total: 3,
           page: 1,
           limit: 1000,
           totalPages: 1,
-        })
-        .mockResolvedValueOnce({
-          items: new Array(2).fill(null).map(() =>
-            Task.create({
-              id: 'task-37',
-              title: 'Task',
-              status: TaskStatus.TODO,
-              priority: TaskPriority.MEDIUM,
-              creatorId: 'creator',
-              assigneeId: 'user-2',
-            })
-          ),
+        });
+
+        // Act
+        const metrics = await service.getUserMetrics(userId);
+
+        // Assert
+        expect(metrics.overdueTasks).toBe(2);
+      });
+
+      it('should not count completed overdue tasks', async () => {
+        // Arrange
+        const userId = 'user-999';
+        const pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - 10);
+
+        const tasks = [
+          Task.create({
+            id: 'task-30',
+            title: 'Overdue but Completed',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.HIGH,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+            dueDate: pastDate,
+          }),
+          Task.create({
+            id: 'task-31',
+            title: 'Overdue but Cancelled',
+            status: TaskStatus.CANCELLED,
+            priority: TaskPriority.MEDIUM,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+            dueDate: pastDate,
+          }),
+        ];
+
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: tasks,
           total: 2,
           page: 1,
           limit: 1000,
           totalPages: 1,
         });
 
-      // Act
-      const capacity = await service.getTeamCapacity();
+        // Act
+        const metrics = await service.getUserMetrics(userId);
 
-      // Assert
-      expect(capacity[0].userId).toBe('user-1');
-      expect(capacity[0].assignedTasks).toBe(5);
-      expect(capacity[1].userId).toBe('user-2');
-      expect(capacity[1].assignedTasks).toBe(2);
+        // Assert
+        expect(metrics.overdueTasks).toBe(0);
+      });
+
+      it('should calculate 100% completion rate', async () => {
+        // Arrange
+        const userId = 'user-complete';
+        const tasks = [
+          Task.create({
+            id: 'task-32',
+            title: 'Done 1',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.MEDIUM,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+          Task.create({
+            id: 'task-33',
+            title: 'Done 2',
+            status: TaskStatus.DONE,
+            priority: TaskPriority.HIGH,
+            creatorId: 'creator-1',
+            assigneeId: userId,
+          }),
+        ];
+
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: tasks,
+          total: 2,
+          page: 1,
+          limit: 1000,
+          totalPages: 1,
+        });
+
+        // Act
+        const metrics = await service.getUserMetrics(userId);
+
+        // Assert
+        expect(metrics.completionRate).toBe(100);
+      });
+
+      it('should filter tasks by assigneeId', async () => {
+        // Arrange
+        const userId = 'specific-user';
+
+        mockTaskRepository.findAll.mockResolvedValue({
+          items: [],
+          total: 0,
+          page: 1,
+          limit: 1000,
+          totalPages: 0,
+        });
+
+        // Act
+        await service.getUserMetrics(userId);
+
+        // Assert
+        expect(mockTaskRepository.findAll).toHaveBeenCalledWith({ assigneeId: userId }, 1, 1000);
+      });
     });
-  });
 
-  describe('error handling', () => {
-    it('should propagate repository errors in getOverallMetrics', async () => {
-      // Arrange
-      mockTaskRepository.findAll.mockRejectedValue(new Error('Database error'));
+    describe('getTeamCapacity()', () => {
+      it('should return empty array when no users', async () => {
+        // Arrange
+        mockUserRepository.findAll.mockResolvedValue([]);
 
-      // Act & Assert
-      await expect(service.getOverallMetrics()).rejects.toThrow('Database error');
+        // Act
+        const capacity = await service.getTeamCapacity();
+
+        // Assert
+        expect(capacity).toEqual([]);
+      });
+
+      it('should calculate capacity for all active users', async () => {
+        // Arrange
+        const user1 = User.create({
+          id: 'user-4',
+          name: 'User 1',
+          email: Email.create('user1@example.com'),
+          password: Password.fromHash('$2a$12$hash'),
+          role: UserRole.USER,
+        });
+        Object.defineProperty(user1, 'id', { value: 'user-1', writable: false });
+
+        const user2 = User.create({
+          id: 'user-5',
+          name: 'User 2',
+          email: Email.create('user2@example.com'),
+          password: Password.fromHash('$2a$12$hash'),
+          role: UserRole.USER,
+        });
+        Object.defineProperty(user2, 'id', { value: 'user-2', writable: false });
+
+        mockUserRepository.findAll.mockResolvedValue([user1, user2]);
+
+        // Mock getUserMetrics calls
+        mockTaskRepository.findAll
+          .mockResolvedValueOnce({
+            items: [
+              Task.create({
+                id: 'task-34',
+                title: 'Task 1',
+                status: TaskStatus.TODO,
+                priority: TaskPriority.MEDIUM,
+                creatorId: 'creator',
+                assigneeId: 'user-1',
+              }),
+            ],
+            total: 1,
+            page: 1,
+            limit: 1000,
+            totalPages: 1,
+          })
+          .mockResolvedValueOnce({
+            items: [
+              Task.create({
+                id: 'task-35',
+                title: 'Task 2',
+                status: TaskStatus.TODO,
+                priority: TaskPriority.MEDIUM,
+                creatorId: 'creator',
+                assigneeId: 'user-2',
+              }),
+            ],
+            total: 1,
+            page: 1,
+            limit: 1000,
+            totalPages: 1,
+          });
+
+        // Act
+        const capacity = await service.getTeamCapacity();
+
+        // Assert
+        expect(capacity).toHaveLength(2);
+        expect(capacity[0].userId).toBe('user-1');
+        expect(capacity[1].userId).toBe('user-2');
+      });
+
+      it('should sort by assigned tasks descending', async () => {
+        // Arrange
+        const user1 = User.create({
+          id: 'user-8',
+          name: 'User 1',
+          email: Email.create('user1@example.com'),
+          password: Password.fromHash('$2a$12$hash'),
+          role: UserRole.USER,
+        });
+        Object.defineProperty(user1, 'id', { value: 'user-1', writable: false });
+
+        const user2 = User.create({
+          id: 'user-9',
+          name: 'User 2',
+          email: Email.create('user2@example.com'),
+          password: Password.fromHash('$2a$12$hash'),
+          role: UserRole.USER,
+        });
+        Object.defineProperty(user2, 'id', { value: 'user-2', writable: false });
+
+        mockUserRepository.findAll.mockResolvedValue([user1, user2]);
+
+        // User 1 has 5 tasks, User 2 has 2 tasks
+        mockTaskRepository.findAll
+          .mockResolvedValueOnce({
+            items: new Array(5).fill(null).map(() =>
+              Task.create({
+                id: 'task-36',
+                title: 'Task',
+                status: TaskStatus.TODO,
+                priority: TaskPriority.MEDIUM,
+                creatorId: 'creator',
+                assigneeId: 'user-1',
+              })
+            ),
+            total: 5,
+            page: 1,
+            limit: 1000,
+            totalPages: 1,
+          })
+          .mockResolvedValueOnce({
+            items: new Array(2).fill(null).map(() =>
+              Task.create({
+                id: 'task-37',
+                title: 'Task',
+                status: TaskStatus.TODO,
+                priority: TaskPriority.MEDIUM,
+                creatorId: 'creator',
+                assigneeId: 'user-2',
+              })
+            ),
+            total: 2,
+            page: 1,
+            limit: 1000,
+            totalPages: 1,
+          });
+
+        // Act
+        const capacity = await service.getTeamCapacity();
+
+        // Assert
+        expect(capacity[0].userId).toBe('user-1');
+        expect(capacity[0].assignedTasks).toBe(5);
+        expect(capacity[1].userId).toBe('user-2');
+        expect(capacity[1].assignedTasks).toBe(2);
+      });
     });
 
-    it('should propagate repository errors in getUserMetrics', async () => {
-      // Arrange
-      mockTaskRepository.findAll.mockRejectedValue(new Error('Query failed'));
+    describe('error handling', () => {
+      it('should propagate repository errors in getOverallMetrics', async () => {
+        // Arrange
+        mockTaskRepository.findAll.mockRejectedValue(new Error('Database error'));
 
-      // Act & Assert
-      await expect(service.getUserMetrics('user-123')).rejects.toThrow('Query failed');
-    });
+        // Act & Assert
+        await expect(service.getOverallMetrics()).rejects.toThrow('Database error');
+      });
 
-    it('should propagate repository errors in getTeamCapacity', async () => {
-      // Arrange
-      mockUserRepository.findAll.mockRejectedValue(new Error('User query failed'));
+      it('should propagate repository errors in getUserMetrics', async () => {
+        // Arrange
+        mockTaskRepository.findAll.mockRejectedValue(new Error('Query failed'));
 
-      // Act & Assert
-      await expect(service.getTeamCapacity()).rejects.toThrow('User query failed');
+        // Act & Assert
+        await expect(service.getUserMetrics('user-123')).rejects.toThrow('Query failed');
+      });
+
+      it('should propagate repository errors in getTeamCapacity', async () => {
+        // Arrange
+        mockUserRepository.findAll.mockRejectedValue(new Error('User query failed'));
+
+        // Act & Assert
+        await expect(service.getTeamCapacity()).rejects.toThrow('User query failed');
+      });
     });
   });
 });

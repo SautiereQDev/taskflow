@@ -31,13 +31,6 @@
  <span class="badge <%= user.role.color %>"><%= user.role.label %></span>
  </div>
 
- <!-- Status -->
- <% if (user.isActive) { %>
- <span class="badge badge-success mb-4">Actif</span>
- <% } else { %>
- <span class="badge badge-ghost mb-4">Inactif</span>
- <% } %>
-
  <!-- Actions -->
  <% if (user.canEdit) { %>
  <div class="flex flex-col gap-2 mt-6">
@@ -45,14 +38,6 @@
  class="btn btn-primary btn-sm w-full">
  Modifier le profil
  </a>
- <% if (!user.isCurrentUser) { %>
- <form method="POST" action="/users/<%= user.id %>/toggle-status"
- hx-post="/users/<%= user.id %>/toggle-status">
- <button type="submit" class="btn btn-ghost btn-sm w-full">
- <%= user.isActive ? 'Désactiver' : 'Activer' %>
- </button>
- </form>
- <% } %>
  </div>
  <% } %>
  </div>

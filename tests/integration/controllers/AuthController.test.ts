@@ -9,7 +9,6 @@ import {
   createTestUser,
   cleanupTestUsers,
   TEST_CREDENTIALS,
-  createTestUserForIntegration,
 } from './auth.helpers.js';
 
 describe('AuthController Integration Tests', () => {
@@ -88,24 +87,6 @@ describe('AuthController Integration Tests', () => {
       const sessionCookie = cookies.find((c: string) => c.includes('sessionId'));
       expect(sessionCookie).toBeDefined();
     });
-
-    it('should reject login for inactive user', async () => {
-      const user = await createTestUserForIntegration(prisma, TEST_CREDENTIALS.user);
-      // Deactivate user
-      await prisma.user.update({ where: { id: user.id }, data: { isActive: false } });
-
-      const response = await supertest(app)
-        .post('/auth/login')
-        .send({
-          email: TEST_CREDENTIALS.user.email,
-          password: TEST_CREDENTIALS.user.password,
-        })
-        .expect(403);
-
-      expect(response.body.success).toBe(false);
-      expect(response.body.error.message).toContain('deactivated');
-    });
-  });
 
   describe('POST /auth/register', () => {
     beforeEach(async () => {
@@ -197,7 +178,6 @@ describe('AuthController Integration Tests', () => {
       });
       expect(user).toBeDefined();
       expect(user?.name).toBe('New User');
-      expect(user?.isActive).toBe(true);
 
       // Cleanup
       if (user) {

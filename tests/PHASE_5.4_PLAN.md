@@ -99,7 +99,6 @@ npm test tests/integration/controllers/AuthController.test.ts
 - [ ] Should require name (400)
 - [ ] Should hash password before storage
 - [ ] Should create user with default role (MEMBER)
-- [ ] Should activate user by default (isActive: true)
 - [ ] Should login user after registration (set session)
 
 #### 2.5 POST /auth/logout (3 tests)

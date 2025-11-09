@@ -114,7 +114,7 @@ export class DashboardMetricsService {
 
     // Get active users count
     const allUsers = await this.userRepository.findAll();
-    const activeUsers = allUsers.filter((user) => user.isActive).length;
+    const activeUsers = allUsers.length;
 
     return {
       totalTasks,
@@ -172,7 +172,7 @@ export class DashboardMetricsService {
    */
   async getTeamCapacity(): Promise<IUserProductivityMetrics[]> {
     const allUsers = await this.userRepository.findAll();
-    const activeUsers = allUsers.filter((user) => user.isActive);
+    const activeUsers = allUsers;
 
     const capacityMetrics: IUserProductivityMetrics[] = [];
 

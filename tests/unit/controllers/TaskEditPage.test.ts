@@ -29,7 +29,6 @@ interface TestUser {
   firstName: string;
   lastName: string;
   role: string;
-  isActive?: boolean;
 }
 
 describe('Task Edit Page Data Fetching', () => {
@@ -170,7 +169,6 @@ describe('Task Edit Page Data Fetching', () => {
           firstName: 'User',
           lastName: 'One',
           role: 'USER',
-          isActive: true,
         },
         {
           id: 'user-2',
@@ -178,7 +176,6 @@ describe('Task Edit Page Data Fetching', () => {
           firstName: 'User',
           lastName: 'Two',
           role: 'USER',
-          isActive: true,
         },
       ];
 

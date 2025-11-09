@@ -105,7 +105,7 @@ export function createApp(): Express {
       store: new PgSession({
         conString: process.env.DATABASE_URL,
         createTableIfMissing: true,
-        tableName: 'session',
+        tableName: 'sessions',
       }),
       secret: process.env.SESSION_SECRET ?? 'taskflow-secret-change-in-prod',
       resave: false,

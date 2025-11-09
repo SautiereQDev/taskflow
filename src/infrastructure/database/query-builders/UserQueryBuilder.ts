@@ -15,20 +15,6 @@ export class UserQueryBuilder {
   }
 
   /**
-   * Build where clause for finding active users
-   */
-  static active(): Prisma.UserWhereInput {
-    return { isActive: true };
-  }
-
-  /**
-   * Build where clause for finding inactive users
-   */
-  static inactive(): Prisma.UserWhereInput {
-    return { isActive: false };
-  }
-
-  /**
    * Build where clause for searching users by name or email
    *
    * @param search - Search term
@@ -49,19 +35,11 @@ export class UserQueryBuilder {
    * @param filters - Filter options
    * @returns Combined Prisma where clause
    */
-  static buildFilters(filters: {
-    role?: UserRole;
-    isActive?: boolean;
-    search?: string;
-  }): Prisma.UserWhereInput {
+  static buildFilters(filters: { role?: UserRole; search?: string }): Prisma.UserWhereInput {
     const where: Prisma.UserWhereInput = {};
 
     if (filters.role !== undefined) {
       where.role = filters.role;
-    }
-
-    if (filters.isActive !== undefined) {
-      where.isActive = filters.isActive;
     }
 
     if (filters.search) {
@@ -104,7 +82,6 @@ export class UserQueryBuilder {
       email: true,
       name: true,
       role: true,
-      isActive: true,
       createdAt: true,
     };
   }

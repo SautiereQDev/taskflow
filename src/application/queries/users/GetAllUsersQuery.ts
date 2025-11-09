@@ -8,7 +8,6 @@ export class GetAllUsersQuery implements IQuery {
     public readonly page = 1,
     public readonly limit = 20,
     public readonly role?: string,
-    public readonly isActive?: boolean,
     public readonly search?: string
   ) {}
 }

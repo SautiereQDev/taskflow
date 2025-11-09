@@ -22,7 +22,6 @@ export class User {
     private _password: Password,
     private _name: string,
     private _role: UserRole,
-    private _isActive: boolean,
     private _locale: string | null,
     private readonly _createdAt: Date,
     private _updatedAt: Date
@@ -40,7 +39,6 @@ export class User {
       password: Password;
       name: string;
       role?: UserRole;
-      isActive?: boolean;
       locale?: string | null;
       createdAt?: Date;
       updatedAt?: Date;
@@ -68,7 +66,6 @@ export class User {
       props.password,
       props.name.trim(),
       props.role ?? UserRole.MEMBER,
-      props.isActive ?? true,
       props.locale ?? 'fr',
       props.createdAt ?? now,
       props.updatedAt ?? now
@@ -94,10 +91,6 @@ export class User {
 
   get role(): UserRole {
     return this._role;
-  }
-
-  get isActive(): boolean {
-    return this._isActive;
   }
 
   get locale(): string | null {
@@ -165,28 +158,6 @@ export class User {
   }
 
   /**
-   * Activate user
-   */
-  activate(): void {
-    if (this._isActive) {
-      throw new Error('User is already active');
-    }
-    this._isActive = true;
-    this._updatedAt = new Date();
-  }
-
-  /**
-   * Deactivate user
-   */
-  deactivate(): void {
-    if (!this._isActive) {
-      throw new Error('User is already inactive');
-    }
-    this._isActive = false;
-    this._updatedAt = new Date();
-  }
-
-  /**
    * Check if user has admin role
    */
   isAdmin(): boolean {
@@ -223,7 +194,6 @@ export class User {
     passwordHash: string;
     name: string;
     role: UserRole;
-    isActive: boolean;
     locale: string | null;
     createdAt: Date;
     updatedAt: Date;
@@ -234,7 +204,6 @@ export class User {
       passwordHash: this._password.value,
       name: this._name,
       role: this._role,
-      isActive: this._isActive,
       locale: this._locale,
       createdAt: new Date(this._createdAt),
       updatedAt: new Date(this._updatedAt),

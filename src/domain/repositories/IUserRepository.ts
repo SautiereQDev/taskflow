@@ -19,17 +19,12 @@ export interface IUserRepository {
   /**
    * Find all users with optional filters
    */
-  findAll(filters?: { role?: UserRole; isActive?: boolean; search?: string }): Promise<User[]>;
+  findAll(filters?: { role?: UserRole; search?: string }): Promise<User[]>;
 
   /**
    * Find users by role
    */
   findByRole(role: UserRole): Promise<User[]>;
-
-  /**
-   * Find active users
-   */
-  findActive(): Promise<User[]>;
 
   /**
    * Save a new user
@@ -59,5 +54,5 @@ export interface IUserRepository {
   /**
    * Count users with optional filters
    */
-  count(filters?: { role?: UserRole; isActive?: boolean }): Promise<number>;
+  count(filters?: { role?: UserRole }): Promise<number>;
 }

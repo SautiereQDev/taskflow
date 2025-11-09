@@ -47,7 +47,6 @@ export async function createTestUser(prisma, credentials) {
       name: credentials.name,
       password: hashedPassword,
       role: credentials.role,
-      isActive: true,
     },
   });
   return User.create({
@@ -56,7 +55,6 @@ export async function createTestUser(prisma, credentials) {
     email: Email.create(dbUser.email),
     password: Password.fromHash(dbUser.password),
     role: dbUser.role,
-    isActive: dbUser.isActive,
     createdAt: dbUser.createdAt,
     updatedAt: dbUser.updatedAt,
   });
@@ -118,7 +116,6 @@ export async function createTestUserForIntegration(prisma, credentials) {
       email: credentials.email,
       password: hashedPassword,
       role: credentials.role,
-      isActive: true,
     },
   });
 }

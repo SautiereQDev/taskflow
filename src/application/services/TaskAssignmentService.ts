@@ -53,10 +53,6 @@ export class TaskAssignmentService {
       throw new AppError('Assignee not found', 404);
     }
 
-    if (!assignee.isActive) {
-      throw new AppError('Cannot assign task to inactive user', 400);
-    }
-
     // Assign task using domain method
     task.assignTo(assigneeId);
 

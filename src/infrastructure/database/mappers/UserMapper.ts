@@ -26,7 +26,6 @@ export class UserMapper {
         password,
         name: prismaUser.name,
         role: this.mapRoleToDomain(prismaUser.role),
-        isActive: prismaUser.isActive,
         locale: prismaUser.locale,
         createdAt: prismaUser.createdAt,
         updatedAt: prismaUser.updatedAt,
@@ -48,7 +47,6 @@ export class UserMapper {
       password: user.password.value,
       name: user.name,
       role: this.mapRoleToPrisma(user.role),
-      isActive: user.isActive,
       locale: user.locale ?? 'fr',
     };
   }
@@ -73,7 +71,6 @@ export class UserMapper {
     } = {};
 
     if (user.name) data.name = user.name;
-    if (user.isActive !== undefined) data.isActive = user.isActive;
     if (user.locale) data.locale = user.locale;
     if (user.role) data.role = this.mapRoleToPrisma(user.role);
 

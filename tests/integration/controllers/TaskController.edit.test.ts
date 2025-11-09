@@ -113,7 +113,6 @@ describe('TaskController - Edit Page Integration Tests', () => {
           password: hashedPassword,
           name: 'User Two',
           role: UserRole.USER,
-          isActive: true,
         },
       });
 

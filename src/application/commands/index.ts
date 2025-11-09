@@ -14,11 +14,6 @@ export { CreateUserCommand, CreateUserCommandSchema } from './users/CreateUserCo
 export { CreateUserHandler } from './users/CreateUserHandler.js';
 export { UpdateUserCommand, UpdateUserCommandSchema } from './users/UpdateUserCommand.js';
 export { UpdateUserHandler } from './users/UpdateUserHandler.js';
-export {
-  DeactivateUserCommand,
-  DeactivateUserCommandSchema,
-} from './users/DeactivateUserCommand.js';
-export { DeactivateUserHandler } from './users/DeactivateUserHandler.js';
 
 // Task Commands
 export { CreateTaskCommand, CreateTaskCommandSchema } from './tasks/CreateTaskCommand.js';

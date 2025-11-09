@@ -54,25 +54,6 @@
  <%- include('../../partials/ui/badge', { text: user.role.label, variant: user.role.color }) %>
  </td>
 
- <!-- Status -->
- <td>
- <% if (user.isActive) { %>
- <span class="badge badge-success gap-1">
- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
- </svg>
- Actif
- </span>
- <% } else { %>
- <span class="badge badge-ghost gap-1">
- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
- </svg>
- Inactif
- </span>
- <% } %>
- </td>
-
  <!-- Task Count -->
  <td>
  <div class="text-sm">
@@ -94,14 +75,6 @@
  <li><a href="/users/<%= user.id %>">Voir profil</a></li>
  <% if (user.canEdit) { %>
  <li><a href="/users/<%= user.id %>/edit">Modifier</a></li>
- <li>
- <form method="POST" action="/users/<%= user.id %>/toggle-status"
- hx-post="/users/<%= user.id %>/toggle-status">
- <button type="submit" class="w-full text-left">
- <%= user.isActive ? 'Désactiver' : 'Activer' %>
- </button>
- </form>
- </li>
  <% } %>
  </ul>
  </div>
@@ -110,7 +83,7 @@
  <% }) %>
  <% } else { %>
  <tr>
- <td colspan="6" class="text-center py-8 text-base-content/50">
+ <td colspan="5" class="text-center py-8 text-base-content/50">
  Aucun utilisateur trouvé
  </td>
  </tr>

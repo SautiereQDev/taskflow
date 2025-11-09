@@ -52,7 +52,6 @@ export async function createTestUser(
       email: credentials.email,
       password: hashedPassword,
       role: credentials.role,
-      isActive: true,
     },
   });
 
@@ -62,7 +61,6 @@ export async function createTestUser(
     email: Email.create(dbUser.email),
     password: Password.fromHash(dbUser.password),
     role: dbUser.role as UserRole,
-    isActive: dbUser.isActive,
   });
 }
 
@@ -111,7 +109,6 @@ export async function createTestUserForIntegration(
       email: credentials.email,
       password: hashedPassword,
       role: credentials.role,
-      isActive: true,
     },
   });
 }

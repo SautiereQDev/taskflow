@@ -3,35 +3,30 @@
     "email": "admin@example.com",
     "name": "Admin User",
     "role": "ADMIN",
-    "locale": "fr",
-    "isActive": true
+    "locale": "fr"
   },
   {
     "email": "manager@example.com",
     "name": "Manager User",
     "role": "MANAGER",
-    "locale": "fr",
-    "isActive": true
+    "locale": "fr"
   },
   {
     "email": "alice@example.com",
     "name": "Alice Dupont",
     "role": "MEMBER",
-    "locale": "fr",
-    "isActive": true
+    "locale": "fr"
   },
   {
     "email": "bob@example.com",
     "name": "Bob Martin",
     "role": "MEMBER",
-    "locale": "en",
-    "isActive": true
+    "locale": "en"
   },
   {
     "email": "charlie@example.com",
     "name": "Charlie Dubois",
     "role": "MEMBER",
-    "locale": "fr",
-    "isActive": false
+    "locale": "fr"
   }
 ]

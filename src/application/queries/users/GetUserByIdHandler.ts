@@ -29,7 +29,6 @@ export class GetUserByIdHandler implements IQueryHandler<GetUserByIdQuery, IUser
       name: user.name,
       email: user.email.value,
       role: user.role,
-      isActive: user.isActive,
       locale: 'fr', // Default locale - consider adding to User entity if needed
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

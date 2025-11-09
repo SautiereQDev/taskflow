@@ -121,32 +121,6 @@ describe('TaskAssignmentService', () => {
         'Assignee not found'
       );
     });
-
-    it('should throw AppError when assignee is inactive', async () => {
-      const task = Task.create({
-        id: 'task-3',
-        title: 'Test Task',
-        status: TaskStatus.TODO,
-        priority: TaskPriority.MEDIUM,
-        creatorId: 'creator-789',
-      });
-
-      const inactiveUser = User.create({
-        id: 'user-2',
-        name: 'Inactive User',
-        email: Email.create('inactive@example.com'),
-        password: Password.fromHash('$2a$12$hash'),
-        role: UserRole.USER,
-      });
-      inactiveUser.deactivate();
-
-      mockTaskRepository.findById.mockResolvedValue(task);
-      mockUserRepository.findById.mockResolvedValue(inactiveUser);
-
-      await expect(service.assignTask('task-123', 'inactive-user')).rejects.toThrow(
-        'Cannot assign task to inactive user'
-      );
-    });
   });
 
   describe('unassignTask()', () => {

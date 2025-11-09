@@ -57,7 +57,6 @@ model User {
   name      String   @db.VarChar(100)
   password  String   @db.VarChar(255)
   role      UserRole @default(MEMBER)
-  isActive  Boolean  @default(true) @map("is_active")
   locale    String   @default("fr") @db.VarChar(5)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -68,7 +67,6 @@ model User {
 
   // Indexes
   @@index([email])
-  @@index([isActive])
   @@index([role])
   @@index([createdAt])
   @@map("users")

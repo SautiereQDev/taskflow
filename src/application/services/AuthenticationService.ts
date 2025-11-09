@@ -22,7 +22,6 @@ export interface IAuthenticationResult {
  *
  * Security Features:
  * - Password verification using secure hashing
- * - Account lockout protection (checks isActive status)
  * - No credential exposure in responses
  *
  * @example
@@ -59,11 +58,6 @@ export class AuthenticationService {
       throw new AppError('Invalid email or password', 401);
     }
 
-    // Check if account is active
-    if (!user.isActive) {
-      throw new AppError('Account is deactivated', 403);
-    }
-
     // Verify password
     const isPasswordValid = await this.passwordHasher.verify(password, user.password.value);
     if (!isPasswordValid) {
@@ -88,7 +82,7 @@ export class AuthenticationService {
   async validateSession(userId: string): Promise<User | null> {
     const user = await this.userRepository.findById(userId);
 
-    if (!user?.isActive) {
+    if (!user) {
       return null;
     }
 

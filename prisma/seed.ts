@@ -28,7 +28,6 @@ async function seed() {
       password: hashedPassword,
       role: UserRole.ADMIN,
       locale: 'fr',
-      isActive: true,
     },
   });
   console.log(`  ✓ Created admin: ${admin.email}`);
@@ -40,7 +39,6 @@ async function seed() {
       password: hashedPassword,
       role: UserRole.MANAGER,
       locale: 'fr',
-      isActive: true,
     },
   });
   console.log(`  ✓ Created manager: ${manager.email}`);
@@ -52,7 +50,6 @@ async function seed() {
       password: hashedPassword,
       role: UserRole.MEMBER,
       locale: 'fr',
-      isActive: true,
     },
   });
   console.log(`  ✓ Created member: ${member1.email}`);
@@ -64,22 +61,9 @@ async function seed() {
       password: hashedPassword,
       role: UserRole.MEMBER,
       locale: 'en',
-      isActive: true,
     },
   });
   console.log(`  ✓ Created member: ${member2.email}`);
-
-  const member3 = await prisma.user.create({
-    data: {
-      email: 'charlie@example.com',
-      name: 'Charlie Dubois',
-      password: hashedPassword,
-      role: UserRole.MEMBER,
-      locale: 'fr',
-      isActive: false, // Inactive user for testing
-    },
-  });
-  console.log(`  ✓ Created inactive member: ${member3.email}\n`);
 
   // Create Tasks
   console.log('📋 Creating tasks...');
@@ -232,7 +216,7 @@ async function seed() {
   const doneCount = await prisma.task.count({ where: { status: TaskStatus.DONE } });
 
   console.log('📊 Seeding Summary:');
-  console.log(`  👥 Users: ${userCount} (1 admin, 1 manager, 3 members)`);
+  console.log(`  👥 Users: ${userCount} (1 admin, 1 manager, 2 members)`);
   console.log(`  📋 Tasks: ${taskCount}`);
   console.log(`    - TODO: ${todoCount}`);
   console.log(`    - IN_PROGRESS: ${inProgressCount}`);

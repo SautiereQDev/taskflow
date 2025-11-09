@@ -106,8 +106,7 @@ await repository.delete(userId);
 
 // Query Operations
 const exists = await repository.existsByEmail('test@example.com');
-const activeUsers = await repository.findActive();
-const count = await repository.count({ isActive: true });
+const count = await repository.count();
 ```
 
 #### PrismaTaskRepository
@@ -191,13 +190,11 @@ Filtres réutilisables pour User :
 ```typescript
 // Filtres simples
 const adminFilter = UserQueryBuilder.byRole(UserRole.ADMIN);
-const activeFilter = UserQueryBuilder.active();
 const searchFilter = UserQueryBuilder.search('john');
 
 // Filtres combinés
 const where = UserQueryBuilder.buildFilters({
   role: UserRole.MANAGER,
-  isActive: true,
   search: 'alice',
 });
 

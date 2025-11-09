@@ -37,7 +37,6 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand, Use
       email: Email.create(command.email),
       password: Password.fromHash(hashedPassword),
       role: command.role ?? UserRole.MEMBER,
-      isActive: true,
     });
 
     // Persist to database

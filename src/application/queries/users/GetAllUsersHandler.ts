@@ -41,7 +41,6 @@ export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery, IPagi
       name: user.name,
       email: user.email.value,
       role: user.role,
-      isActive: user.isActive,
       locale: user.locale,
     }));
 

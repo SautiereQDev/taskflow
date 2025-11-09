@@ -97,23 +97,5 @@ describe('AuthenticationService', () => {
         expect((error as AppError).statusCode).toBe(401);
       }
     });
-
-    it('should throw AppError for inactive user', async () => {
-      const email = 'inactive@example.com';
-      const hashedPassword = '$2a$12$hashedpassword';
-
-      const inactiveUser = User.create({
-        id: 'user-2',
-        name: 'Inactive User',
-        email: Email.create(email),
-        password: Password.fromHash(hashedPassword),
-        role: UserRole.USER,
-      });
-      inactiveUser.deactivate();
-
-      mockUserRepository.findByEmail.mockResolvedValue(inactiveUser);
-
-      await expect(service.login(email, 'password123')).rejects.toThrow('Account is deactivated');
-    });
   });
 });

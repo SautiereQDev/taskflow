@@ -33,7 +33,6 @@ export interface IAuthenticatedRequest extends Request {
     name: string;
     email: string;
     role: string;
-    isActive: boolean;
   };
 }
 

@@ -75,7 +75,6 @@ describe('PrismaUserRepository Integration Tests', () => {
       expect(createdUser.name).toBe('Test User Create');
       expect(createdUser.email.value).toBe('test-create@example.com');
       expect(createdUser.role).toBe(UserRole.MEMBER);
-      expect(createdUser.isActive).toBe(true);
       expect(createdUser.createdAt).toBeInstanceOf(Date);
       expect(createdUser.updatedAt).toBeInstanceOf(Date);
     });
@@ -256,41 +255,6 @@ describe('PrismaUserRepository Integration Tests', () => {
     });
   });
 
-  describe('findActive()', () => {
-    it('should find only active users', async () => {
-      // Arrange
-      const password = await Password.create('ActivePass123!');
-
-      const activeUser = User.create({
-        id: randomUUID(),
-        name: 'Active User',
-        email: Email.create('active@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      await repository.create(activeUser);
-
-      const inactiveUser = User.create({
-        id: randomUUID(),
-        name: 'Inactive User',
-        email: Email.create('inactive@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      inactiveUser.deactivate();
-      await repository.create(inactiveUser);
-
-      // Act
-      const activeUsers = await repository.findActive();
-
-      // Assert
-      expect(activeUsers.length).toBeGreaterThanOrEqual(1);
-      expect(activeUsers.every((u) => u.isActive)).toBe(true);
-      expect(activeUsers.find((u) => u.email.value === 'active@example.com')).toBeDefined();
-      expect(activeUsers.find((u) => u.email.value === 'inactive@example.com')).toBeUndefined();
-    });
-  });
-
   describe('findAll()', () => {
     it('should return all users', async () => {
       // Arrange
@@ -355,36 +319,6 @@ describe('PrismaUserRepository Integration Tests', () => {
       expect(adminUsers.every((u) => u.role === UserRole.ADMIN)).toBe(true);
     });
 
-    it('should filter by active status', async () => {
-      // Arrange
-      const password = await Password.create('StatusPass123!');
-
-      const activeUser = User.create({
-        id: randomUUID(),
-        name: 'Active',
-        email: Email.create('active-filter@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      await repository.create(activeUser);
-
-      const inactiveUser = User.create({
-        id: randomUUID(),
-        name: 'Inactive',
-        email: Email.create('inactive-filter@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      inactiveUser.deactivate();
-      await repository.create(inactiveUser);
-
-      // Act
-      const activeUsers = await repository.findAll({ isActive: true });
-
-      // Assert
-      expect(activeUsers.every((u) => u.isActive)).toBe(true);
-    });
-
     it('should search by name', async () => {
       // Arrange
       const password = await Password.create('SearchPass123!');
@@ -440,49 +374,6 @@ describe('PrismaUserRepository Integration Tests', () => {
       expect(updated.name).toBe('Updated Name');
       expect(updated.id).toBe(user.id);
       expect(updated.updatedAt.getTime()).toBeGreaterThan(updated.createdAt.getTime());
-    });
-
-    it('should deactivate user', async () => {
-      // Arrange
-      const email = Email.create('deactivate@example.com');
-      const password = await Password.create('DeactivatePass123!');
-      let user = User.create({
-        id: randomUUID(),
-        name: 'User To Deactivate',
-        email,
-        password,
-        role: UserRole.MEMBER,
-      });
-      user = await repository.create(user);
-
-      // Act
-      user.deactivate();
-      const updated = await repository.update(user);
-
-      // Assert
-      expect(updated.isActive).toBe(false);
-    });
-
-    it('should reactivate user', async () => {
-      // Arrange
-      const email = Email.create('reactivate@example.com');
-      const password = await Password.create('ReactivatePass123!');
-      let user = User.create({
-        id: randomUUID(),
-        name: 'User To Reactivate',
-        email,
-        password,
-        role: UserRole.MEMBER,
-      });
-      user.deactivate();
-      user = await repository.create(user);
-
-      // Act
-      user.activate();
-      const updated = await repository.update(user);
-
-      // Assert
-      expect(updated.isActive).toBe(true);
     });
   });
 
@@ -625,37 +516,6 @@ describe('PrismaUserRepository Integration Tests', () => {
 
       // Assert
       expect(managerCount).toBeGreaterThanOrEqual(1);
-    });
-
-    it('should count active users only', async () => {
-      // Arrange
-      const password = await Password.create('CountActivePass123!');
-
-      const activeUser = User.create({
-        id: randomUUID(),
-        name: 'Active Count',
-        email: Email.create('active-count@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      await repository.create(activeUser);
-
-      const inactiveUser = User.create({
-        id: randomUUID(),
-        name: 'Inactive Count',
-        email: Email.create('inactive-count@example.com'),
-        password,
-        role: UserRole.MEMBER,
-      });
-      inactiveUser.deactivate();
-      await repository.create(inactiveUser);
-
-      // Act
-      const activeCount = await repository.count({ isActive: true });
-      const totalCount = await repository.count();
-
-      // Assert
-      expect(activeCount).toBeLessThan(totalCount);
     });
   });
 });

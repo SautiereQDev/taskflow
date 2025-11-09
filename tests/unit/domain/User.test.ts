@@ -26,7 +26,6 @@ async function createUserEntity(overrides?: {
   password?: string;
   name?: string;
   role?: UserRole;
-  isActive?: boolean;
 }): Promise<User> {
   userCounter++;
   const email = Email.create(overrides?.email ?? `user${userCounter}@test.com`);
@@ -38,7 +37,6 @@ async function createUserEntity(overrides?: {
       password,
       name: overrides?.name ?? `Test User ${userCounter}`,
       role: overrides?.role ?? UserRole.MEMBER,
-      isActive: overrides?.isActive ?? true,
     },
     overrides?.id ?? `user-${userCounter}`
   );
@@ -325,120 +323,6 @@ describe('User Entity', () => {
     });
   });
 
-  describe('activate()', () => {
-    it('should activate inactive user', async () => {
-      const user = await createUserEntity({ isActive: false });
-      user.activate();
-      expect(user.isActive).toBe(true);
-    });
-
-    it('should throw error if user already active', async () => {
-      const user = await createUserEntity({ isActive: true });
-      expect(() => user.activate()).toThrow('User is already active');
-    });
-
-    it('should update updatedAt timestamp', async () => {
-      const user = await createUserEntity({ isActive: false });
-      const oldUpdatedAt = user.updatedAt;
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      user.activate();
-      expect(user.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
-    });
-  });
-
-  describe('deactivate()', () => {
-    it('should deactivate active user', async () => {
-      const user = await createUserEntity({ isActive: true });
-      user.deactivate();
-      expect(user.isActive).toBe(false);
-    });
-
-    it('should throw error if user already inactive', async () => {
-      const user = await createUserEntity({ isActive: false });
-      expect(() => user.deactivate()).toThrow('User is already inactive');
-    });
-
-    it('should update updatedAt timestamp', async () => {
-      const user = await createUserEntity({ isActive: true });
-      const oldUpdatedAt = user.updatedAt;
-      await new Promise((resolve) => setTimeout(resolve, 10));
-      user.deactivate();
-      expect(user.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
-    });
-  });
-
-  describe('isAdmin()', () => {
-    it('should return true for ADMIN role', async () => {
-      const user = await createUserEntity({ role: UserRole.ADMIN });
-      expect(user.isAdmin()).toBe(true);
-    });
-
-    it('should return false for MANAGER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MANAGER });
-      expect(user.isAdmin()).toBe(false);
-    });
-
-    it('should return false for MEMBER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MEMBER });
-      expect(user.isAdmin()).toBe(false);
-    });
-  });
-
-  describe('isManager()', () => {
-    it('should return true for MANAGER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MANAGER });
-      expect(user.isManager()).toBe(true);
-    });
-
-    it('should return false for ADMIN role', async () => {
-      const user = await createUserEntity({ role: UserRole.ADMIN });
-      expect(user.isManager()).toBe(false);
-    });
-
-    it('should return false for MEMBER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MEMBER });
-      expect(user.isManager()).toBe(false);
-    });
-  });
-
-  describe('canManageTasks()', () => {
-    it('should return true for ADMIN role', async () => {
-      const user = await createUserEntity({ role: UserRole.ADMIN });
-      expect(user.canManageTasks()).toBe(true);
-    });
-
-    it('should return true for MANAGER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MANAGER });
-      expect(user.canManageTasks()).toBe(true);
-    });
-
-    it('should return false for MEMBER role', async () => {
-      const user = await createUserEntity({ role: UserRole.MEMBER });
-      expect(user.canManageTasks()).toBe(false);
-    });
-  });
-
-  describe('verifyPassword()', () => {
-    it('should return true for correct password', async () => {
-      const plainPassword = 'TestPassword123!';
-      const user = await createUserEntity({ password: plainPassword });
-      const result = await user.verifyPassword(plainPassword);
-      expect(result).toBe(true);
-    });
-
-    it('should return false for incorrect password', async () => {
-      const user = await createUserEntity({ password: 'CorrectPass123!' });
-      const result = await user.verifyPassword('WrongPassword456!');
-      expect(result).toBe(false);
-    });
-
-    it('should be case-sensitive', async () => {
-      const user = await createUserEntity({ password: 'Password123!' });
-      const result = await user.verifyPassword('password123!');
-      expect(result).toBe(false);
-    });
-  });
-
   describe('toPlainObject()', () => {
     it('should return plain object with all properties', async () => {
       const user = await createUserEntity({
@@ -446,7 +330,6 @@ describe('User Entity', () => {
         email: 'test@example.com',
         name: 'Test User',
         role: UserRole.ADMIN,
-        isActive: true,
       });
       const plain = user.toPlainObject();
 
@@ -456,7 +339,6 @@ describe('User Entity', () => {
         passwordHash: user.password.value,
         name: 'Test User',
         role: UserRole.ADMIN,
-        isActive: true,
         locale: 'fr',
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),

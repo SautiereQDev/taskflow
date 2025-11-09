@@ -32,7 +32,6 @@ import type { ITaskRepository } from '../domain/repositories/ITaskRepository.js'
 import { CommandBus } from '../application/commands/CommandBus.js';
 import { CreateUserHandler } from '../application/commands/users/CreateUserHandler.js';
 import { UpdateUserHandler } from '../application/commands/users/UpdateUserHandler.js';
-import { DeactivateUserHandler } from '../application/commands/users/DeactivateUserHandler.js';
 import { CreateTaskHandler } from '../application/commands/tasks/CreateTaskHandler.js';
 import { UpdateTaskHandler } from '../application/commands/tasks/UpdateTaskHandler.js';
 import { CompleteTaskHandler } from '../application/commands/tasks/CompleteTaskHandler.js';
@@ -104,7 +103,6 @@ container.registerSingleton(CommandBus);
 // User Command Handlers
 container.register('CreateUserCommandHandler', { useClass: CreateUserHandler });
 container.register('UpdateUserCommandHandler', { useClass: UpdateUserHandler });
-container.register('DeactivateUserCommandHandler', { useClass: DeactivateUserHandler });
 
 // Task Command Handlers
 container.register('CreateTaskCommandHandler', { useClass: CreateTaskHandler });

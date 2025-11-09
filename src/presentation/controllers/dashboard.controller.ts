@@ -93,13 +93,13 @@ export class DashboardController {
     const mapTasks = (result: IPaginatedTasksDto | null): ITaskListItemViewModel[] =>
       result ? result.items.map((task) => toTaskListItemViewModel(task, currentUser)) : [];
 
-    const isActiveTask = (task: ITaskListItemViewModel): boolean =>
+    const isIncompleteTask = (task: ITaskListItemViewModel): boolean =>
       ![TaskStatus.DONE, TaskStatus.CANCELLED].includes(task.status.value);
 
     const highlightedTasks = mapTasks(highlightedTasksResult).slice(0, 5);
 
     const upcomingTasks = mapTasks(upcomingTasksResult)
-      .filter(isActiveTask)
+      .filter(isIncompleteTask)
       .sort((a, b) => {
         const aTime = a.dueDate.raw ? a.dueDate.raw.getTime() : Number.POSITIVE_INFINITY;
         const bTime = b.dueDate.raw ? b.dueDate.raw.getTime() : Number.POSITIVE_INFINITY;
@@ -108,7 +108,7 @@ export class DashboardController {
       .slice(0, 5);
 
     const assignmentPool = mapTasks(myAssignmentsResult);
-    const myAssignments = assignmentPool.filter(isActiveTask).slice(0, 5);
+    const myAssignments = assignmentPool.filter(isIncompleteTask).slice(0, 5);
     const myAssignmentsSummary = {
       total: assignmentPool.length,
       todo: assignmentPool.filter((task) => task.status.value === TaskStatus.TODO).length,
@@ -230,7 +230,6 @@ export class DashboardController {
     name: string;
     email: string;
     role: string;
-    isActive: boolean;
     assigned: number;
     completed: number;
     overdue: number;
@@ -244,7 +243,6 @@ export class DashboardController {
         name: user?.name ?? 'Utilisateur inconnu',
         email: user?.email ?? '',
         role: user?.role ?? 'MEMBER',
-        isActive: user?.isActive ?? false,
         assigned: item.assignedTasks,
         completed: item.completedTasks,
         overdue: item.overdueTasks,

@@ -73,7 +73,6 @@ export async function requireAuth(
       name: user.name,
       email: user.email.value,
       role: user.role,
-      isActive: user.isActive,
     };
 
     next();
@@ -119,7 +118,6 @@ export async function attachUser(
         name: user.name,
         email: user.email.value,
         role: user.role,
-        isActive: user.isActive,
       };
 
       // Make user available to all views (including layout)
