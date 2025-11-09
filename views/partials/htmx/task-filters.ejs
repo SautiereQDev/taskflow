@@ -2,10 +2,16 @@
  <h2 class="text-lg font-bold mb-4">Filtres</h2>
 
  <form id="filters-form"
+ action="/tasks"
+ method="GET"
  hx-get="/tasks"
  hx-target="#task-list-container"
- hx-trigger="change, submit"
+ hx-swap="innerHTML"
  hx-indicator="#filter-indicator"
+ hx-push-url="true"
+ hx-include="[name]"
+ hx-trigger="submit"
+ hx-headers='{"Cache-Control": "no-cache"}'
  class="space-y-6">
 
  <!-- Search -->
@@ -194,9 +200,8 @@
  Appliquer
  </button>
  <button type="reset"
- class="btn btn-ghost btn-sm"
- hx-get="/tasks"
- hx-target="#task-list-container">
+ id="reset-filters-btn"
+ class="btn btn-ghost btn-sm">
  Réinitialiser
  </button>
  </div>
