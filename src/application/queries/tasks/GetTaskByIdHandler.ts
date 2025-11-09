@@ -58,7 +58,6 @@ export class GetTaskByIdHandler implements IQueryHandler<GetTaskByIdQuery, ITask
         email: '',
         role: '',
         isActive: false,
-        avatar: null,
         locale: null,
       };
     }
@@ -69,7 +68,6 @@ export class GetTaskByIdHandler implements IQueryHandler<GetTaskByIdQuery, ITask
       email: user.email.value,
       role: user.role,
       isActive: user.isActive,
-      avatar: null,
       locale: user.locale,
     };
   }

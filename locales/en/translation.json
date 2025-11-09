@@ -276,9 +276,6 @@
       "titleAdmin": "Edit user",
       "fullName": "Full name",
       "fullNameHint": "This name will be visible to your team.",
-      "avatar": "Avatar (URL)",
-      "avatarPlaceholder": "https://…",
-      "avatarHint": "Leave empty to use initials.",
       "language": "Language",
       "languageFr": "Français",
       "languageEn": "English"

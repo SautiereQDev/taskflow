@@ -23,7 +23,6 @@ export class User {
     private _name: string,
     private _role: UserRole,
     private _isActive: boolean,
-    private _avatar: string | null,
     private _locale: string | null,
     private readonly _createdAt: Date,
     private _updatedAt: Date
@@ -42,7 +41,6 @@ export class User {
       name: string;
       role?: UserRole;
       isActive?: boolean;
-      avatar?: string | null;
       locale?: string | null;
       createdAt?: Date;
       updatedAt?: Date;
@@ -71,7 +69,6 @@ export class User {
       props.name.trim(),
       props.role ?? UserRole.MEMBER,
       props.isActive ?? true,
-      props.avatar ?? null,
       props.locale ?? 'fr',
       props.createdAt ?? now,
       props.updatedAt ?? now
@@ -103,10 +100,6 @@ export class User {
     return this._isActive;
   }
 
-  get avatar(): string | null {
-    return this._avatar;
-  }
-
   get locale(): string | null {
     return this._locale;
   }
@@ -136,14 +129,6 @@ export class User {
     }
 
     this._name = name.trim();
-    this._updatedAt = new Date();
-  }
-
-  /**
-   * Update user avatar
-   */
-  updateAvatar(avatar: string | null): void {
-    this._avatar = avatar;
     this._updatedAt = new Date();
   }
 
@@ -239,7 +224,6 @@ export class User {
     name: string;
     role: UserRole;
     isActive: boolean;
-    avatar: string | null;
     locale: string | null;
     createdAt: Date;
     updatedAt: Date;
@@ -251,7 +235,6 @@ export class User {
       name: this._name,
       role: this._role,
       isActive: this._isActive,
-      avatar: this._avatar,
       locale: this._locale,
       createdAt: new Date(this._createdAt),
       updatedAt: new Date(this._updatedAt),

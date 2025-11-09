@@ -191,7 +191,7 @@ export class TaskQueryBuilder {
   }
 
   /**
-   * Default include for task relations
+   * Default include for Task relations
    */
   static defaultInclude(): Prisma.TaskInclude {
     return {
@@ -200,7 +200,6 @@ export class TaskQueryBuilder {
           id: true,
           name: true,
           email: true,
-          avatar: true,
         },
       },
       assignee: {
@@ -208,7 +207,6 @@ export class TaskQueryBuilder {
           id: true,
           name: true,
           email: true,
-          avatar: true,
         },
       },
     };
@@ -229,7 +227,6 @@ export class TaskQueryBuilder {
         select: {
           id: true,
           name: true,
-          avatar: true,
         },
       },
     };

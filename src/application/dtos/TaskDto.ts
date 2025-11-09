@@ -39,7 +39,6 @@ export interface ITaskListItemDto {
     id: string;
     name: string;
     email: string;
-    avatar: string | null;
   } | null;
 }
 

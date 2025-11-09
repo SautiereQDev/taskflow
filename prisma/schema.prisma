@@ -58,7 +58,6 @@ model User {
   password  String   @db.VarChar(255)
   role      UserRole @default(MEMBER)
   isActive  Boolean  @default(true) @map("is_active")
-  avatar    String?  @db.VarChar(500)
   locale    String   @default("fr") @db.VarChar(5)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)

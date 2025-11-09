@@ -1,6 +1,5 @@
 <%
  const currentLocale = typeof user !== 'undefined' && user.locale ? user.locale : 'fr';
- const currentAvatar = typeof user !== 'undefined' ? user.avatar ?? '' : '';
  // Context is passed from controller (isAdminContext variable)
  // isAdminContext: true = admin editing user, false = user editing own profile
  const backUrl = isAdminContext ? `/users/${user.id}` : '/profile';
@@ -45,23 +44,6 @@
  <label class="label">
  <span class="label-text-alt tf-text-muted">
  <%= __('profile.edit.fullNameHint') %>
- </span>
- </label>
- </div>
-
- <!-- Avatar URL Field -->
- <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.avatar') %></span>
- </label>
- <input type="url"
- name="avatar"
- value="<%= currentAvatar %>"
- placeholder="<%= __('profile.edit.avatarPlaceholder') %>"
- class="input input-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300" />
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('profile.edit.avatarHint') %>
  </span>
  </label>
  </div>

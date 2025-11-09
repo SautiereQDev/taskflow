@@ -1,11 +1,10 @@
 <%
 /**
  * Avatar Component
- * User avatar with initials or image
+ * User avatar with initials display
  *
  * Props:
  * - name: string - User name (for initials)
- * - image: string (optional) - Avatar image URL
  * - size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
  * - online: boolean - show online indicator (default: false)
  *
@@ -14,7 +13,6 @@
  */
 
 const name = typeof name !== 'undefined' ? name : '';
-const image = typeof image !== 'undefined' ? image : '';
 const size = typeof size !== 'undefined' ? size : 'md';
 const online = typeof online !== 'undefined' ? online : false;
 
@@ -31,10 +29,6 @@ const onlineClass = online ? 'online' : '';
 
 <div class="avatar placeholder <%= onlineClass %>">
  <div class="bg-primary text-primary-content rounded-full flex-shrink-0 <%= sizeClass %> flex items-center justify-center">
- <% if (image) { %>
- <img src="<%= image %>" alt="<%= name %>" class="rounded-full" />
- <% } else { %>
  <span class="font-semibold"><%= initials %></span>
- <% } %>
  </div>
 </div>

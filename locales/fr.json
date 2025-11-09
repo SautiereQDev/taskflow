@@ -58,9 +58,6 @@
         "titleAdmin": "Modifier l'utilisateur",
         "fullName": "Nom complet",
         "fullNameHint": "Ce nom sera visible par votre équipe.",
-        "avatar": "Avatar (URL)",
-        "avatarPlaceholder": "https://…",
-        "avatarHint": "Laissez vide pour utiliser les initiales.",
         "language": "Langue",
         "languageFr": "Français",
         "languageEn": "English"

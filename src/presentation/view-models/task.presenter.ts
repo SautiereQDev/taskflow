@@ -219,7 +219,6 @@ export function toTaskDetailViewModel(
             id: task.assignee.id,
             name: task.assignee.name,
             email: task.assignee.email,
-            avatar: null,
           }
         : null,
     },

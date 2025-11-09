@@ -165,7 +165,6 @@ export class AdminController {
     return {
       id: user.id,
       name: user.name,
-      avatar: user.avatar ?? '',
       locale: user.locale ?? 'fr',
     };
   }

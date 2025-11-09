@@ -105,7 +105,6 @@ export class UserQueryBuilder {
       name: true,
       role: true,
       isActive: true,
-      avatar: true,
       createdAt: true,
     };
   }

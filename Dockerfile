@@ -20,6 +20,7 @@ COPY tsconfig.json ./
 COPY vitest.config.ts ./
 COPY eslint.config.ts ./
 COPY postcss.config.js ./
+COPY tailwind.config.ts ./
 COPY src ./src
 COPY public ./public
 COPY views ./views

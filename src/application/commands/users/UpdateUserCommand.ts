@@ -17,8 +17,6 @@ export const UpdateUserCommandSchema = z.object({
     .trim()
     .optional(),
 
-  avatar: z.string().url('Avatar must be a valid URL').optional().nullable(),
-
   locale: z.enum(['fr', 'en']).optional(),
 });
 
@@ -46,7 +44,6 @@ export type UpdateUserCommandInput = z.infer<typeof UpdateUserCommandSchema>;
 export class UpdateUserCommand implements ICommand {
   public readonly userId: string;
   public readonly name?: string;
-  public readonly avatar?: string | null;
   public readonly locale?: string;
 
   constructor(input: UpdateUserCommandInput) {
@@ -54,7 +51,6 @@ export class UpdateUserCommand implements ICommand {
 
     this.userId = validated.userId;
     this.name = validated.name;
-    this.avatar = validated.avatar;
     this.locale = validated.locale;
   }
 }

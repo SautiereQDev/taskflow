@@ -70,7 +70,6 @@ export class GetAllTasksHandler implements IQueryHandler<GetAllTasksQuery, IPagi
             id: user.id,
             name: user.name,
             email: user.email.value,
-            avatar: null as string | null,
           },
         ])
     );

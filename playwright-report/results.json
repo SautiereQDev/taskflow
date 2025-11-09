@@ -108,9 +108,9 @@
     ],
     "shard": null,
     "updateSnapshots": "missing",
-    "updateSourceMethod": "patch",
+    "updateSourceMethod": "3way",
     "version": "1.56.1",
-    "workers": 8,
+    "workers": 1,
     "webServer": {
       "command": "npm run dev",
       "url": "http://localhost:3000",
@@ -133,6 +133,185 @@
           "column": 6,
           "specs": [
             {
+              "title": "Step 1: Login page is accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1859,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Login page is accessible and form is present\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:50:48.522Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-2eec3ece6beeea01c1b0",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 18,
+              "column": 3
+            },
+            {
+              "title": "Step 2: Form submission works",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2275,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "After login, redirected to: http://localhost:3000/dashboard\n"
+                        },
+                        {
+                          "text": "✅ Redirected to dashboard\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:50:51.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-996198be33a7baaf9cec",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 36,
+              "column": 3
+            },
+            {
+              "title": "Step 3: Check cookies after login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1863,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 Cookies after login:\n"
+                        },
+                        {
+                          "text": "  - i18next: en...\n"
+                        },
+                        {
+                          "text": "    httpOnly: false, secure: false, sameSite: Strict\n"
+                        },
+                        {
+                          "text": "  - sessionId: s%3AbZ82bdEbZyHkxbT_...\n"
+                        },
+                        {
+                          "text": "    httpOnly: true, secure: false, sameSite: Strict\n"
+                        },
+                        {
+                          "text": "\n✅ Session cookie found: sessionId\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:50:53.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-3772b1bafec4c869ed95",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 62,
+              "column": 3
+            },
+            {
+              "title": "Step 4: Session persistence across requests",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2461,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "After login URL: http://localhost:3000/dashboard\n"
+                        },
+                        {
+                          "text": "Session cookie: sessionId = s%3AInPUSUFZWgOq_abM...\n"
+                        },
+                        {
+                          "text": "Dashboard access URL: http://localhost:3000/dashboard\n"
+                        },
+                        {
+                          "text": "✅ Dashboard accessible - session persisted\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:50:55.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-c4ce40627a7cd56f5ae6",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 101,
+              "column": 3
+            },
+            {
               "title": "Step 5: Complete login flow",
               "ok": true,
               "tags": [],
@@ -148,7 +327,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1737,
+                      "duration": 2574,
                       "errors": [],
                       "stdout": [
                         {
@@ -205,7 +384,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-01T19:17:46.516Z",
+                      "startTime": "2025-11-08T22:50:57.757Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -215,7 +394,2460 @@
               ],
               "id": "16e2d9d8dd12437be17f-a5595da95831793d58b8",
               "file": "auth-diagnostics.spec.ts",
-              "line": 148,
+              "line": 151,
+              "column": 3
+            },
+            {
+              "title": "Step 6: Check database session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1807,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📝 To verify in database, run:\n"
+                        },
+                        {
+                          "text": "docker compose exec db psql -U taskflow -d taskflow_dev -c \"SELECT sid, (sess->>'userId') as user_id, expire FROM session WHERE sid LIKE 's%3A-7JTCA%';\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:00.352Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-3fa7148d5612f5db330a",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 214,
+              "column": 3
+            },
+            {
+              "title": "Step 7: Multiple page navigation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4450,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n🔄 Testing multiple page navigation...\n"
+                        },
+                        {
+                          "text": "✅ /dashboard - accessible\n"
+                        },
+                        {
+                          "text": "✅ /tasks - accessible\n"
+                        },
+                        {
+                          "text": "✅ /profile - accessible\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:02.194Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-d79b0192e5a2b0821559",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 235,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Session Cookie Configuration",
+          "file": "auth-diagnostics.spec.ts",
+          "line": 271,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Check cookie attributes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1941,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n🔐 Session Cookie Configuration:\n"
+                        },
+                        {
+                          "text": "Name: sessionId\n"
+                        },
+                        {
+                          "text": "Domain: localhost\n"
+                        },
+                        {
+                          "text": "Path: /\n"
+                        },
+                        {
+                          "text": "Secure: false\n"
+                        },
+                        {
+                          "text": "HttpOnly: true\n"
+                        },
+                        {
+                          "text": "SameSite: Strict\n"
+                        },
+                        {
+                          "text": "Expires: 1763247067.710176\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:06.684Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16e2d9d8dd12437be17f-90c4bf2f0526171ab4fc",
+              "file": "auth-diagnostics.spec.ts",
+              "line": 272,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "task-critical-path.spec.ts",
+      "file": "task-critical-path.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Task Critical Path - Complete User Journey",
+          "file": "task-critical-path.spec.ts",
+          "line": 30,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Complete task lifecycle: create → edit → complete → delete",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7650,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=E2E Test Task 1762642270118')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=E2E Test Task 1762642270118')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=E2E Test Task 1762642270118')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=E2E Test Task 1762642270118')\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:67:55\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:44:5",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                          "column": 55,
+                          "line": 67
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 65 |\u001b[39m\n \u001b[90m 66 |\u001b[39m       \u001b[90m// Wait for task to appear in list\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m`text=${taskTitle}`\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m5000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m\n \u001b[90m 70 |\u001b[39m     \u001b[90m// ============================================\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 55,
+                            "line": 67
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=E2E Test Task 1762642270118')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=E2E Test Task 1762642270118')\u001b[22m\n\n\n\u001b[0m \u001b[90m 65 |\u001b[39m\n \u001b[90m 66 |\u001b[39m       \u001b[90m// Wait for task to appear in list\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m`text=${taskTitle}`\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m5000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m\n \u001b[90m 70 |\u001b[39m     \u001b[90m// ============================================\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:67:55\u001b[22m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:44:5\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Create new task",
+                          "duration": 5985,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=E2E Test Task 1762642270118')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=E2E Test Task 1762642270118')\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=E2E Test Task 1762642270118')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=E2E Test Task 1762642270118')\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:67:55\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:44:5",
+                            "location": {
+                              "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                              "column": 55,
+                              "line": 67
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 65 |\u001b[39m\n \u001b[90m 66 |\u001b[39m       \u001b[90m// Wait for task to appear in list\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m`text=${taskTitle}`\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m5000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 69 |\u001b[39m\n \u001b[90m 70 |\u001b[39m     \u001b[90m// ============================================\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2025-11-08T22:51:08.664Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-29845--→-edit-→-complete-→-delete-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-29845--→-edit-→-complete-→-delete-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                        "column": 55,
+                        "line": 67
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-5db3a1c7149cc4cde1b3",
+              "file": "task-critical-path.spec.ts",
+              "line": 36,
+              "column": 3
+            },
+            {
+              "title": "should filter tasks without page reload (HTMX)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1945,
+                      "error": {
+                        "message": "Error: locator.selectOption: Error: Element is not a <select> element\nCall log:\n\u001b[2m  - waiting for locator('select[name=\"status\"], input[name=\"status\"]').first()\u001b[22m\n\u001b[2m    - locator resolved to <input value=\"TODO\" name=\"status\" type=\"checkbox\" class=\"checkbox checkbox-sm\"/>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    - waiting for element to be visible and enabled\u001b[22m\n",
+                        "stack": "Error: locator.selectOption: Error: Element is not a <select> element\nCall log:\n\u001b[2m  - waiting for locator('select[name=\"status\"], input[name=\"status\"]').first()\u001b[22m\n\u001b[2m    - locator resolved to <input value=\"TODO\" name=\"status\" type=\"checkbox\" class=\"checkbox checkbox-sm\"/>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    - waiting for element to be visible and enabled\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:197:34",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                          "column": 34,
+                          "line": 197
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 195 |\u001b[39m     \u001b[36mconst\u001b[39m statusFilter \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'select[name=\"status\"], input[name=\"status\"]'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 196 |\u001b[39m     \u001b[36mif\u001b[39m ((\u001b[36mawait\u001b[39m statusFilter\u001b[33m.\u001b[39mcount()) \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 197 |\u001b[39m       \u001b[36mawait\u001b[39m statusFilter\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mselectOption(\u001b[32m'TODO'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 198 |\u001b[39m\n \u001b[90m 199 |\u001b[39m       \u001b[90m// Wait for HTMX update\u001b[39m\n \u001b[90m 200 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 34,
+                            "line": 197
+                          },
+                          "message": "Error: locator.selectOption: Error: Element is not a <select> element\nCall log:\n\u001b[2m  - waiting for locator('select[name=\"status\"], input[name=\"status\"]').first()\u001b[22m\n\u001b[2m    - locator resolved to <input value=\"TODO\" name=\"status\" type=\"checkbox\" class=\"checkbox checkbox-sm\"/>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    - waiting for element to be visible and enabled\u001b[22m\n\n\n\u001b[0m \u001b[90m 195 |\u001b[39m     \u001b[36mconst\u001b[39m statusFilter \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'select[name=\"status\"], input[name=\"status\"]'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 196 |\u001b[39m     \u001b[36mif\u001b[39m ((\u001b[36mawait\u001b[39m statusFilter\u001b[33m.\u001b[39mcount()) \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 197 |\u001b[39m       \u001b[36mawait\u001b[39m statusFilter\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mselectOption(\u001b[32m'TODO'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 198 |\u001b[39m\n \u001b[90m 199 |\u001b[39m       \u001b[90m// Wait for HTMX update\u001b[39m\n \u001b[90m 200 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:197:34\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:17.486Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-fa5b4-s-without-page-reload-HTMX--chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-fa5b4-s-without-page-reload-HTMX--chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                        "column": 34,
+                        "line": 197
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-4a920f03d6afb11dce76",
+              "file": "task-critical-path.spec.ts",
+              "line": 193,
+              "column": 3
+            },
+            {
+              "title": "should handle pagination with HTMX",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1471,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:20.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-e54ffb9bf1adca364eed",
+              "file": "task-critical-path.spec.ts",
+              "line": 211,
+              "column": 3
+            },
+            {
+              "title": "should search tasks with debouncing (HTMX)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2116,
+                      "error": {
+                        "message": "Error: locator.fill: Error: strict mode violation: locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" id=\"search\" name=\"search\" placeholder=\"Titre de la tâche...\" class=\"input input-bordered w-full tf-input-padding\"/> aka getByRole('textbox', { name: 'Recherche', exact: true })\n    2) <input type=\"text\" x-model=\"query\" @input=\"search\" placeholder=\"Rechercher une tâche...\" class=\"input input-bordered flex-1 tf-input-padding\"/> aka getByRole('textbox', { name: 'Rechercher une tâche...' })\n\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]')\u001b[22m\n",
+                        "stack": "Error: locator.fill: Error: strict mode violation: locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" id=\"search\" name=\"search\" placeholder=\"Titre de la tâche...\" class=\"input input-bordered w-full tf-input-padding\"/> aka getByRole('textbox', { name: 'Recherche', exact: true })\n    2) <input type=\"text\" x-model=\"query\" @input=\"search\" placeholder=\"Rechercher une tâche...\" class=\"input input-bordered flex-1 tf-input-padding\"/> aka getByRole('textbox', { name: 'Rechercher une tâche...' })\n\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]')\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:236:25",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                          "column": 25,
+                          "line": 236
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 234 |\u001b[39m     \u001b[36mif\u001b[39m ((\u001b[36mawait\u001b[39m searchInput\u001b[33m.\u001b[39mcount()) \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 235 |\u001b[39m       \u001b[90m// Type search query\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 236 |\u001b[39m       \u001b[36mawait\u001b[39m searchInput\u001b[33m.\u001b[39mfill(\u001b[32m'test'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 237 |\u001b[39m\n \u001b[90m 238 |\u001b[39m       \u001b[90m// Wait for debounce and HTMX request\u001b[39m\n \u001b[90m 239 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 25,
+                            "line": 236
+                          },
+                          "message": "Error: locator.fill: Error: strict mode violation: locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" id=\"search\" name=\"search\" placeholder=\"Titre de la tâche...\" class=\"input input-bordered w-full tf-input-padding\"/> aka getByRole('textbox', { name: 'Recherche', exact: true })\n    2) <input type=\"text\" x-model=\"query\" @input=\"search\" placeholder=\"Rechercher une tâche...\" class=\"input input-bordered flex-1 tf-input-padding\"/> aka getByRole('textbox', { name: 'Rechercher une tâche...' })\n\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"search\"], input[placeholder*=\"Recherch\"]')\u001b[22m\n\n\n\u001b[0m \u001b[90m 234 |\u001b[39m     \u001b[36mif\u001b[39m ((\u001b[36mawait\u001b[39m searchInput\u001b[33m.\u001b[39mcount()) \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 235 |\u001b[39m       \u001b[90m// Type search query\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 236 |\u001b[39m       \u001b[36mawait\u001b[39m searchInput\u001b[33m.\u001b[39mfill(\u001b[32m'test'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 237 |\u001b[39m\n \u001b[90m 238 |\u001b[39m       \u001b[90m// Wait for debounce and HTMX request\u001b[39m\n \u001b[90m 239 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m500\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:236:25\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:21.924Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-60205-tasks-with-debouncing-HTMX--chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Cr-60205-tasks-with-debouncing-HTMX--chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                        "column": 25,
+                        "line": 236
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-bdba8f88c98a82fdf1d2",
+              "file": "task-critical-path.spec.ts",
+              "line": 231,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Task Accessibility Tests",
+          "file": "task-critical-path.spec.ts",
+          "line": 250,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate with keyboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1878,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:25.004Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-74b5cb5086081fa917f6",
+              "file": "task-critical-path.spec.ts",
+              "line": 256,
+              "column": 3
+            },
+            {
+              "title": "should have proper ARIA labels",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1726,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:273:36",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                          "column": 36,
+                          "line": 273
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 271 |\u001b[39m     \u001b[90m// Check for skip link\u001b[39m\n \u001b[90m 272 |\u001b[39m     \u001b[36mconst\u001b[39m skipLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"Aller au contenu\")'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 273 |\u001b[39m     expect(\u001b[36mawait\u001b[39m skipLink\u001b[33m.\u001b[39mcount())\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 274 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 275 |\u001b[39m\n \u001b[90m 276 |\u001b[39m   test(\u001b[32m'should support reduced motion preference'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 36,
+                            "line": 273
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n\u001b[0m \u001b[90m 271 |\u001b[39m     \u001b[90m// Check for skip link\u001b[39m\n \u001b[90m 272 |\u001b[39m     \u001b[36mconst\u001b[39m skipLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"Aller au contenu\")'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 273 |\u001b[39m     expect(\u001b[36mawait\u001b[39m skipLink\u001b[33m.\u001b[39mcount())\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 274 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 275 |\u001b[39m\n \u001b[90m 276 |\u001b[39m   test(\u001b[32m'should support reduced motion preference'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:273:36\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:26.945Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Ac-18c18-uld-have-proper-ARIA-labels-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Ac-18c18-uld-have-proper-ARIA-labels-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                        "column": 36,
+                        "line": 273
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-a093723ca26a90f13f1b",
+              "file": "task-critical-path.spec.ts",
+              "line": 266,
+              "column": 3
+            },
+            {
+              "title": "should support reduced motion preference",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2033,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1, h2')\nExpected: visible\nError: strict mode violation: locator('h1, h2') resolved to 2 elements:\n    1) <h2 class=\"text-lg font-bold mb-4\">Filtres</h2> aka getByRole('heading', { name: 'Filtres' })\n    2) <h1 class=\"text-3xl font-bold\">Mes tâches</h1> aka getByRole('heading', { name: 'Mes tâches' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1, h2')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1, h2')\nExpected: visible\nError: strict mode violation: locator('h1, h2') resolved to 2 elements:\n    1) <h2 class=\"text-lg font-bold mb-4\">Filtres</h2> aka getByRole('heading', { name: 'Filtres' })\n    2) <h1 class=\"text-3xl font-bold\">Mes tâches</h1> aka getByRole('heading', { name: 'Mes tâches' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1, h2')\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:284:42",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                          "column": 42,
+                          "line": 284
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 282 |\u001b[39m\n \u001b[90m 283 |\u001b[39m     \u001b[90m// Verify page still functions\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1, h2'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 285 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 286 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 287 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 42,
+                            "line": 284
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1, h2')\nExpected: visible\nError: strict mode violation: locator('h1, h2') resolved to 2 elements:\n    1) <h2 class=\"text-lg font-bold mb-4\">Filtres</h2> aka getByRole('heading', { name: 'Filtres' })\n    2) <h1 class=\"text-3xl font-bold\">Mes tâches</h1> aka getByRole('heading', { name: 'Mes tâches' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1, h2')\u001b[22m\n\n\n\u001b[0m \u001b[90m 282 |\u001b[39m\n \u001b[90m 283 |\u001b[39m     \u001b[90m// Verify page still functions\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1, h2'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 285 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 286 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 287 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:284:42\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:29.443Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Ac-078a1-t-reduced-motion-preference-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Ac-078a1-t-reduced-motion-preference-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                        "column": 42,
+                        "line": 284
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-d771fc46804a61002c85",
+              "file": "task-critical-path.spec.ts",
+              "line": 276,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Task Performance Tests",
+          "file": "task-critical-path.spec.ts",
+          "line": 288,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load task list within 2 seconds",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2115,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:32.581Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-9d2383c74be5567b13fd",
+              "file": "task-critical-path.spec.ts",
+              "line": 289,
+              "column": 3
+            },
+            {
+              "title": "should handle concurrent HTMX requests",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30223,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts",
+                            "column": 16,
+                            "line": 311
+                          },
+                          "message": "Error: page.waitForTimeout: Target page, context or browser has been closed\n\n\u001b[0m \u001b[90m 309 |\u001b[39m\n \u001b[90m 310 |\u001b[39m     \u001b[90m// Wait for all requests to complete\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 311 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m1000\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 312 |\u001b[39m\n \u001b[90m 313 |\u001b[39m     \u001b[90m// Verify page is still responsive\u001b[39m\n \u001b[90m 314 |\u001b[39m     \u001b[36mconst\u001b[39m taskList \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#task-list-container, .task-list'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-critical-path.spec.ts:311:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:51:34.784Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Pe-2e110-le-concurrent-HTMX-requests-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-critical-path-Task-Pe-2e110-le-concurrent-HTMX-requests-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "933ed24d3c82d9468c43-d7373b82ba4c15d3b777",
+              "file": "task-critical-path.spec.ts",
+              "line": 300,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "task-edit.spec.ts",
+      "file": "task-edit.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Task Edit Page E2E",
+          "file": "task-edit.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to edit page from task detail",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 0,
+                      "error": {
+                        "message": "\u001b[31m\"beforeAll\" hook timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31m\"beforeAll\" hook timeout of 30000ms exceeded.\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts:17:8",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts",
+                          "column": 8,
+                          "line": 17
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 15 |\u001b[39m   \u001b[36mlet\u001b[39m taskId\u001b[33m:\u001b[39m string\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 17 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeAll(\u001b[36masync\u001b[39m ({ browser }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 18 |\u001b[39m     page \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m browser\u001b[33m.\u001b[39mnewPage()\u001b[33m;\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m login(page\u001b[33m,\u001b[39m \u001b[32m'admin@example.com'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'admin123'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 20 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts",
+                            "column": 8,
+                            "line": 17
+                          },
+                          "message": "\u001b[31m\"beforeAll\" hook timeout of 30000ms exceeded.\u001b[39m\n\n\u001b[0m \u001b[90m 15 |\u001b[39m   \u001b[36mlet\u001b[39m taskId\u001b[33m:\u001b[39m string\u001b[33m;\u001b[39m\n \u001b[90m 16 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 17 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeAll(\u001b[36masync\u001b[39m ({ browser }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 18 |\u001b[39m     page \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m browser\u001b[33m.\u001b[39mnewPage()\u001b[33m;\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m login(page\u001b[33m,\u001b[39m \u001b[32m'admin@example.com'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'admin123'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 20 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts:17:8\u001b[22m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts",
+                            "column": 16,
+                            "line": 30
+                          },
+                          "message": "Error: page.waitForURL: Target page, context or browser has been closed\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[0m \u001b[90m 28 |\u001b[39m\n \u001b[90m 29 |\u001b[39m     \u001b[90m// Wait for redirect and extract task ID from URL\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/tasks\\/[a-f0-9-]+$/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m     taskId \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39murl()\u001b[33m.\u001b[39msplit(\u001b[32m'/'\u001b[39m)\u001b[33m.\u001b[39mpop() \u001b[33m||\u001b[39m \u001b[32m''\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m     expect(taskId)\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts:30:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:05.968Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-edit-Task-Edit-Page-E-6f498--edit-page-from-task-detail-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/task-edit-Task-Edit-Page-E-6f498--edit-page-from-task-detail-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/task-edit.spec.ts",
+                        "column": 8,
+                        "line": 17
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-9e0bd46cdd4b01dda93a",
+              "file": "task-edit.spec.ts",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "should display breadcrumb navigation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.295Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-bfe7231fd4fa21c430f9",
+              "file": "task-edit.spec.ts",
+              "line": 62,
+              "column": 3
+            },
+            {
+              "title": "should pre-fill form with existing task data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-bf58272d5122e4b9ff76",
+              "file": "task-edit.spec.ts",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "should display character counters with Alpine.js",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-76f45388236e801a614e",
+              "file": "task-edit.spec.ts",
+              "line": 95,
+              "column": 3
+            },
+            {
+              "title": "should update character counter when typing (Alpine.js)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-4f091452cf2f9345378c",
+              "file": "task-edit.spec.ts",
+              "line": 109,
+              "column": 3
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-071e50370944a1f28638",
+              "file": "task-edit.spec.ts",
+              "line": 131,
+              "column": 3
+            },
+            {
+              "title": "should enforce minlength validation on title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-f458ae31dbeb2f01d8de",
+              "file": "task-edit.spec.ts",
+              "line": 149,
+              "column": 3
+            },
+            {
+              "title": "should submit form with HTMX and update page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-882d140a7f95a145005a",
+              "file": "task-edit.spec.ts",
+              "line": 168,
+              "column": 3
+            },
+            {
+              "title": "should show loading state during submission (Alpine.js)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-5d6f95a34b9ec325714b",
+              "file": "task-edit.spec.ts",
+              "line": 198,
+              "column": 3
+            },
+            {
+              "title": "should display users in assignee dropdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-94e3d0fa13c2e97849aa",
+              "file": "task-edit.spec.ts",
+              "line": 217,
+              "column": 3
+            },
+            {
+              "title": "should handle due date selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-2f49b44063f200b6e25b",
+              "file": "task-edit.spec.ts",
+              "line": 231,
+              "column": 3
+            },
+            {
+              "title": "should display delete button with confirmation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-ed8f7acc9c780e7c3d32",
+              "file": "task-edit.spec.ts",
+              "line": 249,
+              "column": 3
+            },
+            {
+              "title": "should confirm before deleting task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-3507eef85b0833704b06",
+              "file": "task-edit.spec.ts",
+              "line": 260,
+              "column": 3
+            },
+            {
+              "title": "should have cancel button that returns to detail page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-10eccc8e106b6b335eb6",
+              "file": "task-edit.spec.ts",
+              "line": 286,
+              "column": 3
+            },
+            {
+              "title": "should switch language and verify i18n translations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-23140dfab6d2769f22e5",
+              "file": "task-edit.spec.ts",
+              "line": 302,
+              "column": 3
+            },
+            {
+              "title": "should display status options with emojis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-b53adad6fc4a5fa8c439",
+              "file": "task-edit.spec.ts",
+              "line": 333,
+              "column": 3
+            },
+            {
+              "title": "should display priority options with colored emojis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.298Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-39ece145ee01ad304c57",
+              "file": "task-edit.spec.ts",
+              "line": 346,
+              "column": 3
+            },
+            {
+              "title": "should have glassmorphism styling applied",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-76a530112a67e5a937f7",
+              "file": "task-edit.spec.ts",
+              "line": 359,
+              "column": 3
+            },
+            {
+              "title": "should be responsive on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-39982386919b3625733f",
+              "file": "task-edit.spec.ts",
+              "line": 371,
+              "column": 3
+            },
+            {
+              "title": "should display info card with help text",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-611de8351b8d969d5981",
+              "file": "task-edit.spec.ts",
+              "line": 391,
+              "column": 3
+            },
+            {
+              "title": "should handle form with invalid data gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:36.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9868b9f1573ee3cae04f-af92efa9ec87ab06951e",
+              "file": "task-edit.spec.ts",
+              "line": 399,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "user-journey.spec.ts",
+      "file": "user-journey.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Complete User Journey",
+          "file": "user-journey.spec.ts",
+          "line": 29,
+          "column": 6,
+          "specs": [
+            {
+              "title": "1. Should load home page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 359,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:37.228Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-5adfba9d36b4faf79eca",
+              "file": "user-journey.spec.ts",
+              "line": 40,
+              "column": 3
+            },
+            {
+              "title": "2. Should register new user",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30080,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 16,
+                            "line": 60
+                          },
+                          "message": "Error: page.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"firstName\"]')\u001b[22m\n\n\n\u001b[0m \u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"password\"]'\u001b[39m\u001b[33m,\u001b[39m testUser\u001b[33m.\u001b[39mpassword)\u001b[33m;\u001b[39m\n \u001b[90m 59 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"confirmPassword\"]'\u001b[39m\u001b[33m,\u001b[39m testUser\u001b[33m.\u001b[39mpassword)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 60 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"firstName\"]'\u001b[39m\u001b[33m,\u001b[39m testUser\u001b[33m.\u001b[39mfirstName)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 61 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"lastName\"]'\u001b[39m\u001b[33m,\u001b[39m testUser\u001b[33m.\u001b[39mlastName)\u001b[33m;\u001b[39m\n \u001b[90m 62 |\u001b[39m\n \u001b[90m 63 |\u001b[39m     \u001b[90m// Submit form\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:60:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:52:37.803Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-1d167--2-Should-register-new-user-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-1d167--2-Should-register-new-user-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-7860f23f6582aadb2822",
+              "file": "user-journey.spec.ts",
+              "line": 53,
+              "column": 3
+            },
+            {
+              "title": "3. Should login with credentials",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5642,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 5000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 5000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:85:16",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 16,
+                          "line": 85
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 83 |\u001b[39m\n \u001b[90m 84 |\u001b[39m     \u001b[90m// Wait for redirect to dashboard\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 85 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/dashboard/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m     \u001b[90m// Verify we're on dashboard\u001b[39m\n \u001b[90m 88 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/dashboard/\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 16,
+                            "line": 85
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 5000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n\u001b[0m \u001b[90m 83 |\u001b[39m\n \u001b[90m 84 |\u001b[39m     \u001b[90m// Wait for redirect to dashboard\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 85 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/dashboard/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m     \u001b[90m// Verify we're on dashboard\u001b[39m\n \u001b[90m 88 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/\\/dashboard/\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:85:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:53:09.004Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-3e304-ould-login-with-credentials-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-3e304-ould-login-with-credentials-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 16,
+                        "line": 85
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-b7b371c17b49105d78c9",
+              "file": "user-journey.spec.ts",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "4. Should display dashboard with stats",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 468,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:101:37",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 37,
+                          "line": 101
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  99 |\u001b[39m     \u001b[90m// Check for stat cards\u001b[39m\n \u001b[90m 100 |\u001b[39m     \u001b[36mconst\u001b[39m statCards \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'.stat-card, [class*=\"stat\"]'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 101 |\u001b[39m     expect(\u001b[36mawait\u001b[39m statCards\u001b[33m.\u001b[39mcount())\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 102 |\u001b[39m\n \u001b[90m 103 |\u001b[39m     \u001b[90m// Check for tasks section\u001b[39m\n \u001b[90m 104 |\u001b[39m     \u001b[36mconst\u001b[39m tasksSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m':has-text(\"Tasks\"), :has-text(\"Tâches\")'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 37,
+                            "line": 101
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n\u001b[0m \u001b[90m  99 |\u001b[39m     \u001b[90m// Check for stat cards\u001b[39m\n \u001b[90m 100 |\u001b[39m     \u001b[36mconst\u001b[39m statCards \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'.stat-card, [class*=\"stat\"]'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 101 |\u001b[39m     expect(\u001b[36mawait\u001b[39m statCards\u001b[33m.\u001b[39mcount())\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 102 |\u001b[39m\n \u001b[90m 103 |\u001b[39m     \u001b[90m// Check for tasks section\u001b[39m\n \u001b[90m 104 |\u001b[39m     \u001b[36mconst\u001b[39m tasksSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m':has-text(\"Tasks\"), :has-text(\"Tâches\")'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:101:37\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:53:16.019Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-1dd32-isplay-dashboard-with-stats-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-1dd32-isplay-dashboard-with-stats-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 37,
+                        "line": 101
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-8bf48e15aa6fa7d8878e",
+              "file": "user-journey.spec.ts",
+              "line": 95,
+              "column": 3
+            },
+            {
+              "title": "5. Should navigate to tasks list",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5394,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected: \u001b[32m\"http://localhost:3000/\u001b[7mtasks\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"http://localhost:3000/\u001b[7mauth/login\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"http://localhost:3000/auth/login\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected: \u001b[32m\"http://localhost:3000/\u001b[7mtasks\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"http://localhost:3000/\u001b[7mauth/login\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"http://localhost:3000/auth/login\"\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:112:24",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 24,
+                          "line": 112
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 110 |\u001b[39m\n \u001b[90m 111 |\u001b[39m     \u001b[90m// Verify URL\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[32m`${BASE_URL}/tasks`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m\n \u001b[90m 114 |\u001b[39m     \u001b[90m// Check page header\u001b[39m\n \u001b[90m 115 |\u001b[39m     \u001b[36mconst\u001b[39m header \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 24,
+                            "line": 112
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected: \u001b[32m\"http://localhost:3000/\u001b[7mtasks\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"http://localhost:3000/\u001b[7mauth/login\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"http://localhost:3000/auth/login\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 110 |\u001b[39m\n \u001b[90m 111 |\u001b[39m     \u001b[90m// Verify URL\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[32m`${BASE_URL}/tasks`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m\n \u001b[90m 114 |\u001b[39m     \u001b[90m// Check page header\u001b[39m\n \u001b[90m 115 |\u001b[39m     \u001b[36mconst\u001b[39m header \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:112:24\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:53:17.860Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-183e9-ould-navigate-to-tasks-list-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-183e9-ould-navigate-to-tasks-list-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 24,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-a77017731fb1d8f73c9d",
+              "file": "user-journey.spec.ts",
+              "line": 108,
+              "column": 3
+            },
+            {
+              "title": "6. Should create a new task",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30110,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 16,
+                            "line": 129
+                          },
+                          "message": "Error: page.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"title\"]')\u001b[22m\n\n\n\u001b[0m \u001b[90m 127 |\u001b[39m\n \u001b[90m 128 |\u001b[39m     \u001b[90m// Fill task creation form\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 129 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[name=\"title\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'E2E Test Task'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 130 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'textarea[name=\"description\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'This is a test task created by E2E tests'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 131 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mselectOption(\u001b[32m'select[name=\"status\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'TODO'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 132 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mselectOption(\u001b[32m'select[name=\"priority\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'HIGH'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:129:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:53:24.979Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-cdc4d--6-Should-create-a-new-task-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-cdc4d--6-Should-create-a-new-task-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-31d2ba38a97f3a79a82e",
+              "file": "user-journey.spec.ts",
+              "line": 125,
+              "column": 3
+            },
+            {
+              "title": "7. Should view task details",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30117,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 20,
+                            "line": 161
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('a:has-text(\"E2E Test Task\")').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 159 |\u001b[39m     \u001b[90m// Find and click on our test task\u001b[39m\n \u001b[90m 160 |\u001b[39m     \u001b[36mconst\u001b[39m taskLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"E2E Test Task\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 161 |\u001b[39m     \u001b[36mawait\u001b[39m taskLink\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 162 |\u001b[39m\n \u001b[90m 163 |\u001b[39m     \u001b[90m// Wait for navigation\u001b[39m\n \u001b[90m 164 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/tasks\\/[a-f0-9-]+$/\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:161:20\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:53:56.406Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-3b07d--7-Should-view-task-details-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-3b07d--7-Should-view-task-details-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-0f22a6f46685a8bfd6a8",
+              "file": "user-journey.spec.ts",
+              "line": 155,
+              "column": 3
+            },
+            {
+              "title": "8. Should edit task",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30088,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 20,
+                            "line": 185
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('a:has-text(\"E2E Test Task\")').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 183 |\u001b[39m     \u001b[90m// Click on test task\u001b[39m\n \u001b[90m 184 |\u001b[39m     \u001b[36mconst\u001b[39m taskLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"E2E Test Task\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 185 |\u001b[39m     \u001b[36mawait\u001b[39m taskLink\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 186 |\u001b[39m\n \u001b[90m 187 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/tasks\\/[a-f0-9-]+$/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 188 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:185:20\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:54:27.865Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-8-Should-edit-task-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-8-Should-edit-task-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-c4f626a0438da1f70fbc",
+              "file": "user-journey.spec.ts",
+              "line": 179,
+              "column": 3
+            },
+            {
+              "title": "9. Should filter tasks by status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 161,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:54:59.377Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-1f5a94dd60c7b2301d50",
+              "file": "user-journey.spec.ts",
+              "line": 216,
+              "column": 3
+            },
+            {
+              "title": "10. Should search for tasks",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 134,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:54:59.813Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-a494e3a7c10624a598f1",
+              "file": "user-journey.spec.ts",
+              "line": 235,
+              "column": 3
+            },
+            {
+              "title": "11. Should complete task",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30055,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 20,
+                            "line": 258
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('a:has-text(\"E2E Test Task - Updated\")').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 256 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/tasks`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 257 |\u001b[39m     \u001b[36mconst\u001b[39m taskLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"E2E Test Task - Updated\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 258 |\u001b[39m     \u001b[36mawait\u001b[39m taskLink\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 259 |\u001b[39m\n \u001b[90m 260 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/tasks\\/[a-f0-9-]+$/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 261 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:258:20\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:54:59.980Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-11-Should-complete-task-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-11-Should-complete-task-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-9dc7e4c2319c121177ed",
+              "file": "user-journey.spec.ts",
+              "line": 254,
+              "column": 3
+            },
+            {
+              "title": "12. Should delete task",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30088,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 20,
+                            "line": 286
+                          },
+                          "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('a:has-text(\"E2E Test Task\")').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 284 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m`${BASE_URL}/tasks`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 285 |\u001b[39m     \u001b[36mconst\u001b[39m taskLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a:has-text(\"E2E Test Task\")'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 286 |\u001b[39m     \u001b[36mawait\u001b[39m taskLink\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 287 |\u001b[39m\n \u001b[90m 288 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/tasks\\/[a-f0-9-]+$/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 289 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:286:20\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:55:31.068Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-12-Should-delete-task-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-Journey-12-Should-delete-task-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-2b4b79bdf6a2ff471180",
+              "file": "user-journey.spec.ts",
+              "line": 282,
+              "column": 3
+            },
+            {
+              "title": "13. Should view user profile",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 290,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"testuser1762642562480@example.com\"\u001b[39m\nReceived string:    \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"testuser1762642562480@example.com\"\u001b[39m\nReceived string:    \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:327:25",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 25,
+                          "line": 327
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 325 |\u001b[39m     \u001b[90m// Verify user info is displayed\u001b[39m\n \u001b[90m 326 |\u001b[39m     \u001b[36mconst\u001b[39m pageContent \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 327 |\u001b[39m     expect(pageContent)\u001b[33m.\u001b[39mtoContain(testUser\u001b[33m.\u001b[39memail)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 328 |\u001b[39m     expect(pageContent)\u001b[33m.\u001b[39mtoContain(testUser\u001b[33m.\u001b[39mfirstName)\u001b[33m;\u001b[39m\n \u001b[90m 329 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 330 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 25,
+                            "line": 327
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"testuser1762642562480@example.com\"\u001b[39m\nReceived string:    \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m\n\n\u001b[0m \u001b[90m 325 |\u001b[39m     \u001b[90m// Verify user info is displayed\u001b[39m\n \u001b[90m 326 |\u001b[39m     \u001b[36mconst\u001b[39m pageContent \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 327 |\u001b[39m     expect(pageContent)\u001b[33m.\u001b[39mtoContain(testUser\u001b[33m.\u001b[39memail)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 328 |\u001b[39m     expect(pageContent)\u001b[33m.\u001b[39mtoContain(testUser\u001b[33m.\u001b[39mfirstName)\u001b[33m;\u001b[39m\n \u001b[90m 329 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 330 |\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:327:25\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:56:02.507Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-41564-13-Should-view-user-profile-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-41564-13-Should-view-user-profile-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 25,
+                        "line": 327
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-189703278fc8f4207839",
+              "file": "user-journey.spec.ts",
+              "line": 319,
+              "column": 3
+            },
+            {
+              "title": "14. Should access settings page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5289,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('body')\nExpected pattern: \u001b[32m/theme|thème|language|langue/i\u001b[39m\nReceived string:  \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('body')\u001b[22m\n\u001b[2m    9 × locator resolved to <body>…</body>\u001b[22m\n\u001b[2m      - unexpected value \"{\"success\":false,\"error\":\"Too many requests from this IP, please try again later\"}\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('body')\nExpected pattern: \u001b[32m/theme|thème|language|langue/i\u001b[39m\nReceived string:  \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('body')\u001b[22m\n\u001b[2m    9 × locator resolved to <body>…</body>\u001b[22m\n\u001b[2m      - unexpected value \"{\"success\":false,\"error\":\"Too many requests from this IP, please try again later\"}\"\u001b[22m\n\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:339:35",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 35,
+                          "line": 339
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 337 |\u001b[39m     \u001b[90m// Check for settings options\u001b[39m\n \u001b[90m 338 |\u001b[39m     \u001b[36mconst\u001b[39m settingsContent \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 339 |\u001b[39m     \u001b[36mawait\u001b[39m expect(settingsContent)\u001b[33m.\u001b[39mtoContainText(\u001b[35m/theme|thème|language|langue/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 340 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 341 |\u001b[39m\n \u001b[90m 342 |\u001b[39m   test(\u001b[32m'15. Should switch theme'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 35,
+                            "line": 339
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('body')\nExpected pattern: \u001b[32m/theme|thème|language|langue/i\u001b[39m\nReceived string:  \u001b[31m\"{\\\"success\\\":false,\\\"error\\\":\\\"Too many requests from this IP, please try again later\\\"}\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('body')\u001b[22m\n\u001b[2m    9 × locator resolved to <body>…</body>\u001b[22m\n\u001b[2m      - unexpected value \"{\"success\":false,\"error\":\"Too many requests from this IP, please try again later\"}\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 337 |\u001b[39m     \u001b[90m// Check for settings options\u001b[39m\n \u001b[90m 338 |\u001b[39m     \u001b[36mconst\u001b[39m settingsContent \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 339 |\u001b[39m     \u001b[36mawait\u001b[39m expect(settingsContent)\u001b[33m.\u001b[39mtoContainText(\u001b[35m/theme|thème|language|langue/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 340 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 341 |\u001b[39m\n \u001b[90m 342 |\u001b[39m   test(\u001b[32m'15. Should switch theme'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:339:35\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:56:04.312Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-22643-Should-access-settings-page-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-22643-Should-access-settings-page-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 35,
+                        "line": 339
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-6df03ef194ec6f0e9bf0",
+              "file": "user-journey.spec.ts",
+              "line": 331,
+              "column": 3
+            },
+            {
+              "title": "15. Should switch theme",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:56:10.863Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-8e130bfd6009a8a63a2b",
+              "file": "user-journey.spec.ts",
+              "line": 342,
+              "column": 3
+            },
+            {
+              "title": "16. Should logout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 96,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:56:11.286Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-389e792b18875beabc54",
+              "file": "user-journey.spec.ts",
+              "line": 369,
+              "column": 3
+            },
+            {
+              "title": "17. Should show 404 for non-existent page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 127,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m429\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m429\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:405:32",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                          "column": 32,
+                          "line": 405
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 403 |\u001b[39m\n \u001b[90m 404 |\u001b[39m     \u001b[90m// Check 404 status\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 405 |\u001b[39m     expect(response\u001b[33m?\u001b[39m\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 406 |\u001b[39m\n \u001b[90m 407 |\u001b[39m     \u001b[90m// Check 404 page content\u001b[39m\n \u001b[90m 408 |\u001b[39m     \u001b[36mconst\u001b[39m pageContent \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                            "column": 32,
+                            "line": 405
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m429\u001b[39m\n\n\u001b[0m \u001b[90m 403 |\u001b[39m\n \u001b[90m 404 |\u001b[39m     \u001b[90m// Check 404 status\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 405 |\u001b[39m     expect(response\u001b[33m?\u001b[39m\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 406 |\u001b[39m\n \u001b[90m 407 |\u001b[39m     \u001b[90m// Check 404 page content\u001b[39m\n \u001b[90m 408 |\u001b[39m     \u001b[36mconst\u001b[39m pageContent \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'body'\u001b[39m)\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts:405:32\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:56:11.402Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-f0587-w-404-for-non-existent-page-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/user-journey-Complete-User-f0587-w-404-for-non-existent-page-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/user-journey.spec.ts",
+                        "column": 32,
+                        "line": 405
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "71a1cccb6623f87e1233-fcd761c0a00d7e64b8e3",
+              "file": "user-journey.spec.ts",
+              "line": 401,
               "column": 3
             }
           ]
@@ -225,11 +2857,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-01T19:17:46.014Z",
-    "duration": 2362.0099999999998,
-    "expected": 1,
-    "skipped": 0,
-    "unexpected": 0,
+    "startTime": "2025-11-08T22:50:46.166Z",
+    "duration": 325551.81699999794,
+    "expected": 16,
+    "skipped": 20,
+    "unexpected": 19,
     "flaky": 0
   }
 }

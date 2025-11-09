@@ -457,7 +457,6 @@ describe('User Entity', () => {
         name: 'Test User',
         role: UserRole.ADMIN,
         isActive: true,
-        avatar: null,
         locale: 'fr',
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
