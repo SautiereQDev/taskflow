@@ -530,6 +530,45 @@
     border-color: rgba(0, 0, 0, 0.5);
   }
 
+  /* Improved input, select, and textarea visibility for both light and dark modes */
+  .input,
+  .select,
+  .textarea {
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .input:hover,
+  .select:hover,
+  .textarea:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .input:focus,
+  .select:focus,
+  .textarea:focus {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Dark theme improvements for inputs */
+  [data-theme="dark"] .input,
+  [data-theme="dark"] .select,
+  [data-theme="dark"] .textarea {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  [data-theme="dark"] .input:hover,
+  [data-theme="dark"] .select:hover,
+  [data-theme="dark"] .textarea:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  [data-theme="dark"] .input:focus,
+  [data-theme="dark"] .select:focus,
+  [data-theme="dark"] .textarea:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
   /* Dark theme improvements for radio buttons */
   [data-theme="dark"] .radio {
     border-color: rgba(255, 255, 255, 0.4);
