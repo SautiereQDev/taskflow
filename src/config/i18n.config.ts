@@ -76,14 +76,17 @@ export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
  */
 export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunction): void {
   const t = (req as { t: (key: string) => string }).t;
+  const i18n = (req as { i18n?: { language: string } }).i18n;
 
-  // Ensure language is detected, fallback to 'fr' if not set
-  const detectedLang =
+  // Get the actual language being used by i18next
+  let detectedLang =
+    i18n?.language ??
     (req as { language?: string; lng?: string }).language ??
     (req as { language?: string; lng?: string }).lng;
 
   if (!detectedLang) {
     // Force French as default if no language detected
+    detectedLang = 'fr';
     (req as { language?: string }).language = 'fr';
     // Re-initialize i18next for this request
     void i18next.changeLanguage('fr');
@@ -98,7 +101,7 @@ export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunc
     res.locals.t = (key: string) => key;
     res.locals.__ = (key: string) => key;
   }
-  res.locals.locale = detectedLang ?? 'fr';
+  res.locals.locale = detectedLang;
   next();
 }
 
