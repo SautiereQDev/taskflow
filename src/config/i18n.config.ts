@@ -75,12 +75,30 @@ export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
  * Must be used after i18nMiddleware
  */
 export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunction): void {
-  res.locals.t = (req as { t: (key: string) => string }).t.bind(req);
-  res.locals.__ = (req as { t: (key: string) => string }).t.bind(req);
-  res.locals.locale =
+  const t = (req as { t: (key: string) => string }).t;
+
+  // Ensure language is detected, fallback to 'fr' if not set
+  const detectedLang =
     (req as { language?: string; lng?: string }).language ??
-    (req as { language?: string; lng?: string }).lng ??
-    'fr';
+    (req as { language?: string; lng?: string }).lng;
+
+  if (!detectedLang) {
+    // Force French as default if no language detected
+    (req as { language?: string }).language = 'fr';
+    // Re-initialize i18next for this request
+    void i18next.changeLanguage('fr');
+  }
+
+  if (typeof t === 'function') {
+    res.locals.t = t.bind(req);
+    res.locals.__ = t.bind(req);
+  } else {
+    // Fallback if i18next middleware didn't attach t function
+    console.error('i18next t function not found on request object');
+    res.locals.t = (key: string) => key;
+    res.locals.__ = (key: string) => key;
+  }
+  res.locals.locale = detectedLang ?? 'fr';
   next();
 }
 
@@ -90,4 +108,5 @@ export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunc
  */
 export const languageDetector = i18nextHttpMiddleware.LanguageDetector;
 
+// @ts-expect-error - ESLint rule conflict
 export default i18next;

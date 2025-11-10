@@ -400,5 +400,35 @@
       "title": "No commits found",
       "description": "Git history is not available or the repository is empty."
     }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have a question? A suggestion? Feel free to reach out",
+    "email": {
+      "title": "Email"
+    },
+    "support": {
+      "title": "Support",
+      "faq": "View FAQ"
+    },
+    "github": {
+      "title": "GitHub",
+      "repository": "View Repository"
+    },
+    "form": {
+      "title": "Send us a message",
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send",
+      "comingSoon": "The contact form will be available soon. For now, please contact us by email."
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "faq": "FAQ",
+      "about": "About",
+      "changelog": "Changelog"
+    }
   }
 }

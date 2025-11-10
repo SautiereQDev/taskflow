@@ -2441,6 +2441,10 @@ video {
     width: var(--size);
     height: var(--size);
   }
+
+  .btn-block {
+    width: 100%;
+  }
 }
 
 @layer daisyui.component {
@@ -5449,6 +5453,10 @@ svg:not([stroke-width]) {
   margin-bottom: 0.25rem;
 }
 
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -5469,12 +5477,20 @@ svg:not([stroke-width]) {
   margin-bottom: 2rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .ml-4 {
   margin-left: 1rem;
 }
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
 }
 
 .mt-1 {
@@ -5507,18 +5523,6 @@ svg:not([stroke-width]) {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
 }
 
 .block {
@@ -6036,6 +6040,10 @@ svg:not([stroke-width]) {
   stroke: currentColor;
 }
 
+.p-12 {
+  padding: 3rem;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -6056,13 +6064,14 @@ svg:not([stroke-width]) {
   padding: 2rem;
 }
 
-.p-12 {
-  padding: 3rem;
-}
-
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-3 {
@@ -6080,9 +6089,19 @@ svg:not([stroke-width]) {
   padding-right: 1.5rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .py-2 {
@@ -6103,21 +6122,6 @@ svg:not([stroke-width]) {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .pl-12 {
@@ -6240,12 +6244,12 @@ svg:not([stroke-width]) {
   font-style: italic;
 }
 
-.leading-tight {
-  line-height: 1.25;
-}
-
 .leading-relaxed {
   line-height: 1.625;
+}
+
+.leading-tight {
+  line-height: 1.25;
 }
 
 .tracking-wide {

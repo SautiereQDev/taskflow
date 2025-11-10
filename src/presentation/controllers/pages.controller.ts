@@ -77,7 +77,11 @@ export class PagesController {
   /**
    * Show Contact page (placeholder - redirect to FAQ for now)
    */
-  getContact(_req: Request, res: Response): void {
-    res.redirect('/faq');
+  getContact(req: Request, res: Response): void {
+    res.render('pages/contact', {
+      title: 'Contact - TaskFlow',
+      user: (req as { user?: unknown }).user,
+      locale: req.session.locale ?? 'fr',
+    });
   }
 }

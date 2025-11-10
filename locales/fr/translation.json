@@ -449,5 +449,35 @@
       "title": "Aucun commit trouvé",
       "description": "L'historique Git n'est pas disponible ou le dépôt est vide."
     }
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question ? Une suggestion ? N'hésitez pas à nous contacter",
+    "email": {
+      "title": "Email"
+    },
+    "support": {
+      "title": "Support",
+      "faq": "Consulter la FAQ"
+    },
+    "github": {
+      "title": "GitHub",
+      "repository": "Voir le dépôt"
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Message",
+      "send": "Envoyer",
+      "comingSoon": "Le formulaire de contact sera disponible prochainement. Pour l'instant, veuillez nous contacter par email."
+    },
+    "quickLinks": {
+      "title": "Liens rapides",
+      "faq": "FAQ",
+      "about": "À propos",
+      "changelog": "Changelog"
+    }
   }
 }
