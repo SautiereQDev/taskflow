@@ -273,6 +273,133 @@
           "completion": "Completion Rate"
         }
       }
+    },
+    "about": {
+      "tagline": "Modern collaborative task management",
+      "whatIs": "What is TaskFlow?",
+      "description": "TaskFlow is a modern task management application designed for teams seeking simplicity and efficiency. Manage your projects, track your tasks, and collaborate with your team in real-time.",
+      "mission": "Our mission is to make task management intuitive and accessible to everyone, without compromising on the advanced features that professional teams need.",
+      "features": {
+        "simple": {
+          "title": "Simple and Intuitive",
+          "description": "Clean interface and easy to use. Focus on your tasks, not on the tool."
+        },
+        "collaborative": {
+          "title": "Collaborative",
+          "description": "Work as a team with task assignment, comments, and notifications."
+        },
+        "analytics": {
+          "title": "Tracking and Analytics",
+          "description": "Visualize your performance with dashboards and detailed statistics."
+        },
+        "secure": {
+          "title": "Secure",
+          "description": "Your data is protected with modern security standards."
+        }
+      },
+      "technology": {
+        "title": "Technology",
+        "description": "TaskFlow is built with the most modern web technologies to ensure performance and reliability."
+      },
+      "getStarted": "Get Started Now"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions quickly",
+      "questions": {
+        "whatIs": {
+          "question": "What is TaskFlow?",
+          "answer": "TaskFlow is a collaborative task management web application. It allows you to create, organize, and track tasks as a team with prioritization, filtering, and reporting features."
+        },
+        "howToCreate": {
+          "question": "How do I create a new task?",
+          "answer": "Click the '+ New Task' button from the dashboard or tasks page. Fill in the title, description, priority, and due date, then save."
+        },
+        "priorities": {
+          "question": "What are the different priorities available?",
+          "answer": "There are 4 priority levels: Low (LOW), Medium (MEDIUM), High (HIGH), and Urgent (URGENT). Use them to organize your work by importance."
+        },
+        "statuses": {
+          "question": "What are the possible statuses of a task?",
+          "answer": "A task can have 4 statuses: To Do (TODO), In Progress (IN_PROGRESS), Done (DONE), or Cancelled (CANCELLED). These statuses allow you to track the progress of your projects."
+        },
+        "assignTask": {
+          "question": "How do I assign a task to someone?",
+          "answer": "When creating or editing a task, select a team member in the 'Assigned to' field. Only registered users can be assigned."
+        },
+        "dashboard": {
+          "question": "What is the dashboard for?",
+          "answer": "The dashboard provides an overview of your tasks: statistics, overdue tasks, urgent tasks, upcoming tasks, and team workload distribution."
+        },
+        "filters": {
+          "question": "How do I use filters?",
+          "answer": "In the tasks page, use filters by status, priority, and assignee to refine your view. You can also use the search bar to find specific tasks."
+        },
+        "multiLanguage": {
+          "question": "Is TaskFlow available in multiple languages?",
+          "answer": "Yes, TaskFlow is available in French and English. You can change the language from your settings or via the selector in the header."
+        },
+        "deleteTask": {
+          "question": "Can I delete a task?",
+          "answer": "Currently, it is not possible to permanently delete a task. However, you can mark it as 'Cancelled' to remove it from your active views."
+        },
+        "security": {
+          "question": "Is my data secure?",
+          "answer": "Yes, TaskFlow uses standard security practices: passwords hashed with bcrypt, secure sessions, CSRF protection, and HTTPS connection (in production)."
+        }
+      },
+      "stillHaveQuestions": "Still have questions?",
+      "contactUs": "Feel free to contact us for any additional inquiries.",
+      "contactButton": "Contact Us"
+    },
+    "licenses": {
+      "title": "License",
+      "subtitle": "TaskFlow is distributed under Apache License 2.0",
+      "overview": {
+        "title": "About the License",
+        "description": "TaskFlow is open-source software distributed under Apache License 2.0. This permissive license allows you to freely use, modify, and distribute the software, including for commercial purposes.",
+        "readFull": "Read Full License"
+      },
+      "permissions": {
+        "title": "Permissions",
+        "commercial": "Commercial use allowed",
+        "modify": "Code modification allowed",
+        "distribute": "Distribution allowed",
+        "sublicense": "Sublicensing allowed",
+        "private": "Private use allowed"
+      },
+      "conditions": {
+        "title": "Conditions",
+        "include": "Include a copy of the license and copyright",
+        "stateChanges": "Document changes made"
+      },
+      "limitations": {
+        "title": "Limitations",
+        "liability": "No liability warranty",
+        "warranty": "No warranty"
+      },
+      "patent": {
+        "title": "Patent Protection",
+        "description": "Apache License 2.0 includes a patent protection clause, guaranteeing you the right to use contributors' patents without risk of litigation."
+      },
+      "summary": {
+        "title": "In Summary",
+        "description": "You can freely use TaskFlow for your personal or professional projects. If you redistribute the code, include the license and indicate your modifications."
+      }
+    },
+    "changelog": {
+      "title": "Changelog",
+      "subtitle": "Project modification history",
+      "stats": {
+        "totalCommits": "Total Commits",
+        "features": "Features",
+        "fixes": "Fixes",
+        "contributors": "Contributors"
+      },
+      "empty": {
+        "title": "No commits found",
+        "description": "Git history is not available or the repository is empty."
+      }
     }
   }
 }

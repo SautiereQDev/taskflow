@@ -1,0 +1,101 @@
+<div class="container mx-auto px-4 py-12 max-w-5xl">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold tf-text-primary mb-4"><%= __('changelog.title') %></h1>
+    <p class="text-xl tf-text-muted"><%= __('changelog.subtitle') %></p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-4 text-center">
+      <div class="text-3xl font-bold text-primary"><%= commits.length %></div>
+      <div class="text-sm tf-text-muted"><%= __('changelog.stats.totalCommits') %></div>
+    </div>
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-4 text-center">
+      <div class="text-3xl font-bold text-success"><%= groupedCommits.get('feat')?.length || 0 %></div>
+      <div class="text-sm tf-text-muted"><%= __('changelog.stats.features') %></div>
+    </div>
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-4 text-center">
+      <div class="text-3xl font-bold text-error"><%= groupedCommits.get('fix')?.length || 0 %></div>
+      <div class="text-sm tf-text-muted"><%= __('changelog.stats.fixes') %></div>
+    </div>
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-xl p-4 text-center">
+      <div class="text-3xl font-bold text-info"><%= authors.size %></div>
+      <div class="text-sm tf-text-muted"><%= __('changelog.stats.contributors') %></div>
+    </div>
+  </div>
+
+  <!-- Commits by Type -->
+  <div class="space-y-6">
+    <%
+    // Sort types: feat, fix, then others
+    const sortOrder = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert', 'other'];
+    const sortedTypes = Array.from(groupedCommits.keys()).sort((a, b) => {
+      const indexA = sortOrder.indexOf(a);
+      const indexB = sortOrder.indexOf(b);
+      return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+    });
+
+    for (const type of sortedTypes) {
+      const typeCommits = groupedCommits.get(type);
+      if (!typeCommits || typeCommits.length === 0) continue;
+      const typeInfo = typeLabels.get(type);
+    %>
+    <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6">
+      <!-- Type Header -->
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl"><%= typeInfo.icon %></span>
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold tf-text-primary"><%= typeInfo.label %></h2>
+          <p class="text-sm tf-text-muted"><%= typeCommits.length %> <%= typeCommits.length === 1 ? 'commit' : 'commits' %></p>
+        </div>
+        <span class="badge <%= typeInfo.color %> badge-lg"><%= type %></span>
+      </div>
+
+      <!-- Commits List -->
+      <div class="space-y-3">
+        <% for (const commit of typeCommits) { %>
+        <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-base-300/50 transition-colors">
+          <div class="flex-shrink-0">
+            <code class="text-xs font-mono bg-base-300 px-2 py-1 rounded"><%= commit.shortHash %></code>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start gap-2">
+              <% if (commit.scope) { %>
+              <span class="badge badge-sm badge-outline flex-shrink-0"><%= commit.scope %></span>
+              <% } %>
+              <p class="tf-text-secondary flex-1"><%= commit.description || commit.message %></p>
+            </div>
+            <div class="flex items-center gap-3 mt-1 text-xs tf-text-muted">
+              <span class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <%= commit.author %>
+              </span>
+              <span class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <%= new Date(commit.date).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) %>
+              </span>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- Empty State -->
+  <% if (commits.length === 0) { %>
+  <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-12 text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto tf-text-muted mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <h2 class="text-2xl font-bold tf-text-primary mb-2"><%= __('changelog.empty.title') %></h2>
+    <p class="tf-text-muted"><%= __('changelog.empty.description') %></p>
+  </div>
+  <% } %>
+</div>

@@ -13,6 +13,7 @@ import taskRoutes from './task.routes.js';
 import userRoutes from './user.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
 import adminRoutes from './admin.routes.js';
+import pagesRoutes from './pages.routes.js';
 import { DiagnosticController } from '../controllers/DiagnosticController.js';
 import { attachUser } from '../middleware/authentication.middleware.js';
 
@@ -45,6 +46,7 @@ router.use('/tasks', taskRoutes);
 router.use('/dashboard', dashboardRoutes);
 router.use('/users', adminRoutes);
 router.use('/', userRoutes); // Profile and settings at root level
+router.use('/', pagesRoutes); // Static pages
 
 /**
  * Health check endpoint (public)
