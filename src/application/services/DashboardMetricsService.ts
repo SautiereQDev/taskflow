@@ -13,8 +13,6 @@ export interface IDashboardMetrics {
   tasksByPriority: Record<string, number>;
   completionRate: number;
   overdueTasks: number;
-  tasksCreatedThisWeek: number;
-  tasksCompletedThisWeek: number;
   activeUsers: number;
 }
 
@@ -102,16 +100,6 @@ export class DashboardMetricsService {
         task.status !== TaskStatus.CANCELLED
     ).length;
 
-    // Calculate tasks created/completed this week
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-    const tasksCreatedThisWeek = allTasks.filter((task) => task.createdAt >= oneWeekAgo).length;
-
-    const tasksCompletedThisWeek = allTasks.filter(
-      (task) => task.completedAt && task.completedAt >= oneWeekAgo
-    ).length;
-
     // Get active users count
     const allUsers = await this.userRepository.findAll();
     const activeUsers = allUsers.length;
@@ -122,8 +110,6 @@ export class DashboardMetricsService {
       tasksByPriority,
       completionRate,
       overdueTasks,
-      tasksCreatedThisWeek,
-      tasksCompletedThisWeek,
       activeUsers,
     };
   }

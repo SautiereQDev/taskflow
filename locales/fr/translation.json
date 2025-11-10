@@ -195,14 +195,7 @@
       "subtitle": "Taux de complétion basé sur l'ensemble des tâches",
       "completion": "Terminé",
       "completionRate": "Taux de complétion",
-      "createdThisWeek": "Créées (7 derniers jours)",
-      "completedThisWeek": "Terminées (7 derniers jours)",
-      "activeUsers": "Membres actifs",
-      "newTasks": "Nouvelles tâches",
-      "completedTasks": "Tâches terminées",
-      "netVelocity": "Vélocité nette cette semaine",
-      "backlogDecreasing": "Excellent ! Le backlog diminue.",
-      "backlogIncreasing": "Attention : Le backlog augmente."
+      "activeUsers": "Membres actifs"
     },
     "alerts": {
       "title": "Points d'attention",

@@ -193,8 +193,6 @@ export class DashboardController {
 
     const insights = {
       overdueTasks: metrics.overdueTasks,
-      createdThisWeek: metrics.tasksCreatedThisWeek,
-      completedThisWeek: metrics.tasksCompletedThisWeek,
       activeUsers: metrics.activeUsers,
     };
 

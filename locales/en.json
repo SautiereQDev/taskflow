@@ -226,14 +226,7 @@
       "progress": {
         "title": "Overall Progress",
         "completionRate": "Completion Rate",
-        "createdThisWeek": "Created (last 7 days)",
-        "completedThisWeek": "Completed (last 7 days)",
-        "activeUsers": "Active Members",
-        "newTasks": "New tasks",
-        "completedTasks": "Completed tasks",
-        "netVelocity": "Net velocity this week",
-        "backlogDecreasing": "Excellent! Backlog decreasing.",
-        "backlogIncreasing": "Warning: Backlog increasing."
+        "activeUsers": "Active Members"
       },
       "alerts": {
         "title": "Attention Points",

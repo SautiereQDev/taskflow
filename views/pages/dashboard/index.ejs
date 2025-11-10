@@ -184,46 +184,6 @@
  <progress class="progress progress-primary w-full" value="<%= stats.completionRate %>"
  max="100" aria-label="<%= t('dashboard.progress.completionRate') %>"></progress>
  </div>
-
- <!-- Métriques hebdomadaires (vélocité de l'équipe) -->
- <div class="mt-6 grid grid-cols-2 tf-gap text-sm">
- <div class="rounded-lg bg-base-200/50 tf-card-padding-sm text-center">
- <div class="text-xs font-medium tf-text-muted uppercase mb-1">
- <%= t('dashboard.progress.createdThisWeek') %>
- </div>
- <div class="text-2xl font-bold text-info"><%= insights.createdThisWeek %></div>
- <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.newTasks') %></div>
- </div>
-
- <div class="rounded-lg bg-base-200/50 tf-card-padding-sm text-center">
- <div class="text-xs font-medium tf-text-muted uppercase mb-1">
- <%= t('dashboard.progress.completedThisWeek') %>
- </div>
- <div class="text-2xl font-bold text-success"><%= insights.completedThisWeek %></div>
- <div class="text-xs tf-text-muted mt-1"><%= t('dashboard.progress.completedTasks') %></div>
- </div>
- </div>
-
- <!-- Vélocité nette (si positive = on avance, si négative = backlog augmente) -->
- <%
- const netVelocity = insights.completedThisWeek - insights.createdThisWeek;
- const isPositiveVelocity = netVelocity >= 0;
- %>
- <div class="mt-4 tf-card-padding-sm rounded-lg <%= isPositiveVelocity ? 'bg-success/10' : 'bg-warning/10' %>">
- <div class="flex items-center justify-between">
- <span class="text-sm font-medium <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
- <%= t('dashboard.progress.netVelocity') %>
- </span>
- <span class="text-lg font-bold <%= isPositiveVelocity ? 'text-success' : 'text-warning' %>">
- <%= isPositiveVelocity ? '+' : '' %><%= netVelocity %>
- </span>
- </div>
- <div class="text-xs tf-text-muted mt-1">
- <%= isPositiveVelocity
- ? t('dashboard.progress.backlogDecreasing')
- : t('dashboard.progress.backlogIncreasing') %>
- </div>
- </div>
  </div>
  </section>
 
