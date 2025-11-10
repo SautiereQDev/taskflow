@@ -322,5 +322,132 @@
     "validationFailed": "Validation échouée",
     "somethingWentWrong": "Une erreur s'est produite",
     "tryAgainLater": "Veuillez réessayer plus tard"
+  },
+  "about": {
+    "tagline": "Gestion de tâches moderne et collaborative",
+    "whatIs": "Qu'est-ce que TaskFlow ?",
+    "description": "TaskFlow est une application moderne de gestion de tâches conçue pour les équipes qui recherchent simplicité et efficacité. Gérez vos projets, suivez vos tâches et collaborez avec votre équipe en temps réel.",
+    "mission": "Notre mission est de rendre la gestion de tâches intuitive et accessible à tous, sans compromettre les fonctionnalités avancées dont les équipes professionnelles ont besoin.",
+    "features": {
+      "simple": {
+        "title": "Simple et Intuitif",
+        "description": "Interface épurée et facile à prendre en main. Concentrez-vous sur vos tâches, pas sur l'outil."
+      },
+      "collaborative": {
+        "title": "Collaboratif",
+        "description": "Travaillez en équipe avec l'assignation de tâches, les commentaires et les notifications."
+      },
+      "analytics": {
+        "title": "Suivi et Analytics",
+        "description": "Visualisez vos performances avec des tableaux de bord et des statistiques détaillées."
+      },
+      "secure": {
+        "title": "Sécurisé",
+        "description": "Vos données sont protégées avec des standards de sécurité modernes."
+      }
+    },
+    "technology": {
+      "title": "Technologies",
+      "description": "TaskFlow est construit avec les technologies web les plus modernes pour garantir performance et fiabilité."
+    },
+    "getStarted": "Commencer maintenant"
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Trouvez rapidement des réponses aux questions courantes",
+    "questions": {
+      "whatIs": {
+        "question": "Qu'est-ce que TaskFlow ?",
+        "answer": "TaskFlow est une application web de gestion de tâches collaborative. Elle permet de créer, organiser et suivre des tâches en équipe avec des fonctionnalités de priorisation, de filtrage et de reporting."
+      },
+      "howToCreate": {
+        "question": "Comment créer une nouvelle tâche ?",
+        "answer": "Cliquez sur le bouton '+ Nouvelle tâche' depuis le tableau de bord ou la page des tâches. Remplissez le titre, la description, la priorité et la date d'échéance, puis enregistrez."
+      },
+      "priorities": {
+        "question": "Quelles sont les différentes priorités disponibles ?",
+        "answer": "Il existe 4 niveaux de priorité : Basse (LOW), Moyenne (MEDIUM), Haute (HIGH) et Urgente (URGENT). Utilisez-les pour organiser votre travail par ordre d'importance."
+      },
+      "statuses": {
+        "question": "Quels sont les statuts possibles d'une tâche ?",
+        "answer": "Une tâche peut avoir 4 statuts : À faire (TODO), En cours (IN_PROGRESS), Terminée (DONE) ou Annulée (CANCELLED). Ces statuts vous permettent de suivre l'avancement de vos projets."
+      },
+      "assignTask": {
+        "question": "Comment assigner une tâche à quelqu'un ?",
+        "answer": "Lors de la création ou de la modification d'une tâche, sélectionnez un membre de l'équipe dans le champ 'Assigné à'. Seuls les utilisateurs enregistrés peuvent être assignés."
+      },
+      "dashboard": {
+        "question": "À quoi sert le tableau de bord ?",
+        "answer": "Le tableau de bord offre une vue d'ensemble de vos tâches : statistiques, tâches en retard, tâches urgentes, tâches à venir, et répartition de la charge de travail de l'équipe."
+      },
+      "filters": {
+        "question": "Comment utiliser les filtres ?",
+        "answer": "Dans la page des tâches, utilisez les filtres par statut, priorité et assigné pour affiner votre vue. Vous pouvez aussi utiliser la barre de recherche pour trouver des tâches spécifiques."
+      },
+      "multiLanguage": {
+        "question": "TaskFlow est-il disponible en plusieurs langues ?",
+        "answer": "Oui, TaskFlow est disponible en français et en anglais. Vous pouvez changer la langue depuis vos paramètres ou via le sélecteur dans l'en-tête."
+      },
+      "deleteTask": {
+        "question": "Puis-je supprimer une tâche ?",
+        "answer": "Actuellement, il n'est pas possible de supprimer définitivement une tâche. Vous pouvez cependant la marquer comme 'Annulée' pour la retirer de vos vues actives."
+      },
+      "security": {
+        "question": "Mes données sont-elles sécurisées ?",
+        "answer": "Oui, TaskFlow utilise des pratiques de sécurité standard : mots de passe hashés avec bcrypt, sessions sécurisées, protection CSRF, et connexion HTTPS (en production)."
+      }
+    },
+    "stillHaveQuestions": "Vous avez encore des questions ?",
+    "contactUs": "N'hésitez pas à nous contacter pour toute demande supplémentaire.",
+    "contactButton": "Nous contacter"
+  },
+  "licenses": {
+    "title": "Licence",
+    "subtitle": "TaskFlow est distribué sous licence Apache 2.0",
+    "overview": {
+      "title": "À propos de la licence",
+      "description": "TaskFlow est un logiciel open-source distribué sous Apache License 2.0. Cette licence permissive vous permet d'utiliser, de modifier et de distribuer librement le logiciel, y compris à des fins commerciales.",
+      "readFull": "Lire la licence complète"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "commercial": "Utilisation commerciale autorisée",
+      "modify": "Modification du code autorisée",
+      "distribute": "Distribution autorisée",
+      "sublicense": "Sous-licence autorisée",
+      "private": "Utilisation privée autorisée"
+    },
+    "conditions": {
+      "title": "Conditions",
+      "include": "Inclure une copie de la licence et du copyright",
+      "stateChanges": "Documenter les modifications apportées"
+    },
+    "limitations": {
+      "title": "Limitations",
+      "liability": "Aucune garantie de responsabilité",
+      "warranty": "Aucune garantie"
+    },
+    "patent": {
+      "title": "Protection contre les brevets",
+      "description": "La licence Apache 2.0 inclut une clause de protection contre les brevets, vous garantissant le droit d'utiliser les brevets des contributeurs sans risque de poursuite."
+    },
+    "summary": {
+      "title": "En résumé",
+      "description": "Vous pouvez librement utiliser TaskFlow pour vos projets personnels ou professionnels. Si vous redistribuez le code, incluez la licence et indiquez vos modifications."
+    }
+  },
+  "changelog": {
+    "title": "Changelog",
+    "subtitle": "Historique des modifications du projet",
+    "stats": {
+      "totalCommits": "Commits totaux",
+      "features": "Fonctionnalités",
+      "fixes": "Corrections",
+      "contributors": "Contributeurs"
+    },
+    "empty": {
+      "title": "Aucun commit trouvé",
+      "description": "L'historique Git n'est pas disponible ou le dépôt est vide."
+    }
   }
 }
