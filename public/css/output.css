@@ -5228,6 +5228,20 @@ svg:not([stroke-width]) {
     opacity: 0.9;
   }
 
+/* Improved checkbox visibility for both light and dark modes */
+
+.checkbox {
+    border-width: 2px;
+  }
+
+.checkbox:not(:checked):not([aria-checked="true"]) {
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+
+.checkbox:not(:checked):not([aria-checked="true"]):hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
 /* Dark theme improvements for checkboxes - Better visibility */
 
 [data-theme="dark"] .checkbox {
@@ -5242,6 +5256,20 @@ svg:not([stroke-width]) {
 [data-theme="dark"] .checkbox:checked,
   [data-theme="dark"] .checkbox[aria-checked="true"] {
     border-color: transparent;
+  }
+
+/* Improved radio button visibility for both light and dark modes */
+
+.radio {
+    border-width: 2px;
+  }
+
+.radio:not(:checked) {
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+
+.radio:not(:checked):hover {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
 /* Dark theme improvements for radio buttons */
