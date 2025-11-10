@@ -66,20 +66,20 @@
   },
   "suites": [
     {
-      "title": "task-update.spec.ts",
-      "file": "task-update.spec.ts",
+      "title": "assignee-filter.spec.ts",
+      "file": "assignee-filter.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Task Update",
-          "file": "task-update.spec.ts",
+          "title": "Task Assignee Filter",
+          "file": "assignee-filter.spec.ts",
           "line": 7,
           "column": 6,
           "specs": [
             {
-              "title": "should update a task successfully",
+              "title": "should filter tasks by assignee",
               "ok": true,
               "tags": [],
               "tests": [
@@ -94,40 +94,85 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5839,
+                      "duration": 4214,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "BROWSER: [Filter] Found 14 filter inputs\n"
+                          "text": "BROWSER: [Filter] Found 13 filter inputs\n"
                         },
                         {
                           "text": "BROWSER: [Filter] Initialization complete\n"
                         },
                         {
-                          "text": "First task ID: task-cmhtlv8c5000jpe2op4dxj8kj\n"
+                          "text": "Initial task count: 13\n"
                         },
                         {
-                          "text": "Navigating to edit page for task: cmhtlv8c5000jpe2op4dxj8kj\n"
+                          "text": "Found 5 options in assignee select\n"
                         },
                         {
-                          "text": "Edit page URL: http://localhost:3000/tasks/cmhtlv8c5000jpe2op4dxj8kj/edit\n"
+                          "text": "Selecting assignee: \n Bob Martin\n  (cmhtlv8bg0003pe2o6bbqsq3a)\n"
                         },
                         {
-                          "text": "Changing title from: Corriger la faille de sécurité - Modified to: Corriger la faille de sécurité - Modified - Modified\n"
+                          "text": "BROWSER: [Filter] Select changed: assigneeId cmhtlv8bg0003pe2o6bbqsq3a\n"
                         },
                         {
-                          "text": "After submit URL: http://localhost:3000/tasks/cmhtlv8c5000jpe2op4dxj8kj\n"
+                          "text": "BROWSER: [Filter] Triggering HTMX request\n"
                         },
                         {
-                          "text": "Title on detail page: Corriger la faille de sécurité - Modified - Modified\n"
+                          "text": "BROWSER: [Filter] Intercepting HTMX configRequest\n"
                         },
                         {
-                          "text": "✅ Task update successful!\n"
+                          "text": "BROWSER: [Filter] Original parameters: {assigneeId: cmhtlv8bg0003pe2o6bbqsq3a, dueDateFilter: }\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Filtered parameters: {assigneeId: cmhtlv8bg0003pe2o6bbqsq3a}\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Form submitted\n"
+                        },
+                        {
+                          "text": "Filtered task count: 4\n"
+                        },
+                        {
+                          "text": "URL after filter: http://localhost:3000/tasks?assigneeId=cmhtlv8bg0003pe2o6bbqsq3a\n"
+                        },
+                        {
+                          "text": "assigneeId param: cmhtlv8bg0003pe2o6bbqsq3a\n"
+                        },
+                        {
+                          "text": "\n=== Selecting \"Tous\" to clear filter ===\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Select changed: assigneeId \n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Triggering HTMX request\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Intercepting HTMX configRequest\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Original parameters: {assigneeId: , dueDateFilter: }\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Filtered parameters: {}\n"
+                        },
+                        {
+                          "text": "BROWSER: [Filter] Form submitted\n"
+                        },
+                        {
+                          "text": "Final task count: 13\n"
+                        },
+                        {
+                          "text": "Final URL: http://localhost:3000/tasks\n"
+                        },
+                        {
+                          "text": "assigneeId param after clear: null\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-10T21:02:27.951Z",
+                      "startTime": "2025-11-10T21:08:31.271Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -135,8 +180,8 @@
                   "status": "expected"
                 }
               ],
-              "id": "8908b03e670bae75aae6-c456a688057df5fcf31f",
-              "file": "task-update.spec.ts",
+              "id": "a7d4934a6575e2a6d4ae-f04aa054136b73da3b34",
+              "file": "assignee-filter.spec.ts",
               "line": 18,
               "column": 3
             }
@@ -147,8 +192,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-10T21:02:26.986Z",
-    "duration": 7051.739,
+    "startTime": "2025-11-10T21:08:30.358Z",
+    "duration": 5376.76,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
