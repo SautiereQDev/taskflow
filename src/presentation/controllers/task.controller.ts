@@ -246,8 +246,9 @@ export class TaskController {
     }
 
     if (req.isHtmx) {
-      htmxTrigger(res, 'taskUpdated');
-      res.status(200).send('<div class="alert alert-success">Task updated!</div>');
+      // Redirect HTMX request to task detail page
+      res.setHeader('HX-Redirect', `/tasks/${id}`);
+      res.status(200).send();
     } else {
       res.redirect(`/tasks/${id}`);
     }
@@ -267,8 +268,9 @@ export class TaskController {
     }
 
     if (req.isHtmx) {
-      htmxTrigger(res, 'taskDeleted');
-      res.status(200).end();
+      // Redirect HTMX request to tasks list page
+      res.setHeader('HX-Redirect', '/tasks');
+      res.status(200).send();
     } else {
       res.redirect('/tasks');
     }

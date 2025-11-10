@@ -66,20 +66,20 @@
   },
   "suites": [
     {
-      "title": "task-status-change.spec.ts",
-      "file": "task-status-change.spec.ts",
+      "title": "task-update.spec.ts",
+      "file": "task-update.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Task Status Change",
-          "file": "task-status-change.spec.ts",
+          "title": "Task Update",
+          "file": "task-update.spec.ts",
           "line": 7,
           "column": 6,
           "specs": [
             {
-              "title": "should change task status successfully",
+              "title": "should update a task successfully",
               "ok": true,
               "tags": [],
               "tests": [
@@ -94,7 +94,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5325,
+                      "duration": 5839,
                       "errors": [],
                       "stdout": [
                         {
@@ -104,33 +104,30 @@
                           "text": "BROWSER: [Filter] Initialization complete\n"
                         },
                         {
-                          "text": "Testing status change for task: cmhtlv8c5000jpe2op4dxj8kj\n"
+                          "text": "First task ID: task-cmhtlv8c5000jpe2op4dxj8kj\n"
                         },
                         {
-                          "text": "Current status: TODO\n"
+                          "text": "Navigating to edit page for task: cmhtlv8c5000jpe2op4dxj8kj\n"
                         },
                         {
-                          "text": "Changed status to IN_PROGRESS\n"
+                          "text": "Edit page URL: http://localhost:3000/tasks/cmhtlv8c5000jpe2op4dxj8kj/edit\n"
                         },
                         {
-                          "text": "BROWSER: Task updated successfully\n"
+                          "text": "Changing title from: Corriger la faille de sécurité - Modified to: Corriger la faille de sécurité - Modified - Modified\n"
                         },
                         {
-                          "text": "BROWSER: htmx:swapError\n"
+                          "text": "After submit URL: http://localhost:3000/tasks/cmhtlv8c5000jpe2op4dxj8kj\n"
                         },
                         {
-                          "text": "BROWSER: TypeError: Cannot read properties of null (reading 'contains')\n    at le (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:5672)\n    at ze (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:14809)\n    at e (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:46140)\n    at Mn (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:46911)\n    at p.onload (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:42097)\n"
+                          "text": "Title on detail page: Corriger la faille de sécurité - Modified - Modified\n"
                         },
                         {
-                          "text": "Status badge on detail page: \n En cours\n \n"
-                        },
-                        {
-                          "text": "✅ Status change successful!\n"
+                          "text": "✅ Task update successful!\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-10T20:53:43.383Z",
+                      "startTime": "2025-11-10T21:02:27.951Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -138,9 +135,9 @@
                   "status": "expected"
                 }
               ],
-              "id": "f4078a6e91d1e6567a5b-21c258470c69264a83cf",
-              "file": "task-status-change.spec.ts",
-              "line": 8,
+              "id": "8908b03e670bae75aae6-c456a688057df5fcf31f",
+              "file": "task-update.spec.ts",
+              "line": 18,
               "column": 3
             }
           ]
@@ -150,8 +147,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-10T20:53:42.215Z",
-    "duration": 6680.409,
+    "startTime": "2025-11-10T21:02:26.986Z",
+    "duration": 7051.739,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
