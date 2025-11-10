@@ -26,6 +26,7 @@ export const updateProfileValidation = [
     .isEmail()
     .withMessage('Invalid email format')
     .normalizeEmail(),
+  body('locale').optional().isIn(['fr', 'en']).withMessage('Locale must be either fr or en'),
 ];
 
 /**

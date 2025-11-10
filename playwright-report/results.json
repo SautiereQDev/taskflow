@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 2
     },
     "preserveOutput": "always",
     "reporter": [
@@ -40,7 +40,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "id": "chromium",
         "name": "chromium",
@@ -66,20 +66,20 @@
   },
   "suites": [
     {
-      "title": "assignee-filter.spec.ts",
-      "file": "assignee-filter.spec.ts",
+      "title": "profile-update.spec.ts",
+      "file": "profile-update.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Task Assignee Filter",
-          "file": "assignee-filter.spec.ts",
-          "line": 7,
+          "title": "Profile Update",
+          "file": "profile-update.spec.ts",
+          "line": 4,
           "column": 6,
           "specs": [
             {
-              "title": "should filter tasks by assignee",
+              "title": "should update user name successfully",
               "ok": true,
               "tags": [],
               "tests": [
@@ -94,85 +94,34 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4214,
+                      "duration": 4534,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "BROWSER: [Filter] Found 13 filter inputs\n"
+                          "text": "Original name: Admin User\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Initialization complete\n"
+                          "text": "New name: Test User 1762810643252\n"
                         },
                         {
-                          "text": "Initial task count: 13\n"
+                          "text": "BROWSER: Failed to load resource: the server responded with a status of 500 (Internal Server Error)\n"
                         },
                         {
-                          "text": "Found 5 options in assignee select\n"
+                          "text": "BROWSER: Response Status Error Code 500 from /profile\n"
                         },
                         {
-                          "text": "Selecting assignee: \n Bob Martin\n  (cmhtlv8bg0003pe2o6bbqsq3a)\n"
+                          "text": "Current URL after submit: http://localhost:3000/profile/edit\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Select changed: assigneeId cmhtlv8bg0003pe2o6bbqsq3a\n"
+                          "text": "Profile name displayed: Test User 1762810643252\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Triggering HTMX request\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Intercepting HTMX configRequest\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Original parameters: {assigneeId: cmhtlv8bg0003pe2o6bbqsq3a, dueDateFilter: }\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Filtered parameters: {assigneeId: cmhtlv8bg0003pe2o6bbqsq3a}\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Form submitted\n"
-                        },
-                        {
-                          "text": "Filtered task count: 4\n"
-                        },
-                        {
-                          "text": "URL after filter: http://localhost:3000/tasks?assigneeId=cmhtlv8bg0003pe2o6bbqsq3a\n"
-                        },
-                        {
-                          "text": "assigneeId param: cmhtlv8bg0003pe2o6bbqsq3a\n"
-                        },
-                        {
-                          "text": "\n=== Selecting \"Tous\" to clear filter ===\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Select changed: assigneeId \n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Triggering HTMX request\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Intercepting HTMX configRequest\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Original parameters: {assigneeId: , dueDateFilter: }\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Filtered parameters: {}\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Form submitted\n"
-                        },
-                        {
-                          "text": "Final task count: 13\n"
-                        },
-                        {
-                          "text": "Final URL: http://localhost:3000/tasks\n"
-                        },
-                        {
-                          "text": "assigneeId param after clear: null\n"
+                          "text": "✅ Profile name update successful!\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-10T21:08:31.271Z",
+                      "startTime": "2025-11-10T21:37:20.613Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -180,9 +129,99 @@
                   "status": "expected"
                 }
               ],
-              "id": "a7d4934a6575e2a6d4ae-f04aa054136b73da3b34",
-              "file": "assignee-filter.spec.ts",
-              "line": 18,
+              "id": "008732765f65738919e2-9874e0bf56d75028b7c3",
+              "file": "profile-update.spec.ts",
+              "line": 13,
+              "column": 3
+            },
+            {
+              "title": "should update user locale successfully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 4555,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"en\"\u001b[39m\nReceived: \u001b[31m\"fr\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"en\"\u001b[39m\nReceived: \u001b[31m\"fr\"\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/profile-update.spec.ts:74:27",
+                        "location": {
+                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/profile-update.spec.ts",
+                          "column": 27,
+                          "line": 74
+                        },
+                        "snippet": "  72 |     console.log('Updated locale in form:', updatedLocale);\n  73 |\n> 74 |     expect(updatedLocale).toBe(newLocale);\n     |                           ^\n  75 |     console.log('✅ Profile locale update successful!');\n  76 |\n  77 |     // Restore original locale"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/profile-update.spec.ts",
+                            "column": 27,
+                            "line": 74
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"en\"\u001b[39m\nReceived: \u001b[31m\"fr\"\u001b[39m\n\n  72 |     console.log('Updated locale in form:', updatedLocale);\n  73 |\n> 74 |     expect(updatedLocale).toBe(newLocale);\n     |                           ^\n  75 |     console.log('✅ Profile locale update successful!');\n  76 |\n  77 |     // Restore original locale\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/profile-update.spec.ts:74:27"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Original locale: fr\n"
+                        },
+                        {
+                          "text": "New locale: en\n"
+                        },
+                        {
+                          "text": "BROWSER: Failed to load resource: the server responded with a status of 500 (Internal Server Error)\n"
+                        },
+                        {
+                          "text": "BROWSER: Response Status Error Code 500 from /profile\n"
+                        },
+                        {
+                          "text": "Updated locale in form: fr\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-10T21:37:20.605Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/profile-update-Profile-Upd-af49c-te-user-locale-successfully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/profile-update-Profile-Upd-af49c-te-user-locale-successfully-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/profile-update-Profile-Upd-af49c-te-user-locale-successfully-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/profile-update.spec.ts",
+                        "column": 27,
+                        "line": 74
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008732765f65738919e2-2b22cd91b7eb0cf4d76f",
+              "file": "profile-update.spec.ts",
+              "line": 48,
               "column": 3
             }
           ]
@@ -192,11 +231,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-10T21:08:30.358Z",
-    "duration": 5376.76,
+    "startTime": "2025-11-10T21:37:19.462Z",
+    "duration": 5983.755,
     "expected": 1,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }

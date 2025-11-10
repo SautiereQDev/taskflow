@@ -27,6 +27,10 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, Use
       user.updateName(command.name);
     }
 
+    if (command.locale !== undefined) {
+      user.updateLocale(command.locale);
+    }
+
     // Save changes
     return await this.userRepository.update(user);
   }
