@@ -4,6 +4,7 @@ import cors from 'cors';
 import compression from 'compression';
 import session from 'express-session';
 import ConnectPgSimple from 'connect-pg-simple';
+import flash from 'connect-flash';
 import { pino } from 'pino';
 import pinoHttp from 'pino-http';
 import path from 'node:path';
@@ -119,6 +120,15 @@ export function createApp(): Express {
       },
     })
   );
+
+  // Flash Messages (must be after session)
+  app.use(flash());
+
+  // Make flash messages available in views
+  app.use((req, res, next) => {
+    res.locals.messages = req.flash();
+    next();
+  });
 
   // View Engine (EJS)
   app.set('view engine', 'ejs');

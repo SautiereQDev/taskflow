@@ -18,7 +18,7 @@ import {
 import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
 import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
 import type { IUserDto } from '@application/dtos/UserDto.js';
-import { renderOrPartial, htmxTrigger, htmxRefresh } from '@presentation/utils/response.helpers.js';
+import { renderOrPartial, htmxRefresh } from '@presentation/utils/response.helpers.js';
 import {
   toTaskListItemViewModel,
   type ICurrentUserContext,
@@ -136,12 +136,15 @@ export class UserController {
     }
 
     // Set flash message
-    req.flash('success', 'Profile updated successfully!');
+    if (typeof req.flash === 'function') {
+      req.flash('success', 'Profile updated successfully!');
+    }
 
     // Trigger refresh or redirect
     if (req.isHtmx) {
-      htmxTrigger(res, 'profileUpdated');
-      res.status(200).send('<div class="alert alert-success">Profile updated!</div>');
+      // Redirect HTMX request to profile page
+      res.setHeader('HX-Redirect', '/profile');
+      res.status(200).send();
     } else {
       res.redirect('/profile');
     }
@@ -185,7 +188,9 @@ export class UserController {
     }
 
     // Set flash message
-    req.flash('success', 'Settings updated successfully!');
+    if (typeof req.flash === 'function') {
+      req.flash('success', 'Settings updated successfully!');
+    }
 
     // Trigger full page refresh to apply theme
     if (req.isHtmx) {
