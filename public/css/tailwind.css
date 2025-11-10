@@ -502,6 +502,28 @@
     border-color: rgba(0, 0, 0, 0.5);
   }
 
+  /* Ensure colored checkboxes (primary, info, etc.) are visible when unchecked */
+  .checkbox-primary:not(:checked):not([aria-checked="true"]),
+  .checkbox-secondary:not(:checked):not([aria-checked="true"]),
+  .checkbox-accent:not(:checked):not([aria-checked="true"]),
+  .checkbox-info:not(:checked):not([aria-checked="true"]),
+  .checkbox-success:not(:checked):not([aria-checked="true"]),
+  .checkbox-warning:not(:checked):not([aria-checked="true"]),
+  .checkbox-error:not(:checked):not([aria-checked="true"]) {
+    border-color: rgba(0, 0, 0, 0.35);
+    border-width: 2px;
+  }
+
+  .checkbox-primary:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-secondary:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-accent:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-info:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-success:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-warning:not(:checked):not([aria-checked="true"]):hover,
+  .checkbox-error:not(:checked):not([aria-checked="true"]):hover {
+    border-color: rgba(0, 0, 0, 0.55);
+  }
+
   /* Dark theme improvements for checkboxes - Better visibility */
   [data-theme="dark"] .checkbox {
     border-color: rgba(255, 255, 255, 0.4);
@@ -515,6 +537,28 @@
   [data-theme="dark"] .checkbox:checked,
   [data-theme="dark"] .checkbox[aria-checked="true"] {
     border-color: transparent;
+  }
+
+  /* Dark theme: Ensure colored checkboxes are visible when unchecked */
+  [data-theme="dark"] .checkbox-primary:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-secondary:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-accent:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-info:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-success:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-warning:not(:checked):not([aria-checked="true"]),
+  [data-theme="dark"] .checkbox-error:not(:checked):not([aria-checked="true"]) {
+    border-color: rgba(255, 255, 255, 0.45);
+    border-width: 2px;
+  }
+
+  [data-theme="dark"] .checkbox-primary:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-secondary:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-accent:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-info:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-success:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-warning:not(:checked):not([aria-checked="true"]):hover,
+  [data-theme="dark"] .checkbox-error:not(:checked):not([aria-checked="true"]):hover {
+    border-color: rgba(255, 255, 255, 0.65);
   }
 
   /* Improved radio button visibility for both light and dark modes */
