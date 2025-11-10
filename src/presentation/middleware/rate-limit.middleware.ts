@@ -10,9 +10,14 @@
 import rateLimit from 'express-rate-limit';
 
 /**
- * Check if running in test or development environment
+ * Check if running in test environment or E2E tests
+ * Skip rate limiting during automated testing
  */
-const isTestEnvironment = process.env.NODE_ENV === 'test' || process.env.VITEST === 'true';
+const isTestEnvironment =
+  process.env.NODE_ENV === 'test' ||
+  process.env.VITEST === 'true' ||
+  process.env.PLAYWRIGHT_TEST === 'true' ||
+  process.env.CI === 'true';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 /**
@@ -20,11 +25,12 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  * Applies to all routes unless overridden
  *
  * Limit: 100 requests per 15 minutes per IP
- * Disabled in test environment
+ * Disabled in test environment  *
+ * Note: In development, limit is significantly higher (1000) to allow for E2E testing
  */
 export const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
+  max: isDevelopment ? 1000 : 100, // Higher limit in development for E2E tests
   message: 'Too many requests from this IP, please try again later',
   standardHeaders: true, // Return rate limit info in RateLimit-* headers
   legacyHeaders: false, // Disable X-RateLimit-* headers

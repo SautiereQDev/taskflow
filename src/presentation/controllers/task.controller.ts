@@ -89,6 +89,18 @@ export class TaskController {
       toTaskListItemViewModel(task, currentUser)
     );
 
+    // For HTMX requests, trigger events
+    // Note: URL update is handled by hx-push-url="true" attribute in HTML (HTMX 2.0)
+    if (req.isHtmx) {
+      // Trigger task count update
+      res.setHeader(
+        'HX-Trigger',
+        JSON.stringify({
+          updateTaskCount: { total: tasksResult.total },
+        })
+      );
+    }
+
     renderOrPartial(req, res, 'pages/tasks/list', 'partials/htmx/task-list', {
       tasks: taskViewModels,
       pagination: {

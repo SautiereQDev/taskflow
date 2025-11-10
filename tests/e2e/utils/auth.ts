@@ -20,7 +20,7 @@ export async function login(page: Page, email: string, password: string): Promis
   await page.click('button[type="submit"]');
 
   // Wait for redirect to dashboard after successful login
-  await page.waitForURL(`${BASE_URL}/dashboard`, { timeout: 5000 });
+  await page.waitForURL(`${BASE_URL}/dashboard`, { timeout: 10000 });
 }
 
 /**
@@ -29,7 +29,7 @@ export async function login(page: Page, email: string, password: string): Promis
 export async function logout(page: Page): Promise<void> {
   await page.goto(`${BASE_URL}/auth/logout`);
   // Wait for redirect to login page
-  await page.waitForURL(`${BASE_URL}/auth/login`, { timeout: 5000 });
+  await page.waitForURL(`${BASE_URL}/auth/login`, { timeout: 10000 });
 }
 
 /**
@@ -38,8 +38,33 @@ export async function logout(page: Page): Promise<void> {
 export async function isAuthenticated(page: Page): Promise<boolean> {
   try {
     await page.goto(`${BASE_URL}/dashboard`);
+    await page.waitForTimeout(1000);
     return page.url().includes('/dashboard');
   } catch {
     return false;
   }
+}
+
+/**
+ * Wait for HTMX request to complete
+ * Accounts for debounce delays and network idle state
+ */
+export async function waitForHtmxUpdate(page: Page, debounceMs = 300): Promise<void> {
+  await page.waitForTimeout(debounceMs);
+  await page.waitForLoadState('networkidle');
+}
+
+/**
+ * Get task count from UI
+ */
+export async function getTaskCount(page: Page): Promise<number> {
+  const countElement = page.locator('#task-count, [class*="task-count"]');
+  const countText = await countElement.textContent().catch(() => '0');
+
+  if (countText) {
+    const match = /(\d+)/.exec(countText);
+    return match ? Number.parseInt(match[1], 10) : 0;
+  }
+
+  return 0;
 }

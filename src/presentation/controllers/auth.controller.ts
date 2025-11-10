@@ -76,47 +76,67 @@ export class AuthController {
       password: string;
     };
 
-    // Authenticate via service
-    const result = await this.authService.login(email, password);
+    try {
+      // Authenticate via service
+      const result = await this.authService.login(email, password);
 
-    // Store user ID in session
-    req.session.userId = result.user.id;
+      // Store user ID in session
+      req.session.userId = result.user.id;
 
-    // Log session before save
-    logger.info('Session before save', {
-      userId: req.session.userId,
-      sessionID: req.sessionID,
-      cookie: req.session.cookie,
-    });
-
-    // Explicitly save session before redirect
-    await new Promise<void>((resolve, reject) => {
-      req.session.save((err) => {
-        if (err) {
-          logger.error('Session save error', { error: err });
-          reject(new AppError('Failed to save session', 500, { error: err }));
-        } else {
-          logger.info('Session saved successfully');
-          resolve();
-        }
+      // Log session before save
+      logger.info('Session before save', {
+        userId: req.session.userId,
+        sessionID: req.sessionID,
+        cookie: req.session.cookie,
       });
-    });
 
-    logger.info('Session after save', {
-      userId: req.session.userId,
-      sessionID: req.sessionID,
-    });
+      // Explicitly save session before redirect
+      await new Promise<void>((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) {
+            logger.error('Session save error', { error: err });
+            reject(new AppError('Failed to save session', 500, { error: err }));
+          } else {
+            logger.info('Session saved successfully');
+            resolve();
+          }
+        });
+      });
 
-    // Set flash message (if available)
-    if (typeof req.flash === 'function') {
-      req.flash('success', 'Welcome back!');
-    }
+      logger.info('Session after save', {
+        userId: req.session.userId,
+        sessionID: req.sessionID,
+      });
 
-    // Redirect to dashboard (HTMX-aware)
-    if (req.isHtmx) {
-      htmxRedirect(res, '/dashboard');
-    } else {
-      res.redirect('/dashboard');
+      // Set flash message (if available)
+      if (typeof req.flash === 'function') {
+        req.flash('success', 'Welcome back!');
+      }
+
+      // Redirect to dashboard (HTMX-aware)
+      if (req.isHtmx) {
+        htmxRedirect(res, '/dashboard');
+      } else {
+        res.redirect('/dashboard');
+      }
+    } catch (error) {
+      // Handle authentication failure - re-render login page with error
+      if (error instanceof AppError && error.statusCode === 401) {
+        // Set flash error message
+        if (typeof req.flash === 'function') {
+          req.flash('error', error.message);
+        }
+
+        // Re-render login page with error
+        renderOrPartial(req, res, 'pages/auth/login', 'pages/auth/login', {
+          title: 'Connexion - TaskFlow',
+          formData: { email }, // Preserve email input
+          errors: { general: error.message }, // Display error
+        });
+      } else {
+        // Re-throw other errors to global error handler
+        throw error;
+      }
     }
   }
 
