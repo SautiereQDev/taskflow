@@ -66,21 +66,21 @@
   },
   "suites": [
     {
-      "title": "assignee-filter.spec.ts",
-      "file": "assignee-filter.spec.ts",
+      "title": "task-status-change.spec.ts",
+      "file": "task-status-change.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Task Assignee Filter",
-          "file": "assignee-filter.spec.ts",
+          "title": "Task Status Change",
+          "file": "task-status-change.spec.ts",
           "line": 7,
           "column": 6,
           "specs": [
             {
-              "title": "should filter tasks by assignee",
-              "ok": false,
+              "title": "should change task status successfully",
+              "ok": true,
               "tags": [],
               "tests": [
                 {
@@ -93,28 +93,9 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "failed",
-                      "duration": 3090,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"cmhthzite0003qq2o3lwweku4\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"cmhthzite0003qq2o3lwweku4\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/assignee-filter.spec.ts:59:50",
-                        "location": {
-                          "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/assignee-filter.spec.ts",
-                          "column": 50,
-                          "line": 59
-                        },
-                        "snippet": "  57 |\n  58 |       // Verify that the assigneeId is in the URL\n> 59 |       expect(url.searchParams.get('assigneeId')).toBe(firstUserValue);\n     |                                                  ^\n  60 |\n  61 |       // Now select \"Tous\" again to remove filter\n  62 |       console.log('\\n=== Selecting \"Tous\" to clear filter ===');"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/assignee-filter.spec.ts",
-                            "column": 50,
-                            "line": 59
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"cmhthzite0003qq2o3lwweku4\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  57 |\n  58 |       // Verify that the assigneeId is in the URL\n> 59 |       expect(url.searchParams.get('assigneeId')).toBe(firstUserValue);\n     |                                                  ^\n  60 |\n  61 |       // Now select \"Tous\" again to remove filter\n  62 |       console.log('\\n=== Selecting \"Tous\" to clear filter ===');\n    at /home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/assignee-filter.spec.ts:59:50"
-                        }
-                      ],
+                      "status": "passed",
+                      "duration": 5325,
+                      "errors": [],
                       "stdout": [
                         {
                           "text": "BROWSER: [Filter] Found 14 filter inputs\n"
@@ -123,85 +104,43 @@
                           "text": "BROWSER: [Filter] Initialization complete\n"
                         },
                         {
-                          "text": "Initial task count: 12\n"
+                          "text": "Testing status change for task: cmhtlv8c5000jpe2op4dxj8kj\n"
                         },
                         {
-                          "text": "Found 5 options in assignee select\n"
+                          "text": "Current status: TODO\n"
                         },
                         {
-                          "text": "Selecting assignee: \n Bob Martin\n  (cmhthzite0003qq2o3lwweku4)\n"
+                          "text": "Changed status to IN_PROGRESS\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Select changed: assigneeId cmhthzite0003qq2o3lwweku4\n"
+                          "text": "BROWSER: Task updated successfully\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Triggering HTMX request\n"
+                          "text": "BROWSER: htmx:swapError\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Intercepting HTMX configRequest\n"
+                          "text": "BROWSER: TypeError: Cannot read properties of null (reading 'contains')\n    at le (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:5672)\n    at ze (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:14809)\n    at e (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:46140)\n    at Mn (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:46911)\n    at p.onload (https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js:1:42097)\n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Original parameters: {search: , assigneeId: cmhthzite0003qq2o3lwweku4, dueDateFilter: }\n"
+                          "text": "Status badge on detail page: \n En cours\n \n"
                         },
                         {
-                          "text": "BROWSER: [Filter] Filtered parameters: {assigneeId: cmhthzite0003qq2o3lwweku4}\n"
-                        },
-                        {
-                          "text": "BROWSER: [Filter] Form submitted\n"
-                        },
-                        {
-                          "text": "BROWSER: Failed to load resource: the server responded with a status of 400 (Bad Request)\n"
-                        },
-                        {
-                          "text": "BROWSER: Response Status Error Code 400 from /tasks\n"
-                        },
-                        {
-                          "text": "400 Response body: <div class=\"alert alert-error\">Validation failed</div>\n"
-                        },
-                        {
-                          "text": "Filtered task count: 12\n"
-                        },
-                        {
-                          "text": "URL after filter: http://localhost:3000/tasks\n"
-                        },
-                        {
-                          "text": "assigneeId param: null\n"
+                          "text": "✅ Status change successful!\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-10T20:27:32.161Z",
+                      "startTime": "2025-11-10T20:53:43.383Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/assignee-filter-Task-Assig-918b0-ld-filter-tasks-by-assignee-chromium/test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/assignee-filter-Task-Assig-918b0-ld-filter-tasks-by-assignee-chromium/video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/test-results/assignee-filter-Task-Assig-918b0-ld-filter-tasks-by-assignee-chromium/error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "/home/quentin-sautiere/Documents/cours/ensIIE/web/projet/tests/e2e/assignee-filter.spec.ts",
-                        "column": 50,
-                        "line": 59
-                      }
+                      "attachments": []
                     }
                   ],
-                  "status": "unexpected"
+                  "status": "expected"
                 }
               ],
-              "id": "a7d4934a6575e2a6d4ae-f04aa054136b73da3b34",
-              "file": "assignee-filter.spec.ts",
-              "line": 18,
+              "id": "f4078a6e91d1e6567a5b-21c258470c69264a83cf",
+              "file": "task-status-change.spec.ts",
+              "line": 8,
               "column": 3
             }
           ]
@@ -211,11 +150,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-10T20:27:31.198Z",
-    "duration": 4241.601,
-    "expected": 0,
+    "startTime": "2025-11-10T20:53:42.215Z",
+    "duration": 6680.409,
+    "expected": 1,
     "skipped": 0,
-    "unexpected": 1,
+    "unexpected": 0,
     "flaky": 0
   }
 }

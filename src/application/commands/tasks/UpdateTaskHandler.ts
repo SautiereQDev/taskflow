@@ -41,13 +41,13 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand, Tas
       changes.description = command.description;
     }
 
-    if (command.priority !== undefined) {
+    if (command.priority !== undefined && command.priority !== task.priority) {
       const oldPriority = task.priority;
       task.updatePriority(command.priority);
       events.push(new TaskPriorityChangedEvent(task.id, oldPriority, command.priority));
     }
 
-    if (command.status !== undefined) {
+    if (command.status !== undefined && command.status !== task.status) {
       const oldStatus = task.status;
       task.changeStatus(command.status);
       events.push(new TaskStatusChangedEvent(task.id, oldStatus, command.status));
