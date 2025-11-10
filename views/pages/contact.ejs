@@ -6,7 +6,7 @@
   </div>
 
   <!-- Contact Information -->
-  <div class="grid md:grid-cols-3 gap-6 mb-8">
+  <div class="grid md:grid-cols-3 gap-6 mb-12">
     <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-6 text-center">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -30,52 +30,6 @@
       <h3 class="font-semibold tf-text-primary mb-2"><%= __('contact.github.title') %></h3>
       <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link link-primary"><%= __('contact.github.repository') %></a>
     </div>
-  </div>
-
-  <!-- Contact Form -->
-  <div class="bg-base-200 border border-base-content/10 shadow-md rounded-2xl p-8">
-    <h2 class="text-2xl font-bold tf-text-primary mb-6"><%= __('contact.form.title') %></h2>
-    
-    <form class="space-y-4">
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text"><%= __('contact.form.name') %></span>
-        </label>
-        <input type="text" name="name" class="input input-bordered w-full" required />
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text"><%= __('contact.form.email') %></span>
-        </label>
-        <input type="email" name="email" class="input input-bordered w-full" required />
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text"><%= __('contact.form.subject') %></span>
-        </label>
-        <input type="text" name="subject" class="input input-bordered w-full" required />
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text"><%= __('contact.form.message') %></span>
-        </label>
-        <textarea name="message" class="textarea textarea-bordered w-full h-32" required></textarea>
-      </div>
-
-      <div class="alert alert-info">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span><%= __('contact.form.comingSoon') %></span>
-      </div>
-
-      <button type="button" class="btn btn-primary btn-block" disabled>
-        <%= __('contact.form.send') %>
-      </button>
-    </form>
   </div>
 
   <!-- Quick Links -->

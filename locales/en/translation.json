@@ -415,15 +415,6 @@
       "title": "GitHub",
       "repository": "View Repository"
     },
-    "form": {
-      "title": "Send us a message",
-      "name": "Name",
-      "email": "Email",
-      "subject": "Subject",
-      "message": "Message",
-      "send": "Send",
-      "comingSoon": "The contact form will be available soon. For now, please contact us by email."
-    },
     "quickLinks": {
       "title": "Quick Links",
       "faq": "FAQ",
