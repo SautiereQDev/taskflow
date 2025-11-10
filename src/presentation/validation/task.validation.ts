@@ -23,7 +23,12 @@ export const createTaskValidation = [
   ...statusValidation,
   ...priorityValidation,
   ...dueDateValidation,
-  body('assigneeId').optional().isUUID().withMessage('Assignee ID must be a valid UUID'),
+  body('assigneeId')
+    .optional()
+    .custom(
+      (value: unknown) => !value || (typeof value === 'string' && /^c[a-z0-9]{24}$/i.test(value))
+    )
+    .withMessage('Assignee ID must be a valid CUID'),
 ];
 
 /**
@@ -42,7 +47,12 @@ export const updateTaskValidation = [
   ...statusValidation,
   ...priorityValidation,
   ...dueDateValidation,
-  body('assigneeId').optional().isUUID().withMessage('Assignee ID must be a valid UUID'),
+  body('assigneeId')
+    .optional()
+    .custom(
+      (value: unknown) => !value || (typeof value === 'string' && /^c[a-z0-9]{24}$/i.test(value))
+    )
+    .withMessage('Assignee ID must be a valid CUID'),
 ];
 
 /**
@@ -87,23 +97,20 @@ export const taskFiltersValidation = [
   query('assigneeId')
     .optional()
     .customSanitizer((value: unknown) => (value === '' ? undefined : value))
-    .custom(
-      (value: unknown) =>
-        !value ||
-        (typeof value === 'string' &&
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value))
-    )
-    .withMessage('Assignee ID must be a valid UUID'),
+    .custom((value: unknown) => {
+      console.warn('[VALIDATION DEBUG] assigneeId value:', value, 'type:', typeof value);
+      const result = !value || (typeof value === 'string' && /^c[a-z0-9]{24}$/i.test(value));
+      console.warn('[VALIDATION DEBUG] assigneeId validation result:', result);
+      return result;
+    })
+    .withMessage('Assignee ID must be a valid CUID'),
   query('creatorId')
     .optional()
     .customSanitizer((value: unknown) => (value === '' ? undefined : value))
     .custom(
-      (value: unknown) =>
-        !value ||
-        (typeof value === 'string' &&
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value))
+      (value: unknown) => !value || (typeof value === 'string' && /^c[a-z0-9]{24}$/i.test(value))
     )
-    .withMessage('Creator ID must be a valid UUID'),
+    .withMessage('Creator ID must be a valid CUID'),
   query('search')
     .optional()
     .customSanitizer((value: unknown) => {
