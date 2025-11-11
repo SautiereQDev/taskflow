@@ -3594,16 +3594,6 @@ video {
     grid-column-start: 1;
     grid-row-start: 1;
   }
-
-  .hero-content {
-    isolation: isolate;
-    display: flex;
-    max-width: 80rem;
-    align-items: center;
-    justify-content: center;
-    gap: calc(0.25rem * 4);
-    padding: calc(0.25rem * 4);
-  }
 }
 
 .collapse:not(td, tr, colgroup) {
@@ -5397,14 +5387,6 @@ svg:not([stroke-width]) {
   border-width: 0;
 }
 
-.pointer-events-none {
-  pointer-events: none;
-}
-
-.pointer-events-auto {
-  pointer-events: auto;
-}
-
 .visible {
   visibility: visible;
 }
@@ -5433,18 +5415,6 @@ svg:not([stroke-width]) {
   inset: 0px;
 }
 
-.left-4 {
-  left: 1rem;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.top-1\/2 {
-  top: 50%;
-}
-
 .bottom-1\/3 {
   bottom: 33.333333%;
 }
@@ -5465,12 +5435,24 @@ svg:not([stroke-width]) {
   left: 25%;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
 .right-1\/3 {
   right: 33.333333%;
 }
 
 .right-1\/4 {
   right: 25%;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.top-1\/2 {
+  top: 50%;
 }
 
 .top-1\/4 {
@@ -5485,8 +5467,9 @@ svg:not([stroke-width]) {
   z-index: 50;
 }
 
-.z-0 {
-  z-index: 0;
+.-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
 }
 
 .mx-auto {
@@ -5499,17 +5482,20 @@ svg:not([stroke-width]) {
   margin-bottom: 0.25rem;
 }
 
-.-mx-2 {
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .mb-12 {
   margin-bottom: 3rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
 }
 
 .mb-2 {
@@ -5584,14 +5570,6 @@ svg:not([stroke-width]) {
   margin-top: auto;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
-.mb-16 {
-  margin-bottom: 4rem;
-}
-
 .block {
   display: block;
 }
@@ -5664,16 +5642,12 @@ svg:not([stroke-width]) {
   height: 1.5rem;
 }
 
-.h-8 {
-  height: 2rem;
-}
-
-.h-full {
-  height: 100%;
-}
-
 .h-72 {
   height: 18rem;
+}
+
+.h-8 {
+  height: 2rem;
 }
 
 .h-80 {
@@ -5684,6 +5658,10 @@ svg:not([stroke-width]) {
   height: 24rem;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .max-h-60 {
   max-height: 15rem;
 }
@@ -5692,8 +5670,8 @@ svg:not([stroke-width]) {
   min-height: 4rem;
 }
 
-.min-h-\[70vh\] {
-  min-height: 70vh;
+.min-h-\[85vh\] {
+  min-height: 85vh;
 }
 
 .min-h-\[calc\(100vh-20rem\)\] {
@@ -5702,10 +5680,6 @@ svg:not([stroke-width]) {
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-\[85vh\] {
-  min-height: 85vh;
 }
 
 .w-1\/2 {
@@ -5772,20 +5746,20 @@ svg:not([stroke-width]) {
   width: 13rem;
 }
 
+.w-56 {
+  width: 14rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
 
-.w-8 {
-  width: 2rem;
-}
-
-.w-full {
-  width: 100%;
-}
-
 .w-72 {
   width: 18rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .w-80 {
@@ -5796,8 +5770,8 @@ svg:not([stroke-width]) {
   width: 24rem;
 }
 
-.w-56 {
-  width: 14rem;
+.w-full {
+  width: 100%;
 }
 
 .min-w-0 {
@@ -5824,6 +5798,10 @@ svg:not([stroke-width]) {
   max-width: 64rem;
 }
 
+.max-w-6xl {
+  max-width: 72rem;
+}
+
 .max-w-7xl {
   max-width: 80rem;
 }
@@ -5834,10 +5812,6 @@ svg:not([stroke-width]) {
 
 .max-w-none {
   max-width: none;
-}
-
-.max-w-6xl {
-  max-width: 72rem;
 }
 
 .flex-1 {
@@ -5852,6 +5826,11 @@ svg:not([stroke-width]) {
   flex-shrink: 0;
 }
 
+.-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -5864,11 +5843,6 @@ svg:not([stroke-width]) {
 
 .translate-x-8 {
   --tw-translate-x: 2rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-translate-x-1\/2 {
-  --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -5893,6 +5867,23 @@ svg:not([stroke-width]) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+@keyframes bounce {
+
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
 @keyframes ping {
 
   75%, 100% {
@@ -5914,23 +5905,6 @@ svg:not([stroke-width]) {
 
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes bounce {
-
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8,0,1,1);
-  }
-
-  50% {
-    transform: none;
-    animation-timing-function: cubic-bezier(0,0,0.2,1);
-  }
-}
-
-.animate-bounce {
-  animation: bounce 1s infinite;
 }
 
 .cursor-pointer {
@@ -6190,16 +6164,16 @@ svg:not([stroke-width]) {
   --tw-gradient-stops: var(--tw-gradient-from), var(--color-secondary) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
+.to-accent {
+  --tw-gradient-to: var(--color-accent) var(--tw-gradient-to-position);
+}
+
 .to-secondary {
   --tw-gradient-to: var(--color-secondary) var(--tw-gradient-to-position);
 }
 
 .to-warning {
   --tw-gradient-to: var(--color-warning) var(--tw-gradient-to-position);
-}
-
-.to-accent {
-  --tw-gradient-to: var(--color-accent) var(--tw-gradient-to-position);
 }
 
 .bg-clip-text {
@@ -6240,6 +6214,11 @@ svg:not([stroke-width]) {
   padding-right: 0.25rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6270,6 +6249,11 @@ svg:not([stroke-width]) {
   padding-bottom: 0.5rem;
 }
 
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -6283,16 +6267,6 @@ svg:not([stroke-width]) {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.py-20 {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .pb-4 {
@@ -6500,6 +6474,10 @@ svg:not([stroke-width]) {
   opacity: 0;
 }
 
+.opacity-10 {
+  opacity: 0.1;
+}
+
 .opacity-100 {
   opacity: 1;
 }
@@ -6524,13 +6502,15 @@ svg:not([stroke-width]) {
   opacity: 0.8;
 }
 
-.opacity-10 {
-  opacity: 0.1;
-}
-
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -6549,12 +6529,6 @@ svg:not([stroke-width]) {
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-2xl {
-  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -6599,14 +6573,14 @@ svg:not([stroke-width]) {
   transition-duration: 150ms;
 }
 
-.transition-transform {
-  transition-property: transform;
+.transition-shadow {
+  transition-property: box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
-.transition-shadow {
-  transition-property: box-shadow;
+.transition-transform {
+  transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -6615,16 +6589,16 @@ svg:not([stroke-width]) {
   transition-duration: 1000ms;
 }
 
+.duration-150 {
+  transition-duration: 150ms;
+}
+
 .duration-200 {
   transition-duration: 200ms;
 }
 
 .duration-300 {
   transition-duration: 300ms;
-}
-
-.duration-150 {
-  transition-duration: 150ms;
 }
 
 .ease-in {
@@ -6846,101 +6820,6 @@ svg:not([stroke-width]) {
 
 .rounded-box {
   border-radius: var(--radius-box);
-}
-
-@layer daisyui.component {
-
-  .hover\:link:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
-
-  .hover\:link:hover:focus {
-    --tw-outline-style: none;
-    outline-style: none;
-  }
-
-  @media (forced-colors: active) {
-
-    .hover\:link:hover:focus {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-    }
-  }
-
-  .hover\:link:hover:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .hover\:link:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
-
-  .hover\:link:hover:focus {
-    --tw-outline-style: none;
-    outline-style: none;
-  }
-
-  @media (forced-colors: active) {
-
-    .hover\:link:hover:focus {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-    }
-  }
-
-  .hover\:link:hover:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .hover\:link:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
-
-  .hover\:link:hover:focus {
-    --tw-outline-style: none;
-    outline-style: none;
-  }
-
-  @media (forced-colors: active) {
-
-    .hover\:link:hover:focus {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-    }
-  }
-
-  .hover\:link:hover:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
-  .hover\:link:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
-
-  .hover\:link:hover:focus {
-    --tw-outline-style: none;
-    outline-style: none;
-  }
-
-  @media (forced-colors: active) {
-
-    .hover\:link:hover:focus {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-    }
-  }
-
-  .hover\:link:hover:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
 }
 
 @layer daisyui.modifier {
@@ -7569,10 +7448,6 @@ svg:not([stroke-width]) {
   background-color: var(--color-base-300);
 }
 
-.hover\:text-primary:hover {
-  color: var(--color-primary);
-}
-
 .hover\:shadow-lg:hover {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -7650,10 +7525,6 @@ svg:not([stroke-width]) {
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .md\:grid-cols-4 {
@@ -7787,14 +7658,14 @@ svg:not([stroke-width]) {
     line-height: 1;
   }
 
-  .lg\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
   .lg\:text-7xl {
     font-size: 4.5rem;
     line-height: 1;
+  }
+
+  .lg\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 
