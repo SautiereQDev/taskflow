@@ -43,12 +43,13 @@ services:
       - ./public:/app/public:ro
       - ./prisma:/app/prisma:ro
       - /app/node_modules
+      - /app/dist
     networks:
       - e2e-network
     depends_on:
       db:
         condition: service_healthy
-    command: npm run start
+    command: sh -c "npm run build && npm run start"
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
       interval: 10s
