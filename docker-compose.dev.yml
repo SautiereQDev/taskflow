@@ -48,6 +48,7 @@ services:
       - ./public/js:/app/public/js:ro
       - ./public/images:/app/public/images:ro
       - ./prisma:/app/prisma:ro
+      - ./CHANGELOG.md:/app/CHANGELOG.md:ro
       # Node modules from container (don't override)
       - /app/node_modules
       # Dist folder for built files

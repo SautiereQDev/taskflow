@@ -1,4 +1,6 @@
 import { execSync } from 'node:child_process';
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 
 /**
  * Git commit entry
@@ -15,11 +17,124 @@ export interface IGitCommit {
 }
 
 /**
+ * Changelog version entry
+ */
+export interface IChangelogVersion {
+  version: string;
+  date?: string;
+  sections: Map<string, IChangelogCommit[]>;
+}
+
+/**
+ * Changelog commit entry
+ */
+export interface IChangelogCommit {
+  type: string;
+  scope?: string;
+  description: string;
+  hash?: string;
+  breaking?: boolean;
+}
+
+/**
  * Changelog Service
  *
- * Generates changelog from git commits using conventional commit format
+ * Generates and parses changelog from CHANGELOG.md file
+ * The CHANGELOG.md is generated using conventional-changelog-cli
  */
 export class ChangelogService {
+  private readonly changelogPath = join(process.cwd(), 'CHANGELOG.md');
+
+  /**
+   * Generate CHANGELOG.md file using conventional-changelog-cli
+   */
+  generateChangelog(): void {
+    try {
+      // Generate changelog with all commits
+      execSync('npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0', {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      });
+    } catch (error) {
+      console.error('Error generating changelog:', error);
+      throw new Error('Failed to generate changelog');
+    }
+  }
+
+  /**
+   * Parse CHANGELOG.md file
+   */
+  parseChangelog(): IChangelogVersion[] {
+    if (!existsSync(this.changelogPath)) {
+      return [];
+    }
+
+    try {
+      const content = readFileSync(this.changelogPath, 'utf-8');
+      const versions: IChangelogVersion[] = [];
+
+      // Split by version headers (## x.x.x)
+      const versionRegex = /^## (\d+\.\d+\.\d+)(?: \(([^)]+)\))?$/gm;
+      const sections = content.split(versionRegex).filter((s) => s.trim());
+
+      // Process versions (groups of 3: version, date, content)
+      for (let i = 0; i < sections.length; i += 3) {
+        const version = sections[i];
+        const date = sections[i + 1];
+        const versionContent = sections[i + 2];
+
+        if (!versionContent) continue;
+
+        const sectionMap = this.parseVersionCommits(versionContent);
+
+        versions.push({
+          version,
+          date,
+          sections: sectionMap,
+        });
+      }
+
+      return versions;
+    } catch (error) {
+      console.error('Error parsing changelog:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Parse commits from a version section
+   */
+  private parseVersionCommits(versionContent: string): Map<string, IChangelogCommit[]> {
+    const sectionMap = new Map<string, IChangelogCommit[]>();
+    const lines = versionContent.split('\n');
+    const commitRegex = /^\* (\w+)(?:\(([^)]+)\))?: (.+?)(?: ([a-f0-9]{7,}))?$/;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith('*')) continue;
+
+      const match = commitRegex.exec(trimmed);
+
+      if (match) {
+        const [, type, scope, description, hash] = match;
+        const commitType = type ?? 'other';
+
+        if (!sectionMap.has(commitType)) {
+          sectionMap.set(commitType, []);
+        }
+
+        sectionMap.get(commitType)!.push({
+          type: commitType,
+          scope,
+          description: description.trim(),
+          hash,
+        });
+      }
+    }
+
+    return sectionMap;
+  }
+
   /**
    * Parse conventional commit message
    * Format: type(scope): description
@@ -46,7 +161,7 @@ export class ChangelogService {
   }
 
   /**
-   * Get git commits
+   * Get git commits (fallback if CHANGELOG.md doesn't exist)
    */
   getCommits(limit = 100): IGitCommit[] {
     try {

@@ -33,6 +33,7 @@ test-results
 # Documentation
 *.md
 !README.md
+!CHANGELOG.md
 
 # Docker
 Dockerfile*

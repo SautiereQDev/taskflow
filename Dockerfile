@@ -21,6 +21,7 @@ COPY vitest.config.ts ./
 COPY eslint.config.ts ./
 COPY postcss.config.js ./
 COPY tailwind.config.ts ./
+COPY CHANGELOG.md ./
 COPY src ./src
 COPY public ./public
 COPY views ./views
@@ -64,6 +65,7 @@ COPY --from=base /app/dist ./dist
 COPY --from=base /app/public ./public
 COPY --from=base /app/views ./views
 COPY --from=base /app/locales ./locales
+COPY --from=base /app/CHANGELOG.md ./CHANGELOG.md
 
 # Copy docker entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
