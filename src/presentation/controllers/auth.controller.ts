@@ -126,13 +126,14 @@ export class AuthController {
 
         if (wantsJson) {
           // API response with JSON
-          return res.status(401).json({
+          res.status(401).json({
             success: false,
             error: {
               message: error.message,
               statusCode: 401,
             },
           });
+          return;
         }
 
         // Set flash error message for HTML response
