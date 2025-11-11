@@ -1,0 +1,205 @@
+<%
+/**
+ * Checkbox/Toggle Component
+ * Reusable checkbox or toggle switch with label, help text, and full DaisyUI styling
+ *
+ * @component
+ * @example Basic checkbox
+ * <%- include('../../partials/ui/forms/checkbox', {
+ *   label: 'Remember me',
+ *   name: 'rememberMe'
+ * }) %>
+ *
+ * @example Checkbox with required and error
+ * <%- include('../../partials/ui/forms/checkbox', {
+ *   label: 'I accept the terms',
+ *   name: 'acceptTerms',
+ *   required: true,
+ *   size: 'sm',
+ *   error: errors.acceptTerms
+ * }) %>
+ *
+ * @example Toggle switch (settings)
+ * <%- include('../../partials/ui/forms/checkbox', {
+ *   label: 'Email notifications',
+ *   name: 'emailNotifications',
+ *   type: 'toggle',
+ *   checked: user.emailNotifications,
+ *   helpText: 'Receive email updates'
+ * }) %>
+ *
+ * @example With HTMX (live save)
+ * <%- include('../../partials/ui/forms/checkbox', {
+ *   label: 'Dark mode',
+ *   name: 'darkMode',
+ *   type: 'toggle',
+ *   checked: user.preferences.darkMode,
+ *   hxPost: '/api/settings/theme',
+ *   hxTrigger: 'change',
+ *   hxSwap: 'none'
+ * }) %>
+ *
+ * @param {string} label - Checkbox/toggle label text
+ * @param {string} name - Input name and ID attribute
+ * @param {string} [type='checkbox'] - Type: 'checkbox' or 'toggle'
+ * @param {boolean} [checked=false] - Initial checked state
+ * @param {boolean} [required=false] - Mark field as required
+ * @param {boolean} [disabled=false] - Disable checkbox/toggle
+ * @param {string} [value='on'] - Input value attribute (default: 'on')
+ *
+ * @param {string} [error=''] - Error message to display
+ * @param {string} [helpText=''] - Help text below checkbox
+ * @param {string} [labelClass=''] - Additional CSS classes for label text
+ *
+ * @param {string} [size='md'] - Size: 'xs', 'sm', 'md', 'lg'
+ * @param {string} [variant='primary'] - Color variant: 'primary', 'secondary', 'accent', 'success', 'warning', 'error', 'info'
+ *
+ * @param {string} [containerClass=''] - Additional CSS classes for form-control container
+ * @param {string} [inputClass=''] - Additional CSS classes for input element
+ * @param {string} [layout='inline'] - Layout: 'inline' (label right of checkbox) or 'stacked' (label below)
+ * @param {string} [justify='start'] - Flex justify: 'start', 'center', 'end', 'between'
+ *
+ * @param {string} [hxPost=''] - HTMX hx-post URL
+ * @param {string} [hxGet=''] - HTMX hx-get URL
+ * @param {string} [hxTrigger=''] - HTMX hx-trigger event
+ * @param {string} [hxTarget=''] - HTMX hx-target selector
+ * @param {string} [hxSwap=''] - HTMX hx-swap strategy
+ *
+ * @param {string} [xModel=''] - Alpine.js x-model binding
+ * @param {string} [xOn=''] - Alpine.js x-on event handler
+ *
+ * @param {string} [ariaLabel=''] - ARIA label for accessibility
+ * @param {string} [ariaDescribedby=''] - ARIA describedby attribute
+ */
+
+// Required props
+const label = typeof label !== 'undefined' ? label : '';
+const name = typeof name !== 'undefined' ? name : '';
+
+// Type and state
+const type = typeof type !== 'undefined' ? type : 'checkbox';
+const checked = typeof checked !== 'undefined' ? checked : false;
+const required = typeof required !== 'undefined' ? required : false;
+const disabled = typeof disabled !== 'undefined' ? disabled : false;
+const value = typeof value !== 'undefined' ? value : 'on';
+
+// Validation and messages
+const error = typeof error !== 'undefined' ? error : '';
+const helpText = typeof helpText !== 'undefined' ? helpText : '';
+const labelClass = typeof labelClass !== 'undefined' ? labelClass : '';
+
+// Styling
+const size = typeof size !== 'undefined' ? size : 'md';
+const variant = typeof variant !== 'undefined' ? variant : 'primary';
+const containerClass = typeof containerClass !== 'undefined' ? containerClass : '';
+const inputClass = typeof inputClass !== 'undefined' ? inputClass : '';
+const layout = typeof layout !== 'undefined' ? layout : 'inline';
+const justify = typeof justify !== 'undefined' ? justify : 'start';
+
+// HTMX attributes
+const hxPost = typeof hxPost !== 'undefined' ? hxPost : '';
+const hxGet = typeof hxGet !== 'undefined' ? hxGet : '';
+const hxTrigger = typeof hxTrigger !== 'undefined' ? hxTrigger : '';
+const hxTarget = typeof hxTarget !== 'undefined' ? hxTarget : '';
+const hxSwap = typeof hxSwap !== 'undefined' ? hxSwap : '';
+
+// Alpine.js attributes
+const xModel = typeof xModel !== 'undefined' ? xModel : '';
+const xOn = typeof xOn !== 'undefined' ? xOn : '';
+
+// Accessibility
+const ariaLabel = typeof ariaLabel !== 'undefined' ? ariaLabel : '';
+const ariaDescribedby = typeof ariaDescribedby !== 'undefined' ? ariaDescribedby : '';
+
+// Build size classes
+const sizeClasses = {
+  xs: type === 'toggle' ? 'toggle-xs' : 'checkbox-xs',
+  sm: type === 'toggle' ? 'toggle-sm' : 'checkbox-sm',
+  md: '',
+  lg: type === 'toggle' ? 'toggle-lg' : 'checkbox-lg'
+};
+
+// Build variant classes
+const variantClasses = {
+  primary: type === 'toggle' ? 'toggle-primary' : 'checkbox-primary',
+  secondary: type === 'toggle' ? 'toggle-secondary' : 'checkbox-secondary',
+  accent: type === 'toggle' ? 'toggle-accent' : 'checkbox-accent',
+  success: type === 'toggle' ? 'toggle-success' : 'checkbox-success',
+  warning: type === 'toggle' ? 'toggle-warning' : 'checkbox-warning',
+  error: type === 'toggle' ? 'toggle-error' : 'checkbox-error',
+  info: type === 'toggle' ? 'toggle-info' : 'checkbox-info'
+};
+
+// Build justify classes
+const justifyClasses = {
+  start: 'justify-start',
+  center: 'justify-center',
+  end: 'justify-end',
+  between: 'justify-between'
+};
+
+// Build input classes
+const baseClass = type === 'toggle' ? 'toggle' : 'checkbox';
+const checkboxClasses = [
+  baseClass,
+  sizeClasses[size] || '',
+  variantClasses[variant] || (type === 'toggle' ? 'toggle-primary' : 'checkbox-primary'),
+  error ? (type === 'toggle' ? 'toggle-error' : 'checkbox-error') : '',
+  inputClass
+].filter(Boolean).join(' ');
+
+// Generate unique IDs
+const inputId = name;
+const helpTextId = helpText || error ? `${name}-help` : '';
+const errorId = error ? `${name}-error` : '';
+%>
+
+<div class="form-control <%= containerClass %>">
+  <label class="label cursor-pointer <%= justifyClasses[justify] || 'justify-start' %> <%= layout === 'inline' ? 'tf-gap-sm' : 'flex-col items-start gap-2' %>">
+    <!-- Checkbox/Toggle Input -->
+    <input
+      type="checkbox"
+      id="<%= inputId %>"
+      name="<%= name %>"
+      value="<%= value %>"
+      class="<%= checkboxClasses %>"
+      <% if (checked) { %>checked<% } %>
+      <% if (required) { %>required<% } %>
+      <% if (disabled) { %>disabled<% } %>
+      <% if (hxPost) { %>hx-post="<%= hxPost %>"<% } %>
+      <% if (hxGet) { %>hx-get="<%= hxGet %>"<% } %>
+      <% if (hxTrigger) { %>hx-trigger="<%= hxTrigger %>"<% } %>
+      <% if (hxTarget) { %>hx-target="<%= hxTarget %>"<% } %>
+      <% if (hxSwap) { %>hx-swap="<%= hxSwap %>"<% } %>
+      <% if (xModel) { %>x-model="<%= xModel %>"<% } %>
+      <% if (xOn) { %>x-on:<%= xOn %><% } %>
+      <% if (ariaLabel) { %>aria-label="<%= ariaLabel %>"<% } %>
+      <% if (ariaDescribedby || helpTextId || errorId) { %>
+        aria-describedby="<%= ariaDescribedby || helpTextId || errorId %>"
+      <% } %>
+    />
+
+    <!-- Label Text -->
+    <span class="label-text <%= labelClass %>">
+      <%= label %>
+      <% if (required && !disabled) { %>
+        <span class="text-error">*</span>
+      <% } %>
+    </span>
+  </label>
+
+  <!-- Help Text / Error Message -->
+  <% if (error) { %>
+    <label class="label">
+      <span class="label-text-alt text-error" id="<%= errorId %>">
+        <%= error %>
+      </span>
+    </label>
+  <% } else if (helpText) { %>
+    <label class="label">
+      <span class="label-text-alt tf-text-muted" id="<%= helpTextId %>">
+        <%= helpText %>
+      </span>
+    </label>
+  <% } %>
+</div>

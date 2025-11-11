@@ -108,15 +108,13 @@
  <% } %>
  </div>
 
- <div class="form-control">
- <label class="label cursor-pointer justify-start tf-gap-sm">
- <input type="checkbox" name="acceptTerms" required class="checkbox checkbox-primary checkbox-sm" />
- <span class="label-text text-sm">
- J'accepte les <a href="/terms" class="link link-primary">conditions d'utilisation</a>
- et la <a href="/privacy" class="link link-primary">politique de confidentialité</a>
- </span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/checkbox', {
+ label: 'J\'accepte les <a href="/terms" class="link link-primary">conditions d\'utilisation</a> et la <a href="/privacy" class="link link-primary">politique de confidentialité</a>',
+ name: 'acceptTerms',
+ required: true,
+ size: 'sm',
+ labelClass: 'text-sm'
+ }) %>
 
  <%- include('../../partials/ui/button', {
  text: 'Créer mon compte',

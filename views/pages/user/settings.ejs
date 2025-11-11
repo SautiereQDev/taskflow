@@ -142,26 +142,32 @@
  </p>
 
  <div class="space-y-3">
- <div class="form-control">
- <label class="label cursor-pointer justify-start gap-3">
- <input type="checkbox" class="toggle toggle-primary" disabled />
- <span class="label-text"><%= __('settings.notifications.email') %></span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/checkbox', {
+ label: __('settings.notifications.email'),
+ name: 'emailNotifications',
+ type: 'toggle',
+ disabled: true,
+ justify: 'start',
+ containerClass: ''
+ }) %>
 
- <div class="form-control">
- <label class="label cursor-pointer justify-start gap-3">
- <input type="checkbox" class="toggle toggle-primary" disabled />
- <span class="label-text"><%= __('settings.notifications.browser') %></span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/checkbox', {
+ label: __('settings.notifications.browser'),
+ name: 'browserNotifications',
+ type: 'toggle',
+ disabled: true,
+ justify: 'start',
+ containerClass: ''
+ }) %>
 
- <div class="form-control">
- <label class="label cursor-pointer justify-start gap-3">
- <input type="checkbox" class="toggle toggle-primary" disabled />
- <span class="label-text"><%= __('settings.notifications.taskAssigned') %></span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/checkbox', {
+ label: __('settings.notifications.taskAssigned'),
+ name: 'taskAssignedNotifications',
+ type: 'toggle',
+ disabled: true,
+ justify: 'start',
+ containerClass: ''
+ }) %>
  </div>
  </div>
 
