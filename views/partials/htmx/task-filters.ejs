@@ -1,5 +1,5 @@
-<div class="bg-base-100 border border-base-content/10 p-6 rounded-lg">
- <h2 class="text-lg font-bold mb-4">Filtres</h2>
+<div class="glass tf-card-padding rounded-2xl">
+ <h2 class="text-xl font-bold tf-text-primary mb-6">Filtres</h2>
 
  <form id="filters-form"
  action="/tasks"
@@ -12,15 +12,15 @@
  hx-include="[name]"
  hx-trigger="submit"
  hx-headers='{"Cache-Control": "no-cache"}'
- class="space-y-6">
+ class="tf-section">
 
  <!-- Status -->
  <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold">Statut</span>
+ <label class="label mb-2">
+ <span class="label-text font-semibold tf-text-primary">Statut</span>
  </label>
- <div class="space-y-2">
- <label class="label cursor-pointer justify-start gap-3">
+ <div class="tf-items">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="status"
@@ -28,9 +28,9 @@
  class="checkbox checkbox-sm"
  <%= filters.status && filters.status.includes('TODO') ? 'checked' : '' %>
  />
- <span class="label-text">À faire</span>
+ <span class="label-text tf-text-primary">À faire</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="status"
@@ -38,9 +38,9 @@
  class="checkbox checkbox-sm"
  <%= filters.status && filters.status.includes('IN_PROGRESS') ? 'checked' : '' %>
  />
- <span class="label-text">En cours</span>
+ <span class="label-text tf-text-primary">En cours</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="status"
@@ -48,9 +48,9 @@
  class="checkbox checkbox-sm"
  <%= filters.status && filters.status.includes('DONE') ? 'checked' : '' %>
  />
- <span class="label-text">Terminée</span>
+ <span class="label-text tf-text-primary">Terminée</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="status"
@@ -58,18 +58,18 @@
  class="checkbox checkbox-sm"
  <%= filters.status && filters.status.includes('CANCELLED') ? 'checked' : '' %>
  />
- <span class="label-text">Annulée</span>
+ <span class="label-text tf-text-primary">Annulée</span>
  </label>
  </div>
  </div>
 
  <!-- Priority -->
  <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold">Priorité</span>
+ <label class="label mb-2">
+ <span class="label-text font-semibold tf-text-primary">Priorité</span>
  </label>
- <div class="space-y-2">
- <label class="label cursor-pointer justify-start gap-3">
+ <div class="tf-items">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="priority"
@@ -77,9 +77,9 @@
  class="checkbox checkbox-sm checkbox-error"
  <%= filters.priority && filters.priority.includes('URGENT') ? 'checked' : '' %>
  />
- <span class="label-text">Urgente</span>
+ <span class="label-text tf-text-primary">Urgente</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="priority"
@@ -87,9 +87,9 @@
  class="checkbox checkbox-sm checkbox-warning"
  <%= filters.priority && filters.priority.includes('HIGH') ? 'checked' : '' %>
  />
- <span class="label-text">Haute</span>
+ <span class="label-text tf-text-primary">Haute</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="priority"
@@ -97,9 +97,9 @@
  class="checkbox checkbox-sm checkbox-info"
  <%= filters.priority && filters.priority.includes('MEDIUM') ? 'checked' : '' %>
  />
- <span class="label-text">Moyenne</span>
+ <span class="label-text tf-text-primary">Moyenne</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="checkbox"
  name="priority"
@@ -107,7 +107,7 @@
  class="checkbox checkbox-sm"
  <%= filters.priority && filters.priority.includes('LOW') ? 'checked' : '' %>
  />
- <span class="label-text">Basse</span>
+ <span class="label-text tf-text-primary">Basse</span>
  </label>
  </div>
  </div>
@@ -115,8 +115,8 @@
  <!-- Assignee -->
  <% if (users && users.length > 0) { %>
  <div class="form-control">
- <label for="assigneeId" class="label">
- <span class="label-text font-semibold">Assignée à</span>
+ <label for="assigneeId" class="label mb-2">
+ <span class="label-text font-semibold tf-text-primary">Assignée à</span>
  </label>
  <select id="assigneeId" name="assigneeId" class="select select-bordered select-sm w-full tf-input-padding-sm">
  <option value="">Tous</option>
@@ -131,11 +131,11 @@
 
  <!-- Due Date Filter -->
  <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold">Échéance</span>
+ <label class="label mb-2">
+ <span class="label-text font-semibold tf-text-primary">Échéance</span>
  </label>
- <div class="space-y-2">
- <label class="label cursor-pointer justify-start gap-3">
+ <div class="tf-items">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="radio"
  name="dueDateFilter"
@@ -143,9 +143,9 @@
  class="radio radio-sm"
  <%= !filters.dueDateFilter ? 'checked' : '' %>
  />
- <span class="label-text">Toutes</span>
+ <span class="label-text tf-text-primary">Toutes</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="radio"
  name="dueDateFilter"
@@ -153,9 +153,9 @@
  class="radio radio-sm radio-error"
  <%= filters.dueDateFilter === 'overdue' ? 'checked' : '' %>
  />
- <span class="label-text">En retard</span>
+ <span class="label-text tf-text-primary">En retard</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="radio"
  name="dueDateFilter"
@@ -163,9 +163,9 @@
  class="radio radio-sm radio-warning"
  <%= filters.dueDateFilter === 'today' ? 'checked' : '' %>
  />
- <span class="label-text">Aujourd'hui</span>
+ <span class="label-text tf-primary">Aujourd'hui</span>
  </label>
- <label class="label cursor-pointer justify-start gap-3">
+ <label class="label cursor-pointer justify-start tf-gap-sm py-2 hover:bg-base-200/50 rounded-lg px-2 -mx-2 transition-colors">
  <input
  type="radio"
  name="dueDateFilter"
@@ -173,20 +173,20 @@
  class="radio radio-sm"
  <%= filters.dueDateFilter === 'week' ? 'checked' : '' %>
  />
- <span class="label-text">Cette semaine</span>
+ <span class="label-text tf-text-primary">Cette semaine</span>
  </label>
  </div>
  </div>
 
  <!-- Actions -->
- <div class="flex gap-2">
- <button type="submit" class="btn btn-primary btn-sm flex-1">
+ <div class="flex tf-gap-sm">
+ <button type="submit" class="btn btn-primary btn-sm flex-1 tf-gap-xs">
  <span id="filter-indicator" class="htmx-indicator loading loading-spinner loading-xs"></span>
  Appliquer
  </button>
  <button type="reset"
  id="reset-filters-btn"
- class="btn btn-ghost btn-sm">
+ class="btn btn-ghost btn-sm tf-gap-xs">
  Réinitialiser
  </button>
  </div>
