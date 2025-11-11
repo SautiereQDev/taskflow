@@ -74,9 +74,12 @@
  </label>
  </div>
 
- <button type="submit" class="btn btn-primary w-full">
- Se connecter
- </button>
+ <%- include('../../partials/ui/button', {
+ text: 'Se connecter',
+ type: 'submit',
+ variant: 'primary',
+ block: true
+ }) %>
  </form>
 
  <div class="divider">OU</div>

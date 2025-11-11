@@ -1,0 +1,116 @@
+<%
+/**
+ * Button Component (DaisyUI)
+ *
+ * Reusable button component with support for variants, sizes, states, and icons.
+ *
+ * @param {string} text - Button text content (required)
+ * @param {string} [variant='primary'] - Button style: 'primary', 'secondary', 'accent', 'success', 'error', 'warning', 'info', 'ghost', 'link', 'neutral'
+ * @param {string} [size='md'] - Button size: 'xs', 'sm', 'md', 'lg'
+ * @param {string} [type='button'] - Button type: 'button', 'submit', 'reset'
+ * @param {boolean} [disabled=false] - Disabled state
+ * @param {boolean} [loading=false] - Loading state (shows spinner, disables button)
+ * @param {boolean} [outline=false] - Use outline style
+ * @param {boolean} [wide=false] - Full width button
+ * @param {boolean} [block=false] - Display as block (full width)
+ * @param {string} [icon=''] - Icon HTML (SVG or icon class)
+ * @param {string} [iconPosition='left'] - Icon position: 'left', 'right'
+ * @param {string} [href=''] - If provided, renders as <a> tag instead of <button>
+ * @param {string} [class=''] - Additional CSS classes
+ * @param {string} [id=''] - Button ID attribute
+ * @param {object} [attrs={}] - Additional HTML attributes (e.g., { 'data-action': 'delete', 'hx-post': '/api/tasks' })
+ *
+ * @example Basic button
+ * <%- include('./partials/ui/button', { text: 'Save', variant: 'primary' }) %>
+ *
+ * @example Button with icon
+ * <%- include('./partials/ui/button', {
+ *   text: 'Delete',
+ *   variant: 'error',
+ *   icon: '<svg>...</svg>',
+ *   iconPosition: 'right'
+ * }) %>
+ *
+ * @example Submit button with loading state
+ * <%- include('./partials/ui/button', {
+ *   text: 'Create Task',
+ *   type: 'submit',
+ *   variant: 'success',
+ *   loading: isSubmitting
+ * }) %>
+ *
+ * @example Link button (renders as <a>)
+ * <%- include('./partials/ui/button', {
+ *   text: 'Go to Dashboard',
+ *   variant: 'link',
+ *   href: '/dashboard'
+ * }) %>
+ *
+ * @example Button with HTMX attributes
+ * <%- include('./partials/ui/button', {
+ *   text: 'Load More',
+ *   variant: 'ghost',
+ *   attrs: {
+ *     'hx-get': '/api/tasks?page=2',
+ *     'hx-target': '#task-list',
+ *     'hx-swap': 'beforeend'
+ *   }
+ * }) %>
+ */
+
+// Default values
+const btnText = typeof text !== 'undefined' ? text : '';
+const btnVariant = typeof variant !== 'undefined' ? variant : 'primary';
+const btnSize = typeof size !== 'undefined' ? size : 'md';
+const btnType = typeof type !== 'undefined' ? type : 'button';
+const btnDisabled = typeof disabled !== 'undefined' ? disabled : false;
+const btnLoading = typeof loading !== 'undefined' ? loading : false;
+const btnOutline = typeof outline !== 'undefined' ? outline : false;
+const btnWide = typeof wide !== 'undefined' ? wide : false;
+const btnBlock = typeof block !== 'undefined' ? block : false;
+const btnIcon = typeof icon !== 'undefined' ? icon : '';
+const btnIconPosition = typeof iconPosition !== 'undefined' ? iconPosition : 'left';
+const btnHref = typeof href !== 'undefined' ? href : '';
+const btnClass = typeof class !== 'undefined' ? class : '';
+const btnId = typeof id !== 'undefined' ? id : '';
+const btnAttrs = typeof attrs !== 'undefined' ? attrs : {};
+
+// Build DaisyUI button classes
+const classes = [
+  'btn',
+  btnVariant !== 'neutral' ? `btn-${btnVariant}` : '',
+  btnSize !== 'md' ? `btn-${btnSize}` : '',
+  btnOutline ? 'btn-outline' : '',
+  btnWide ? 'btn-wide' : '',
+  btnBlock ? 'btn-block' : '',
+  btnLoading ? 'loading' : '',
+  btnClass
+].filter(Boolean).join(' ');
+
+// Render button or link
+const isLink = btnHref !== '';
+const tag = isLink ? 'a' : 'button';
+const typeAttr = isLink ? '' : ` type="${btnType}"`;
+const hrefAttr = isLink ? ` href="${btnHref}"` : '';
+const disabledAttr = (btnDisabled || btnLoading) && !isLink ? ' disabled' : '';
+const idAttr = btnId ? ` id="${btnId}"` : '';
+
+// Build additional attributes string
+let attrsString = '';
+for (const [key, value] of Object.entries(btnAttrs)) {
+  attrsString += ` ${key}="${value}"`;
+}
+%>
+
+<<%= tag %> class="<%= classes %>"<%= typeAttr %><%= hrefAttr %><%= disabledAttr %><%= idAttr %><%= attrsString %>>
+  <% if (btnLoading) { %>
+    <span class="loading loading-spinner loading-xs"></span>
+  <% } %>
+  <% if (btnIcon && btnIconPosition === 'left' && !btnLoading) { %>
+    <%- btnIcon %>
+  <% } %>
+  <%= btnText %>
+  <% if (btnIcon && btnIconPosition === 'right' && !btnLoading) { %>
+    <%- btnIcon %>
+  <% } %>
+</<%= tag %>>

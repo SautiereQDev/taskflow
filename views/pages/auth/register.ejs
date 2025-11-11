@@ -118,9 +118,12 @@
  </label>
  </div>
 
- <button type="submit" class="btn btn-primary w-full">
- Créer mon compte
- </button>
+ <%- include('../../partials/ui/button', {
+ text: 'Créer mon compte',
+ type: 'submit',
+ variant: 'primary',
+ block: true
+ }) %>
  </form>
 
  <div class="divider">OU</div>

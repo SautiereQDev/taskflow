@@ -2441,6 +2441,15 @@ video {
     width: var(--size);
     height: var(--size);
   }
+
+  .btn-wide {
+    width: 100%;
+    max-width: calc(0.25rem * 64);
+  }
+
+  .btn-block {
+    width: 100%;
+  }
 }
 
 @layer daisyui.component {
