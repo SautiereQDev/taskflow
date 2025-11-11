@@ -9,13 +9,17 @@
 
 import type { Response } from 'express';
 import { injectable, inject } from 'tsyringe';
-import { UserService } from '@application/services/UserService.js';
-import { TaskService } from '@application/services/TaskService.js';
-import type { User } from '@domain/entities/User.js';
+import { QueryBus } from '@application/queries/QueryBus.js';
+import { GetDashboardStatsQuery } from '@application/queries/dashboard/GetDashboardStatsQuery.js';
+import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
+import { GetAllUsersQuery } from '@application/queries/users/GetAllUsersQuery.js';
+import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
+import type { IPaginatedUsersDto } from '@application/queries/users/GetAllUsersHandler.js';
 import {
   DashboardMetricsService,
   type IUserProductivityMetrics,
 } from '@application/services/DashboardMetricsService.js';
+import type { IDashboardStatsDto } from '@application/dtos/DashboardDto.js';
 import { TaskStatus, getTaskStatusLabel } from '@domain/value-objects/TaskStatus.js';
 import { TaskPriority, getTaskPriorityLabel } from '@domain/value-objects/TaskPriority.js';
 import { renderOrPartial } from '@presentation/utils/response.helpers.js';
@@ -35,8 +39,7 @@ import type { IAuthenticatedRequest } from './auth.controller.js';
 @injectable()
 export class DashboardController {
   constructor(
-    @inject(UserService) private readonly userService: UserService,
-    @inject(TaskService) private readonly taskService: TaskService,
+    @inject(QueryBus) private readonly queryBus: QueryBus,
     @inject(DashboardMetricsService)
     private readonly dashboardMetricsService: DashboardMetricsService
   ) {}
@@ -56,7 +59,7 @@ export class DashboardController {
       : null;
 
     const [
-      userStats,
+      stats,
       metrics,
       teamCapacityMetrics,
       usersResult,
@@ -64,18 +67,30 @@ export class DashboardController {
       highlightedTasksResult,
       myAssignmentsResult,
     ] = await Promise.all([
-      userId ? this.dashboardMetricsService.getUserMetrics(userId) : Promise.resolve(null),
+      this.queryBus.execute<IDashboardStatsDto>(
+        GetDashboardStatsQuery,
+        new GetDashboardStatsQuery(userId)
+      ),
       this.dashboardMetricsService.getOverallMetrics(),
       this.dashboardMetricsService.getTeamCapacity(),
-      this.userService.findAll({ page: 1, limit: 100 }),
-      this.taskService.findAllTasks({ page: 1, limit: 6, dueDateFilter: 'week' }),
-      this.taskService.findAllTasks({ page: 1, limit: 6 }),
+      this.queryBus.execute<IPaginatedUsersDto>(GetAllUsersQuery, new GetAllUsersQuery(1, 100)),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ page: 1, limit: 6, dueDateFilter: 'week' })
+      ),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ page: 1, limit: 6 })
+      ),
       userId
-        ? this.taskService.findAllTasks({ page: 1, limit: 6, assigneeId: userId })
-        : Promise.resolve(null),
+        ? this.queryBus.execute<IPaginatedTasksDto>(
+            GetAllTasksQuery,
+            new GetAllTasksQuery({ page: 1, limit: 6, assigneeId: userId })
+          )
+        : Promise.resolve<IPaginatedTasksDto | null>(null),
     ]);
 
-    const mapTasks = (result: typeof upcomingTasksResult): ITaskListItemViewModel[] =>
+    const mapTasks = (result: IPaginatedTasksDto | null): ITaskListItemViewModel[] =>
       result ? result.items.map((task) => toTaskListItemViewModel(task, currentUser)) : [];
 
     const isIncompleteTask = (task: ITaskListItemViewModel): boolean =>
@@ -173,9 +188,7 @@ export class DashboardController {
       })
     );
 
-    // Type guard: usersResult is IPaginatedUserResult when pagination is used
-    const usersArray = Array.isArray(usersResult) ? [] : usersResult.users;
-    const usersMap = new Map(usersArray.map((user) => [user.id, user]));
+    const usersMap = new Map(usersResult.users.map((user) => [user.id, user]));
     const teamCapacity = this.buildTeamCapacityView(teamCapacityMetrics, usersMap, userId);
 
     const insights = {
@@ -189,7 +202,7 @@ export class DashboardController {
       ((metrics.tasksByStatus[TaskStatus.CANCELLED] as number | undefined) ?? 0);
 
     renderOrPartial(req, res, 'pages/dashboard/index', 'partials/dashboard/stats', {
-      stats: userStats,
+      stats,
       metrics,
       statusDistribution,
       priorityDistribution,
@@ -208,7 +221,7 @@ export class DashboardController {
 
   private buildTeamCapacityView(
     metrics: IUserProductivityMetrics[],
-    usersMap: Map<string, User>,
+    usersMap: Map<string, IPaginatedUsersDto['users'][number]>,
     currentUserId?: string
   ): {
     id: string;
