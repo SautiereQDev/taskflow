@@ -20,7 +20,7 @@ import { i18nMiddleware, i18nLocalsMiddleware } from '@config/i18n.config.js';
 import { attachUser } from '@presentation/middleware/authentication.middleware.js';
 import routes from '@presentation/routes/index.js';
 import { logger } from '@utils/logger.util.js';
-import { helmetConfig, csrfConfig } from '@config/security.config.js';
+import { helmetConfig } from '@config/security.config.js';
 
 // ES Module __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -109,14 +109,19 @@ export function createApp(): Express {
         conString: process.env.DATABASE_URL,
         createTableIfMissing: true,
         tableName: 'session',
+        // Prune expired session rows from database table daily
+        pruneSessionInterval: 24 * 60 * 60, // 24 hours in seconds
       }),
       secret: process.env.SESSION_SECRET ?? 'taskflow-secret-change-in-prod',
-      resave: false,
-      saveUninitialized: false,
+      resave: false, // Don't save session if unmodified
+      saveUninitialized: false, // Don't create session until something stored
+      rolling: true, // Reset maxAge on every request (extends session lifetime with user activity)
       name: 'sessionId',
       cookie: {
-        ...csrfConfig.cookieOptions,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        httpOnly: true, // Prevent XSS attacks (no JavaScript access)
+        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        sameSite: 'strict', // CSRF protection (only send cookie on same-site requests)
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days (automatically refreshed with rolling: true)
         domain: undefined, // Let browser determine domain (works for localhost)
         path: '/',
       },
