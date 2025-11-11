@@ -59,58 +59,58 @@
  */
 
 // Default values
-const btnText = typeof text !== 'undefined' ? text : '';
-const btnVariant = typeof variant !== 'undefined' ? variant : 'primary';
-const btnSize = typeof size !== 'undefined' ? size : 'md';
-const btnType = typeof type !== 'undefined' ? type : 'button';
-const btnDisabled = typeof disabled !== 'undefined' ? disabled : false;
-const btnLoading = typeof loading !== 'undefined' ? loading : false;
-const btnOutline = typeof outline !== 'undefined' ? outline : false;
-const btnWide = typeof wide !== 'undefined' ? wide : false;
-const btnBlock = typeof block !== 'undefined' ? block : false;
-const btnIcon = typeof icon !== 'undefined' ? icon : '';
-const btnIconPosition = typeof iconPosition !== 'undefined' ? iconPosition : 'left';
-const btnHref = typeof href !== 'undefined' ? href : '';
-const btnClass = typeof class !== 'undefined' ? class : '';
-const btnId = typeof id !== 'undefined' ? id : '';
-const btnAttrs = typeof attrs !== 'undefined' ? attrs : {};
+const _text = typeof locals.text !== 'undefined' ? locals.text : '';
+const _variant = typeof locals.variant !== 'undefined' ? locals.variant : 'primary';
+const _size = typeof locals.size !== 'undefined' ? locals.size : 'md';
+const _type = typeof locals.type !== 'undefined' ? locals.type : 'button';
+const _disabled = typeof locals.disabled !== 'undefined' ? locals.disabled : false;
+const _loading = typeof locals.loading !== 'undefined' ? locals.loading : false;
+const _outline = typeof locals.outline !== 'undefined' ? locals.outline : false;
+const _wide = typeof locals.wide !== 'undefined' ? locals.wide : false;
+const _block = typeof locals.block !== 'undefined' ? locals.block : false;
+const _icon = typeof locals.icon !== 'undefined' ? locals.icon : '';
+const _iconPosition = typeof locals.iconPosition !== 'undefined' ? locals.iconPosition : 'left';
+const _href = typeof locals.href !== 'undefined' ? locals.href : '';
+const _class = typeof locals.class !== 'undefined' ? locals.class : '';
+const _id = typeof locals.id !== 'undefined' ? locals.id : '';
+const _attrs = typeof locals.attrs !== 'undefined' ? locals.attrs : {};
 
 // Build DaisyUI button classes
 const classes = [
   'btn',
-  btnVariant !== 'neutral' ? `btn-${btnVariant}` : '',
-  btnSize !== 'md' ? `btn-${btnSize}` : '',
-  btnOutline ? 'btn-outline' : '',
-  btnWide ? 'btn-wide' : '',
-  btnBlock ? 'btn-block' : '',
-  btnLoading ? 'loading' : '',
-  btnClass
+  _variant !== 'neutral' ? `btn-${_variant}` : '',
+  _size !== 'md' ? `btn-${_size}` : '',
+  _outline ? 'btn-outline' : '',
+  _wide ? 'btn-wide' : '',
+  _block ? 'btn-block' : '',
+  _loading ? 'loading' : '',
+  _class
 ].filter(Boolean).join(' ');
 
 // Render button or link
-const isLink = btnHref !== '';
+const isLink = _href !== '';
 const tag = isLink ? 'a' : 'button';
-const typeAttr = isLink ? '' : ` type="${btnType}"`;
-const hrefAttr = isLink ? ` href="${btnHref}"` : '';
-const disabledAttr = (btnDisabled || btnLoading) && !isLink ? ' disabled' : '';
-const idAttr = btnId ? ` id="${btnId}"` : '';
+const typeAttr = isLink ? '' : ` type="${_type}"`;
+const hrefAttr = isLink ? ` href="${_href}"` : '';
+const disabledAttr = (_disabled || _loading) && !isLink ? ' disabled' : '';
+const idAttr = _id ? ` id="${_id}"` : '';
 
 // Build additional attributes string
 let attrsString = '';
-for (const [key, value] of Object.entries(btnAttrs)) {
+for (const [key, value] of Object.entries(_attrs)) {
   attrsString += ` ${key}="${value}"`;
 }
 %>
 
 <<%= tag %> class="<%= classes %>"<%= typeAttr %><%= hrefAttr %><%= disabledAttr %><%= idAttr %><%= attrsString %>>
-  <% if (btnLoading) { %>
+  <% if (_loading) { %>
     <span class="loading loading-spinner loading-xs"></span>
   <% } %>
-  <% if (btnIcon && btnIconPosition === 'left' && !btnLoading) { %>
-    <%- btnIcon %>
+  <% if (_icon && _iconPosition === 'left' && !_loading) { %>
+    <%- _icon %>
   <% } %>
-  <%= btnText %>
-  <% if (btnIcon && btnIconPosition === 'right' && !btnLoading) { %>
-    <%- btnIcon %>
+  <%= _text %>
+  <% if (_icon && _iconPosition === 'right' && !_loading) { %>
+    <%- _icon %>
   <% } %>
 </<%= tag %>>

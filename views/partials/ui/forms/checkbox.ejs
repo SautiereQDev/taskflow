@@ -73,61 +73,61 @@
  */
 
 // Required props
-const label = typeof label !== 'undefined' ? label : '';
-const name = typeof name !== 'undefined' ? name : '';
+const _label = typeof locals.label !== 'undefined' ? locals.label : '';
+const _name = typeof locals.name !== 'undefined' ? locals.name : '';
 
 // Type and state
-const type = typeof type !== 'undefined' ? type : 'checkbox';
-const checked = typeof checked !== 'undefined' ? checked : false;
-const required = typeof required !== 'undefined' ? required : false;
-const disabled = typeof disabled !== 'undefined' ? disabled : false;
-const value = typeof value !== 'undefined' ? value : 'on';
+const _type = typeof locals.type !== 'undefined' ? locals.type : 'checkbox';
+const _checked = typeof locals.checked !== 'undefined' ? locals.checked : false;
+const _required = typeof locals.required !== 'undefined' ? locals.required : false;
+const _disabled = typeof locals.disabled !== 'undefined' ? locals.disabled : false;
+const _value = typeof locals.value !== 'undefined' ? locals.value : 'on';
 
 // Validation and messages
-const error = typeof error !== 'undefined' ? error : '';
-const helpText = typeof helpText !== 'undefined' ? helpText : '';
-const labelClass = typeof labelClass !== 'undefined' ? labelClass : '';
+const _error = typeof locals.error !== 'undefined' ? locals.error : '';
+const _helpText = typeof locals.helpText !== 'undefined' ? locals.helpText : '';
+const _labelClass = typeof locals.labelClass !== 'undefined' ? locals.labelClass : '';
 
 // Styling
-const size = typeof size !== 'undefined' ? size : 'md';
-const variant = typeof variant !== 'undefined' ? variant : 'primary';
-const containerClass = typeof containerClass !== 'undefined' ? containerClass : '';
-const inputClass = typeof inputClass !== 'undefined' ? inputClass : '';
-const layout = typeof layout !== 'undefined' ? layout : 'inline';
-const justify = typeof justify !== 'undefined' ? justify : 'start';
+const _size = typeof locals.size !== 'undefined' ? locals.size : 'md';
+const _variant = typeof locals.variant !== 'undefined' ? locals.variant : 'primary';
+const _containerClass = typeof locals.containerClass !== 'undefined' ? locals.containerClass : '';
+const _inputClass = typeof locals.inputClass !== 'undefined' ? locals.inputClass : '';
+const _layout = typeof locals.layout !== 'undefined' ? locals.layout : 'inline';
+const _justify = typeof locals.justify !== 'undefined' ? locals.justify : 'start';
 
 // HTMX attributes
-const hxPost = typeof hxPost !== 'undefined' ? hxPost : '';
-const hxGet = typeof hxGet !== 'undefined' ? hxGet : '';
-const hxTrigger = typeof hxTrigger !== 'undefined' ? hxTrigger : '';
-const hxTarget = typeof hxTarget !== 'undefined' ? hxTarget : '';
-const hxSwap = typeof hxSwap !== 'undefined' ? hxSwap : '';
+const _hxPost = typeof locals.hxPost !== 'undefined' ? locals.hxPost : '';
+const _hxGet = typeof locals.hxGet !== 'undefined' ? locals.hxGet : '';
+const _hxTrigger = typeof locals.hxTrigger !== 'undefined' ? locals.hxTrigger : '';
+const _hxTarget = typeof locals.hxTarget !== 'undefined' ? locals.hxTarget : '';
+const _hxSwap = typeof locals.hxSwap !== 'undefined' ? locals.hxSwap : '';
 
 // Alpine.js attributes
-const xModel = typeof xModel !== 'undefined' ? xModel : '';
-const xOn = typeof xOn !== 'undefined' ? xOn : '';
+const _xModel = typeof locals.xModel !== 'undefined' ? locals.xModel : '';
+const _xOn = typeof locals.xOn !== 'undefined' ? locals.xOn : '';
 
 // Accessibility
-const ariaLabel = typeof ariaLabel !== 'undefined' ? ariaLabel : '';
-const ariaDescribedby = typeof ariaDescribedby !== 'undefined' ? ariaDescribedby : '';
+const _ariaLabel = typeof locals.ariaLabel !== 'undefined' ? locals.ariaLabel : '';
+const _ariaDescribedby = typeof locals.ariaDescribedby !== 'undefined' ? locals.ariaDescribedby : '';
 
 // Build size classes
 const sizeClasses = {
-  xs: type === 'toggle' ? 'toggle-xs' : 'checkbox-xs',
-  sm: type === 'toggle' ? 'toggle-sm' : 'checkbox-sm',
+  xs: _type === 'toggle' ? 'toggle-xs' : 'checkbox-xs',
+  sm: _type === 'toggle' ? 'toggle-sm' : 'checkbox-sm',
   md: '',
-  lg: type === 'toggle' ? 'toggle-lg' : 'checkbox-lg'
+  lg: _type === 'toggle' ? 'toggle-lg' : 'checkbox-lg'
 };
 
 // Build variant classes
 const variantClasses = {
-  primary: type === 'toggle' ? 'toggle-primary' : 'checkbox-primary',
-  secondary: type === 'toggle' ? 'toggle-secondary' : 'checkbox-secondary',
-  accent: type === 'toggle' ? 'toggle-accent' : 'checkbox-accent',
-  success: type === 'toggle' ? 'toggle-success' : 'checkbox-success',
-  warning: type === 'toggle' ? 'toggle-warning' : 'checkbox-warning',
-  error: type === 'toggle' ? 'toggle-error' : 'checkbox-error',
-  info: type === 'toggle' ? 'toggle-info' : 'checkbox-info'
+  primary: _type === 'toggle' ? 'toggle-primary' : 'checkbox-primary',
+  secondary: _type === 'toggle' ? 'toggle-secondary' : 'checkbox-secondary',
+  accent: _type === 'toggle' ? 'toggle-accent' : 'checkbox-accent',
+  success: _type === 'toggle' ? 'toggle-success' : 'checkbox-success',
+  warning: _type === 'toggle' ? 'toggle-warning' : 'checkbox-warning',
+  error: _type === 'toggle' ? 'toggle-error' : 'checkbox-error',
+  info: _type === 'toggle' ? 'toggle-info' : 'checkbox-info'
 };
 
 // Build justify classes
@@ -139,66 +139,66 @@ const justifyClasses = {
 };
 
 // Build input classes
-const baseClass = type === 'toggle' ? 'toggle' : 'checkbox';
+const baseClass = _type === 'toggle' ? 'toggle' : 'checkbox';
 const checkboxClasses = [
   baseClass,
-  sizeClasses[size] || '',
-  variantClasses[variant] || (type === 'toggle' ? 'toggle-primary' : 'checkbox-primary'),
-  error ? (type === 'toggle' ? 'toggle-error' : 'checkbox-error') : '',
-  inputClass
+  sizeClasses[_size] || '',
+  variantClasses[_variant] || (_type === 'toggle' ? 'toggle-primary' : 'checkbox-primary'),
+  _error ? (_type === 'toggle' ? 'toggle-error' : 'checkbox-error') : '',
+  _inputClass
 ].filter(Boolean).join(' ');
 
 // Generate unique IDs
-const inputId = name;
-const helpTextId = helpText || error ? `${name}-help` : '';
-const errorId = error ? `${name}-error` : '';
+const inputId = _name;
+const helpTextId = _helpText || _error ? `${_name}-help` : '';
+const errorId = _error ? `${_name}-error` : '';
 %>
 
-<div class="form-control <%= containerClass %>">
-  <label class="label cursor-pointer <%= justifyClasses[justify] || 'justify-start' %> <%= layout === 'inline' ? 'tf-gap-sm' : 'flex-col items-start gap-2' %>">
+<div class="form-control <%= _containerClass %>">
+  <label class="label cursor-pointer <%= justifyClasses[_justify] || 'justify-start' %> <%= _layout === 'inline' ? 'tf-gap-sm' : 'flex-col items-start gap-2' %>">
     <!-- Checkbox/Toggle Input -->
     <input
       type="checkbox"
       id="<%= inputId %>"
-      name="<%= name %>"
-      value="<%= value %>"
+      name="<%= _name %>"
+      value="<%= _value %>"
       class="<%= checkboxClasses %>"
-      <% if (checked) { %>checked<% } %>
-      <% if (required) { %>required<% } %>
-      <% if (disabled) { %>disabled<% } %>
-      <% if (hxPost) { %>hx-post="<%= hxPost %>"<% } %>
-      <% if (hxGet) { %>hx-get="<%= hxGet %>"<% } %>
-      <% if (hxTrigger) { %>hx-trigger="<%= hxTrigger %>"<% } %>
-      <% if (hxTarget) { %>hx-target="<%= hxTarget %>"<% } %>
-      <% if (hxSwap) { %>hx-swap="<%= hxSwap %>"<% } %>
-      <% if (xModel) { %>x-model="<%= xModel %>"<% } %>
-      <% if (xOn) { %>x-on:<%= xOn %><% } %>
-      <% if (ariaLabel) { %>aria-label="<%= ariaLabel %>"<% } %>
-      <% if (ariaDescribedby || helpTextId || errorId) { %>
-        aria-describedby="<%= ariaDescribedby || helpTextId || errorId %>"
+      <% if (_checked) { %>checked<% } %>
+      <% if (_required) { %>required<% } %>
+      <% if (_disabled) { %>disabled<% } %>
+      <% if (_hxPost) { %>hx-post="<%= _hxPost %>"<% } %>
+      <% if (_hxGet) { %>hx-get="<%= _hxGet %>"<% } %>
+      <% if (_hxTrigger) { %>hx-trigger="<%= _hxTrigger %>"<% } %>
+      <% if (_hxTarget) { %>hx-target="<%= _hxTarget %>"<% } %>
+      <% if (_hxSwap) { %>hx-swap="<%= _hxSwap %>"<% } %>
+      <% if (_xModel) { %>x-model="<%= _xModel %>"<% } %>
+      <% if (_xOn) { %>x-on:<%= _xOn %><% } %>
+      <% if (_ariaLabel) { %>aria-label="<%= _ariaLabel %>"<% } %>
+      <% if (_ariaDescribedby || helpTextId || errorId) { %>
+        aria-describedby="<%= _ariaDescribedby || helpTextId || errorId %>"
       <% } %>
     />
 
     <!-- Label Text -->
-    <span class="label-text <%= labelClass %>">
-      <%= label %>
-      <% if (required && !disabled) { %>
+    <span class="label-text <%= _labelClass %>">
+      <%= _label %>
+      <% if (_required && !_disabled) { %>
         <span class="text-error">*</span>
       <% } %>
     </span>
   </label>
 
   <!-- Help Text / Error Message -->
-  <% if (error) { %>
+  <% if (_error) { %>
     <label class="label">
       <span class="label-text-alt text-error" id="<%= errorId %>">
-        <%= error %>
+        <%= _error %>
       </span>
     </label>
-  <% } else if (helpText) { %>
+  <% } else if (_helpText) { %>
     <label class="label">
       <span class="label-text-alt tf-text-muted" id="<%= helpTextId %>">
-        <%= helpText %>
+        <%= _helpText %>
       </span>
     </label>
   <% } %>
