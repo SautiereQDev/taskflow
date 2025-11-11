@@ -1,0 +1,174 @@
+<%
+/**
+ * Modal Component (DaisyUI + Alpine.js)
+ *
+ * Reusable modal dialog component with Alpine.js integration.
+ *
+ * @param {string} id - Modal unique ID (required for Alpine.js x-data)
+ * @param {string} [title=''] - Modal title
+ * @param {string} body - Modal body content (required)
+ * @param {string} [size='default'] - Modal size: 'default', 'large', 'fullscreen'
+ * @param {boolean} [showClose=true] - Show close button in header
+ * @param {boolean} [closeOnBackdrop=true] - Close modal when clicking backdrop
+ * @param {string} [confirmText=''] - Confirm button text (if provided, shows confirm button)
+ * @param {string} [confirmVariant='primary'] - Confirm button variant
+ * @param {string} [cancelText=''] - Cancel button text (if provided, shows cancel button)
+ * @param {string} [onConfirm=''] - JavaScript function to call on confirm (e.g., 'submitForm()')
+ * @param {string} [onCancel=''] - JavaScript function to call on cancel
+ * @param {string} [class=''] - Additional CSS classes for modal box
+ *
+ * Usage with Alpine.js:
+ * The modal uses Alpine.js x-show and x-transition for smooth animations.
+ * Control modal state with Alpine.js: @click="modalOpen = true"
+ *
+ * @example Basic modal
+ * <div x-data="{ modalOpen: false }">
+ *   <button @click="modalOpen = true" class="btn">Open Modal</button>
+ *   <%- include('./partials/ui/modal', {
+ *     id: 'example-modal',
+ *     title: 'Confirm Action',
+ *     body: 'Are you sure you want to continue?',
+ *     confirmText: 'Yes',
+ *     cancelText: 'No'
+ *   }) %>
+ * </div>
+ *
+ * @example Large modal with custom action
+ * <%- include('./partials/ui/modal', {
+ *   id: 'task-modal',
+ *   title: 'Create Task',
+ *   body: '<form>...</form>',
+ *   size: 'large',
+ *   confirmText: 'Create',
+ *   onConfirm: 'createTask()',
+ *   confirmVariant: 'success'
+ * }) %>
+ *
+ * @example Fullscreen modal
+ * <%- include('./partials/ui/modal', {
+ *   id: 'preview-modal',
+ *   title: 'Document Preview',
+ *   body: '<iframe src="..."></iframe>',
+ *   size: 'fullscreen',
+ *   showClose: true
+ * }) %>
+ */
+
+// Default values
+const modalId = typeof id !== 'undefined' ? id : '';
+const modalTitle = typeof title !== 'undefined' ? title : '';
+const modalBody = typeof body !== 'undefined' ? body : '';
+const modalSize = typeof size !== 'undefined' ? size : 'default';
+const modalShowClose = typeof showClose !== 'undefined' ? showClose : true;
+const modalCloseOnBackdrop = typeof closeOnBackdrop !== 'undefined' ? closeOnBackdrop : true;
+const modalConfirmText = typeof confirmText !== 'undefined' ? confirmText : '';
+const modalConfirmVariant = typeof confirmVariant !== 'undefined' ? confirmVariant : 'primary';
+const modalCancelText = typeof cancelText !== 'undefined' ? cancelText : '';
+const modalOnConfirm = typeof onConfirm !== 'undefined' ? onConfirm : '';
+const modalOnCancel = typeof onCancel !== 'undefined' ? onCancel : '';
+const modalClass = typeof class !== 'undefined' ? class : '';
+
+// Validate required params
+if (!modalId) {
+  throw new Error('Modal component requires an "id" parameter');
+}
+
+// Build modal box classes
+const sizeClasses = {
+  default: 'max-w-lg',
+  large: 'max-w-3xl',
+  fullscreen: 'w-11/12 max-w-5xl h-5/6'
+};
+
+const boxClasses = [
+  'modal-box',
+  sizeClasses[modalSize] || sizeClasses.default,
+  modalClass
+].filter(Boolean).join(' ');
+%>
+
+<!-- Modal Backdrop and Container (Alpine.js controlled) -->
+<div x-show="modalOpen"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     class="fixed inset-0 z-50 overflow-y-auto"
+     aria-labelledby="<%= modalId %>-title"
+     role="dialog"
+     aria-modal="true"
+     style="display: none;">
+  
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+       <% if (modalCloseOnBackdrop) { %>
+       @click="modalOpen = false"
+       <% } %>
+       aria-hidden="true"></div>
+
+  <!-- Modal Box -->
+  <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
+    <!-- Centering trick -->
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+    <!-- Modal Content -->
+    <div x-show="modalOpen"
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+         class="<%= boxClasses %> inline-block align-bottom bg-base-100 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
+         @click.away="<%= modalCloseOnBackdrop ? 'modalOpen = false' : '' %>">
+      
+      <!-- Header -->
+      <% if (modalTitle || modalShowClose) { %>
+      <div class="flex items-start justify-between p-4 border-b border-base-300">
+        <% if (modalTitle) { %>
+        <h3 class="text-lg font-semibold" id="<%= modalId %>-title">
+          <%= modalTitle %>
+        </h3>
+        <% } %>
+        <% if (modalShowClose) { %>
+        <button type="button"
+                class="btn btn-sm btn-ghost btn-circle"
+                @click="modalOpen = false"
+                aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <% } %>
+      </div>
+      <% } %>
+
+      <!-- Body -->
+      <div class="p-6">
+        <%- modalBody %>
+      </div>
+
+      <!-- Actions -->
+      <% if (modalConfirmText || modalCancelText) { %>
+      <div class="modal-action p-4 border-t border-base-300">
+        <% if (modalCancelText) { %>
+        <button type="button"
+                class="btn btn-ghost"
+                @click="<%= modalOnCancel ? modalOnCancel + '; ' : '' %>modalOpen = false">
+          <%= modalCancelText %>
+        </button>
+        <% } %>
+        <% if (modalConfirmText) { %>
+        <button type="button"
+                class="btn btn-<%= modalConfirmVariant %>"
+                @click="<%= modalOnConfirm ? modalOnConfirm + '; ' : '' %>modalOpen = false">
+          <%= modalConfirmText %>
+        </button>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
