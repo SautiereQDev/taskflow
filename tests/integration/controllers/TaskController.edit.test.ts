@@ -175,16 +175,15 @@ describe('TaskController - Edit Page Integration Tests', () => {
       expect(response.text).toContain('htmx.ajax');
     });
 
-    it('should include breadcrumb navigation', async () => {
+    it('should include navigation to task detail', async () => {
       const response = await supertest(app)
         .get(`/tasks/${testTask.id}/edit`)
         .set('Cookie', sessionCookie)
         .expect(200);
 
-      // Check breadcrumb structure
-      expect(response.text).toContain('breadcrumbs');
-      expect(response.text).toContain('/tasks');
+      // Check navigation back to detail page
       expect(response.text).toContain(`/tasks/${testTask.id}`);
+      expect(response.text).toMatch(/cancel|annuler/i);
     });
 
     it('should handle task with no dueDate', async () => {
@@ -281,15 +280,17 @@ describe('TaskController - Edit Page Integration Tests', () => {
       expect(response.text).toMatch(/cancel|annuler/i);
     });
 
-    it('should include glassmorphism design classes', async () => {
+    it('should include design system classes', async () => {
       const response = await supertest(app)
         .get(`/tasks/${testTask.id}/edit`)
         .set('Cookie', sessionCookie)
         .expect(200);
 
-      // Check for design system classes
-      expect(response.text).toMatch(/glass(-light|-heavy)?/);
-      expect(response.text).toContain('tf-');
+      // Check for Task Flow design system classes
+      expect(response.text).toContain('tf-text-primary');
+      expect(response.text).toContain('tf-text-secondary');
+      expect(response.text).toContain('tf-gap');
+      expect(response.text).toContain('tf-card-padding');
     });
 
     it('should include form validation attributes', async () => {
