@@ -135,6 +135,10 @@ export function createApp(): Express {
   // View Engine (EJS)
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '../../views'));
+  // Disable view caching in development for hot reloading
+  if (process.env.NODE_ENV !== 'production') {
+    app.set('view cache', false);
+  }
   app.use(expressLayouts);
   app.set('layout', 'layouts/main');
 
