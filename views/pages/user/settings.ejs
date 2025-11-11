@@ -31,40 +31,23 @@
  <span class="label-text-alt"><%= __('settings.appearance.themeHint') %></span>
  </label>
 
- <div class="flex gap-4 flex-wrap" x-data="{ selectedTheme: '<%= theme %>' }">
- <!-- Light Theme -->
- <label class="cursor-pointer">
- <input type="radio"
- name="theme"
- value="light"
- <%= theme === 'light' ? 'checked' : '' %>
- x-model="selectedTheme"
- class="radio radio-primary hidden" />
- <div class="card bg-base-200 border border-base-content/10 shadow-md card hover:bg-base-300 transition-colors w-32 p-4 transition-all"
- :class="{ 'ring-2 ring-primary': selectedTheme === 'light' }">
- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
- </svg>
- <span class="text-center text-sm font-medium"><%= __('settings.appearance.light') %></span>
- </div>
- </label>
-
- <!-- Dark Theme -->
- <label class="cursor-pointer">
- <input type="radio"
- name="theme"
- value="dark"
- <%= theme === 'dark' ? 'checked' : '' %>
- x-model="selectedTheme"
- class="radio radio-primary hidden" />
- <div class="card bg-base-200 border border-base-content/10 shadow-md card hover:bg-base-300 transition-colors w-32 p-4 transition-all"
- :class="{ 'ring-2 ring-primary': selectedTheme === 'dark' }">
- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
- </svg>
- <span class="text-center text-sm font-medium"><%= __('settings.appearance.dark') %></span>
- </div>
- </label>
+ <div x-data="{ selectedTheme: '<%= theme %>' }">
+ <%- include('../../partials/ui/forms/radio-group', {
+ name: 'theme',
+ xModel: 'selectedTheme',
+ options: [
+ {
+ value: 'light',
+ title: __('settings.appearance.light'),
+ icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`
+ },
+ {
+ value: 'dark',
+ title: __('settings.appearance.dark'),
+ icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`
+ }
+ ]
+ }) %>
  </div>
 
  <label class="label">
@@ -93,36 +76,23 @@
  <span class="label-text-alt"><%= __('settings.language.hint') %></span>
  </label>
 
- <div class="flex gap-4 flex-wrap" x-data="{ selectedLocale: '<%= locale %>' }">
- <!-- French -->
- <label class="cursor-pointer">
- <input type="radio"
- name="locale"
- value="fr"
- <%= locale === 'fr' ? 'checked' : '' %>
- x-model="selectedLocale"
- class="radio radio-primary hidden" />
- <div class="card bg-base-200 border border-base-content/10 shadow-md card hover:bg-base-300 transition-colors w-32 p-4 transition-all"
- :class="{ 'ring-2 ring-primary': selectedLocale === 'fr' }">
- <div class="text-4xl text-center mb-2">🇫🇷</div>
- <span class="text-center text-sm font-medium">Français</span>
- </div>
- </label>
-
- <!-- English -->
- <label class="cursor-pointer">
- <input type="radio"
- name="locale"
- value="en"
- <%= locale === 'en' ? 'checked' : '' %>
- x-model="selectedLocale"
- class="radio radio-primary hidden" />
- <div class="card bg-base-200 border border-base-content/10 shadow-md card hover:bg-base-300 transition-colors w-32 p-4 transition-all"
- :class="{ 'ring-2 ring-primary': selectedLocale === 'en' }">
- <div class="text-4xl text-center mb-2">🇬🇧</div>
- <span class="text-center text-sm font-medium">English</span>
- </div>
- </label>
+ <div x-data="{ selectedLocale: '<%= locale %>' }">
+ <%- include('../../partials/ui/forms/radio-group', {
+ name: 'locale',
+ xModel: 'selectedLocale',
+ options: [
+ {
+ value: 'fr',
+ title: 'Français',
+ icon: `<div class="text-4xl">🇫🇷</div>`
+ },
+ {
+ value: 'en',
+ title: 'English',
+ icon: `<div class="text-4xl">🇬🇧</div>`
+ }
+ ]
+ }) %>
  </div>
  </div>
  </div>

@@ -1,0 +1,58 @@
+<%
+/**
+ * Radio Group Component
+ * Render a group of visual radio cards (useful for theme/locale selectors)
+ *
+ * Props:
+ * - name: string - input name shared by the radio group
+ * - options: Array<{ value, title, subtitle?, icon?, cardClass? }> - option objects
+ * - xModel: string (optional) - Alpine.js x-model variable name (e.g. 'selectedTheme')
+ * - selectedValue: string (optional) - server-side selected value fallback
+ * - containerClass: string (optional) - classes for the outer container
+ * - cardBaseClass: string (optional) - base classes applied to each option card
+ *
+ * Usage example (inside a page with x-data):
+ * <div x-data="{ selectedTheme: '<%= theme %>' }">
+ *   <%- include('../../partials/ui/forms/radio-group', {
+ *     name: 'theme',
+ *     xModel: 'selectedTheme',
+ *     options: [
+ *       { value: 'light', title: __('settings.appearance.light'), icon: `<svg ...></svg>` },
+ *       { value: 'dark', title: __('settings.appearance.dark'), icon: `<svg ...></svg>` }
+ *     ]
+ *   }) %>
+ * </div>
+ */
+
+const name = typeof name !== 'undefined' ? name : '';
+const options = typeof options !== 'undefined' ? options : [];
+const xModel = typeof xModel !== 'undefined' ? xModel : '';
+const selectedValue = typeof selectedValue !== 'undefined' ? selectedValue : '';
+const containerClass = typeof containerClass !== 'undefined' ? containerClass : 'flex gap-4 flex-wrap';
+const cardBaseClass = typeof cardBaseClass !== 'undefined' ? cardBaseClass : 'card bg-base-200 border border-base-content/10 shadow-md hover:bg-base-300 transition-colors w-32 p-4 transition-all';
+%>
+
+<div class="<%= containerClass %>">
+  <% options.forEach(function(opt){ %>
+    <label class="cursor-pointer">
+      <input
+        type="radio"
+        name="<%= name %>"
+        value="<%= opt.value %>"
+        class="radio radio-primary hidden"
+        <%= xModel ? `x-model=\"${xModel}\"` : (opt.value === selectedValue ? 'checked' : '') %>
+      />
+
+      <div class="<%= cardBaseClass %>" <%= xModel ? `:class=\"{ 'ring-2 ring-primary': ${xModel} === '${opt.value}' }\"` : (selectedValue === opt.value ? 'aria-pressed="true"' : '') %>>
+        <% if (opt.icon) { %>
+          <div class="mb-2 h-8 w-8 mx-auto"><%- opt.icon %></div>
+        <% } %>
+
+        <span class="text-center text-sm font-medium"><%= opt.title %></span>
+        <% if (opt.subtitle) { %>
+          <span class="text-center block text-xs opacity-70"><%= opt.subtitle %></span>
+        <% } %>
+      </div>
+    </label>
+  <% }) %>
+</div>
