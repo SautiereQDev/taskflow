@@ -69,6 +69,35 @@ test_db_clean: ## Nettoie les volumes de la base de données de test
 	$(NPM) run test:db:clean
 	@echo "$(GREEN)✓ Volumes nettoyés$(NC)"
 
+# E2E Tests (Playwright)
+test_e2e: ## Lance les tests E2E Playwright localement
+	@echo "$(YELLOW)Lancement des tests E2E Playwright...$(NC)"
+	$(NPM) run test:e2e
+	@echo "$(GREEN)✓ Tests E2E terminés$(NC)"
+
+test_e2e_ui: ## Lance les tests E2E avec interface graphique
+	@echo "$(YELLOW)Lancement de l'interface Playwright...$(NC)"
+	$(NPM) run test:e2e:ui
+
+test_e2e_headed: ## Lance les tests E2E en mode visible (headed)
+	@echo "$(YELLOW)Lancement des tests E2E en mode visible...$(NC)"
+	$(NPM) run test:e2e:headed
+
+test_e2e_docker: ## Lance les tests E2E dans Docker (avec app + DB)
+	@echo "$(YELLOW)Lancement des tests E2E dans Docker...$(NC)"
+	@echo "$(BLUE)Construction et démarrage des conteneurs...$(NC)"
+	docker compose -f docker-compose.e2e.yml up --build --abort-on-container-exit --exit-code-from e2e
+	@echo "$(GREEN)✓ Tests E2E Docker terminés$(NC)"
+	@$(MAKE) test_e2e_docker_down
+
+test_e2e_docker_down: ## Arrête et nettoie les conteneurs E2E Docker
+	@echo "$(YELLOW)Nettoyage des conteneurs E2E...$(NC)"
+	docker compose -f docker-compose.e2e.yml down -v
+	@echo "$(GREEN)✓ Conteneurs E2E nettoyés$(NC)"
+
+test_e2e_docker_logs: ## Affiche les logs des conteneurs E2E
+	docker compose -f docker-compose.e2e.yml logs -f
+
 lint: ## Vérifie le code
 	$(ESLINT) . --ext .ts
 

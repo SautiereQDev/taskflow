@@ -1,5 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*", "tests/**/*", "**/*.test.ts", "**/*.spec.ts"],
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "playwright.config.ts",
+    "playwright.config.docker.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }
