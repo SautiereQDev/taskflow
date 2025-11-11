@@ -292,11 +292,21 @@ describe('Task Entity', () => {
       expect(task.completedAt).toBeNull();
     });
 
-    it('should throw error for invalid status transition', () => {
+    it('should allow transition from TODO to DONE', () => {
       const task = createTaskEntity({ status: TaskStatus.TODO });
 
-      expect(() => task.changeStatus(TaskStatus.DONE)).toThrow(
-        'Cannot transition from TODO to DONE'
+      task.changeStatus(TaskStatus.DONE);
+
+      expect(task.status).toBe(TaskStatus.DONE);
+      expect(task.completedAt).toBeInstanceOf(Date);
+    });
+
+    it('should throw error for invalid status transition (DONE to CANCELLED)', () => {
+      const task = createTaskEntity({ status: TaskStatus.IN_PROGRESS });
+      task.changeStatus(TaskStatus.DONE);
+
+      expect(() => task.changeStatus(TaskStatus.CANCELLED)).toThrow(
+        'Cannot transition from DONE to CANCELLED'
       );
     });
 

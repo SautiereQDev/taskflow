@@ -171,7 +171,7 @@ export class Task {
 
     // Validate status transition
     const validTransitions: Record<TaskStatus, TaskStatus[]> = {
-      [TaskStatus.TODO]: [TaskStatus.IN_PROGRESS, TaskStatus.CANCELLED],
+      [TaskStatus.TODO]: [TaskStatus.IN_PROGRESS, TaskStatus.DONE, TaskStatus.CANCELLED],
       [TaskStatus.IN_PROGRESS]: [TaskStatus.DONE, TaskStatus.TODO, TaskStatus.CANCELLED],
       [TaskStatus.DONE]: [TaskStatus.IN_PROGRESS],
       [TaskStatus.CANCELLED]: [TaskStatus.TODO],

@@ -49,7 +49,7 @@ export function getTaskStatusLabel(status: TaskStatus, locale = 'en'): string {
 export function isValidStatusTransition(from: TaskStatus, to: TaskStatus): boolean {
   // Define allowed transitions
   const allowedTransitions: Record<TaskStatus, TaskStatus[]> = {
-    [TaskStatus.TODO]: [TaskStatus.IN_PROGRESS, TaskStatus.CANCELLED],
+    [TaskStatus.TODO]: [TaskStatus.IN_PROGRESS, TaskStatus.DONE, TaskStatus.CANCELLED],
     [TaskStatus.IN_PROGRESS]: [TaskStatus.DONE, TaskStatus.TODO, TaskStatus.CANCELLED],
     [TaskStatus.DONE]: [TaskStatus.TODO], // Can reopen
     [TaskStatus.CANCELLED]: [TaskStatus.TODO], // Can reopen
