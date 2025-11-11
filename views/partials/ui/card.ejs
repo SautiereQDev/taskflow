@@ -1,0 +1,95 @@
+<%
+/**
+ * Card Component (DaisyUI)
+ *
+ * Reusable card component with support for variants, slots, and actions.
+ *
+ * @param {string} [title=''] - Card title (optional)
+ * @param {string} [body=''] - Card body content (optional, use slot instead for complex content)
+ * @param {string} [variant='default'] - Card style: 'default', 'bordered', 'compact', 'glass', 'side'
+ * @param {string} [class=''] - Additional CSS classes
+ * @param {string} [id=''] - Card ID attribute
+ * @param {boolean} [clickable=false] - Add hover effects for clickable cards
+ * @param {object} [attrs={}] - Additional HTML attributes
+ *
+ * Slots (use EJS body between include tags):
+ * - Default slot: Card content (between opening and closing tags)
+ * - If no slot content, uses `body` parameter
+ *
+ * @example Basic card with title and body
+ * <%- include('./partials/ui/card', { title: 'User Profile', body: 'User information here' }) %>
+ *
+ * @example Card with slot content
+ * <% const cardContent = `
+ *   <h3 class="card-title">Custom Content</h3>
+ *   <p>This is slot content</p>
+ *   <div class="card-actions justify-end">
+ *     <button class="btn btn-primary">Action</button>
+ *   </div>
+ * ` %>
+ * <%- include('./partials/ui/card', { body: cardContent, variant: 'bordered' }) %>
+ *
+ * @example Compact card with actions
+ * <%- include('./partials/ui/card', {
+ *   title: 'Task #123',
+ *   body: 'Complete the documentation',
+ *   variant: 'compact',
+ *   class: 'bg-base-200'
+ * }) %>
+ *
+ * @example Glass card (for hero sections)
+ * <%- include('./partials/ui/card', {
+ *   title: 'Welcome',
+ *   body: 'Get started with TaskFlow',
+ *   variant: 'glass'
+ * }) %>
+ *
+ * @example Clickable card (hover effects)
+ * <%- include('./partials/ui/card', {
+ *   title: 'Feature',
+ *   body: 'Click to learn more',
+ *   clickable: true,
+ *   attrs: { 'data-feature': 'automation' }
+ * }) %>
+ */
+
+// Default values
+const cardTitle = typeof title !== 'undefined' ? title : '';
+const cardBody = typeof body !== 'undefined' ? body : '';
+const cardVariant = typeof variant !== 'undefined' ? variant : 'default';
+const cardClass = typeof class !== 'undefined' ? class : '';
+const cardId = typeof id !== 'undefined' ? id : '';
+const cardClickable = typeof clickable !== 'undefined' ? clickable : false;
+const cardAttrs = typeof attrs !== 'undefined' ? attrs : {};
+
+// Build DaisyUI card classes
+const classes = [
+  'card',
+  cardVariant === 'bordered' ? 'card-bordered' : '',
+  cardVariant === 'compact' ? 'card-compact' : '',
+  cardVariant === 'glass' ? 'glass' : '',
+  cardVariant === 'side' ? 'card-side' : '',
+  cardVariant === 'default' ? 'bg-base-100 shadow-xl' : '',
+  cardClickable ? 'hover:shadow-2xl transition-shadow cursor-pointer' : '',
+  cardClass
+].filter(Boolean).join(' ');
+
+// Build additional attributes string
+let attrsString = '';
+for (const [key, value] of Object.entries(cardAttrs)) {
+  attrsString += ` ${key}="${value}"`;
+}
+
+const idAttr = cardId ? ` id="${cardId}"` : '';
+%>
+
+<div class="<%= classes %>"<%= idAttr %><%= attrsString %>>
+  <div class="card-body">
+    <% if (cardTitle) { %>
+      <h2 class="card-title"><%= cardTitle %></h2>
+    <% } %>
+    <% if (cardBody) { %>
+      <%- cardBody %>
+    <% } %>
+  </div>
+</div>
