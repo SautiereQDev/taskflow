@@ -32,11 +32,9 @@ export const helmetConfig: HelmetOptions = {
         // Use nonce for inline scripts (replaces 'unsafe-inline')
         // The nonce is generated per-request by csp-nonce middleware
         (_req, res) => `'nonce-${(res as Response & { cspNonce?: string }).cspNonce}'`,
-        // Alpine.js requires 'unsafe-eval' for x-bind expressions until Phase 5 (CSP build migration)
-        // TODO Phase 5: Replace with @alpinejs/csp build + esbuild bundling
-        "'unsafe-eval'",
+        // Phase 5.3: Alpine.js CSP build - no 'unsafe-eval' required! ✅
+        // Using @alpinejs/csp bundled with esbuild (alpine-csp.js)
         'https://unpkg.com', // CDN for HTMX
-        'https://cdn.jsdelivr.net', // CDN for Alpine.js (fallback)
       ],
       styleSrc: [
         "'self'",

@@ -2572,6 +2572,15 @@ video {
 
 @layer daisyui.component {
 
+  .fieldset {
+    display: grid;
+    gap: calc(0.25rem * 1.5);
+    padding-block: calc(0.25rem * 1);
+    font-size: 0.75rem;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+  }
+
   .navbar {
     display: flex;
     width: 100%;
@@ -4164,6 +4173,17 @@ video {
     width: calc(0.25rem * 0);
     padding-inline: calc(0.25rem * 0);
     opacity: 0%;
+  }
+
+  .mask {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-mask-size: contain;
+            mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
   }
 
   .label {
@@ -6589,6 +6609,10 @@ svg:not([stroke-width]) {
 
 .lowercase {
   text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .italic {

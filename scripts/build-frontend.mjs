@@ -21,6 +21,7 @@ const isWatch = process.argv.includes('--watch');
 const buildConfig = {
   // Entry points - TypeScript source files
   entryPoints: [
+    join(rootDir, 'src/frontend/alpine-csp.ts'), // Alpine.js CSP build with plugins
     join(rootDir, 'src/frontend/components/alpine-components.ts'),
     join(rootDir, 'src/frontend/utils/theme-init.ts'),
     join(rootDir, 'src/frontend/utils/task-card-click.ts'),
