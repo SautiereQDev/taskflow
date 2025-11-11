@@ -1,14 +1,15 @@
 <div id="task-<%= task.id %>"
- class="bg-base-200 border border-base-content/10 shadow-md tf-card-padding-sm rounded-xl hover:shadow-lg transition-all duration-200">
+ class="bg-base-200 border border-base-content/10 shadow-md tf-card-padding-sm rounded-xl hover:shadow-lg transition-all duration-200 group relative">
 
- <div class="flex items-start justify-between tf-gap">
+ <a href="/tasks/<%= task.id %>" class="absolute inset-0 z-0 rounded-xl" aria-label="Voir les détails de <%= task.title %>"></a>
+
+ <div class="flex items-start justify-between tf-gap relative z-10">
  <!-- Left: Task Info -->
- <div class="flex-1 min-w-0">
+ <div class="flex-1 min-w-0 pointer-events-none">
  <!-- Title -->
- <a href="/tasks/<%= task.id %>"
- class="text-lg font-semibold hover:link block mb-2 truncate">
+ <h3 class="text-lg font-semibold group-hover:text-primary transition-colors block mb-2 truncate">
  <%= task.title %>
- </a>
+ </h3>
 
  <!-- Badges -->
  <div class="flex flex-wrap tf-gap-sm mb-3">
@@ -38,7 +39,7 @@
  </div>
 
  <!-- Right: Actions -->
- <div class="flex items-center tf-gap-sm">
+ <div class="flex items-center tf-gap-sm pointer-events-auto">
  <!-- Quick Actions -->
  <% if (task.canEdit) { %>
  <div class="dropdown dropdown-end" x-data="{ open: false }" @click.outside="open = false">
