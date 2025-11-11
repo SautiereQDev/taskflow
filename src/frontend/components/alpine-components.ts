@@ -76,7 +76,9 @@ document.addEventListener('alpine:init', () => {
         document.body.style.overflow = 'hidden';
 
         // Focus first focusable element
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this as any).$nextTick(() => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const focusable = (this as any).$el.querySelector(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
           );
@@ -303,7 +305,9 @@ document.addEventListener('alpine:init', () => {
       startEdit() {
         this.editing = true;
         this.originalValue = this.value;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this as any).$nextTick(() => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const input = (this as any).$el.querySelector('input, textarea');
           if (input instanceof HTMLElement) {
             input.focus();

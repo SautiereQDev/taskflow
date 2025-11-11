@@ -20,7 +20,15 @@ const isWatch = process.argv.includes('--watch');
  */
 const buildConfig = {
   // Entry points - TypeScript source files
-  entryPoints: [join(rootDir, 'src/frontend/components/alpine-components.ts')],
+  entryPoints: [
+    join(rootDir, 'src/frontend/components/alpine-components.ts'),
+    join(rootDir, 'src/frontend/utils/theme-init.ts'),
+    join(rootDir, 'src/frontend/utils/task-card-click.ts'),
+    join(rootDir, 'src/frontend/utils/htmx-events.ts'),
+    join(rootDir, 'src/frontend/utils/task-filters-url.ts'),
+    join(rootDir, 'src/frontend/utils/htmx-filters-url.ts'),
+    join(rootDir, 'src/frontend/utils/web-vitals.ts'),
+  ],
 
   // Output directory - public/js/
   outdir: join(rootDir, 'public/js'),
