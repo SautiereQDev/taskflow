@@ -24,17 +24,18 @@ import { logger } from '@utils/logger.util.js';
  * @see https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
  */
 const {
-  //   invalidCsrfTokenError, // For checking if an error is an invalid token error
-  generateToken,
-  //   validateRequest, // We'll use this to validate the token
-  doubleCsrfProtection, // Deprecated in favor of validateRequest
+  invalidCsrfTokenError: _invalidCsrfTokenError,
+  generateCsrfToken,
+  validateRequest: _validateRequest,
+  doubleCsrfProtection,
 } = doubleCsrf({
   getSecret: () => process.env.SESSION_SECRET ?? 'taskflow-secret-change-in-prod',
+  getSessionIdentifier: (req) => req.sessionID || req.session?.id || 'anonymous',
   cookieName: csrfConfig.tokenConfig.cookieName,
   cookieOptions: csrfConfig.cookieOptions,
   size: csrfConfig.tokenConfig.size,
   ignoredMethods: csrfConfig.tokenConfig.ignoredMethods as ('GET' | 'HEAD' | 'OPTIONS')[],
-  getTokenFromRequest: csrfConfig.tokenConfig.getTokenFromRequest,
+  getCsrfTokenFromRequest: csrfConfig.tokenConfig.getTokenFromRequest,
 });
 
 /**
@@ -55,11 +56,10 @@ const {
  */
 export function csrfTokenMiddleware(req: Request, res: Response, next: NextFunction): void {
   try {
-    const token = generateToken(req, res);
+    const token = generateCsrfToken(req, res);
     res.locals.csrfToken = token;
 
-    logger.debug({
-      msg: 'CSRF token generated',
+    logger.debug('CSRF token generated', {
       method: req.method,
       path: req.path,
       hasToken: Boolean(token),
@@ -69,8 +69,7 @@ export function csrfTokenMiddleware(req: Request, res: Response, next: NextFunct
   } catch (error) {
     // Don't fail the request if token generation fails
     // This ensures the app remains functional even if CSRF has issues
-    logger.warn({
-      msg: 'CSRF token generation failed',
+    logger.warn('CSRF token generation failed', {
       error: error instanceof Error ? error.message : String(error),
       method: req.method,
       path: req.path,
@@ -108,15 +107,14 @@ export function csrfProtectionMiddleware(req: Request, res: Response, next: Next
   }
 
   // Validate CSRF token using double submit cookie pattern
-  doubleCsrfProtection(req, res, (error?: Error) => {
+  doubleCsrfProtection(req, res, (error) => {
     if (error) {
-      logger.warn({
-        msg: 'CSRF validation failed',
+      logger.warn('CSRF validation failed', {
         method: req.method,
         path: req.path,
         ip: req.ip,
         userAgent: req.headers['user-agent'],
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
         context: {
           hasBodyToken: Boolean((req.body as Record<string, unknown>)?._csrf),
           hasHeaderToken: Boolean(req.headers['x-csrf-token']),
@@ -146,13 +144,16 @@ export function csrfProtectionMiddleware(req: Request, res: Response, next: Next
         title: 'Forbidden',
         error: {
           message: 'Invalid or missing CSRF token. Please refresh the page and try again.',
-          context: process.env.NODE_ENV === 'development' ? {
-            method: req.method,
-            path: req.path,
-            hasBodyToken: Boolean((req.body as Record<string, unknown>)?._csrf),
-            hasHeaderToken: Boolean(req.headers['x-csrf-token']),
-            hasQueryToken: Boolean((req.query as Record<string, unknown>)?._csrf),
-          } : undefined,
+          context:
+            process.env.NODE_ENV === 'development'
+              ? {
+                  method: req.method,
+                  path: req.path,
+                  hasBodyToken: Boolean((req.body as Record<string, unknown>)?._csrf),
+                  hasHeaderToken: Boolean(req.headers['x-csrf-token']),
+                  hasQueryToken: Boolean((req.query as Record<string, unknown>)?._csrf),
+                }
+              : undefined,
         },
       });
     }
@@ -178,7 +179,7 @@ export function csrfProtectionMiddleware(req: Request, res: Response, next: Next
  * ```
  */
 export function csrfMiddleware(req: Request, res: Response, next: NextFunction): void {
-  csrfTokenMiddleware(req, res, (err?: Error) => {
+  csrfTokenMiddleware(req, res, (err) => {
     if (err) return next(err);
     csrfProtectionMiddleware(req, res, next);
   });

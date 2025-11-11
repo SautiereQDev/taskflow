@@ -254,7 +254,20 @@ export function validateEnvVars(): void {
  * @see https://owasp.org/www-community/attacks/csrf
  * @see https://www.npmjs.com/package/csrf-csrf
  */
-export const csrfConfig = {
+export const csrfConfig: {
+  cookieOptions: {
+    httpOnly: boolean;
+    secure: boolean;
+    sameSite: 'strict';
+    path: string;
+  };
+  tokenConfig: {
+    cookieName: string;
+    size: number;
+    ignoredMethods: string[];
+    getTokenFromRequest: (req: Request) => string | undefined;
+  };
+} = {
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

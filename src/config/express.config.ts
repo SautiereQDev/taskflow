@@ -4,7 +4,6 @@ import cors from 'cors';
 import compression from 'compression';
 import session from 'express-session';
 import ConnectPgSimple from 'connect-pg-simple';
-// import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import { pino } from 'pino';
 import pinoHttp from 'pino-http';
