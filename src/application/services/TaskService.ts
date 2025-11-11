@@ -11,7 +11,7 @@
 
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
-import type { Task } from '@domain/entities/Task.js';
+import { Task } from '@domain/entities/Task.js';
 import { TaskStatus } from '@domain/value-objects/TaskStatus.js';
 import { TaskPriority } from '@domain/value-objects/TaskPriority.js';
 import type {
@@ -204,7 +204,9 @@ export class TaskService {
     const savedTask = await this.taskRepository.create(task);
 
     // Publish domain event for side effects (notifications, logging, etc.)
-    await this.eventBus.publish(new TaskCreatedEvent(savedTask));
+    await this.eventBus.publish(
+      new TaskCreatedEvent(savedTask.id, savedTask.title, savedTask.creatorId, savedTask.priority)
+    );
 
     logger.info('Task created successfully', {
       taskId: savedTask.id,
@@ -404,7 +406,7 @@ export class TaskService {
     const updatedTask = await this.taskRepository.update(task);
 
     // Publish event for notifications
-    await this.eventBus.publish(new TaskAssignedEvent(updatedTask, assigneeId));
+    await this.eventBus.publish(new TaskAssignedEvent(updatedTask.id, assigneeId));
 
     logger.info('Task assigned successfully', {
       taskId: updatedTask.id,
@@ -589,7 +591,7 @@ export class TaskService {
   }
 
   /**
-   * Generates a unique task identifier
+   * Generates a unique task ID
    *
    * Uses CUID format for sortable, collision-resistant IDs.
    *
@@ -601,6 +603,56 @@ export class TaskService {
     // In production, use a proper CUID/UUID library
     const timestamp = Date.now().toString(36);
     const randomPart = Math.random().toString(36).substring(2, 11);
-    return `task_${timestamp}_${randomPart}`;
+    return `task_${timestamp}${randomPart}`;
+  }
+
+  /**
+   * Convert Task entities to list DTOs with assignee information
+   * Helper method for controllers that need DTOs for view models
+   *
+   * @param tasks - Array of Task entities
+   * @returns Array of ITaskListItemDto with enriched assignee data
+   */
+  async toListDtos(
+    tasks: Task[]
+  ): Promise<import('@application/dtos/TaskDto.js').ITaskListItemDto[]> {
+    // Extract unique assignee IDs
+    const assigneeIds = [
+      ...new Set(tasks.map((t) => t.assigneeId).filter((id): id is string => id !== null)),
+    ];
+
+    // Batch fetch all assignees
+    const assignees =
+      assigneeIds.length > 0
+        ? await Promise.all(assigneeIds.map((id) => this.userRepository.findById(id)))
+        : [];
+
+    // Create a map for quick lookup
+    const assigneeMap = new Map(
+      assignees
+        .filter((u): u is import('@domain/entities/User.js').User => u !== null)
+        .map((u) => [u.id, u])
+    );
+
+    // Map tasks to DTOs
+    return tasks.map((task) => {
+      const assignee = task.assigneeId ? assigneeMap.get(task.assigneeId) : null;
+
+      return {
+        id: task.id,
+        title: task.title,
+        creatorId: task.creatorId,
+        status: task.status,
+        priority: task.priority,
+        dueDate: task.dueDate,
+        assignee: assignee
+          ? {
+              id: assignee.id,
+              name: assignee.name,
+              email: assignee.email.value,
+            }
+          : null,
+      };
+    });
   }
 }

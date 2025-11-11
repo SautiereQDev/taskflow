@@ -211,13 +211,14 @@ export class TaskController {
     const normalized = this.normalizeTaskRequest(req.body);
 
     // Build service input with proper types
+    // Note: Zod schema has .default() so these fields are never undefined after validation
     const input: CreateTaskInput = {
       title: normalized.title as string,
-      description: normalized.description as string | undefined | null,
-      status: normalized.status as TaskStatus | undefined,
-      priority: normalized.priority as TaskPriority | undefined,
-      dueDate: normalized.dueDate ? new Date(normalized.dueDate as string) : undefined,
-      assigneeId: normalized.assigneeId as string | undefined,
+      description: typeof normalized.description === 'string' ? normalized.description : null,
+      status: (normalized.status as TaskStatus) || TaskStatus.TODO,
+      priority: (normalized.priority as TaskPriority) || TaskPriority.MEDIUM,
+      dueDate: normalized.dueDate ? new Date(normalized.dueDate as string) : null,
+      assigneeId: typeof normalized.assigneeId === 'string' ? normalized.assigneeId : null,
       creatorId: req.user!.id,
     };
 
@@ -515,9 +516,9 @@ export class TaskController {
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
         completedAt: task.completedAt,
-        creator: { id: task.creatorId, name: '', email: '' }, // TODO: Load full creator data
+        creator: { id: task.creatorId, name: '', email: '', role: 'MEMBER', locale: null }, // TODO: Load full creator data
         assignee: task.assigneeId
-          ? { id: task.assigneeId, name: '', email: '' } // TODO: Load full assignee data
+          ? { id: task.assigneeId, name: '', email: '', role: 'MEMBER', locale: null } // TODO: Load full assignee data
           : null,
       },
       currentUser

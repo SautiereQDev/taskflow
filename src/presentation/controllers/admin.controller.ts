@@ -3,6 +3,7 @@ import type { Request, Response } from 'express';
 import { UserService } from '@application/services/UserService.js';
 import { TaskService } from '@application/services/TaskService.js';
 import type { User } from '@domain/entities/User.js';
+import { UserRole } from '@domain/entities/User.js';
 import { renderOrPartial, htmxTrigger } from '@presentation/utils/response.helpers.js';
 import {
   toTaskListItemViewModel,
@@ -65,8 +66,8 @@ export class AdminController {
     // Load user data and task statistics concurrently
     const [user, assignedTasks, createdTasks] = await Promise.all([
       this.userService.findById(userId),
-      this.taskService.findAllTasks({ assigneeId: userId, limit: 5 }),
-      this.taskService.findAllTasks({ creatorId: userId, limit: 1 }),
+      this.taskService.findAllTasks({ assigneeId: userId }, 1, 5),
+      this.taskService.findAllTasks({ creatorId: userId }, 1, 1),
     ]);
 
     if (!user) {
@@ -83,7 +84,8 @@ export class AdminController {
       currentUserContext
     );
 
-    const recentTasks = assignedTasks.items.map((task) =>
+    const recentTaskDtos = await this.taskService.toListDtos(assignedTasks.items);
+    const recentTasks = recentTaskDtos.map((task) =>
       toTaskListItemViewModel(task, currentUserContext)
     );
 
@@ -132,8 +134,9 @@ export class AdminController {
     const userId = req.params.id;
     const updateData = req.body as {
       name?: string;
-      locale?: string;
-      role?: string;
+      email?: string;
+      locale?: 'fr' | 'en';
+      role?: UserRole;
     };
 
     // Execute update via service

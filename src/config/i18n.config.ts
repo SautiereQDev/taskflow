@@ -111,5 +111,5 @@ export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunc
  */
 export const languageDetector = i18nextHttpMiddleware.LanguageDetector;
 
-// @ts-expect-error - ESLint rule conflict
+// eslint-disable-next-line import/no-default-export
 export default i18next;

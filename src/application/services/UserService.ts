@@ -11,8 +11,7 @@
 
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
-import type { User } from '@domain/entities/User.js';
-import { UserRole } from '@domain/entities/User.js';
+import { User, UserRole } from '@domain/entities/User.js';
 import { Email } from '@domain/value-objects/Email.js';
 import { Password } from '@domain/value-objects/Password.js';
 import type { IUserRepository } from '@domain/repositories/IUserRepository.js';
@@ -263,7 +262,9 @@ export class UserService {
     const savedUser = await this.userRepository.create(user);
 
     // Publish domain event for side effects (welcome email, analytics, etc.)
-    await this.eventBus.publish(new UserRegisteredEvent(savedUser));
+    await this.eventBus.publish(
+      new UserRegisteredEvent(savedUser.id, savedUser.email.value, savedUser.name, savedUser.role)
+    );
 
     logger.info('User registered successfully', {
       userId: savedUser.id,

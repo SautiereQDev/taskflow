@@ -12,6 +12,7 @@ import { injectable, inject } from 'tsyringe';
 import { UserService } from '@application/services/UserService.js';
 import { TaskService } from '@application/services/TaskService.js';
 import type { User } from '@domain/entities/User.js';
+import type { IPaginatedTasks } from '@domain/repositories/ITaskRepository.js';
 import {
   DashboardMetricsService,
   type IUserProductivityMetrics,
@@ -68,22 +69,25 @@ export class DashboardController {
       this.dashboardMetricsService.getOverallMetrics(),
       this.dashboardMetricsService.getTeamCapacity(),
       this.userService.findAll({ page: 1, limit: 100 }),
-      this.taskService.findAllTasks({ page: 1, limit: 6, dueDateFilter: 'week' }),
-      this.taskService.findAllTasks({ page: 1, limit: 6 }),
-      userId
-        ? this.taskService.findAllTasks({ page: 1, limit: 6, assigneeId: userId })
-        : Promise.resolve(null),
+      this.taskService.findAllTasks({ dueDateFilter: 'week' }, 1, 6),
+      this.taskService.findAllTasks({}, 1, 6),
+      userId ? this.taskService.findAllTasks({ assigneeId: userId }, 1, 6) : Promise.resolve(null),
     ]);
 
-    const mapTasks = (result: typeof upcomingTasksResult): ITaskListItemViewModel[] =>
-      result ? result.items.map((task) => toTaskListItemViewModel(task, currentUser)) : [];
+    const mapTasks = async (
+      result: IPaginatedTasks | null
+    ): Promise<ITaskListItemViewModel[]> => {
+      if (!result) return [];
+      const dtos = await this.taskService.toListDtos(result.items);
+      return dtos.map((task) => toTaskListItemViewModel(task, currentUser));
+    };
 
     const isIncompleteTask = (task: ITaskListItemViewModel): boolean =>
       ![TaskStatus.DONE, TaskStatus.CANCELLED].includes(task.status.value);
 
-    const highlightedTasks = mapTasks(highlightedTasksResult).slice(0, 5);
+    const highlightedTasks = (await mapTasks(highlightedTasksResult)).slice(0, 5);
 
-    const upcomingTasks = mapTasks(upcomingTasksResult)
+    const upcomingTasks = (await mapTasks(upcomingTasksResult))
       .filter(isIncompleteTask)
       .sort((a, b) => {
         const aTime = a.dueDate.raw ? a.dueDate.raw.getTime() : Number.POSITIVE_INFINITY;
@@ -92,7 +96,7 @@ export class DashboardController {
       })
       .slice(0, 5);
 
-    const assignmentPool = mapTasks(myAssignmentsResult);
+    const assignmentPool = await mapTasks(myAssignmentsResult);
     const myAssignments = assignmentPool.filter(isIncompleteTask).slice(0, 5);
     const myAssignmentsSummary = {
       total: assignmentPool.length,
@@ -226,7 +230,7 @@ export class DashboardController {
       return {
         id: item.userId,
         name: user?.name ?? 'Utilisateur inconnu',
-        email: user?.email ?? '',
+        email: user?.email.value ?? '',
         role: user?.role ?? 'MEMBER',
         assigned: item.assignedTasks,
         completed: item.completedTasks,

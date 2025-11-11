@@ -10,11 +10,7 @@
 import type { Request, Response } from 'express';
 import { injectable, inject } from 'tsyringe';
 import { AuthenticationService } from '../../application/services/AuthenticationService.js';
-import { CommandBus } from '../../application/commands/CommandBus.js';
-import {
-  CreateUserCommand,
-  type CreateUserCommandInput,
-} from '../../application/commands/users/CreateUserCommand.js';
+import { UserService } from '../../application/services/UserService.js';
 import { UserRole } from '@domain/entities/User.js';
 import { renderOrPartial, htmxRedirect } from '../utils/response.helpers.js';
 import { AppError } from '../../utils/AppError.js';
@@ -47,7 +43,7 @@ export class AuthController {
   constructor(
     @inject(AuthenticationService)
     private readonly authService: AuthenticationService,
-    @inject(CommandBus) private readonly commandBus: CommandBus
+    @inject(UserService) private readonly userService: UserService
   ) {}
 
   /**
@@ -161,20 +157,20 @@ export class AuthController {
    * @throws {AppError} 409 if email already exists
    */
   async register(req: IAuthenticatedRequest, res: Response): Promise<void> {
-    const { name, email, password } = req.body as CreateUserCommandInput;
+    const { name, email, password } = req.body as {
+      name: string;
+      email: string;
+      password: string;
+    };
 
-    // Create user via command with default role and locale from request
-    const command = new CreateUserCommand({
+    // Create user via UserService with default role and locale from request
+    const user = await this.userService.register({
       name,
       email,
       password,
       role: UserRole.MEMBER, // Default role for new registrations
-      locale: (req.getLocale?.() as 'fr' | 'en') || 'fr', // From i18n middleware
+      locale: (req.getLocale?.() as 'fr' | 'en') ?? 'fr', // From i18n middleware
     });
-    const user = await this.commandBus.execute<
-      CreateUserCommand,
-      { id: string; name: string; email: string }
-    >(CreateUserCommand, command);
 
     if (!user?.id) {
       throw new AppError('Failed to create user', 500);
