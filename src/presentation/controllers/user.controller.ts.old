@@ -3,23 +3,27 @@
  *
  * Handles HTTP requests for user profile and settings operations.
  *
- * Migrated to Service Layer architecture - uses UserService and TaskService directly.
- *
  * @module presentation/controllers/user.controller
- * @since 2.0.0
  */
 
 import type { Response } from 'express';
 import { injectable, inject } from 'tsyringe';
-import { UserService } from '@application/services/UserService.js';
-import { TaskService } from '@application/services/TaskService.js';
+import { CommandBus } from '@application/commands/CommandBus.js';
+import { QueryBus } from '@application/queries/QueryBus.js';
+import { GetUserByIdQuery } from '@application/queries/users/GetUserByIdQuery.js';
+import {
+  UpdateUserCommand,
+  type UpdateUserCommandInput,
+} from '@application/commands/users/UpdateUserCommand.js';
+import { GetAllTasksQuery } from '@application/queries/tasks/GetAllTasksQuery.js';
+import type { IPaginatedTasksDto } from '@application/dtos/TaskDto.js';
+import type { IUserDto } from '@application/dtos/UserDto.js';
 import { renderOrPartial, htmxRefresh } from '@presentation/utils/response.helpers.js';
 import {
   toTaskListItemViewModel,
   type ICurrentUserContext,
 } from '@presentation/view-models/index.js';
 import type { IAuthenticatedRequest } from './auth.controller.js';
-import type { Task } from '@domain/entities/Task.js';
 
 const ROLE_DISPLAY: Record<string, { label: string; color: string }> = {
   ADMIN: { label: 'Administrateur', color: 'badge-error' },
@@ -35,8 +39,8 @@ const ROLE_DISPLAY: Record<string, { label: string; color: string }> = {
 @injectable()
 export class UserController {
   constructor(
-    @inject(UserService) private readonly userService: UserService,
-    @inject(TaskService) private readonly taskService: TaskService
+    @inject(CommandBus) private readonly commandBus: CommandBus,
+    @inject(QueryBus) private readonly queryBus: QueryBus
   ) {}
 
   /**
@@ -51,31 +55,29 @@ export class UserController {
     const currentUserContext = this.getCurrentUserContext(req);
 
     // Load profile data and task statistics concurrently
-    const [user, assignedTasksResult, createdTasksResult] = await Promise.all([
-      this.userService.findById(userId),
-      this.taskService.findAllTasks({ assigneeId: userId }, 1, 5),
-      this.taskService.findAllTasks({ creatorId: userId }, 1, 1),
+    const [user, assignedTasks, createdTasks] = await Promise.all([
+      this.queryBus.execute<IUserDto>(GetUserByIdQuery, new GetUserByIdQuery(userId)),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ assigneeId: userId, limit: 5 })
+      ),
+      this.queryBus.execute<IPaginatedTasksDto>(
+        GetAllTasksQuery,
+        new GetAllTasksQuery({ creatorId: userId, limit: 1 })
+      ),
     ]);
-
-    if (!user) {
-      res.status(404).render('pages/error/404', {
-        message: 'User not found',
-        user: req.user,
-      });
-      return;
-    }
 
     const profileView = this.buildProfileViewModel(
       user,
       {
-        assigned: assignedTasksResult.total,
-        created: createdTasksResult.total,
+        assigned: assignedTasks.total,
+        created: createdTasks.total,
       },
       currentUserContext
     );
 
-    const recentTasks = assignedTasksResult.items.map((task) =>
-      this.taskToListItemViewModel(task, currentUserContext)
+    const recentTasks = assignedTasks.items.map((task) =>
+      toTaskListItemViewModel(task, currentUserContext)
     );
 
     // Render profile
@@ -96,15 +98,10 @@ export class UserController {
     const userId = req.user!.id;
 
     // Get user data
-    const user = await this.userService.findById(userId);
-
-    if (!user) {
-      res.status(404).render('pages/error/404', {
-        message: 'User not found',
-        user: req.user,
-      });
-      return;
-    }
+    const user = await this.queryBus.execute<IUserDto>(
+      GetUserByIdQuery,
+      new GetUserByIdQuery(userId)
+    );
 
     const formModel = this.buildProfileFormModel(user);
 
@@ -124,21 +121,18 @@ export class UserController {
    */
   async updateProfile(req: IAuthenticatedRequest, res: Response): Promise<void> {
     const userId = req.user!.id;
+    const updateData = req.body as Omit<UpdateUserCommandInput, 'userId'>;
 
-    // Build service input
-    const input = {
-      name: req.body.name as string | undefined,
-      locale: req.body.locale as 'en' | 'fr' | undefined,
-      currentPassword: req.body.currentPassword as string | undefined,
-      newPassword: req.body.newPassword as string | undefined,
-    };
-
-    // Execute update
-    await this.userService.updateProfile(userId, input);
+    // Execute command
+    const command = new UpdateUserCommand({
+      userId,
+      ...updateData,
+    });
+    await this.commandBus.execute(UpdateUserCommand, command);
 
     // Update session locale if changed
-    if (input.locale) {
-      req.session.locale = input.locale;
+    if (updateData.locale) {
+      req.session.locale = updateData.locale;
     }
 
     // Set flash message
@@ -218,15 +212,7 @@ export class UserController {
   }
 
   private buildProfileViewModel(
-    user: {
-      id: string;
-      name: string;
-      email: { value: string };
-      role: string;
-      locale: string | null;
-      createdAt: Date;
-      updatedAt: Date;
-    },
+    user: IUserDto,
     taskTotals: { assigned: number; created: number },
     currentUser: ICurrentUserContext | null
   ): Record<string, unknown> {
@@ -236,7 +222,7 @@ export class UserController {
     return {
       id: user.id,
       name: user.name,
-      email: user.email.value,
+      email: user.email,
       role: {
         value: user.role,
         label: roleDisplay.label,
@@ -259,31 +245,12 @@ export class UserController {
     };
   }
 
-  private buildProfileFormModel(user: {
-    id: string;
-    name: string;
-    locale: string | null;
-  }): Record<string, unknown> {
+  private buildProfileFormModel(user: IUserDto): Record<string, unknown> {
     return {
       id: user.id,
       name: user.name,
       locale: user.locale ?? 'fr',
     };
-  }
-
-  private taskToListItemViewModel(task: Task, currentUser: ICurrentUserContext | null): unknown {
-    return toTaskListItemViewModel(
-      {
-        id: task.id,
-        title: task.title,
-        creatorId: task.creatorId,
-        status: task.status,
-        priority: task.priority,
-        dueDate: task.dueDate,
-        assignee: task.assigneeId ? { id: task.assigneeId, name: '', email: '' } : null,
-      },
-      currentUser
-    );
   }
 
   private formatDate(date: Date): string {
