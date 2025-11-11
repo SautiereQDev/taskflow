@@ -104,8 +104,8 @@ export class TaskController {
 
     // Transform domain entities to view models
     const currentUser = this.getCurrentUserContext(req);
-    const taskViewModels = tasksResult.items.map((task) =>
-      this.taskToListItemViewModel(task, currentUser)
+    const taskViewModels = await Promise.all(
+      tasksResult.items.map((task) => this.taskToListItemViewModel(task, currentUser))
     );
 
     // For HTMX requests, trigger events
@@ -164,7 +164,7 @@ export class TaskController {
     }
 
     const currentUser = this.getCurrentUserContext(req);
-    const taskViewModel = this.taskToDetailViewModel(task, currentUser);
+    const taskViewModel = await this.taskToDetailViewModel(task, currentUser);
 
     renderOrPartial(req, res, 'pages/tasks/detail', 'partials/tasks/task-detail-card', {
       task: taskViewModel,
@@ -389,7 +389,7 @@ export class TaskController {
       const currentUser = this.getCurrentUserContext(req);
 
       if (hxTarget === 'task-detail-card') {
-        const detailView = this.taskToDetailViewModel(updatedTask, currentUser);
+        const detailView = await this.taskToDetailViewModel(updatedTask, currentUser);
         htmxTrigger(res, 'taskStatusUpdated');
         res.render('partials/tasks/task-detail-card', {
           task: detailView,
@@ -399,7 +399,7 @@ export class TaskController {
         return;
       }
 
-      const viewModel = this.taskToListItemViewModel(updatedTask, currentUser);
+      const viewModel = await this.taskToListItemViewModel(updatedTask, currentUser);
       htmxTrigger(res, 'taskStatusUpdated');
       res.render('partials/htmx/task-item', {
         task: viewModel,
@@ -453,7 +453,7 @@ export class TaskController {
       const currentUser = this.getCurrentUserContext(req);
 
       if (hxTarget === 'task-detail-card') {
-        const detailView = this.taskToDetailViewModel(updatedTask, currentUser);
+        const detailView = await this.taskToDetailViewModel(updatedTask, currentUser);
         htmxTrigger(res, 'taskStatusUpdated');
         res.render('partials/tasks/task-detail-card', {
           task: detailView,
@@ -463,7 +463,7 @@ export class TaskController {
         return;
       }
 
-      const viewModel = this.taskToListItemViewModel(updatedTask, currentUser);
+      const viewModel = await this.taskToListItemViewModel(updatedTask, currentUser);
       htmxTrigger(res, 'taskStatusUpdated');
       res.render('partials/htmx/task-item', {
         task: viewModel,
@@ -505,9 +505,20 @@ export class TaskController {
    * @private
    * @param {Task} task - Task domain entity
    * @param {ICurrentUserContext | null} currentUser - Current user context
-   * @returns {unknown} Task detail view model
+   * @returns {Promise<unknown>} Task detail view model
    */
-  private taskToDetailViewModel(task: Task, currentUser: ICurrentUserContext | null): unknown {
+  private async taskToDetailViewModel(
+    task: Task,
+    currentUser: ICurrentUserContext | null
+  ): Promise<unknown> {
+    // Load full creator and assignee data
+    const creator = await this.userService.findById(task.creatorId);
+    if (!creator) {
+      throw new AppError('Creator not found', 404, { creatorId: task.creatorId });
+    }
+
+    const assignee = task.assigneeId ? await this.userService.findById(task.assigneeId) : null;
+
     return toTaskDetailViewModel(
       {
         id: task.id,
@@ -519,9 +530,21 @@ export class TaskController {
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
         completedAt: task.completedAt,
-        creator: { id: task.creatorId, name: '', email: '', role: 'MEMBER', locale: null }, // TODO: Load full creator data
-        assignee: task.assigneeId
-          ? { id: task.assigneeId, name: '', email: '', role: 'MEMBER', locale: null } // TODO: Load full assignee data
+        creator: {
+          id: creator.id,
+          name: creator.name,
+          email: creator.email.value,
+          role: creator.role,
+          locale: creator.locale,
+        },
+        assignee: assignee
+          ? {
+              id: assignee.id,
+              name: assignee.name,
+              email: assignee.email.value,
+              role: assignee.role,
+              locale: assignee.locale,
+            }
           : null,
       },
       currentUser
@@ -534,9 +557,15 @@ export class TaskController {
    * @private
    * @param {Task} task - Task domain entity
    * @param {ICurrentUserContext | null} currentUser - Current user context
-   * @returns {unknown} Task list item view model
+   * @returns {Promise<unknown>} Task list item view model
    */
-  private taskToListItemViewModel(task: Task, currentUser: ICurrentUserContext | null): unknown {
+  private async taskToListItemViewModel(
+    task: Task,
+    currentUser: ICurrentUserContext | null
+  ): Promise<unknown> {
+    // Load assignee data if assigned
+    const assignee = task.assigneeId ? await this.userService.findById(task.assigneeId) : null;
+
     return toTaskListItemViewModel(
       {
         id: task.id,
@@ -545,8 +574,12 @@ export class TaskController {
         status: task.status,
         priority: task.priority,
         dueDate: task.dueDate,
-        assignee: task.assigneeId
-          ? { id: task.assigneeId, name: '', email: '' } // TODO: Load full assignee data
+        assignee: assignee
+          ? {
+              id: assignee.id,
+              name: assignee.name,
+              email: assignee.email.value,
+            }
           : null,
       },
       currentUser
@@ -585,7 +618,7 @@ export class TaskController {
   }
 
   /**
-   * Parses array of strings from query parameter
+   * Parses array from query parameter
    *
    * @private
    * @param {string | string[] | undefined} value - Raw value
@@ -593,9 +626,7 @@ export class TaskController {
    */
   private parseArray(value: string | string[] | undefined): string[] | undefined {
     if (Array.isArray(value)) {
-      const values = value
-        .map((entry) => this.parseString(entry))
-        .filter((entry): entry is string => Boolean(entry));
+      const values = value.map((entry) => this.parseString(entry)).filter(Boolean);
       return values.length > 0 ? values : undefined;
     }
 
