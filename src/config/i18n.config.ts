@@ -111,5 +111,4 @@ export function i18nLocalsMiddleware(req: Request, res: Response, next: NextFunc
  */
 export const languageDetector = i18nextHttpMiddleware.LanguageDetector;
 
-// eslint-disable-next-line import/no-default-export
 export default i18next;

@@ -422,7 +422,8 @@ export class TaskController {
    */
   async updateStatus(req: IAuthenticatedRequest, res: Response): Promise<void> {
     const { id } = req.params;
-    const newStatus = this.parseString(req.body?.status as string | string[] | undefined);
+    const body = req.body as { status?: string | string[] };
+    const newStatus = this.parseString(body.status);
 
     logger.debug('TaskController.updateStatus', {
       taskId: id,
