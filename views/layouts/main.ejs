@@ -23,11 +23,9 @@
  <!-- Toast Notifications (Alpine.js) -->
  <%- include('../partials/toast-notifications') %>
 
- <!-- HTMX 2.0.0 - Dynamic content updates with improved history management -->
- <script nonce="<%= cspNonce %>" src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.min.js" crossorigin="anonymous"></script>
-
- <!-- HTMX Extensions (HTMX 2.x compatible versions) -->
- <script nonce="<%= cspNonce %>" src="https://unpkg.com/htmx-ext-loading-states@2.0.0/loading-states.js"></script>
+ <!-- HTMX 2.0.7 Bundle - Local bundle with loading-states extension -->
+ <!-- No CDN required! -->
+ <script nonce="<%= cspNonce %>" src="/js/htmx-bundle.js"></script>
 
  <!-- HTMX Custom Events & URL Handling (HTMX 2.0) -->
  <script nonce="<%= cspNonce %>" src="/js/htmx-events.js"></script>

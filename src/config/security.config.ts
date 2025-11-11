@@ -32,9 +32,8 @@ export const helmetConfig: HelmetOptions = {
         // Use nonce for inline scripts (replaces 'unsafe-inline')
         // The nonce is generated per-request by csp-nonce middleware
         (_req, res) => `'nonce-${(res as Response & { cspNonce?: string }).cspNonce}'`,
-        // Phase 5.3: Alpine.js CSP build - no 'unsafe-eval' required! ✅
-        // Using @alpinejs/csp bundled with esbuild (alpine-csp.js)
-        'https://unpkg.com', // CDN for HTMX
+        // Phase 5.4-HTMX: HTMX 2.0.7 bundled locally - zero CDN dependencies! ✅
+        // All external scripts (Alpine.js CSP + HTMX) are now bundled with esbuild
       ],
       styleSrc: [
         "'self'",

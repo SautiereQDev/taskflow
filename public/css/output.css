@@ -5570,6 +5570,10 @@ svg:not([stroke-width]) {
   visibility: visible;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .collapse {
   visibility: collapse;
 }
@@ -5849,6 +5853,10 @@ svg:not([stroke-width]) {
   height: 83.333333%;
 }
 
+.h-1 {
+  height: 0.25rem;
+}
+
 .max-h-60 {
   max-height: 15rem;
 }
@@ -6120,6 +6128,10 @@ svg:not([stroke-width]) {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+
+.resize {
+  resize: both;
 }
 
 .list-inside {
