@@ -8,13 +8,13 @@
 
 import { type HelmetOptions } from 'helmet';
 import { type RateLimitRequestHandler, rateLimit } from 'express-rate-limit';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 
 /**
  * Helmet Security Headers Configuration
  *
  * Implements defense-in-depth approach with multiple security layers:
- * - Content
+ * - Content Security Policy (CSP) with nonce-based inline script/style protection
  * - HSTS - Force HTTPS connections
  * - Frame options - Prevent clickjacking
  * - Content type sniffing protection
@@ -23,20 +23,25 @@ import type { Request } from 'express';
  * @see https://helmetjs.github.io/
  */
 export const helmetConfig: HelmetOptions = {
-  // Content Security Policy - Define trusted sources
+  // Content Security Policy - Define trusted sources with nonce-based inline protection
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: [
         "'self'",
-        "'unsafe-inline'", // Required for HTMX, Alpine.js (TODO: migrate to nonce)
-        "'unsafe-eval'", // Required for Alpine.js expressions
+        // Use nonce for inline scripts (replaces 'unsafe-inline')
+        // The nonce is generated per-request by csp-nonce middleware
+        (_req, res) => `'nonce-${(res as Response & { cspNonce?: string }).cspNonce}'`,
+        // Alpine.js requires 'unsafe-eval' for x-bind expressions until Phase 5 (CSP build migration)
+        // TODO Phase 5: Replace with @alpinejs/csp build + esbuild bundling
+        "'unsafe-eval'",
         'https://unpkg.com', // CDN for HTMX
-        'https://cdn.jsdelivr.net', // CDN for Alpine.js
+        'https://cdn.jsdelivr.net', // CDN for Alpine.js (fallback)
       ],
       styleSrc: [
         "'self'",
-        "'unsafe-inline'", // Required for inline styles (TODO: migrate to nonce)
+        // Use nonce for inline styles (replaces 'unsafe-inline')
+        (_req, res) => `'nonce-${(res as Response & { cspNonce?: string }).cspNonce}'`,
       ],
       imgSrc: ["'self'", 'data:', 'https:'],
       fontSrc: ["'self'", 'data:'],

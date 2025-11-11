@@ -13,6 +13,7 @@ import { PrismaClient } from '@prisma/client';
 import expressLayouts from 'express-ejs-layouts';
 import { htmxMiddleware } from '@presentation/middleware/htmx.middleware.js';
 import { errorHandler, notFoundHandler } from '@presentation/middleware/error.middleware.js';
+import { generateCspNonce } from '@presentation/middleware/csp-nonce.middleware.js';
 import { csrfMiddleware } from '@presentation/middleware/csrf.middleware.js';
 import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js';
 import { performanceMonitoring } from '@presentation/middleware/performance.middleware.js';
@@ -49,7 +50,10 @@ export function createApp(): Express {
     app.set('trust proxy', 1);
   }
 
-  // Security Middleware - Helmet with comprehensive CSP
+  // Generate CSP nonce early (required for helmet CSP configuration)
+  app.use(generateCspNonce);
+
+  // Security Middleware - Helmet with comprehensive CSP (uses nonce from middleware)
   app.use(helmet(helmetConfig));
 
   // CORS configuration
