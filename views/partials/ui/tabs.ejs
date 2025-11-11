@@ -1,0 +1,71 @@
+<%
+/**
+ * Tabs Component
+ * Tabbed navigation with Alpine.js state management
+ *
+ * Props:
+ * - tabs: Array<{ id, label, icon?, badge? }> - tab definitions
+ * - activeTab: string (optional) - initially active tab id
+ * - variant: string (default: 'bordered') - 'bordered', 'lifted', 'boxed'
+ * - size: string (default: 'md') - 'xs', 'sm', 'md', 'lg'
+ * - containerClass: string (optional)
+ *
+ * Usage (requires x-data in parent and x-show on tab content):
+ * <div x-data="{ activeTab: 'profile' }">
+ *   <%- include('../partials/ui/tabs', {
+ *     tabs: [
+ *       { id: 'profile', label: 'Profile' },
+ *       { id: 'settings', label: 'Settings', badge: '3' }
+ *     ]
+ *   }) %>
+ *
+ *   <div x-show="activeTab === 'profile'">Profile content</div>
+ *   <div x-show="activeTab === 'settings'">Settings content</div>
+ * </div>
+ */
+
+const tabs = typeof tabs !== 'undefined' ? tabs : [];
+const activeTab = typeof activeTab !== 'undefined' ? activeTab : (tabs.length > 0 ? tabs[0].id : '');
+const variant = typeof variant !== 'undefined' ? variant : 'bordered';
+const size = typeof size !== 'undefined' ? size : 'md';
+const containerClass = typeof containerClass !== 'undefined' ? containerClass : '';
+
+const variantClasses = {
+  bordered: 'tabs-bordered',
+  lifted: 'tabs-lifted',
+  boxed: 'tabs-boxed'
+};
+
+const sizeClasses = {
+  xs: 'tabs-xs',
+  sm: 'tabs-sm',
+  md: '',
+  lg: 'tabs-lg'
+};
+
+const classes = [
+  'tabs',
+  variantClasses[variant] || 'tabs-bordered',
+  sizeClasses[size] || '',
+  containerClass
+].filter(Boolean).join(' ');
+%>
+
+<div role="tablist" class="<%= classes %>">
+  <% tabs.forEach(function(tab) { %>
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      :class="{ 'tab-active': activeTab === '<%= tab.id %>' }"
+      @click="activeTab = '<%= tab.id %>'"
+      :aria-selected="activeTab === '<%= tab.id %>'"
+      aria-controls="<%= tab.id %>-panel">
+      <% if (tab.icon) { %><%- tab.icon %><% } %>
+      <%= tab.label %>
+      <% if (tab.badge) { %>
+        <span class="badge badge-sm ml-2"><%= tab.badge %></span>
+      <% } %>
+    </button>
+  <% }) %>
+</div>
