@@ -40,10 +40,10 @@ services:
       - ./src:/app/src:ro
       - ./views:/app/views:ro
       - ./locales:/app/locales:ro
-      - ./public:/app/public:ro
       - ./prisma:/app/prisma:ro
       - /app/node_modules
       - /app/dist
+      - /app/public
     networks:
       - e2e-network
     depends_on:
