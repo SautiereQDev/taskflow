@@ -28,9 +28,23 @@ import { UnitOfWork } from '../infrastructure/database/prisma/UnitOfWork.js';
 import type { IUserRepository } from '../domain/repositories/IUserRepository.js';
 import type { ITaskRepository } from '../domain/repositories/ITaskRepository.js';
 
-// Application Layer - Services
-import { UserService } from '../application/services/UserService.js';
-import { TaskService } from '../application/services/TaskService.js';
+// Application Layer - Command Handlers
+import { CommandBus } from '../application/commands/CommandBus.js';
+import { CreateUserHandler } from '../application/commands/users/CreateUserHandler.js';
+import { UpdateUserHandler } from '../application/commands/users/UpdateUserHandler.js';
+import { CreateTaskHandler } from '../application/commands/tasks/CreateTaskHandler.js';
+import { UpdateTaskHandler } from '../application/commands/tasks/UpdateTaskHandler.js';
+import { CompleteTaskHandler } from '../application/commands/tasks/CompleteTaskHandler.js';
+import { DeleteTaskHandler } from '../application/commands/tasks/DeleteTaskHandler.js';
+import { AssignTaskHandler } from '../application/commands/tasks/AssignTaskHandler.js';
+
+// Application Layer - Query Handlers
+import { QueryBus } from '../application/queries/QueryBus.js';
+import { GetUserByIdHandler } from '../application/queries/users/GetUserByIdHandler.js';
+import { GetAllUsersHandler } from '../application/queries/users/GetAllUsersHandler.js';
+import { GetAllTasksHandler } from '../application/queries/tasks/GetAllTasksHandler.js';
+import { GetTaskByIdHandler } from '../application/queries/tasks/GetTaskByIdHandler.js';
+import { GetDashboardStatsHandler } from '../application/queries/dashboard/GetDashboardStatsHandler.js';
 
 // Application Layer - Domain Services
 import { PasswordHashingService } from '../application/services/PasswordHashingService.js';
@@ -80,12 +94,40 @@ container.register<ITaskRepository>('ITaskRepository', {
 });
 
 /**
- * Register Application Layer - Services
+ * Register Application Layer - Command Bus & Handlers
  */
 
-// Business Logic Services (singletons)
-container.registerSingleton(UserService);
-container.registerSingleton(TaskService);
+// Command Bus (singleton)
+container.registerSingleton(CommandBus);
+
+// User Command Handlers
+container.register('CreateUserCommandHandler', { useClass: CreateUserHandler });
+container.register('UpdateUserCommandHandler', { useClass: UpdateUserHandler });
+
+// Task Command Handlers
+container.register('CreateTaskCommandHandler', { useClass: CreateTaskHandler });
+container.register('UpdateTaskCommandHandler', { useClass: UpdateTaskHandler });
+container.register('AssignTaskCommandHandler', { useClass: AssignTaskHandler });
+container.register('CompleteTaskCommandHandler', { useClass: CompleteTaskHandler });
+container.register('DeleteTaskCommandHandler', { useClass: DeleteTaskHandler });
+
+/**
+ * Register Application Layer - Query Bus & Handlers
+ */
+
+// Query Bus (singleton)
+container.registerSingleton(QueryBus);
+
+// User Query Handlers
+container.register('GetUserByIdQueryHandler', { useClass: GetUserByIdHandler });
+container.register('GetAllUsersQueryHandler', { useClass: GetAllUsersHandler });
+
+// Task Query Handlers
+container.register('GetAllTasksQueryHandler', { useClass: GetAllTasksHandler });
+container.register('GetTaskByIdQueryHandler', { useClass: GetTaskByIdHandler });
+
+// Dashboard Query Handlers
+container.register('GetDashboardStatsQueryHandler', { useClass: GetDashboardStatsHandler });
 
 /**
  * Register Application Layer - Domain Services
@@ -156,4 +198,4 @@ process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
 
 // Export container for manual resolution
-export { container } from 'tsyringe';
+export { container };
