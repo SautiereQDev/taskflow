@@ -1,9 +1,8 @@
 <div id="task-<%= task.id %>"
- class="bg-base-200 border border-base-content/10 shadow-md tf-card-padding-sm rounded-xl hover:shadow-lg transition-all duration-200 group relative cursor-pointer">
+ @click="window.location.href = '/tasks/<%= task.id %>'"
+ class="bg-base-200 border border-base-content/10 shadow-md tf-card-padding-sm rounded-xl hover:shadow-lg transition-all duration-200 group cursor-pointer">
 
- <a href="/tasks/<%= task.id %>" class="absolute inset-0 rounded-xl" aria-label="Voir les détails de <%= task.title %>"></a>
-
- <div class="flex items-start justify-between tf-gap relative">
+ <div class="flex items-start justify-between tf-gap">
  <!-- Left: Task Info -->
  <div class="flex-1 min-w-0">
  <!-- Title -->
@@ -39,7 +38,7 @@
  </div>
 
  <!-- Right: Actions -->
- <div class="flex items-center tf-gap-sm relative z-10">
+ <div class="flex items-center tf-gap-sm">
  <!-- Quick Actions -->
  <% if (task.canEdit) { %>
  <div class="dropdown dropdown-end" x-data="{ open: false }" @click.outside="open = false">
