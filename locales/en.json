@@ -125,7 +125,12 @@
         "detailsTitle": "Error Details (development)",
         "supportTitle": "Need help?",
         "supportEmail": "Contact Support"
-      }
+      },
+      "forbidden": "403 Forbidden",
+      "csrfInvalid": "Invalid or missing security token. Please refresh the page and try again.",
+      "whyThis": "Why am I seeing this?",
+      "csrfExplanation": "This security check protects you from Cross-Site Request Forgery (CSRF) attacks. Your session token may have expired or the request came from an untrusted source.",
+      "csrfSolution": "Simply refresh the page to get a new security token and try again."
     },
     "tasks": {
       "edit": {

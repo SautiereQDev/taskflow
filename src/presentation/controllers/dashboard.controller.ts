@@ -74,9 +74,7 @@ export class DashboardController {
       userId ? this.taskService.findAllTasks({ assigneeId: userId }, 1, 6) : Promise.resolve(null),
     ]);
 
-    const mapTasks = async (
-      result: IPaginatedTasks | null
-    ): Promise<ITaskListItemViewModel[]> => {
+    const mapTasks = async (result: IPaginatedTasks | null): Promise<ITaskListItemViewModel[]> => {
       if (!result) return [];
       const dtos = await this.taskService.toListDtos(result.items);
       return dtos.map((task) => toTaskListItemViewModel(task, currentUser));

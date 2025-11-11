@@ -4,7 +4,8 @@ import cors from 'cors';
 import compression from 'compression';
 import session from 'express-session';
 import ConnectPgSimple from 'connect-pg-simple';
-import flash from 'connect-flash';
+// import flash from 'connect-flash';
+import cookieParser from 'cookie-parser';
 import { pino } from 'pino';
 import pinoHttp from 'pino-http';
 import path from 'node:path';
@@ -13,6 +14,7 @@ import { PrismaClient } from '@prisma/client';
 import expressLayouts from 'express-ejs-layouts';
 import { htmxMiddleware } from '@presentation/middleware/htmx.middleware.js';
 import { errorHandler, notFoundHandler } from '@presentation/middleware/error.middleware.js';
+import { csrfMiddleware } from '@presentation/middleware/csrf.middleware.js';
 import { globalLimiter } from '@presentation/middleware/rate-limit.middleware.js';
 import { performanceMonitoring } from '@presentation/middleware/performance.middleware.js';
 import { i18nMiddleware, i18nLocalsMiddleware } from '@config/i18n.config.js';
@@ -63,6 +65,7 @@ export function createApp(): Express {
   );
 
   // Body Parsing & Compression
+  app.use(cookieParser()); // Required for CSRF cookie parsing
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
   app.use(compression());
@@ -106,7 +109,7 @@ export function createApp(): Express {
       store: new PgSession({
         conString: process.env.DATABASE_URL,
         createTableIfMissing: true,
-        tableName: 'sessions',
+        tableName: 'session',
       }),
       secret: process.env.SESSION_SECRET ?? 'taskflow-secret-change-in-prod',
       resave: false,
@@ -120,15 +123,6 @@ export function createApp(): Express {
       },
     })
   );
-
-  // Flash Messages (must be after session)
-  app.use(flash());
-
-  // Make flash messages available in views
-  app.use((req, res, next) => {
-    res.locals.messages = req.flash();
-    next();
-  });
 
   // View Engine (EJS)
   app.set('view engine', 'ejs');
@@ -145,6 +139,7 @@ export function createApp(): Express {
   app.use(i18nMiddleware);
   app.use(i18nLocalsMiddleware); // Attach i18n functions to res.locals for EJS
   app.use(attachUser); // Attach user to request if authenticated
+  app.use(csrfMiddleware); // CSRF protection (must be after session & body parsing)
   app.use(globalLimiter);
 
   // Health Checks

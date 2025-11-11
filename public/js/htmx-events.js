@@ -1,9 +1,23 @@
 /**
  * HTMX Custom Events Handler
  * Handles custom HTMX events like task count updates
+ * Adds CSRF token to all HTMX requests
  */
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Add CSRF token to all HTMX requests
+  document.body.addEventListener('htmx:configRequest', function (event) {
+    // Get CSRF token from meta tag or form input
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfInput = document.querySelector('input[name="_csrf"]');
+    const csrfToken = csrfMeta?.getAttribute('content') || csrfInput?.value;
+
+    if (csrfToken) {
+      // Add CSRF token as header for AJAX requests
+      event.detail.headers['X-CSRF-Token'] = csrfToken;
+    }
+  });
+
   // Listen for task count updates
   document.body.addEventListener('updateTaskCount', function (event) {
     const detail = event.detail;

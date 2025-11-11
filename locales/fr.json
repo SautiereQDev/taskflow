@@ -125,7 +125,12 @@
         "detailsTitle": "Détails de l'erreur (développement)",
         "supportTitle": "Besoin d'aide ?",
         "supportEmail": "Contactez le support"
-      }
+      },
+      "forbidden": "403 Interdit",
+      "csrfInvalid": "Jeton de sécurité invalide ou manquant. Veuillez rafraîchir la page et réessayer.",
+      "whyThis": "Pourquoi je vois ça ?",
+      "csrfExplanation": "Cette vérification de sécurité vous protège contre les attaques CSRF (Cross-Site Request Forgery). Votre jeton de session a peut-être expiré ou la requête provient d'une source non fiable.",
+      "csrfSolution": "Rafraîchissez simplement la page pour obtenir un nouveau jeton de sécurité et réessayez."
     },
     "tasks": {
       "edit": {

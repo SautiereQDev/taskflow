@@ -4,6 +4,9 @@
 <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'TaskFlow - Gestionnaire de tâches collaboratif moderne' %>">
 <meta name="theme-color" content="#6366f1">
 
+<!-- CSRF Token -->
+<meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+
 <!-- Title -->
 <title><%= typeof pageTitle !== 'undefined' ? pageTitle : (typeof title !== 'undefined' ? title : 'TaskFlow') %> | TaskFlow</title>
 

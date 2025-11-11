@@ -8,6 +8,7 @@
 
 import { type HelmetOptions } from 'helmet';
 import { type RateLimitRequestHandler, rateLimit } from 'express-rate-limit';
+import type { Request } from 'express';
 
 /**
  * Helmet Security Headers Configuration
@@ -154,15 +155,6 @@ export const passwordResetRateLimiter: RateLimitRequestHandler = rateLimit({
  * Note: express-session with sameSite: 'strict' provides good CSRF protection
  * For additional protection, we could use csurf middleware
  */
-export const csrfConfig = {
-  // Session-based CSRF protection via sameSite cookies
-  cookieOptions: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict' as const,
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  },
-};
 
 /**
  * Input Validation Configuration
@@ -252,3 +244,41 @@ export function validateEnvVars(): void {
  * - [ ] Penetration testing
  * - [ ] Security logging and monitoring
  */
+
+/**
+ * CSRF Protection Configuration
+ *
+ * Modern CSRF protection using csrf-csrf package with Double Submit Cookie pattern.
+ * Implements HMAC signature verification for enhanced security.
+ *
+ * @see https://owasp.org/www-community/attacks/csrf
+ * @see https://www.npmjs.com/package/csrf-csrf
+ */
+export const csrfConfig = {
+  cookieOptions: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    path: '/',
+  },
+  tokenConfig: {
+    cookieName: '_csrf',
+    size: 64, // 64 bytes = 512 bits (strong token)
+    ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
+    getTokenFromRequest: (req: Request): string | undefined => {
+      // Try body first (form submissions)
+      const bodyToken = (req.body as Record<string, unknown>)?._csrf;
+      if (typeof bodyToken === 'string') return bodyToken;
+
+      // Try header (AJAX/HTMX requests)
+      const headerToken = req.headers['x-csrf-token'];
+      if (typeof headerToken === 'string') return headerToken;
+
+      // Try query string (fallback)
+      const queryToken = (req.query as Record<string, unknown>)?._csrf;
+      if (typeof queryToken === 'string') return queryToken;
+
+      return undefined;
+    },
+  },
+};
