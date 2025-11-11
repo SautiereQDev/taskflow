@@ -19,7 +19,12 @@ export interface IUserRepository {
   /**
    * Find all users with optional filters
    */
-  findAll(filters?: { role?: UserRole; search?: string }): Promise<User[]>;
+  findAll(filters?: {
+    role?: UserRole;
+    search?: string;
+    skip?: number;
+    take?: number;
+  }): Promise<User[]>;
 
   /**
    * Find users by role

@@ -60,12 +60,20 @@ export class PrismaUserRepository implements IUserRepository {
   /**
    * Find all users with optional filters
    */
-  async findAll(filters?: { role?: UserRole; search?: string }): Promise<User[]> {
-    const where = filters ? UserQueryBuilder.buildFilters(filters) : {};
+  async findAll(filters?: {
+    role?: UserRole;
+    search?: string;
+    skip?: number;
+    take?: number;
+  }): Promise<User[]> {
+    const { skip, take, ...queryFilters } = filters ?? {};
+    const where = queryFilters ? UserQueryBuilder.buildFilters(queryFilters) : {};
 
     const prismaUsers = await this.prismaService.client.user.findMany({
       where,
       orderBy: { createdAt: 'desc' },
+      skip,
+      take,
       select: {
         id: true,
         email: true,

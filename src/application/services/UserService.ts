@@ -131,7 +131,7 @@ export const AdminUpdateUserSchema = z.object({
 export type AdminUpdateUserInput = z.infer<typeof AdminUpdateUserSchema>;
 
 /**
- * User filters for queries
+ * User filters for querying users
  *
  * @interface IUserFilters
  */
@@ -140,6 +140,28 @@ export interface IUserFilters {
   role?: UserRole;
   /** Search in name and email */
   search?: string;
+  /** Page number for pagination (1-indexed) */
+  page?: number;
+  /** Number of items per page */
+  limit?: number;
+}
+
+/**
+ * Paginated user result
+ *
+ * @interface IPaginatedUserResult
+ */
+export interface IPaginatedUserResult {
+  /** Array of users */
+  users: User[];
+  /** Current page number (1-indexed) */
+  page: number;
+  /** Number of items per page */
+  limit: number;
+  /** Total number of users matching filters */
+  total: number;
+  /** Total number of pages */
+  totalPages: number;
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -354,25 +376,43 @@ export class UserService {
   }
 
   /**
-   * Retrieves all users with optional filtering
-   *
-   * Supports filtering by role and searching in name/email.
+   * Retrieves all users with optional filters and pagination
    *
    * @async
-   * @param {IUserFilters} [filters={}] - Optional filter criteria
-   * @returns {Promise<User[]>} Array of user entities
+   * @param {IUserFilters} [filters={}] - Optional filter criteria including pagination
+   * @returns {Promise<User[] | IPaginatedUserResult>} Array of users or paginated result
    *
    * @example
    * ```typescript
    * // Get all admin users
    * const admins = await userService.findAll({ role: UserRole.ADMIN });
    *
-   * // Search users
-   * const results = await userService.findAll({ search: 'john' });
+   * // Search users with pagination
+   * const results = await userService.findAll({ search: 'john', page: 1, limit: 10 });
    * ```
    */
-  async findAll(filters: IUserFilters = {}): Promise<User[]> {
-    return await this.userRepository.findAll(filters);
+  async findAll(filters: IUserFilters = {}): Promise<User[] | IPaginatedUserResult> {
+    const { page, limit, ...otherFilters } = filters;
+
+    // If pagination is requested
+    if (page !== undefined && limit !== undefined) {
+      const skip = (page - 1) * limit;
+      const [users, total] = await Promise.all([
+        this.userRepository.findAll({ ...otherFilters, skip, take: limit }),
+        this.userRepository.count(otherFilters),
+      ]);
+
+      return {
+        users,
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      };
+    }
+
+    // Non-paginated query
+    return await this.userRepository.findAll(otherFilters);
   }
 
   /**
