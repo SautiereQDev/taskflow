@@ -47,7 +47,7 @@
  <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
  </svg>
  </button>
- <ul x-show="open" 
+ <ul x-show="open"
  x-cloak
  x-transition:enter="transition ease-out duration-200"
  x-transition:enter-start="opacity-0 scale-95"
@@ -66,7 +66,7 @@
  <span class="flex-1 tf-text-primary">Voir les détails</span>
  </a>
  </li>
- 
+
  <!-- Modification -->
  <li>
  <a href="/tasks/<%= task.id %>/edit" class="gap-3 py-3 rounded-lg hover:bg-base-200/50 transition-colors">
@@ -76,11 +76,11 @@
  <span class="flex-1 tf-text-primary">Modifier</span>
  </a>
  </li>
- 
+
  <!-- Séparateur -->
  <% if (task.status.value !== 'DONE') { %>
  <div class="divider my-1"></div>
- 
+
  <!-- Action de complétion -->
  <li>
  <button hx-post="/tasks/<%= task.id %>/complete"
@@ -97,10 +97,10 @@
  </button>
  </li>
  <% } %>
- 
+
  <!-- Séparateur avant action destructive -->
  <div class="divider my-1"></div>
- 
+
  <!-- Action destructive -->
  <li>
  <button hx-delete="/tasks/<%= task.id %>"

@@ -19,6 +19,7 @@ pnpm-debug.log*
 coverage/
 .vitest/
 test-results/
+playwright-report/
 *.log
 
 # SQLite artefacts (ne plus versionner)
@@ -54,9 +55,4 @@ test-output.txt
 # Scripts de test temporaires
 scripts/test-*.ts
 scripts/check-*.ts
-scripts/fix-*.sh
-test-seed.sh
 
-# Docker test
-docker-compose.test.yml
-Dockerfile.test
