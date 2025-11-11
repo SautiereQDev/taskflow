@@ -1,0 +1,234 @@
+<%
+/**
+ * Input Field Component
+ * Reusable text input component with full validation, character counter, help text, and Alpine.js/HTMX support
+ *
+ * @component
+ * @example
+ * <%- include('../../partials/ui/forms/input', {
+ *   label: 'Email Address',
+ *   name: 'email',
+ *   type: 'email',
+ *   required: true,
+ *   placeholder: 'name@example.com',
+ *   helpText: 'We will never share your email',
+ *   error: errors.email
+ * }) %>
+ *
+ * @example With character counter (Alpine.js)
+ * <%- include('../../partials/ui/forms/input', {
+ *   label: 'Task Title',
+ *   name: 'title',
+ *   value: task.title,
+ *   maxlength: 200,
+ *   showCounter: true,
+ *   counterModel: 'title',
+ *   required: true
+ * }) %>
+ *
+ * @example With HTMX validation
+ * <%- include('../../partials/ui/forms/input', {
+ *   label: 'Username',
+ *   name: 'username',
+ *   hxPost: '/api/validate-username',
+ *   hxTrigger: 'keyup changed delay:500ms',
+ *   hxTarget: '#username-validation',
+ *   hxSwap: 'innerHTML'
+ * }) %>
+ *
+ * @param {string} label - Field label text
+ * @param {string} name - Input name and ID attribute
+ * @param {string} [type='text'] - Input type: 'text', 'email', 'password', 'number', 'tel', 'url', 'date', 'datetime-local', 'time', 'search'
+ * @param {string} [value=''] - Input value (use for edit forms)
+ * @param {string} [placeholder=''] - Placeholder text
+ * @param {boolean} [required=false] - Mark field as required
+ * @param {boolean} [disabled=false] - Disable input
+ * @param {boolean} [readonly=false] - Make input read-only
+ * @param {boolean} [autofocus=false] - Auto-focus input on page load
+ * @param {string} [autocomplete=''] - HTML autocomplete attribute value
+ *
+ * @param {string} [error=''] - Error message to display (shows error state)
+ * @param {string} [helpText=''] - Help text below input (hidden if error present)
+ * @param {string} [labelAlt=''] - Alternative label text (right side, e.g., "Optional")
+ *
+ * @param {number} [minlength] - Minimum character length
+ * @param {number} [maxlength] - Maximum character length
+ * @param {number} [min] - Minimum value (for number/date types)
+ * @param {number} [max] - Maximum value (for number/date types)
+ * @param {number} [step] - Step increment (for number type)
+ * @param {string} [pattern] - Regex pattern for validation
+ *
+ * @param {boolean} [showCounter=false] - Show character counter (requires maxlength and counterModel)
+ * @param {string} [counterModel=''] - Alpine.js x-model variable name for counter (e.g., 'title')
+ *
+ * @param {string} [inputClass=''] - Additional CSS classes for input element
+ * @param {string} [containerClass=''] - Additional CSS classes for form-control container
+ * @param {string} [size='md'] - Input size: 'xs', 'sm', 'md', 'lg'
+ * @param {string} [variant='bordered'] - Input variant: 'bordered', 'ghost', 'primary', 'secondary'
+ *
+ * @param {string} [hxPost=''] - HTMX hx-post URL
+ * @param {string} [hxGet=''] - HTMX hx-get URL
+ * @param {string} [hxTrigger=''] - HTMX hx-trigger event
+ * @param {string} [hxTarget=''] - HTMX hx-target selector
+ * @param {string} [hxSwap=''] - HTMX hx-swap strategy
+ * @param {string} [hxIndicator=''] - HTMX loading indicator selector
+ *
+ * @param {string} [xModel=''] - Alpine.js x-model binding
+ * @param {string} [xOn=''] - Alpine.js x-on event handler (e.g., 'input: handleInput($event)')
+ *
+ * @param {string} [ariaLabel=''] - ARIA label for accessibility
+ * @param {string} [ariaDescribedby=''] - ARIA describedby attribute
+ */
+
+// Required props
+const label = typeof label !== 'undefined' ? label : '';
+const name = typeof name !== 'undefined' ? name : '';
+
+// Input type and basic attributes
+const type = typeof type !== 'undefined' ? type : 'text';
+const value = typeof value !== 'undefined' ? value : '';
+const placeholder = typeof placeholder !== 'undefined' ? placeholder : '';
+const required = typeof required !== 'undefined' ? required : false;
+const disabled = typeof disabled !== 'undefined' ? disabled : false;
+const readonly = typeof readonly !== 'undefined' ? readonly : false;
+const autofocus = typeof autofocus !== 'undefined' ? autofocus : false;
+const autocomplete = typeof autocomplete !== 'undefined' ? autocomplete : '';
+
+// Validation and messages
+const error = typeof error !== 'undefined' ? error : '';
+const helpText = typeof helpText !== 'undefined' ? helpText : '';
+const labelAlt = typeof labelAlt !== 'undefined' ? labelAlt : '';
+
+// Validation constraints
+const minlength = typeof minlength !== 'undefined' ? minlength : null;
+const maxlength = typeof maxlength !== 'undefined' ? maxlength : null;
+const min = typeof min !== 'undefined' ? min : null;
+const max = typeof max !== 'undefined' ? max : null;
+const step = typeof step !== 'undefined' ? step : null;
+const pattern = typeof pattern !== 'undefined' ? pattern : '';
+
+// Character counter (Alpine.js)
+const showCounter = typeof showCounter !== 'undefined' ? showCounter : false;
+const counterModel = typeof counterModel !== 'undefined' ? counterModel : '';
+
+// Styling
+const inputClass = typeof inputClass !== 'undefined' ? inputClass : '';
+const containerClass = typeof containerClass !== 'undefined' ? containerClass : '';
+const size = typeof size !== 'undefined' ? size : 'md';
+const variant = typeof variant !== 'undefined' ? variant : 'bordered';
+
+// HTMX attributes
+const hxPost = typeof hxPost !== 'undefined' ? hxPost : '';
+const hxGet = typeof hxGet !== 'undefined' ? hxGet : '';
+const hxTrigger = typeof hxTrigger !== 'undefined' ? hxTrigger : '';
+const hxTarget = typeof hxTarget !== 'undefined' ? hxTarget : '';
+const hxSwap = typeof hxSwap !== 'undefined' ? hxSwap : '';
+const hxIndicator = typeof hxIndicator !== 'undefined' ? hxIndicator : '';
+
+// Alpine.js attributes
+const xModel = typeof xModel !== 'undefined' ? xModel : '';
+const xOn = typeof xOn !== 'undefined' ? xOn : '';
+
+// Accessibility
+const ariaLabel = typeof ariaLabel !== 'undefined' ? ariaLabel : '';
+const ariaDescribedby = typeof ariaDescribedby !== 'undefined' ? ariaDescribedby : '';
+
+// Build input classes
+const sizeClasses = {
+  xs: 'input-xs',
+  sm: 'input-sm',
+  md: '',
+  lg: 'input-lg'
+};
+
+const variantClasses = {
+  bordered: 'input-bordered',
+  ghost: 'input-ghost',
+  primary: 'input-primary',
+  secondary: 'input-secondary'
+};
+
+const inputClasses = [
+  'input',
+  'w-full',
+  'tf-input-padding',
+  sizeClasses[size] || '',
+  variantClasses[variant] || 'input-bordered',
+  error ? 'input-error' : '',
+  inputClass
+].filter(Boolean).join(' ');
+
+// Generate unique IDs
+const inputId = name;
+const helpTextId = helpText || error ? `${name}-help` : '';
+const errorId = error ? `${name}-error` : '';
+%>
+
+<div class="form-control w-full <%= containerClass %>">
+  <!-- Label -->
+  <label class="label" for="<%= inputId %>">
+    <span class="label-text font-semibold tf-text-primary">
+      <%= label %>
+      <% if (required) { %>
+        <span class="text-error">*</span>
+      <% } %>
+    </span>
+    <% if (labelAlt || (showCounter && counterModel && maxlength)) { %>
+      <span class="label-text-alt tf-text-muted">
+        <% if (showCounter && counterModel && maxlength) { %>
+          <span x-text="`${<%= counterModel %>.length}/<%= maxlength %>`">0/<%= maxlength %></span>
+        <% } else if (labelAlt) { %>
+          <%= labelAlt %>
+        <% } %>
+      </span>
+    <% } %>
+  </label>
+
+  <!-- Input -->
+  <input
+    type="<%= type %>"
+    id="<%= inputId %>"
+    name="<%= name %>"
+    <% if (value) { %>value="<%= value %>"<% } %>
+    <% if (placeholder) { %>placeholder="<%= placeholder %>"<% } %>
+    class="<%= inputClasses %>"
+    <% if (required) { %>required<% } %>
+    <% if (disabled) { %>disabled<% } %>
+    <% if (readonly) { %>readonly<% } %>
+    <% if (autofocus) { %>autofocus<% } %>
+    <% if (autocomplete) { %>autocomplete="<%= autocomplete %>"<% } %>
+    <% if (minlength) { %>minlength="<%= minlength %>"<% } %>
+    <% if (maxlength) { %>maxlength="<%= maxlength %>"<% } %>
+    <% if (min !== null) { %>min="<%= min %>"<% } %>
+    <% if (max !== null) { %>max="<%= max %>"<% } %>
+    <% if (step !== null) { %>step="<%= step %>"<% } %>
+    <% if (pattern) { %>pattern="<%= pattern %>"<% } %>
+    <% if (hxPost) { %>hx-post="<%= hxPost %>"<% } %>
+    <% if (hxGet) { %>hx-get="<%= hxGet %>"<% } %>
+    <% if (hxTrigger) { %>hx-trigger="<%= hxTrigger %>"<% } %>
+    <% if (hxTarget) { %>hx-target="<%= hxTarget %>"<% } %>
+    <% if (hxSwap) { %>hx-swap="<%= hxSwap %>"<% } %>
+    <% if (hxIndicator) { %>hx-indicator="<%= hxIndicator %>"<% } %>
+    <% if (xModel) { %>x-model="<%= xModel %>"<% } %>
+    <% if (xOn) { %>x-on:<%= xOn %><% } %>
+    <% if (ariaLabel) { %>aria-label="<%= ariaLabel %>"<% } %>
+    <% if (ariaDescribedby || helpTextId || errorId) { %>
+      aria-describedby="<%= ariaDescribedby || helpTextId || errorId %>"
+    <% } %>
+  />
+
+  <!-- Help Text / Error Message -->
+  <% if (error) { %>
+    <label class="label">
+      <span class="label-text-alt text-error" id="<%= errorId %>">
+        <%= error %>
+      </span>
+    </label>
+  <% } else if (helpText) { %>
+    <label class="label">
+      <span class="label-text-alt tf-text-muted" id="<%= helpTextId %>">
+        <%= helpText %>
+      </span>
+    </label>
+  <% } %>
+</div>

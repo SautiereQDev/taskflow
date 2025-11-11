@@ -39,31 +39,20 @@
  class="tf-section"
  >
  <!-- Title -->
- <div class="form-control">
- <label class="label" for="title">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.title') %> <span class="text-error">*</span>
- </span>
- <span class="label-text-alt tf-text-muted" x-text="`${title.length}/200`">0/200</span>
- </label>
- <input
- type="text"
- id="title"
- name="title"
- value="<%= task.title %>"
- x-model="title"
- class="input input-bordered w-full tf-input-padding"
- placeholder="<%= __('tasks.form.titlePlaceholder') %>"
- required
- minlength="3"
- maxlength="200"
- />
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('tasks.form.titleHint') %>
- </span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: __('tasks.form.title'),
+ name: 'title',
+ type: 'text',
+ value: task.title,
+ placeholder: __('tasks.form.titlePlaceholder'),
+ helpText: __('tasks.form.titleHint'),
+ required: true,
+ minlength: 3,
+ maxlength: 200,
+ showCounter: true,
+ counterModel: 'title',
+ xModel: 'title'
+ }) %>
 
  <!-- Description -->
  <div class="form-control">
@@ -180,25 +169,13 @@
  </div>
 
  <!-- Due Date -->
- <div class="form-control">
- <label class="label" for="dueDate">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.dueDate') %>
- </span>
- </label>
- <input
- type="datetime-local"
- id="dueDate"
- name="dueDate"
- value="<%= task.dueDate || '' %>"
- class="input input-bordered w-full tf-input-padding"
- />
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('tasks.form.dueDateHint') %>
- </span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: __('tasks.form.dueDate'),
+ name: 'dueDate',
+ type: 'datetime-local',
+ value: task.dueDate || '',
+ helpText: __('tasks.form.dueDateHint')
+ }) %>
  </div>
 
  <!-- Form Actions -->

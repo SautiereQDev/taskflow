@@ -19,51 +19,27 @@
  <% } %>
 
  <!-- Email Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Email
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="email"
- name="email"
- id="email"
- value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
- placeholder="nom@example.com"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.email ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.email) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.email %></span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Email',
+ name: 'email',
+ type: 'email',
+ value: typeof formData !== 'undefined' ? formData.email : '',
+ placeholder: 'nom@example.com',
+ required: true,
+ autocomplete: 'email',
+ error: typeof errors !== 'undefined' ? errors.email : ''
+ }) %>
 
  <!-- Password Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Mot de passe
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="password"
- name="password"
- id="password"
- placeholder="••••••••"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.password ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.password) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.password %></span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Mot de passe',
+ name: 'password',
+ type: 'password',
+ placeholder: '••••••••',
+ required: true,
+ autocomplete: 'current-password',
+ error: typeof errors !== 'undefined' ? errors.password : ''
+ }) %>
 
  <div class="flex items-center justify-between">
  <label class="label cursor-pointer tf-gap-sm">
