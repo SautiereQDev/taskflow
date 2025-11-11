@@ -30,98 +30,88 @@
  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
  <!-- Title -->
- <div class="form-control w-full">
- <label class="label" for="title">
- <span class="label-text font-semibold">Titre <span class="text-error">*</span></span>
- <span class="label-text-alt text-base-content/50" x-text="`${title.length}/200`"><%= taskTitle.length %>/200</span>
- </label>
- <input
- type="text"
- id="title"
- name="title"
- value="<%= taskTitle %>"
- class="input input-bordered w-full tf-input-padding"
- placeholder="Ex: Préparer la livraison de la fonctionnalité"
- minlength="3"
- maxlength="200"
- required
- x-model="title"
- />
- </div>
+ <%- include('../ui/forms/input', {
+ label: 'Titre',
+ name: 'title',
+ type: 'text',
+ value: taskTitle,
+ placeholder: 'Ex: Préparer la livraison de la fonctionnalité',
+ minlength: 3,
+ maxlength: 200,
+ required: true,
+ showCounter: true,
+ counterModel: 'title',
+ xModel: 'title'
+ }) %>
 
  <!-- Description -->
- <div class="form-control">
- <label class="label" for="description">
- <span class="label-text font-semibold">Description</span>
- <span class="label-text-alt text-base-content/50" x-text="`${description.length}/2000`"><%= taskDescription.length %>/2000</span>
- </label>
- <textarea
- id="description"
- name="description"
- class="textarea textarea-bordered w-full h-32 tf-input-padding"
- maxlength="2000"
- placeholder="Ajoutez des détails pour contextualiser la tâche..."
- x-model="description"
- ><%= taskDescription %></textarea>
- </div>
+ <%- include('../ui/forms/textarea', {
+ label: 'Description',
+ name: 'description',
+ value: taskDescription,
+ placeholder: 'Ajoutez des détails pour contextualiser la tâche...',
+ rows: 8,
+ maxlength: 2000,
+ showCounter: true,
+ counterModel: 'description',
+ xModel: 'description'
+ }) %>
 
  <div class="grid md:grid-cols-2 gap-6">
  <!-- Status -->
- <div class="form-control">
- <label class="label" for="status">
- <span class="label-text font-semibold">Statut</span>
- </label>
- <select id="status" name="status" class="select select-bordered w-full tf-input-padding" required>
- <option value="TODO" <%= taskStatus === 'TODO' ? 'selected' : '' %>>À faire</option>
- <option value="IN_PROGRESS" <%= taskStatus === 'IN_PROGRESS' ? 'selected' : '' %>>En cours</option>
- <option value="DONE" <%= taskStatus === 'DONE' ? 'selected' : '' %>>Terminée</option>
- <option value="CANCELLED" <%= taskStatus === 'CANCELLED' ? 'selected' : '' %>>Annulée</option>
- </select>
- </div>
+ <%- include('../ui/forms/select', {
+ label: 'Statut',
+ name: 'status',
+ value: taskStatus,
+ required: true,
+ showPlaceholder: false,
+ options: [
+ { value: 'TODO', label: 'À faire' },
+ { value: 'IN_PROGRESS', label: 'En cours' },
+ { value: 'DONE', label: 'Terminée' },
+ { value: 'CANCELLED', label: 'Annulée' }
+ ]
+ }) %>
 
  <!-- Priority -->
- <div class="form-control">
- <label class="label" for="priority">
- <span class="label-text font-semibold">Priorité</span>
- </label>
- <select id="priority" name="priority" class="select select-bordered w-full tf-input-padding" required>
- <option value="LOW" <%= taskPriority === 'LOW' ? 'selected' : '' %>>Basse</option>
- <option value="MEDIUM" <%= taskPriority === 'MEDIUM' ? 'selected' : '' %>>Moyenne</option>
- <option value="HIGH" <%= taskPriority === 'HIGH' ? 'selected' : '' %>>Haute</option>
- <option value="URGENT" <%= taskPriority === 'URGENT' ? 'selected' : '' %>>Urgente</option>
- </select>
- </div>
+ <%- include('../ui/forms/select', {
+ label: 'Priorité',
+ name: 'priority',
+ value: taskPriority,
+ required: true,
+ showPlaceholder: false,
+ options: [
+ { value: 'LOW', label: 'Basse' },
+ { value: 'MEDIUM', label: 'Moyenne' },
+ { value: 'HIGH', label: 'Haute' },
+ { value: 'URGENT', label: 'Urgente' }
+ ]
+ }) %>
  </div>
 
  <div class="grid md:grid-cols-2 gap-6">
  <!-- Assignee -->
- <div class="form-control">
- <label class="label" for="assigneeId">
- <span class="label-text font-semibold">Assignée à</span>
- </label>
- <select id="assigneeId" name="assigneeId" class="select select-bordered w-full tf-input-padding">
- <option value="">Non assignée / No assignee</option>
- <% (users || []).forEach((user) => { %>
- <option value="<%= user.id %>" <%= taskAssigneeId === user.id ? 'selected' : '' %>>
- <%= user.name %> (<%= user.email %>)
+ <%- include('../ui/forms/select', {
+ label: 'Assignée à',
+ name: 'assigneeId',
+ value: taskAssigneeId,
+ placeholder: 'Non assignée / No assignee',
+ customOptionsHtml: `
+ ${(users || []).map(user => `
+ <option value="${user.id}" ${taskAssigneeId === user.id ? 'selected' : ''}>
+ ${user.name} (${user.email})
  </option>
- <% }) %>
- </select>
- </div>
+ `).join('')}
+ `
+ }) %>
 
  <!-- Due Date -->
- <div class="form-control">
- <label class="label" for="dueDate">
- <span class="label-text font-semibold">Date d'échéance</span>
- </label>
- <input
- type="datetime-local"
- id="dueDate"
- name="dueDate"
- value="<%= taskDueDate %>"
- class="input input-bordered w-full tf-input-padding"
- />
- </div>
+ <%- include('../ui/forms/input', {
+ label: 'Date d\'échéance',
+ name: 'dueDate',
+ type: 'datetime-local',
+ value: taskDueDate
+ }) %>
  </div>
 
  <div class="btn-group pt-6">
