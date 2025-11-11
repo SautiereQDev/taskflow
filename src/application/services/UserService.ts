@@ -240,7 +240,7 @@ export class UserService {
     // Check if email already exists
     const existingUser = await this.userRepository.findByEmail(validated.email);
     if (existingUser) {
-      throw new AppError('Email already registered', 409, {
+      throw new AppError('Email already exists', 409, {
         email: validated.email,
       });
     }
@@ -559,7 +559,7 @@ export class UserService {
     if (validated.email !== undefined && validated.email !== user.email.value) {
       const existingUser = await this.userRepository.findByEmail(validated.email);
       if (existingUser) {
-        throw new AppError('Email already registered', 409, {
+        throw new AppError('Email already exists', 409, {
           email: validated.email,
         });
       }

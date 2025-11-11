@@ -156,7 +156,8 @@ export class TaskController {
     const task = await this.taskService.findTaskById(id);
     if (!task) {
       res.status(404).render('pages/error/404', {
-        message: 'Task not found',
+        title: 'Task not found',
+        error: { message: 'Task not found' },
         user: req.user,
       });
       return;
@@ -256,7 +257,8 @@ export class TaskController {
 
     if (!task) {
       res.status(404).render('pages/error/404', {
-        message: 'Task not found',
+        title: 'Task not found',
+        error: { message: 'Task not found' },
         user: req.user,
       });
       return;

@@ -116,9 +116,26 @@ export class AuthController {
         res.redirect('/dashboard');
       }
     } catch (error) {
-      // Handle authentication failure - re-render login page with error
+      // Handle authentication failure
       if (error instanceof AppError && error.statusCode === 401) {
-        // Set flash error message
+        // Check if JSON response is expected (API call)
+        const wantsJson =
+          req.headers['content-type']?.includes('application/json') ??
+          req.headers.accept?.includes('application/json') ??
+          false;
+
+        if (wantsJson) {
+          // API response with JSON
+          return res.status(401).json({
+            success: false,
+            error: {
+              message: error.message,
+              statusCode: 401,
+            },
+          });
+        }
+
+        // Set flash error message for HTML response
         if (typeof req.flash === 'function') {
           req.flash('error', error.message);
         }
