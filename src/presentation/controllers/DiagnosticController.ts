@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { existsSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PrismaClient } from '@prisma/client';
+import type { IDiagnosticViewModel } from '@shared-types/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..');
@@ -29,12 +30,26 @@ export class DiagnosticController {
   async getDiagnosticPage(req: Request, res: Response): Promise<void> {
     const checks = await this.runAllChecks();
 
-    res.render('pages/diagnostic', {
+    const viewData: IDiagnosticViewModel = {
       title: 'System Diagnostic',
       checks,
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV ?? 'development',
-    });
+      database: {
+        status:
+          checks.find((c) => c.name === 'Database Connection')?.status === 'pass'
+            ? 'connected'
+            : 'disconnected',
+        message: checks.find((c) => c.name === 'Database Connection')?.message,
+      },
+      server: {
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        version: process.version,
+      },
+    };
+
+    res.render('pages/diagnostic', viewData);
   }
 
   /**

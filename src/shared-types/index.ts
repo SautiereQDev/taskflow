@@ -57,6 +57,7 @@ export { DashboardViewModel } from '../presentation/view-models/dashboard.view-m
 // Import types for use in interface definitions below
 import type { IUserViewModel } from '../presentation/view-models/user.view-model.js';
 import type { ITaskListItemViewModel } from '../presentation/view-models/task.presenter.js';
+import type { IDashboardViewModel } from '../presentation/view-models/dashboard.view-model.js';
 
 /**
  * Common pagination result type
@@ -173,4 +174,64 @@ export interface IErrorViewModel extends IBaseViewData {
   message: string;
   error?: Error;
   stack?: string;
+}
+
+/**
+ * Task detail page view model
+ */
+export interface ITaskDetailPageViewModel extends IBaseViewData {
+  title: string;
+  task: ITaskListItemViewModel;
+  canEdit: boolean;
+  canDelete: boolean;
+}
+
+/**
+ * Task list page view model
+ */
+export interface ITaskListPageViewModel extends IBaseViewData {
+  title: string;
+  tasks: ITaskListItemViewModel[];
+  pagination: IPaginatedResult<ITaskListItemViewModel>;
+  filters: IFilterOptions;
+}
+
+/**
+ * Dashboard page view model
+ */
+export interface IDashboardPageViewModel extends IBaseViewData {
+  title: string;
+  dashboard: IDashboardViewModel;
+}
+
+/**
+ * Diagnostic page view model
+ */
+export interface IDiagnosticViewModel extends IBaseViewData {
+  title: string;
+  environment: string;
+  timestamp?: string;
+  checks?: {
+    name: string;
+    status: 'pass' | 'fail' | 'warn';
+    message: string;
+    details?: Record<string, unknown>;
+  }[];
+  database: {
+    status: 'connected' | 'disconnected';
+    message?: string;
+  };
+  server: {
+    uptime: number;
+    memory: NodeJS.MemoryUsage;
+    version: string;
+  };
+}
+
+/**
+ * Static pages view model (About, FAQ, Contact, etc.)
+ */
+export interface IStaticPageViewModel extends IBaseViewData {
+  title: string;
+  content?: string;
 }
