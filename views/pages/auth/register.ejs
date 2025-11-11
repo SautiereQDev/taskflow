@@ -11,102 +11,50 @@
  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
  <!-- Name Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Nom complet
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="text"
- name="name"
- id="name"
- value="<%= typeof formData !== 'undefined' ? formData.name : '' %>"
- placeholder="Jean Dupont"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.name ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.name) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.name %></span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Nom complet',
+ name: 'name',
+ type: 'text',
+ value: typeof formData !== 'undefined' ? formData.name : '',
+ placeholder: 'Jean Dupont',
+ required: true,
+ error: typeof errors !== 'undefined' ? errors.name : ''
+ }) %>
 
  <!-- Email Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Email
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="email"
- name="email"
- id="email"
- value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
- placeholder="nom@example.com"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.email ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.email) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.email %></span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Email',
+ name: 'email',
+ type: 'email',
+ value: typeof formData !== 'undefined' ? formData.email : '',
+ placeholder: 'nom@example.com',
+ required: true,
+ autocomplete: 'email',
+ error: typeof errors !== 'undefined' ? errors.email : ''
+ }) %>
 
  <!-- Password Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Mot de passe
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="password"
- name="password"
- id="password"
- placeholder="••••••••"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.password ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.password) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.password %></span>
- </label>
- <% } else { %>
- <label class="label">
- <span class="label-text-alt opacity-70">Minimum 8 caractères</span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Mot de passe',
+ name: 'password',
+ type: 'password',
+ placeholder: '••••••••',
+ required: true,
+ autocomplete: 'new-password',
+ helpText: typeof errors !== 'undefined' && errors.password ? '' : 'Minimum 8 caractères',
+ error: typeof errors !== 'undefined' ? errors.password : ''
+ }) %>
 
  <!-- Confirm Password Field -->
- <div class="form-control w-full">
- <label class="label">
- <span class="label-text font-semibold">
- Confirmer le mot de passe
- <span class="text-error">*</span>
- </span>
- </label>
- <input
- type="password"
- name="confirmPassword"
- id="confirmPassword"
- placeholder="••••••••"
- class="input input-bordered w-full tf-input-padding <%= typeof errors !== 'undefined' && errors.confirmPassword ? 'input-error' : '' %>"
- required
- />
- <% if (typeof errors !== 'undefined' && errors.confirmPassword) { %>
- <label class="label">
- <span class="label-text-alt text-error"><%= errors.confirmPassword %></span>
- </label>
- <% } %>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: 'Confirmer le mot de passe',
+ name: 'confirmPassword',
+ type: 'password',
+ placeholder: '••••••••',
+ required: true,
+ autocomplete: 'new-password',
+ error: typeof errors !== 'undefined' ? errors.confirmPassword : ''
+ }) %>
 
  <%- include('../../partials/ui/forms/checkbox', {
  label: 'J\'accepte les <a href="/terms" class="link link-primary">conditions d\'utilisation</a> et la <a href="/privacy" class="link link-primary">politique de confidentialité</a>',

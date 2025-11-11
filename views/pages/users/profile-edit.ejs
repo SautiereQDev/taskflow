@@ -31,38 +31,28 @@
 
  <div class="bg-base-200 border border-base-content/10 shadow-md p-8 rounded-2xl space-y-6">
  <!-- Full Name Field -->
- <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.fullName') %></span>
- </label>
- <input type="text"
- name="name"
- value="<%= user.name %>"
- minlength="2"
- maxlength="100"
- class="input input-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300"
- required />
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('profile.edit.fullNameHint') %>
- </span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/input', {
+ label: __('profile.edit.fullName'),
+ name: 'name',
+ type: 'text',
+ value: user.name,
+ minlength: 2,
+ maxlength: 100,
+ required: true,
+ helpText: __('profile.edit.fullNameHint')
+ }) %>
 
  <!-- Language Select -->
- <div class="form-control">
- <label class="label">
- <span class="label-text font-semibold tf-text-primary"><%= __('profile.edit.language') %></span>
- </label>
- <select name="locale" class="select select-bordered w-full tf-input-padding transition-all duration-200 focus:card bg-base-200 hover:bg-base-300">
- <option value="fr" <%= currentLocale === 'fr' ? 'selected' : '' %>>
- <%= __('profile.edit.languageFr') %>
- </option>
- <option value="en" <%= currentLocale === 'en' ? 'selected' : '' %>>
- <%= __('profile.edit.languageEn') %>
- </option>
- </select>
- </div>
+ <%- include('../../partials/ui/forms/select', {
+ label: __('profile.edit.language'),
+ name: 'locale',
+ value: currentLocale,
+ showPlaceholder: false,
+ options: [
+ { value: 'fr', label: __('profile.edit.languageFr') },
+ { value: 'en', label: __('profile.edit.languageEn') }
+ ]
+ }) %>
  </div>
 
 

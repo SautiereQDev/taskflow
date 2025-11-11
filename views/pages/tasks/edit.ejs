@@ -55,118 +55,84 @@
  }) %>
 
  <!-- Description -->
- <div class="form-control">
- <label class="label" for="description">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.description') %>
- </span>
- <span class="label-text-alt tf-text-muted" x-text="`${description.length}/2000`">0/2000</span>
- </label>
- <textarea
- id="description"
- name="description"
- x-model="description"
- class="textarea textarea-bordered h-32 w-full"
- placeholder="<%= __('tasks.form.descriptionPlaceholder') %>"
- maxlength="2000"
- ><%= task.description || '' %></textarea>
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('tasks.form.descriptionHint') %>
- </span>
- </label>
- </div>
+ <%- include('../../partials/ui/forms/textarea', {
+ label: __('tasks.form.description'),
+ name: 'description',
+ value: task.description || '',
+ placeholder: __('tasks.form.descriptionPlaceholder'),
+ helpText: __('tasks.form.descriptionHint'),
+ rows: 8,
+ maxlength: 2000,
+ showCounter: true,
+ counterModel: 'description',
+ xModel: 'description'
+ }) %>
 
  <!-- Status & Priority Row -->
  <div class="grid grid-cols-1 md:grid-cols-2 tf-gap">
  <!-- Status -->
- <div class="form-control">
- <label class="label" for="status">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.status') %> <span class="text-error">*</span>
- </span>
- </label>
- <select
- id="status"
- name="status"
- class="select select-bordered w-full tf-input-padding"
- required
- >
- <option value="TODO" <%= task.status === 'TODO' ? 'selected' : '' %>>
- 📝 <%= __('tasks.status.todo') %>
+ <%- include('../../partials/ui/forms/select', {
+ label: __('tasks.form.status'),
+ name: 'status',
+ value: task.status,
+ required: true,
+ showPlaceholder: false,
+ customOptionsHtml: `
+ <option value="TODO" ${task.status === 'TODO' ? 'selected' : ''}>
+ 📝 ${__('tasks.status.todo')}
  </option>
- <option value="IN_PROGRESS" <%= task.status === 'IN_PROGRESS' ? 'selected' : '' %>>
- 🚀 <%= __('tasks.status.inProgress') %>
+ <option value="IN_PROGRESS" ${task.status === 'IN_PROGRESS' ? 'selected' : ''}>
+ 🚀 ${__('tasks.status.inProgress')}
  </option>
- <option value="DONE" <%= task.status === 'DONE' ? 'selected' : '' %>>
- ✅ <%= __('tasks.status.done') %>
+ <option value="DONE" ${task.status === 'DONE' ? 'selected' : ''}>
+ ✅ ${__('tasks.status.done')}
  </option>
- <option value="CANCELLED" <%= task.status === 'CANCELLED' ? 'selected' : '' %>>
- ❌ <%= __('tasks.status.cancelled') %>
+ <option value="CANCELLED" ${task.status === 'CANCELLED' ? 'selected' : ''}>
+ ❌ ${__('tasks.status.cancelled')}
  </option>
- </select>
- </div>
+ `
+ }) %>
 
  <!-- Priority -->
- <div class="form-control">
- <label class="label" for="priority">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.priority') %>
- </span>
- </label>
- <select
- id="priority"
- name="priority"
- class="select select-bordered w-full tf-input-padding"
- >
- <option value="LOW" <%= task.priority === 'LOW' ? 'selected' : '' %>>
- 🟢 <%= __('tasks.priority.low') %>
+ <%- include('../../partials/ui/forms/select', {
+ label: __('tasks.form.priority'),
+ name: 'priority',
+ value: task.priority,
+ showPlaceholder: false,
+ customOptionsHtml: `
+ <option value="LOW" ${task.priority === 'LOW' ? 'selected' : ''}>
+ 🟢 ${__('tasks.priority.low')}
  </option>
- <option value="MEDIUM" <%= task.priority === 'MEDIUM' ? 'selected' : '' %>>
- 🟡 <%= __('tasks.priority.medium') %>
+ <option value="MEDIUM" ${task.priority === 'MEDIUM' ? 'selected' : ''}>
+ 🟡 ${__('tasks.priority.medium')}
  </option>
- <option value="HIGH" <%= task.priority === 'HIGH' ? 'selected' : '' %>>
- 🟠 <%= __('tasks.priority.high') %>
+ <option value="HIGH" ${task.priority === 'HIGH' ? 'selected' : ''}>
+ 🟠 ${__('tasks.priority.high')}
  </option>
- <option value="URGENT" <%= task.priority === 'URGENT' ? 'selected' : '' %>>
- 🔴 <%= __('tasks.priority.urgent') %>
+ <option value="URGENT" ${task.priority === 'URGENT' ? 'selected' : ''}>
+ 🔴 ${__('tasks.priority.urgent')}
  </option>
- </select>
- </div>
+ `
+ }) %>
  </div>
 
  <!-- Assignee & Due Date Row -->
  <div class="grid grid-cols-1 md:grid-cols-2 tf-gap">
  <!-- Assignee -->
- <div class="form-control">
- <label class="label" for="assigneeId">
- <span class="label-text font-semibold tf-text-primary">
- <%= __('tasks.form.assignee') %>
- </span>
- </label>
- <select
- id="assigneeId"
- name="assigneeId"
- class="select select-bordered w-full tf-input-padding"
- >
- <option value="">
- <%= __('tasks.form.noAssignee') %>
+ <%- include('../../partials/ui/forms/select', {
+ label: __('tasks.form.assignee'),
+ name: 'assigneeId',
+ value: task.assigneeId || '',
+ helpText: __('tasks.form.assigneeHint'),
+ placeholder: __('tasks.form.noAssignee'),
+ customOptionsHtml: `
+ ${users.map(u => `
+ <option value="${u.id}" ${task.assigneeId === u.id ? 'selected' : ''}>
+ ${u.firstName} ${u.lastName} (${u.email})
  </option>
- <% users.forEach(u => { %>
- <option
- value="<%= u.id %>"
- <%= task.assigneeId === u.id ? 'selected' : '' %>
- >
- <%= u.firstName %> <%= u.lastName %> (<%= u.email %>)
- </option>
- <% }); %>
- </select>
- <label class="label">
- <span class="label-text-alt tf-text-muted">
- <%= __('tasks.form.assigneeHint') %>
- </span>
- </label>
- </div>
+ `).join('')}
+ `
+ }) %>
 
  <!-- Due Date -->
  <%- include('../../partials/ui/forms/input', {
