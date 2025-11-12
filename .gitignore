@@ -56,3 +56,4 @@ test-output.txt
 scripts/test-*.ts
 scripts/check-*.ts
 
+cookies.txt
