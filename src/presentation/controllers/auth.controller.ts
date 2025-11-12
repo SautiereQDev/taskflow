@@ -53,6 +53,11 @@ export class AuthController {
    * @param res - Express response
    */
   loginPage(req: Request, res: Response): void {
+    // Initialize session to ensure sessionID persistence for CSRF validation
+    // This is required because saveUninitialized: false in session config
+    // Without this, GET request has temporary sessionID and POST gets new one
+    req.session.initialized ??= true;
+
     renderOrPartial(req, res, 'pages/auth/login', 'pages/auth/login', {
       title: 'Connexion - TaskFlow',
     });
@@ -161,6 +166,9 @@ export class AuthController {
    * @param res - Express response
    */
   registerPage(req: Request, res: Response): void {
+    // Initialize session for CSRF validation (same as loginPage)
+    req.session.initialized ??= true;
+
     renderOrPartial(req, res, 'pages/auth/register', 'pages/auth/register', {
       title: 'Inscription - TaskFlow',
     });
