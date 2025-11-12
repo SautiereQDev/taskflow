@@ -57,3 +57,5 @@ scripts/test-*.ts
 scripts/check-*.ts
 
 cookies.txt
+
+./github/instructions/

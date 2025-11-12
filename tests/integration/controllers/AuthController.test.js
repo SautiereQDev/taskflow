@@ -66,9 +66,8 @@ describe('AuthController Integration Tests', () => {
       const sessionCookie = cookies.find((c) => c.includes('taskflow.sid'));
       expect(sessionCookie).toBeDefined();
     });
-    });
-    it('should reject registration without required fields', async () => {
   });
+  it('should reject registration without required fields', async () => {});
   describe('POST /auth/register', () => {
     beforeEach(async () => {
       await cleanupTestUsers(prisma);
