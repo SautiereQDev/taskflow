@@ -321,7 +321,9 @@ describe('PrismaUserRepository Integration Tests', () => {
       expect(updated.name).toBe('Updated Name');
       expect(updated.id).toBe(user.id);
       expect(updated.updatedAt.getTime()).toBeGreaterThan(updated.createdAt.getTime());
+    });
   });
+
   describe('delete()', () => {
     it('should delete user from database', async () => {
       // Arrange
@@ -439,5 +441,6 @@ describe('PrismaUserRepository Integration Tests', () => {
       const managerCount = await repository.count({ role: UserRole.MANAGER });
       // Assert
       expect(managerCount).toBeGreaterThanOrEqual(1);
+    });
   });
 });
