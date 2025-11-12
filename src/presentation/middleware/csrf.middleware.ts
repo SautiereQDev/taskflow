@@ -120,8 +120,12 @@ export function csrfProtectionMiddleware(req: Request, res: Response, next: Next
         ip: req.ip,
         userAgent: req.headers['user-agent'],
         error: error instanceof Error ? error.message : String(error),
+        sessionID: req.sessionID,
+        cookies: req.cookies,
+        body: req.body,
         context: {
           hasBodyToken: Boolean((req.body as Record<string, unknown>)?._csrf),
+          bodyToken: (req.body as Record<string, unknown>)?._csrf,
           hasHeaderToken: Boolean(req.headers['x-csrf-token']),
           hasQueryToken: Boolean((req.query as Record<string, unknown>)?._csrf),
         },
