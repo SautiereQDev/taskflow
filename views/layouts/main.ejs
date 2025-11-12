@@ -35,11 +35,11 @@
  <!-- Theme initialization (runs BEFORE Alpine) -->
  <script nonce="<%= cspNonce %>" src="/js/theme-init.js"></script>
 
+ <!-- Alpine.js components (must load BEFORE Alpine.js itself) -->
+ <script nonce="<%= cspNonce %>" src="/js/alpine-components.js"></script>
+
  <!-- Alpine.js 3.15.1 CSP Build - Bundled with persist, intersect, focus plugins -->
  <!-- No 'unsafe-eval' required! -->
  <script nonce="<%= cspNonce %>" defer src="/js/alpine-csp.js"></script>
-
- <!-- Alpine.js components (theme, modal, toast, etc.) -->
- <script nonce="<%= cspNonce %>" defer src="/js/alpine-components.js"></script>
 </body>
 </html>
