@@ -1,75 +1,75 @@
-<%
-/**
- * Modal Component (DaisyUI + Alpine.js)
- *
- * Reusable modal dialog component with Alpine.js integration.
- *
- * @param {string} id - Modal unique ID (required for Alpine.js x-data)
- * @param {string} [title=''] - Modal title
- * @param {string} body - Modal body content (required)
- * @param {string} [size='default'] - Modal size: 'default', 'large', 'fullscreen'
- * @param {boolean} [showClose=true] - Show close button in header
- * @param {boolean} [closeOnBackdrop=true] - Close modal when clicking backdrop
- * @param {string} [confirmText=''] - Confirm button text (if provided, shows confirm button)
- * @param {string} [confirmVariant='primary'] - Confirm button variant
- * @param {string} [cancelText=''] - Cancel button text (if provided, shows cancel button)
- * @param {string} [onConfirm=''] - JavaScript function to call on confirm (e.g., 'submitForm()')
- * @param {string} [onCancel=''] - JavaScript function to call on cancel
- * @param {string} [class=''] - Additional CSS classes for modal box
- *
- * Usage with Alpine.js:
- * The modal uses Alpine.js x-show and x-transition for smooth animations.
- * Control modal state with Alpine.js: @click="modalOpen = true"
- *
- * @example Basic modal
- * <div x-data="{ modalOpen: false }">
- *   <button @click="modalOpen = true" class="btn">Open Modal</button>
- *   <%- include('./partials/ui/modal', {
- *     id: 'example-modal',
- *     title: 'Confirm Action',
- *     body: 'Are you sure you want to continue?',
- *     confirmText: 'Yes',
- *     cancelText: 'No'
- *   }) %>
- * </div>
- *
- * @example Large modal with custom action
- * <%- include('./partials/ui/modal', {
- *   id: 'task-modal',
- *   title: 'Create Task',
- *   body: '<form>...</form>',
- *   size: 'large',
- *   confirmText: 'Create',
- *   onConfirm: 'createTask()',
- *   confirmVariant: 'success'
- * }) %>
- *
- * @example Fullscreen modal
- * <%- include('./partials/ui/modal', {
- *   id: 'preview-modal',
- *   title: 'Document Preview',
- *   body: '<iframe src="..."></iframe>',
- *   size: 'fullscreen',
- *   showClose: true
- * }) %>
- */
+<!--
+  Modal Component (DaisyUI + Alpine.js)
 
+  Reusable modal dialog component with Alpine.js integration.
+
+  Parameters:
+  - id (string, required): Modal unique ID (required for Alpine.js x-data)
+  - title (string): Modal title
+  - body (string, required): Modal body content
+  - size (string): Modal size - 'default', 'large', 'fullscreen'
+  - showClose (boolean): Show close button in header
+  - closeOnBackdrop (boolean): Close modal when clicking backdrop
+  - confirmText (string): Confirm button text (if provided, shows confirm button)
+  - confirmVariant (string): Confirm button variant
+  - cancelText (string): Cancel button text (if provided, shows cancel button)
+  - onConfirm (string): JavaScript function to call on confirm (e.g., 'submitForm()')
+  - onCancel (string): JavaScript function to call on cancel
+  - class (string): Additional CSS classes for modal box
+
+  Usage with Alpine.js:
+  The modal uses Alpine.js x-show and x-transition for smooth animations.
+  Control modal state with Alpine.js: @click="modalOpen = true"
+
+  Example - Basic modal:
+  <div x-data="{ modalOpen: false }">
+    <button @click="modalOpen = true" class="btn">Open Modal</button>
+    include('./partials/ui/modal', {
+      id: 'example-modal',
+      title: 'Confirm Action',
+      body: 'Are you sure you want to continue?',
+      confirmText: 'Yes',
+      cancelText: 'No'
+    })
+  </div>
+
+  Example - Large modal with custom action:
+  include('./partials/ui/modal', {
+    id: 'task-modal',
+    title: 'Create Task',
+    body: '<form>...</form>',
+    size: 'large',
+    confirmText: 'Create',
+    onConfirm: 'createTask()',
+    confirmVariant: 'success'
+  })
+
+  Example - Fullscreen modal:
+  include('./partials/ui/modal', {
+    id: 'preview-modal',
+    title: 'Document Preview',
+    body: '<iframe src="..."></iframe>',
+    size: 'fullscreen',
+    showClose: true
+  })
+-->
+<%
 // Default values
-const modalId = typeof id !== 'undefined' ? id : '';
-const modalTitle = typeof title !== 'undefined' ? title : '';
-const modalBody = typeof body !== 'undefined' ? body : '';
-const modalSize = typeof size !== 'undefined' ? size : 'default';
-const modalShowClose = typeof showClose !== 'undefined' ? showClose : true;
-const modalCloseOnBackdrop = typeof closeOnBackdrop !== 'undefined' ? closeOnBackdrop : true;
-const modalConfirmText = typeof confirmText !== 'undefined' ? confirmText : '';
-const modalConfirmVariant = typeof confirmVariant !== 'undefined' ? confirmVariant : 'primary';
-const modalCancelText = typeof cancelText !== 'undefined' ? cancelText : '';
-const modalOnConfirm = typeof onConfirm !== 'undefined' ? onConfirm : '';
-const modalOnCancel = typeof onCancel !== 'undefined' ? onCancel : '';
-const modalClass = typeof class !== 'undefined' ? class : '';
+const _id = typeof locals.id !== 'undefined' ? locals.id : '';
+const _title = typeof locals.title !== 'undefined' ? locals.title : '';
+const _body = typeof locals.body !== 'undefined' ? locals.body : '';
+const _size = typeof locals.size !== 'undefined' ? locals.size : 'default';
+const _showClose = typeof locals.showClose !== 'undefined' ? locals.showClose : true;
+const _closeOnBackdrop = typeof locals.closeOnBackdrop !== 'undefined' ? locals.closeOnBackdrop : true;
+const _confirmText = typeof locals.confirmText !== 'undefined' ? locals.confirmText : '';
+const _confirmVariant = typeof locals.confirmVariant !== 'undefined' ? locals.confirmVariant : 'primary';
+const _cancelText = typeof locals.cancelText !== 'undefined' ? locals.cancelText : '';
+const _onConfirm = typeof locals.onConfirm !== 'undefined' ? locals.onConfirm : '';
+const _onCancel = typeof locals.onCancel !== 'undefined' ? locals.onCancel : '';
+const _class = typeof locals.class !== 'undefined' ? locals.class : '';
 
 // Validate required params
-if (!modalId) {
+if (!_id) {
   throw new Error('Modal component requires an "id" parameter');
 }
 
@@ -82,8 +82,8 @@ const sizeClasses = {
 
 const boxClasses = [
   'modal-box',
-  sizeClasses[modalSize] || sizeClasses.default,
-  modalClass
+  sizeClasses[_size] || sizeClasses.default,
+  _class
 ].filter(Boolean).join(' ');
 %>
 
@@ -96,14 +96,14 @@ const boxClasses = [
      x-transition:leave-start="opacity-100"
      x-transition:leave-end="opacity-0"
      class="fixed inset-0 z-50 overflow-y-auto"
-     aria-labelledby="<%= modalId %>-title"
+     aria-labelledby="<%= _id %>-title"
      role="dialog"
      aria-modal="true"
      style="display: none;">
 
   <!-- Backdrop -->
   <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-       <% if (modalCloseOnBackdrop) { %>
+       <% if (_closeOnBackdrop) { %>
        @click="modalOpen = false"
        <% } %>
        aria-hidden="true"></div>
@@ -122,17 +122,17 @@ const boxClasses = [
          x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
          x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
          class="<%= boxClasses %> inline-block align-bottom bg-base-100 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
-         @click.away="<%= modalCloseOnBackdrop ? 'modalOpen = false' : '' %>">
+         @click.away="<%= _closeOnBackdrop ? 'modalOpen = false' : '' %>">
 
       <!-- Header -->
-      <% if (modalTitle || modalShowClose) { %>
+      <% if (_title || _showClose) { %>
       <div class="flex items-start justify-between p-4 border-b border-base-300">
-        <% if (modalTitle) { %>
-        <h3 class="text-lg font-semibold" id="<%= modalId %>-title">
-          <%= modalTitle %>
+        <% if (_title) { %>
+        <h3 class="text-lg font-semibold" id="<%= _id %>-title">
+          <%= _title %>
         </h3>
         <% } %>
-        <% if (modalShowClose) { %>
+        <% if (_showClose) { %>
         <button type="button"
                 class="btn btn-sm btn-ghost btn-circle"
                 @click="modalOpen = false"
@@ -147,24 +147,24 @@ const boxClasses = [
 
       <!-- Body -->
       <div class="p-6">
-        <%- modalBody %>
+        <%- _body %>
       </div>
 
       <!-- Actions -->
-      <% if (modalConfirmText || modalCancelText) { %>
+      <% if (_confirmText || _cancelText) { %>
       <div class="modal-action p-4 border-t border-base-300">
-        <% if (modalCancelText) { %>
+        <% if (_cancelText) { %>
         <button type="button"
                 class="btn btn-ghost"
-                @click="<%= modalOnCancel ? modalOnCancel + '; ' : '' %>modalOpen = false">
-          <%= modalCancelText %>
+                @click="<%= _onCancel ? _onCancel + '; ' : '' %>modalOpen = false">
+          <%= _cancelText %>
         </button>
         <% } %>
-        <% if (modalConfirmText) { %>
+        <% if (_confirmText) { %>
         <button type="button"
-                class="btn btn-<%= modalConfirmVariant %>"
-                @click="<%= modalOnConfirm ? modalOnConfirm + '; ' : '' %>modalOpen = false">
-          <%= modalConfirmText %>
+                class="btn btn-<%= _confirmVariant %>"
+                @click="<%= _onConfirm ? _onConfirm + '; ' : '' %>modalOpen = false">
+          <%= _confirmText %>
         </button>
         <% } %>
       </div>
