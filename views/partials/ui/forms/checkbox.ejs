@@ -1,77 +1,71 @@
-<%
-/**
- * Checkbox/Toggle Component
- * Reusable checkbox or toggle switch with label, help text, and full DaisyUI styling
- *
- * @component
- * @example Basic checkbox
- * <%- include('../../partials/ui/forms/checkbox', {
- *   label: 'Remember me',
- *   name: 'rememberMe'
- * }) %>
- *
- * @example Checkbox with required and error
- * <%- include('../../partials/ui/forms/checkbox', {
- *   label: 'I accept the terms',
- *   name: 'acceptTerms',
- *   required: true,
- *   size: 'sm',
- *   error: errors.acceptTerms
- * }) %>
- *
- * @example Toggle switch (settings)
- * <%- include('../../partials/ui/forms/checkbox', {
- *   label: 'Email notifications',
- *   name: 'emailNotifications',
- *   type: 'toggle',
- *   checked: user.emailNotifications,
- *   helpText: 'Receive email updates'
- * }) %>
- *
- * @example With HTMX (live save)
- * <%- include('../../partials/ui/forms/checkbox', {
- *   label: 'Dark mode',
- *   name: 'darkMode',
- *   type: 'toggle',
- *   checked: user.preferences.darkMode,
- *   hxPost: '/api/settings/theme',
- *   hxTrigger: 'change',
- *   hxSwap: 'none'
- * }) %>
- *
- * @param {string} label - Checkbox/toggle label text
- * @param {string} name - Input name and ID attribute
- * @param {string} [type='checkbox'] - Type: 'checkbox' or 'toggle'
- * @param {boolean} [checked=false] - Initial checked state
- * @param {boolean} [required=false] - Mark field as required
- * @param {boolean} [disabled=false] - Disable checkbox/toggle
- * @param {string} [value='on'] - Input value attribute (default: 'on')
- *
- * @param {string} [error=''] - Error message to display
- * @param {string} [helpText=''] - Help text below checkbox
- * @param {string} [labelClass=''] - Additional CSS classes for label text
- *
- * @param {string} [size='md'] - Size: 'xs', 'sm', 'md', 'lg'
- * @param {string} [variant='primary'] - Color variant: 'primary', 'secondary', 'accent', 'success', 'warning', 'error', 'info'
- *
- * @param {string} [containerClass=''] - Additional CSS classes for form-control container
- * @param {string} [inputClass=''] - Additional CSS classes for input element
- * @param {string} [layout='inline'] - Layout: 'inline' (label right of checkbox) or 'stacked' (label below)
- * @param {string} [justify='start'] - Flex justify: 'start', 'center', 'end', 'between'
- *
- * @param {string} [hxPost=''] - HTMX hx-post URL
- * @param {string} [hxGet=''] - HTMX hx-get URL
- * @param {string} [hxTrigger=''] - HTMX hx-trigger event
- * @param {string} [hxTarget=''] - HTMX hx-target selector
- * @param {string} [hxSwap=''] - HTMX hx-swap strategy
- *
- * @param {string} [xModel=''] - Alpine.js x-model binding
- * @param {string} [xOn=''] - Alpine.js x-on event handler
- *
- * @param {string} [ariaLabel=''] - ARIA label for accessibility
- * @param {string} [ariaDescribedby=''] - ARIA describedby attribute
- */
+<!--
+  Checkbox/Toggle Component
+  Reusable checkbox or toggle switch with label, help text, and full DaisyUI styling
 
+  Example basic checkbox:
+  include('partials/ui/forms/checkbox', {
+    label: 'Remember me',
+    name: 'rememberMe'
+  })
+
+  Example checkbox with required and error:
+  include('partials/ui/forms/checkbox', {
+    label: 'I accept the terms',
+    name: 'acceptTerms',
+    required: true,
+    size: 'sm',
+    error: errors.acceptTerms
+  })
+
+  Example toggle switch (settings):
+  include('partials/ui/forms/checkbox', {
+    label: 'Email notifications',
+    name: 'emailNotifications',
+    type: 'toggle',
+    checked: user.emailNotifications,
+    helpText: 'Receive email updates'
+  })
+
+  Example with HTMX (live save):
+  include('partials/ui/forms/checkbox', {
+    label: 'Dark mode',
+    name: 'darkMode',
+    type: 'toggle',
+    checked: user.preferences.darkMode,
+    hxPost: '/api/settings/theme',
+    hxTrigger: 'change',
+    hxSwap: 'none'
+  })
+
+  Parameters:
+  - label: Checkbox/toggle label text (required)
+  - name: Input name and ID attribute (required)
+  - type: Type 'checkbox' or 'toggle' (default: 'checkbox')
+  - checked: Initial checked state (default: false)
+  - required: Mark field as required (default: false)
+  - disabled: Disable checkbox/toggle (default: false)
+  - value: Input value attribute (default: 'on')
+  - error: Error message to display
+  - helpText: Help text below checkbox
+  - labelClass: Additional CSS classes for label text
+  - size: Size 'xs', 'sm', 'md', 'lg' (default: 'md')
+  - variant: Color variant (default: 'primary')
+  - containerClass: Additional CSS classes for form-control container
+  - inputClass: Additional CSS classes for input element
+  - layout: Layout 'inline' or 'stacked' (default: 'inline')
+  - justify: Flex justify 'start', 'center', 'end', 'between' (default: 'start')
+  - hxPost: HTMX hx-post URL
+  - hxGet: HTMX hx-get URL
+  - hxTrigger: HTMX hx-trigger event
+  - hxTarget: HTMX hx-target selector
+  - hxSwap: HTMX hx-swap strategy
+  - xModel: Alpine.js x-model binding
+  - xOn: Alpine.js x-on event handler
+  - ariaLabel: ARIA label for accessibility
+  - ariaDescribedby: ARIA describedby attribute
+-->
+
+<%
 // Required props
 const _label = typeof locals.label !== 'undefined' ? locals.label : '';
 const _name = typeof locals.name !== 'undefined' ? locals.name : '';

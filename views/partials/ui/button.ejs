@@ -1,63 +1,64 @@
-<%
-/**
- * Button Component (DaisyUI)
- *
- * Reusable button component with support for variants, sizes, states, and icons.
- *
- * @param {string} text - Button text content (required)
- * @param {string} [variant='primary'] - Button style: 'primary', 'secondary', 'accent', 'success', 'error', 'warning', 'info', 'ghost', 'link', 'neutral'
- * @param {string} [size='md'] - Button size: 'xs', 'sm', 'md', 'lg'
- * @param {string} [type='button'] - Button type: 'button', 'submit', 'reset'
- * @param {boolean} [disabled=false] - Disabled state
- * @param {boolean} [loading=false] - Loading state (shows spinner, disables button)
- * @param {boolean} [outline=false] - Use outline style
- * @param {boolean} [wide=false] - Full width button
- * @param {boolean} [block=false] - Display as block (full width)
- * @param {string} [icon=''] - Icon HTML (SVG or icon class)
- * @param {string} [iconPosition='left'] - Icon position: 'left', 'right'
- * @param {string} [href=''] - If provided, renders as <a> tag instead of <button>
- * @param {string} [class=''] - Additional CSS classes
- * @param {string} [id=''] - Button ID attribute
- * @param {object} [attrs={}] - Additional HTML attributes (e.g., { 'data-action': 'delete', 'hx-post': '/api/tasks' })
- *
- * @example Basic button
- * <%- include('./partials/ui/button', { text: 'Save', variant: 'primary' }) %>
- *
- * @example Button with icon
- * <%- include('./partials/ui/button', {
- *   text: 'Delete',
- *   variant: 'error',
- *   icon: '<svg>...</svg>',
- *   iconPosition: 'right'
- * }) %>
- *
- * @example Submit button with loading state
- * <%- include('./partials/ui/button', {
- *   text: 'Create Task',
- *   type: 'submit',
- *   variant: 'success',
- *   loading: isSubmitting
- * }) %>
- *
- * @example Link button (renders as <a>)
- * <%- include('./partials/ui/button', {
- *   text: 'Go to Dashboard',
- *   variant: 'link',
- *   href: '/dashboard'
- * }) %>
- *
- * @example Button with HTMX attributes
- * <%- include('./partials/ui/button', {
- *   text: 'Load More',
- *   variant: 'ghost',
- *   attrs: {
- *     'hx-get': '/api/tasks?page=2',
- *     'hx-target': '#task-list',
- *     'hx-swap': 'beforeend'
- *   }
- * }) %>
- */
+<!--
+  Button Component (DaisyUI)
 
+  Reusable button component with support for variants, sizes, states, and icons.
+
+  Parameters:
+  - text: Button text content (required)
+  - variant: Button style 'primary', 'secondary', 'accent', etc. (default: 'primary')
+  - size: Button size 'xs', 'sm', 'md', 'lg' (default: 'md')
+  - type: Button type 'button', 'submit', 'reset' (default: 'button')
+  - disabled: Disabled state (default: false)
+  - loading: Loading state shows spinner (default: false)
+  - outline: Use outline style (default: false)
+  - wide: Full width button (default: false)
+  - block: Display as block (default: false)
+  - icon: Icon HTML (SVG or icon class)
+  - iconPosition: Icon position 'left' or 'right' (default: 'left')
+  - href: If provided, renders as anchor tag instead of button
+  - class: Additional CSS classes
+  - id: Button ID attribute
+  - attrs: Additional HTML attributes object
+
+  Example basic button:
+  include('./partials/ui/button', { text: 'Save', variant: 'primary' })
+
+  Example button with icon:
+  include('./partials/ui/button', {
+    text: 'Delete',
+    variant: 'error',
+    icon: '<svg>...</svg>',
+    iconPosition: 'right'
+  })
+
+  Example submit button with loading:
+  include('./partials/ui/button', {
+    text: 'Create Task',
+    type: 'submit',
+    variant: 'success',
+    loading: isSubmitting
+  })
+
+  Example link button:
+  include('./partials/ui/button', {
+    text: 'Go to Dashboard',
+    variant: 'link',
+    href: '/dashboard'
+  })
+
+  Example with HTMX:
+  include('./partials/ui/button', {
+    text: 'Load More',
+    variant: 'ghost',
+    attrs: {
+      'hx-get': '/api/tasks?page=2',
+      'hx-target': '#task-list',
+      'hx-swap': 'beforeend'
+    }
+  })
+-->
+
+<%
 // Default values
 const _text = typeof locals.text !== 'undefined' ? locals.text : '';
 const _variant = typeof locals.variant !== 'undefined' ? locals.variant : 'primary';

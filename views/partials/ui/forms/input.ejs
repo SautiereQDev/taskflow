@@ -1,85 +1,78 @@
-<%
-/**
- * Input Field Component
- * Reusable text input component with full validation, character counter, help text, and Alpine.js/HTMX support
- *
- * @component
- * @example
- * <%- include('../../partials/ui/forms/input', {
- *   label: 'Email Address',
- *   name: 'email',
- *   type: 'email',
- *   required: true,
- *   placeholder: 'name@example.com',
- *   helpText: 'We will never share your email',
- *   error: errors.email
- * }) %>
- *
- * @example With character counter (Alpine.js)
- * <%- include('../../partials/ui/forms/input', {
- *   label: 'Task Title',
- *   name: 'title',
- *   value: task.title,
- *   maxlength: 200,
- *   showCounter: true,
- *   counterModel: 'title',
- *   required: true
- * }) %>
- *
- * @example With HTMX validation
- * <%- include('../../partials/ui/forms/input', {
- *   label: 'Username',
- *   name: 'username',
- *   hxPost: '/api/validate-username',
- *   hxTrigger: 'keyup changed delay:500ms',
- *   hxTarget: '#username-validation',
- *   hxSwap: 'innerHTML'
- * }) %>
- *
- * @param {string} label - Field label text
- * @param {string} name - Input name and ID attribute
- * @param {string} [type='text'] - Input type: 'text', 'email', 'password', 'number', 'tel', 'url', 'date', 'datetime-local', 'time', 'search'
- * @param {string} [value=''] - Input value (use for edit forms)
- * @param {string} [placeholder=''] - Placeholder text
- * @param {boolean} [required=false] - Mark field as required
- * @param {boolean} [disabled=false] - Disable input
- * @param {boolean} [readonly=false] - Make input read-only
- * @param {boolean} [autofocus=false] - Auto-focus input on page load
- * @param {string} [autocomplete=''] - HTML autocomplete attribute value
- *
- * @param {string} [error=''] - Error message to display (shows error state)
- * @param {string} [helpText=''] - Help text below input (hidden if error present)
- * @param {string} [labelAlt=''] - Alternative label text (right side, e.g., "Optional")
- *
- * @param {number} [minlength] - Minimum character length
- * @param {number} [maxlength] - Maximum character length
- * @param {number} [min] - Minimum value (for number/date types)
- * @param {number} [max] - Maximum value (for number/date types)
- * @param {number} [step] - Step increment (for number type)
- * @param {string} [pattern] - Regex pattern for validation
- *
- * @param {boolean} [showCounter=false] - Show character counter (requires maxlength and counterModel)
- * @param {string} [counterModel=''] - Alpine.js x-model variable name for counter (e.g., 'title')
- *
- * @param {string} [inputClass=''] - Additional CSS classes for input element
- * @param {string} [containerClass=''] - Additional CSS classes for form-control container
- * @param {string} [size='md'] - Input size: 'xs', 'sm', 'md', 'lg'
- * @param {string} [variant='bordered'] - Input variant: 'bordered', 'ghost', 'primary', 'secondary'
- *
- * @param {string} [hxPost=''] - HTMX hx-post URL
- * @param {string} [hxGet=''] - HTMX hx-get URL
- * @param {string} [hxTrigger=''] - HTMX hx-trigger event
- * @param {string} [hxTarget=''] - HTMX hx-target selector
- * @param {string} [hxSwap=''] - HTMX hx-swap strategy
- * @param {string} [hxIndicator=''] - HTMX loading indicator selector
- *
- * @param {string} [xModel=''] - Alpine.js x-model binding
- * @param {string} [xOn=''] - Alpine.js x-on event handler (e.g., 'input: handleInput($event)')
- *
- * @param {string} [ariaLabel=''] - ARIA label for accessibility
- * @param {string} [ariaDescribedby=''] - ARIA describedby attribute
- */
+<!--
+  Input Field Component
+  Reusable text input component with full validation, character counter, help text, and Alpine.js/HTMX support
 
+  Example basic usage:
+  include('partials/ui/forms/input', {
+    label: 'Email Address',
+    name: 'email',
+    type: 'email',
+    required: true,
+    placeholder: 'name@example.com',
+    helpText: 'We will never share your email',
+    error: errors.email
+  })
+
+  Example with character counter (Alpine.js):
+  include('partials/ui/forms/input', {
+    label: 'Task Title',
+    name: 'title',
+    value: task.title,
+    maxlength: 200,
+    showCounter: true,
+    counterModel: 'title',
+    required: true
+  })
+
+  Example with HTMX validation:
+  include('partials/ui/forms/input', {
+    label: 'Username',
+    name: 'username',
+    hxPost: '/api/validate-username',
+    hxTrigger: 'keyup changed delay:500ms',
+    hxTarget: '#username-validation',
+    hxSwap: 'innerHTML'
+  })
+
+  Parameters:
+  - label: Field label text (required)
+  - name: Input name and ID attribute (required)
+  - type: Input type (default: 'text')
+  - value: Input value (use for edit forms)
+  - placeholder: Placeholder text
+  - required: Mark field as required (default: false)
+  - disabled: Disable input (default: false)
+  - readonly: Make input read-only (default: false)
+  - autofocus: Auto-focus input on page load (default: false)
+  - autocomplete: HTML autocomplete attribute value
+  - error: Error message to display
+  - helpText: Help text below input
+  - labelAlt: Alternative label text (right side, e.g., "Optional")
+  - minlength: Minimum character length
+  - maxlength: Maximum character length
+  - min: Minimum value (for number/date types)
+  - max: Maximum value (for number/date types)
+  - step: Step increment (for number type)
+  - pattern: Regex pattern for validation
+  - showCounter: Show character counter (default: false)
+  - counterModel: Alpine.js x-model variable name for counter
+  - inputClass: Additional CSS classes for input element
+  - containerClass: Additional CSS classes for form-control container
+  - size: Input size: 'xs', 'sm', 'md', 'lg' (default: 'md')
+  - variant: Input variant: 'bordered', 'ghost', 'primary', 'secondary' (default: 'bordered')
+  - hxPost: HTMX hx-post URL
+  - hxGet: HTMX hx-get URL
+  - hxTrigger: HTMX hx-trigger event
+  - hxTarget: HTMX hx-target selector
+  - hxSwap: HTMX hx-swap strategy
+  - hxIndicator: HTMX loading indicator selector
+  - xModel: Alpine.js x-model binding
+  - xOn: Alpine.js x-on event handler
+  - ariaLabel: ARIA label for accessibility
+  - ariaDescribedby: ARIA describedby attribute
+-->
+
+<%
 // Required props
 const _label = typeof locals.label !== 'undefined' ? locals.label : '';
 const _name = typeof locals.name !== 'undefined' ? locals.name : '';
