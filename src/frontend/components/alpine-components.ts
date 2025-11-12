@@ -35,19 +35,15 @@ document.addEventListener('alpine:init', () => {
       isDark: false,
 
       init() {
-        // Get saved theme or system preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          this.isDark = savedTheme === 'dark';
-        } else {
-          this.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
+        // Get saved theme from themeUtils (uses 'taskflow-theme' key)
+        const savedTheme = window.themeUtils.getSavedTheme();
+        this.isDark = savedTheme === window.themeUtils.THEME_DARK;
         window.themeUtils.applyTheme(this.isDark);
 
         // Listen for storage events (sync across tabs)
         window.addEventListener('storage', (e: StorageEvent) => {
-          if (e.key === 'theme' && e.newValue) {
-            this.isDark = e.newValue === 'dark';
+          if (e.key === window.themeUtils.STORAGE_KEY && e.newValue) {
+            this.isDark = e.newValue === window.themeUtils.THEME_DARK;
             window.themeUtils.applyTheme(this.isDark);
           }
         });
@@ -55,7 +51,8 @@ document.addEventListener('alpine:init', () => {
 
       toggle() {
         this.isDark = !this.isDark;
-        localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+        const theme = this.isDark ? window.themeUtils.THEME_DARK : window.themeUtils.THEME_LIGHT;
+        localStorage.setItem(window.themeUtils.STORAGE_KEY, theme);
         window.themeUtils.applyTheme(this.isDark);
       },
     })

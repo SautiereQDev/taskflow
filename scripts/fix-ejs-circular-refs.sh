@@ -10,19 +10,19 @@ echo "Fixing EJS circular references in UI components..."
 fix_file() {
   local file=$1
   echo "Processing: $file"
-  
+
   # Create backup
   cp "$file" "$file.bak"
-  
+
   # Get the component name (button, checkbox, etc.)
   local component=$(basename "$file" .ejs)
-  
+
   # Fix the circular reference patterns using sed
   # This is complex because we need to:
   # 1. Change variable names on the left side of assignment to _variable
   # 2. Change typeof variable to typeof locals.variable
   # 3. Update all references to use _variable
-  
+
   # For now, we'll process each file manually since they have different variable sets
 }
 

@@ -36,7 +36,7 @@ for file in "${FILES_TO_FIX[@]}"; do
     ((SKIPPED_COUNT++))
     continue
   fi
-  
+
   # Check if file has JSDoc inside <% %> blocks
   if grep -q "^<%" "$file" && grep -q "^ \* @" "$file"; then
     echo "✅ Would fix: $file"
