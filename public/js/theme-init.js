@@ -1,61 +1,43 @@
-/**
- * Theme initialization script
- * Runs before Alpine.js to prevent flash of wrong theme
- * Reads theme from localStorage and applies it immediately
- */
-
-(function () {
-  'use strict';
-
-  const STORAGE_KEY = 'taskflow-theme';
-  const THEME_LIGHT = 'light';
-  const THEME_DARK = 'dark';
-
-  /**
-   * Get saved theme from localStorage or system preference
-   */
-  function getSavedTheme() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === THEME_LIGHT || saved === THEME_DARK) {
-        return saved;
+'use strict';
+(() => {
+  // src/frontend/utils/theme-init.ts
+  (() => {
+    const STORAGE_KEY = 'taskflow-theme';
+    const THEME_LIGHT = 'light';
+    const THEME_DARK = 'dark';
+    function getSavedTheme() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === THEME_LIGHT || saved === THEME_DARK) {
+          return saved;
+        }
+        if (saved === 'taskflowLight') {
+          return THEME_LIGHT;
+        }
+        if (saved === 'taskflowDark') {
+          return THEME_DARK;
+        }
+      } catch (error) {
+        console.warn('Failed to read theme from localStorage:', error);
       }
-      // Handle legacy theme names (taskflowLight/taskflowDark)
-      if (saved === 'taskflowLight') {
-        return THEME_LIGHT;
-      }
-      if (saved === 'taskflowDark') {
+      if (globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches === true) {
         return THEME_DARK;
       }
-    } catch (error) {
-      console.warn('Failed to read theme from localStorage:', error);
+      return THEME_LIGHT;
     }
-
-    // Fallback to system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return THEME_DARK;
+    function applyTheme(isDark) {
+      const theme2 = isDark ? THEME_DARK : THEME_LIGHT;
+      document.documentElement.dataset.theme = theme2;
     }
-
-    return THEME_LIGHT;
-  }
-
-  /**
-   * Apply theme to HTML element
-   */
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
-
-  // Apply theme immediately (before page renders)
-  const theme = getSavedTheme();
-  applyTheme(theme);
-
-  // Make theme utilities available globally for Alpine.js
-  window.themeUtils = {
-    THEME_LIGHT,
-    THEME_DARK,
-    STORAGE_KEY,
-    applyTheme,
-    getSavedTheme,
-  };
+    const theme = getSavedTheme();
+    applyTheme(theme === THEME_DARK);
+    globalThis.themeUtils = {
+      THEME_LIGHT,
+      THEME_DARK,
+      STORAGE_KEY,
+      applyTheme,
+      getSavedTheme,
+    };
+  })();
 })();
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiLi4vLi4vLi4vc3JjL2Zyb250ZW5kL3V0aWxzL3RoZW1lLWluaXQudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8qKlxuICogVGhlbWUgaW5pdGlhbGl6YXRpb24gc2NyaXB0XG4gKiBSdW5zIGJlZm9yZSBBbHBpbmUuanMgdG8gcHJldmVudCBmbGFzaCBvZiB3cm9uZyB0aGVtZVxuICogUmVhZHMgdGhlbWUgZnJvbSBsb2NhbFN0b3JhZ2UgYW5kIGFwcGxpZXMgaXQgaW1tZWRpYXRlbHlcbiAqL1xuXG4oKCkgPT4ge1xuICBjb25zdCBTVE9SQUdFX0tFWSA9ICd0YXNrZmxvdy10aGVtZSc7XG4gIGNvbnN0IFRIRU1FX0xJR0hUID0gJ2xpZ2h0JztcbiAgY29uc3QgVEhFTUVfREFSSyA9ICdkYXJrJztcblxuICB0eXBlIFRoZW1lID0gdHlwZW9mIFRIRU1FX0xJR0hUIHwgdHlwZW9mIFRIRU1FX0RBUks7XG5cbiAgLyoqXG4gICAqIEdldCBzYXZlZCB0aGVtZSBmcm9tIGxvY2FsU3RvcmFnZSBvciBzeXN0ZW0gcHJlZmVyZW5jZVxuICAgKi9cbiAgZnVuY3Rpb24gZ2V0U2F2ZWRUaGVtZSgpOiBUaGVtZSB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHNhdmVkID0gbG9jYWxTdG9yYWdlLmdldEl0ZW0oU1RPUkFHRV9LRVkpO1xuICAgICAgaWYgKHNhdmVkID09PSBUSEVNRV9MSUdIVCB8fCBzYXZlZCA9PT0gVEhFTUVfREFSSykge1xuICAgICAgICByZXR1cm4gc2F2ZWQ7XG4gICAgICB9XG4gICAgICAvLyBIYW5kbGUgbGVnYWN5IHRoZW1lIG5hbWVzICh0YXNrZmxvd0xpZ2h0L3Rhc2tmbG93RGFyaylcbiAgICAgIGlmIChzYXZlZCA9PT0gJ3Rhc2tmbG93TGlnaHQnKSB7XG4gICAgICAgIHJldHVybiBUSEVNRV9MSUdIVDtcbiAgICAgIH1cbiAgICAgIGlmIChzYXZlZCA9PT0gJ3Rhc2tmbG93RGFyaycpIHtcbiAgICAgICAgcmV0dXJuIFRIRU1FX0RBUks7XG4gICAgICB9XG4gICAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICAgIGNvbnNvbGUud2FybignRmFpbGVkIHRvIHJlYWQgdGhlbWUgZnJvbSBsb2NhbFN0b3JhZ2U6JywgZXJyb3IpO1xuICAgIH1cblxuICAgIC8vIEZhbGxiYWNrIHRvIHN5c3RlbSBwcmVmZXJlbmNlXG4gICAgaWYgKGdsb2JhbFRoaXMubWF0Y2hNZWRpYT8uKCcocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspJykubWF0Y2hlcyA9PT0gdHJ1ZSkge1xuICAgICAgcmV0dXJuIFRIRU1FX0RBUks7XG4gICAgfVxuXG4gICAgcmV0dXJuIFRIRU1FX0xJR0hUO1xuICB9XG5cbiAgLyoqXG4gICAqIEFwcGx5IHRoZW1lIHRvIEhUTUwgZWxlbWVudFxuICAgKi9cbiAgZnVuY3Rpb24gYXBwbHlUaGVtZShpc0Rhcms6IGJvb2xlYW4pOiB2b2lkIHtcbiAgICBjb25zdCB0aGVtZSA9IGlzRGFyayA/IFRIRU1FX0RBUksgOiBUSEVNRV9MSUdIVDtcbiAgICBkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQuZGF0YXNldC50aGVtZSA9IHRoZW1lO1xuICB9XG5cbiAgLy8gQXBwbHkgdGhlbWUgaW1tZWRpYXRlbHkgKGJlZm9yZSBwYWdlIHJlbmRlcnMpXG4gIGNvbnN0IHRoZW1lID0gZ2V0U2F2ZWRUaGVtZSgpO1xuICBhcHBseVRoZW1lKHRoZW1lID09PSBUSEVNRV9EQVJLKTtcblxuICAvLyBNYWtlIHRoZW1lIHV0aWxpdGllcyBhdmFpbGFibGUgZ2xvYmFsbHkgZm9yIEFscGluZS5qc1xuICBnbG9iYWxUaGlzLnRoZW1lVXRpbHMgPSB7XG4gICAgVEhFTUVfTElHSFQsXG4gICAgVEhFTUVfREFSSyxcbiAgICBTVE9SQUdFX0tFWSxcbiAgICBhcHBseVRoZW1lLFxuICAgIGdldFNhdmVkVGhlbWUsXG4gIH07XG59KSgpO1xuIl0sCiAgIm1hcHBpbmdzIjogIjs7O0FBTUEsR0FBQyxNQUFNO0FBQ0wsVUFBTSxjQUFjO0FBQ3BCLFVBQU0sY0FBYztBQUNwQixVQUFNLGFBQWE7QUFPbkIsYUFBUyxnQkFBdUI7QUFDOUIsVUFBSTtBQUNGLGNBQU0sUUFBUSxhQUFhLFFBQVEsV0FBVztBQUM5QyxZQUFJLFVBQVUsZUFBZSxVQUFVLFlBQVk7QUFDakQsaUJBQU87QUFBQSxRQUNUO0FBRUEsWUFBSSxVQUFVLGlCQUFpQjtBQUM3QixpQkFBTztBQUFBLFFBQ1Q7QUFDQSxZQUFJLFVBQVUsZ0JBQWdCO0FBQzVCLGlCQUFPO0FBQUEsUUFDVDtBQUFBLE1BQ0YsU0FBUyxPQUFPO0FBQ2QsZ0JBQVEsS0FBSywyQ0FBMkMsS0FBSztBQUFBLE1BQy9EO0FBR0EsVUFBSSxXQUFXLGFBQWEsOEJBQThCLEVBQUUsWUFBWSxNQUFNO0FBQzVFLGVBQU87QUFBQSxNQUNUO0FBRUEsYUFBTztBQUFBLElBQ1Q7QUFLQSxhQUFTLFdBQVcsUUFBdUI7QUFDekMsWUFBTUEsU0FBUSxTQUFTLGFBQWE7QUFDcEMsZUFBUyxnQkFBZ0IsUUFBUSxRQUFRQTtBQUFBLElBQzNDO0FBR0EsVUFBTSxRQUFRLGNBQWM7QUFDNUIsZUFBVyxVQUFVLFVBQVU7QUFHL0IsZUFBVyxhQUFhO0FBQUEsTUFDdEI7QUFBQSxNQUNBO0FBQUEsTUFDQTtBQUFBLE1BQ0E7QUFBQSxNQUNBO0FBQUEsSUFDRjtBQUFBLEVBQ0YsR0FBRzsiLAogICJuYW1lcyI6IFsidGhlbWUiXQp9Cg==
