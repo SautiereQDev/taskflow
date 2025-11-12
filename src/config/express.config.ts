@@ -142,8 +142,19 @@ export function createApp(): Express {
   app.use(expressLayouts);
   app.set('layout', 'layouts/main');
 
-  // Static Files
-  app.use(express.static(path.join(__dirname, '../../public')));
+  // Static Files with proper MIME types
+  app.use(
+    express.static(path.join(__dirname, '../../public'), {
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.svg')) {
+          res.setHeader('Content-Type', 'image/svg+xml');
+        }
+        if (filePath.endsWith('.ico')) {
+          res.setHeader('Content-Type', 'image/x-icon');
+        }
+      },
+    })
+  );
 
   // Custom Middleware
   app.use(performanceMonitoring); // Track TTFB and response times
