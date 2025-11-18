@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { errors } from '@vinejs/vine'
 
-import TaskService, { TaskAssignmentError } from '#services/task_service'
+import TaskService, { TaskAssignmentError, TaskNotFoundError } from '#services/task_service'
 import User from '#models/user'
 import { priorityLabels, statusLabels } from '#view_models/task_labels'
 import { taskFiltersValidator } from '#validators/task/task_filters_validator'
@@ -109,14 +109,75 @@ export default class TasksController {
     })
   }
 
-  public async store({ auth, request, response, session }: HttpContext) {
+  public async edit({ auth, params, view, session, request, response }: HttpContext) {
     const user = auth.user!
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
 
     try {
-      const payload = await taskPayloadValidator.validate(
-        request.only(['title', 'description', 'status', 'priority', 'dueDate', 'assigneeId'])
-      )
+      const task = await this.taskService.findEditableTask(user, params.id)
+
+      if (wantsJson) {
+        return { task: task.serialize() }
+      }
+
+      const flash = session.flashMessages
+      const errorsBag = flash?.get('errors') || {}
+      const notification = flash?.get('notification') || null
+      const defaultForm = {
+        title: task.title,
+        description: task.description ?? '',
+        status: task.status,
+        priority: task.priority,
+        dueDate: task.dueDate ? task.dueDate.toISODate() : '',
+        assigneeId: task.assigneeId === user.id ? null : task.assigneeId,
+      }
+      const flashedForm = flash?.get('form')
+      const form = flashedForm ? { ...defaultForm, ...flashedForm } : defaultForm
+
+      const collaborators = await User.query()
+        .select(['id', 'name', 'email'])
+        .orderBy('name', 'asc')
+
+      const pageContent = await view.render('pages/tasks/edit', {
+        form,
+        errors: errorsBag,
+        statusLabels,
+        priorityLabels,
+        collaborators,
+        locale: user.locale || 'fr',
+        currentUser: user,
+        task,
+      })
+
+      return view.render('layouts/base', {
+        title: `Taskflow • Modifier ${task.title}`,
+        pageContent,
+        notification,
+      })
+    } catch (error) {
+      if (error instanceof TaskNotFoundError) {
+        if (wantsJson) {
+          return response.status(404).send({ message: error.message })
+        }
+
+        session.flash('notification', {
+          type: 'error',
+          message: error.message,
+        })
+        return response.redirect().toRoute('tasks.index')
+      }
+
+      throw error
+    }
+  }
+
+  public async store({ auth, request, response, session }: HttpContext) {
+    const user = auth.user!
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+    const formPayload = this.extractTaskPayload(request)
+
+    try {
+      const payload = await taskPayloadValidator.validate(formPayload)
 
       const task = await this.taskService.createFor(user, payload)
 
@@ -130,40 +191,67 @@ export default class TasksController {
       })
       return response.redirect().toRoute('tasks.index')
     } catch (error) {
-      if (error instanceof errors.E_VALIDATION_ERROR) {
-        if (wantsJson) {
-          return response.status(422).send({ errors: error.messages })
-        }
-
-        session.flash('errors', this.validationErrorsToBag(error))
-        session.flash(
-          'form',
-          request.only(['title', 'description', 'status', 'priority', 'dueDate', 'assigneeId'])
-        )
-        session.flash('notification', {
-          type: 'error',
-          message: 'Merci de corriger les erreurs du formulaire.',
+      if (
+        this.handleMutationFormError({
+          error,
+          wantsJson,
+          response,
+          session,
+          formPayload,
+          redirectRoute: 'tasks.create',
         })
-        return response.redirect().toRoute('tasks.create')
+      ) {
+        return
       }
 
-      if (error instanceof TaskAssignmentError) {
+      throw error
+    }
+  }
+
+  public async update({ auth, request, response, session, params }: HttpContext) {
+    const user = auth.user!
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+    const formPayload = this.extractTaskPayload(request)
+    const taskId = params.id
+
+    try {
+      const payload = await taskPayloadValidator.validate(formPayload)
+      const task = await this.taskService.updateFor(user, taskId, payload)
+
+      if (wantsJson) {
+        return response.ok({ task: task.serialize() })
+      }
+
+      session.flash('notification', {
+        type: 'success',
+        message: 'Tâche mise à jour avec succès.',
+      })
+      return response.redirect().toRoute('tasks.index')
+    } catch (error) {
+      if (
+        this.handleMutationFormError({
+          error,
+          wantsJson,
+          response,
+          session,
+          formPayload,
+          redirectRoute: 'tasks.edit',
+          routeParams: { id: taskId },
+        })
+      ) {
+        return
+      }
+
+      if (error instanceof TaskNotFoundError) {
         if (wantsJson) {
-          return response.status(422).send({
-            errors: [{ field: error.field, message: error.message }],
-          })
+          return response.status(404).send({ message: error.message })
         }
 
-        session.flash('errors', { [error.field]: error.message })
-        session.flash(
-          'form',
-          request.only(['title', 'description', 'status', 'priority', 'dueDate', 'assigneeId'])
-        )
         session.flash('notification', {
           type: 'error',
           message: error.message,
         })
-        return response.redirect().toRoute('tasks.create')
+        return response.redirect().toRoute('tasks.index')
       }
 
       throw error
@@ -175,5 +263,105 @@ export default class TasksController {
       acc[current.field] = current.message
       return acc
     }, {})
+  }
+
+  private extractTaskPayload(request: HttpContext['request']) {
+    const allowedFields = [
+      'title',
+      'description',
+      'status',
+      'priority',
+      'dueDate',
+      'assigneeId',
+    ] as const
+    const payload: Record<string, unknown> = {}
+
+    for (const field of allowedFields) {
+      const value = request.input(field)
+      if (value === undefined) {
+        continue
+      }
+      payload[field] = value
+    }
+
+    if ('dueDate' in payload) {
+      const rawValue = payload.dueDate
+      if (
+        rawValue === '' ||
+        rawValue === null ||
+        (typeof rawValue === 'string' && rawValue.trim().length === 0)
+      ) {
+        payload.dueDate = null
+      }
+    }
+
+    if ('assigneeId' in payload) {
+      const rawValue = payload.assigneeId
+      if (rawValue === '' || rawValue === null) {
+        payload.assigneeId = null
+      } else if (typeof rawValue === 'string') {
+        payload.assigneeId = rawValue
+      } else if (typeof rawValue === 'number') {
+        payload.assigneeId = String(rawValue)
+      } else {
+        delete payload.assigneeId
+      }
+    }
+
+    return payload
+  }
+
+  private handleMutationFormError({
+    error,
+    wantsJson,
+    response,
+    session,
+    formPayload,
+    redirectRoute,
+    routeParams,
+  }: {
+    error: unknown
+    wantsJson: boolean
+    response: HttpContext['response']
+    session: HttpContext['session']
+    formPayload: Record<string, unknown>
+    redirectRoute: string
+    routeParams?: Record<string, unknown>
+  }) {
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      if (wantsJson) {
+        response.status(422).send({ errors: error.messages })
+        return true
+      }
+
+      session.flash('errors', this.validationErrorsToBag(error))
+      session.flash('form', formPayload)
+      session.flash('notification', {
+        type: 'error',
+        message: 'Merci de corriger les erreurs du formulaire.',
+      })
+      response.redirect().toRoute(redirectRoute, routeParams)
+      return true
+    }
+
+    if (error instanceof TaskAssignmentError) {
+      if (wantsJson) {
+        response.status(422).send({
+          errors: [{ field: error.field, message: error.message }],
+        })
+        return true
+      }
+
+      session.flash('errors', { [error.field]: error.message })
+      session.flash('form', formPayload)
+      session.flash('notification', {
+        type: 'error',
+        message: error.message,
+      })
+      response.redirect().toRoute(redirectRoute, routeParams)
+      return true
+    }
+
+    return false
   }
 }

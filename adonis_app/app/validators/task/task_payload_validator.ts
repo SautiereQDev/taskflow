@@ -10,12 +10,14 @@ const taskPayloadSchema = vine.object({
   priority: vine.enum(taskPriorities).optional(),
   dueDate: vine
     .date({ formats: ['iso8601', 'YYYY-MM-DD'] })
-    .transform((value) => DateTime.fromJSDate(value))
-    .optional(),
+    .nullable()
+    .optional()
+    .transform((value) => (value ? DateTime.fromJSDate(value) : null)),
   assigneeId: vine
     .string()
     .regex(/^[a-z0-9]{24}$/i)
-    .optional(),
+    .optional()
+    .nullable(),
 })
 
 export const taskPayloadValidator = vine.compile(taskPayloadSchema)

@@ -147,6 +147,7 @@
               <th>Assignée à</th>
               <th>Échéance</th>
               <th>Dernière mise à jour</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -169,6 +170,15 @@
                   @endif
                 </td>
                 <td>{{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}</td>
+                <td>
+                  <a
+                    role="button"
+                    class="secondary outline"
+                    href="{{ route('tasks.edit', { id: task.id }) }}"
+                  >
+                    Modifier
+                  </a>
+                </td>
               </tr>
             @endeach
           </tbody>

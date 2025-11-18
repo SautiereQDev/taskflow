@@ -29,5 +29,7 @@ router
     router.get('/tasks', [TasksController, 'index']).as('tasks.index')
     router.get('/tasks/create', [TasksController, 'create']).as('tasks.create')
     router.post('/tasks', [TasksController, 'store']).as('tasks.store')
+    router.get('/tasks/:id/edit', [TasksController, 'edit']).as('tasks.edit')
+    router.put('/tasks/:id', [TasksController, 'update']).as('tasks.update')
   })
   .middleware([middleware.auth()])

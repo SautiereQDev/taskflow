@@ -24,7 +24,7 @@ export type TaskListResult = {
   meta: TaskListMeta
 }
 
-export type TaskCreationInput = {
+export type TaskMutationInput = {
   title: string
   description?: string | null
   status?: TaskStatus
@@ -40,6 +40,13 @@ export class TaskAssignmentError extends Error {
   ) {
     super(message)
     this.name = 'TaskAssignmentError'
+  }
+}
+
+export class TaskNotFoundError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'TaskNotFoundError'
   }
 }
 
@@ -99,16 +106,8 @@ export default class TaskService {
     }
   }
 
-  public async createFor(user: User, payload: TaskCreationInput): Promise<Task> {
-    let assigneeId = payload.assigneeId || user.id
-
-    if (payload.assigneeId && payload.assigneeId !== user.id) {
-      const assignee = await User.find(payload.assigneeId)
-      if (!assignee) {
-        throw new TaskAssignmentError('Utilisateur assigné introuvable.', 'assigneeId')
-      }
-      assigneeId = assignee.id
-    }
+  public async createFor(user: User, payload: TaskMutationInput): Promise<Task> {
+    const assigneeId = await this.resolveAssigneeId(user, payload.assigneeId)
 
     const task = await Task.create({
       title: payload.title,
@@ -123,5 +122,72 @@ export default class TaskService {
     await task.load('assignee')
     await task.load('creator')
     return task
+  }
+
+  public async updateFor(user: User, taskId: string, payload: TaskMutationInput): Promise<Task> {
+    const task = await this.findEditableTask(user, taskId)
+    const assigneeId = await this.resolveAssigneeId(user, payload.assigneeId, task.assigneeId)
+
+    task.title = payload.title
+    if (payload.description !== undefined) {
+      task.description = payload.description ?? null
+    }
+    if (payload.status) {
+      task.status = payload.status
+    }
+    if (payload.priority) {
+      task.priority = payload.priority
+    }
+    if (payload.dueDate !== undefined) {
+      task.dueDate = payload.dueDate ?? null
+    }
+    task.assigneeId = assigneeId
+
+    await task.save()
+    await task.load('assignee')
+    await task.load('creator')
+    return task
+  }
+
+  public async findEditableTask(user: User, taskId: string): Promise<Task> {
+    const task = await Task.query()
+      .where('id', taskId)
+      .where((builder) => {
+        builder.where('creator_id', user.id).orWhere('assignee_id', user.id)
+      })
+      .preload('assignee')
+      .preload('creator')
+      .first()
+
+    if (!task) {
+      throw new TaskNotFoundError('Tâche introuvable ou accès refusé.')
+    }
+
+    return task
+  }
+
+  private async resolveAssigneeId(
+    user: User,
+    desiredId: string | null | undefined,
+    fallback?: string | null
+  ) {
+    if (desiredId === undefined) {
+      return fallback ?? user.id
+    }
+
+    if (desiredId === null) {
+      return user.id
+    }
+
+    if (desiredId === user.id) {
+      return desiredId
+    }
+
+    const assignee = await User.find(desiredId)
+    if (!assignee) {
+      throw new TaskAssignmentError('Utilisateur assigné introuvable.', 'assigneeId')
+    }
+
+    return assignee.id
   }
 }
