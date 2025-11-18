@@ -154,7 +154,9 @@
             @each(task in tasks)
               <tr>
                 <td>
-                  <strong>{{ task.title }}</strong>
+                  <strong>
+                    <a href="{{ route('tasks.show', { id: task.id }) }}">{{ task.title }}</a>
+                  </strong>
                   <p>{{ task.description || 'Pas de description fournie.' }}</p>
                 </td>
                 <td>

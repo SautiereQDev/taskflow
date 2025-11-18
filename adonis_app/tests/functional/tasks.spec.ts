@@ -288,3 +288,68 @@ test.group('Task editing', () => {
     response.assertStatus(404)
   })
 })
+
+test.group('Task details', () => {
+  test('shows task details in HTML', async ({ client }) => {
+    const owner = await UserFactory.create()
+    const task = await TaskFactory.merge({
+      title: 'Support incident',
+      description: 'Faire le point avec le support client.',
+      creatorId: owner.id,
+      assigneeId: owner.id,
+      priority: 'high',
+      status: 'in_progress',
+      dueDate: DateTime.now().plus({ days: 3 }),
+    }).create()
+
+    const response = await client
+      .get(`/tasks/${task.id}`)
+      .header('x-test-user-id', String(owner.id))
+
+    response.assertStatus(200)
+    response.assertTextIncludes('Support incident')
+    response.assertTextIncludes('Faire le point avec le support client.')
+    response.assertTextIncludes('Modifier')
+  })
+
+  test('returns JSON payload when requested', async ({ client, assert }) => {
+    const owner = await UserFactory.create()
+    const teammate = await UserFactory.create()
+    const task = await TaskFactory.merge({
+      title: 'Audit RGPD',
+      creatorId: owner.id,
+      assigneeId: teammate.id,
+      status: 'todo',
+      priority: 'medium',
+    }).create()
+
+    const response = await client
+      .get(`/tasks/${task.id}`)
+      .header('x-test-user-id', String(owner.id))
+      .header('accept', 'application/json')
+
+    response.assertStatus(200)
+    response.assertBodyContains({
+      task: { id: task.id, title: 'Audit RGPD', assigneeId: teammate.id },
+    })
+
+    const payload = response.body() as { task: { creatorId: string } }
+    assert.equal(payload.task.creatorId, owner.id)
+  })
+
+  test('returns 404 when task not visible', async ({ client }) => {
+    const owner = await UserFactory.create()
+    const intruder = await UserFactory.create()
+    const task = await TaskFactory.merge({
+      creatorId: owner.id,
+      assigneeId: owner.id,
+    }).create()
+
+    const response = await client
+      .get(`/tasks/${task.id}`)
+      .header('x-test-user-id', String(intruder.id))
+      .header('accept', 'application/json')
+
+    response.assertStatus(404)
+  })
+})

@@ -109,12 +109,52 @@ export default class TasksController {
     })
   }
 
+  public async show({ auth, params, request, response, view, session }: HttpContext) {
+    const user = auth.user!
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+
+    try {
+      const task = await this.taskService.findVisibleTask(user, params.id)
+
+      if (wantsJson) {
+        return { task: task.serialize() }
+      }
+
+      const pageContent = await view.render('pages/tasks/show', {
+        task,
+        statusLabels,
+        priorityLabels,
+        locale: user.locale || 'fr',
+      })
+
+      return view.render('layouts/base', {
+        title: `Taskflow • ${task.title}`,
+        pageContent,
+        notification: session.flashMessages?.get('notification') || null,
+      })
+    } catch (error) {
+      if (error instanceof TaskNotFoundError) {
+        if (wantsJson) {
+          return response.status(404).send({ message: error.message })
+        }
+
+        session.flash('notification', {
+          type: 'error',
+          message: error.message,
+        })
+        return response.redirect().toRoute('tasks.index')
+      }
+
+      throw error
+    }
+  }
+
   public async edit({ auth, params, view, session, request, response }: HttpContext) {
     const user = auth.user!
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
 
     try {
-      const task = await this.taskService.findEditableTask(user, params.id)
+      const task = await this.taskService.findVisibleTask(user, params.id)
 
       if (wantsJson) {
         return { task: task.serialize() }

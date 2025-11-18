@@ -1,0 +1,74 @@
+  <style>
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-block-start: 1.5rem;
+    }
+
+    .detail-card {
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: var(--pico-secondary-background);
+    }
+
+    .detail-card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pico-muted-color);
+    }
+  </style>
+
+  <section class="page-header">
+    <div>
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.description || 'Pas de description fournie.' }}</p>
+      <small>
+        Créée le {{ task.createdAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }} —
+        Dernière mise à jour {{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}
+      </small>
+    </div>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">Retour</a>
+      <a role="button" href="{{ route('tasks.edit', { id: task.id }) }}">Modifier</a>
+    </div>
+  </section>
+
+  <section class="details-grid">
+    <article class="detail-card">
+      <h4>Statut</h4>
+      <strong>{{ statusLabels[task.status] || task.status }}</strong>
+    </article>
+
+    <article class="detail-card">
+      <h4>Priorité</h4>
+      <strong>{{ priorityLabels[task.priority] || task.priority }}</strong>
+    </article>
+
+    <article class="detail-card">
+      <h4>Assignée à</h4>
+      <strong>{{ task.assignee?.name || task.assignee?.email || 'Non assignée' }}</strong>
+    </article>
+
+    <article class="detail-card">
+      <h4>Échéance</h4>
+      <strong>
+        @if(task.dueDate)
+          {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
+        @else
+          —
+        @endif
+      </strong>
+    </article>
+  </section>
+
+  <section style="margin-block-start: 2rem;">
+    <h3>Historique</h3>
+    <p>
+      Créée par {{ task.creator?.name || 'Inconnu' }} et suivie par
+      {{ task.assignee?.name || 'Non assignée' }}.
+    </p>
+  </section>

@@ -125,7 +125,7 @@ export default class TaskService {
   }
 
   public async updateFor(user: User, taskId: string, payload: TaskMutationInput): Promise<Task> {
-    const task = await this.findEditableTask(user, taskId)
+    const task = await this.findVisibleTask(user, taskId)
     const assigneeId = await this.resolveAssigneeId(user, payload.assigneeId, task.assigneeId)
 
     task.title = payload.title
@@ -149,7 +149,7 @@ export default class TaskService {
     return task
   }
 
-  public async findEditableTask(user: User, taskId: string): Promise<Task> {
+  public async findVisibleTask(user: User, taskId: string): Promise<Task> {
     const task = await Task.query()
       .where('id', taskId)
       .where((builder) => {
