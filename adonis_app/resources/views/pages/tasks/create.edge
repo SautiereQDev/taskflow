@@ -1,0 +1,112 @@
+  <style>
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-block-start: 1.5rem;
+    }
+
+    .field-error {
+      color: var(--pico-del-color);
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+
+  <section class="page-header">
+    <div>
+      <h2>Créer une nouvelle tâche</h2>
+      <p>Définissez les informations clés pour démarrer ce chantier.</p>
+    </div>
+    <div>
+      <a role="button" class="secondary" href="{{ route('tasks.index') }}">Retour à mes tâches</a>
+    </div>
+  </section>
+
+  <form method="POST" action="{{ route('tasks.store') }}">
+    @csrf()
+    <div class="form-grid">
+      <label>
+        <span>Titre</span>
+        <input type="text" name="title" value="{{ form.title || '' }}" required minlength="3" maxlength="180" />
+        @if(errors.title)
+          <span class="field-error">{{ errors.title }}</span>
+        @endif
+      </label>
+
+      <label>
+        <span>Statut</span>
+        <select name="status">
+          @each((tuple) in Object.entries(statusLabels))
+            <option value="{{ tuple[0] }}" {{ (form.status || 'todo') === tuple[0] ? 'selected' : '' }}>
+              {{ tuple[1] }}
+            </option>
+          @endeach
+        </select>
+        @if(errors.status)
+          <span class="field-error">{{ errors.status }}</span>
+        @endif
+      </label>
+
+      <label>
+        <span>Priorité</span>
+        <select name="priority">
+          @each((tuple) in Object.entries(priorityLabels))
+            <option value="{{ tuple[0] }}" {{ (form.priority || 'medium') === tuple[0] ? 'selected' : '' }}>
+              {{ tuple[1] }}
+            </option>
+          @endeach
+        </select>
+        @if(errors.priority)
+          <span class="field-error">{{ errors.priority }}</span>
+        @endif
+      </label>
+
+      <label>
+        <span>Échéance</span>
+        <input type="date" name="dueDate" value="{{ form.dueDate || '' }}" />
+        @if(errors.dueDate)
+          <span class="field-error">{{ errors.dueDate }}</span>
+        @endif
+      </label>
+
+      <label>
+        <span>Assignée à</span>
+        <select name="assigneeId">
+          <option value="" {{ form.assigneeId ? '' : 'selected' }}>Moi-même</option>
+          @each(userOption in collaborators)
+            <option
+              value="{{ userOption.id }}"
+              {{ String(form.assigneeId || '') === String(userOption.id) ? 'selected' : '' }}
+            >
+              {{ userOption.name || userOption.email }}
+              @if(userOption.id === currentUser.id)
+                (Vous)
+              @endif
+            </option>
+          @endeach
+        </select>
+        @if(errors.assigneeId)
+          <span class="field-error">{{ errors.assigneeId }}</span>
+        @endif
+      </label>
+    </div>
+
+    <label style="margin-block-start: 1.5rem;">
+      <span>Description</span>
+      <textarea
+        name="description"
+        rows="5"
+        maxlength="2000"
+        placeholder="Détails, livrables attendus, contexte..."
+      >{{ form.description || '' }}</textarea>
+      @if(errors.description)
+        <span class="field-error">{{ errors.description }}</span>
+      @endif
+    </label>
+
+    <div style="margin-block-start: 1.5rem; display: flex; gap: 1rem;">
+      <button type="submit">Créer la tâche</button>
+      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">Annuler</a>
+    </div>
+  </form>

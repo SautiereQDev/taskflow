@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 
 import Task from '#models/task'
-import type User from '#models/user'
+import User from '#models/user'
 import type { TaskPriority, TaskStatus } from '#types/domain'
 
 export type TaskFilters = {
@@ -22,6 +22,25 @@ export type TaskListMeta = {
 export type TaskListResult = {
   tasks: Task[]
   meta: TaskListMeta
+}
+
+export type TaskCreationInput = {
+  title: string
+  description?: string | null
+  status?: TaskStatus
+  priority?: TaskPriority
+  dueDate?: DateTime | null
+  assigneeId?: string | null
+}
+
+export class TaskAssignmentError extends Error {
+  constructor(
+    message: string,
+    public readonly field: string
+  ) {
+    super(message)
+    this.name = 'TaskAssignmentError'
+  }
 }
 
 export default class TaskService {
@@ -78,5 +97,31 @@ export default class TaskService {
         lastPage: meta.lastPage,
       },
     }
+  }
+
+  public async createFor(user: User, payload: TaskCreationInput): Promise<Task> {
+    let assigneeId = payload.assigneeId || user.id
+
+    if (payload.assigneeId && payload.assigneeId !== user.id) {
+      const assignee = await User.find(payload.assigneeId)
+      if (!assignee) {
+        throw new TaskAssignmentError('Utilisateur assigné introuvable.', 'assigneeId')
+      }
+      assigneeId = assignee.id
+    }
+
+    const task = await Task.create({
+      title: payload.title,
+      description: payload.description ?? null,
+      status: payload.status ?? 'todo',
+      priority: payload.priority ?? 'medium',
+      dueDate: payload.dueDate ?? null,
+      creatorId: user.id,
+      assigneeId,
+    })
+
+    await task.load('assignee')
+    await task.load('creator')
+    return task
   }
 }

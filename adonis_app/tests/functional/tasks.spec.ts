@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { test } from '@japa/runner'
 
+import Task from '#models/task'
 import { UserFactory } from '#factories/user_factory'
 import { TaskFactory } from '#factories/task_factory'
 
@@ -107,6 +108,65 @@ test.group('Tasks listing', () => {
     })
     response.assertBodyContains({
       errors: [{ message: 'Statut non supporté.' }],
+    })
+  })
+})
+
+test.group('Task creation', () => {
+  test('renders the creation form with collaborators list', async ({ client, assert }) => {
+    const user = await UserFactory.create()
+    const teammate = await UserFactory.merge({ name: 'Teammate' }).create()
+
+    const response = await client.get('/tasks/create').header('x-test-user-id', String(user.id))
+
+    response.assertStatus(200)
+    response.assertTextIncludes('Créer une nouvelle tâche')
+    response.assertTextIncludes(teammate.name)
+    assert.include(response.text(), 'Retour à mes tâches')
+  })
+
+  test('creates a task via HTML form submission', async ({ client, assert }) => {
+    const owner = await UserFactory.create()
+    const teammate = await UserFactory.create()
+    const dueDate = DateTime.now().plus({ days: 4 }).toISODate()
+
+    const response = await client
+      .post('/tasks')
+      .header('x-test-user-id', String(owner.id))
+      .redirects(0)
+      .form({
+        title: 'Suivi intégration',
+        description: 'Préciser les dépendances front.',
+        priority: 'high',
+        status: 'in_progress',
+        dueDate,
+        assigneeId: teammate.id,
+      })
+
+    response.assertStatus(302)
+    response.assertHeader('location', '/tasks')
+
+    const task = await Task.query().where('title', 'Suivi intégration').firstOrFail()
+    assert.equal(task.creatorId, owner.id)
+    assert.equal(task.assigneeId, teammate.id)
+    assert.equal(task.priority, 'high')
+  })
+
+  test('returns JSON validation errors when payload is invalid', async ({ client }) => {
+    const owner = await UserFactory.create()
+
+    const response = await client
+      .post('/tasks')
+      .header('x-test-user-id', String(owner.id))
+      .header('accept', 'application/json')
+      .json({
+        title: 'Ok',
+        dueDate: 'invalid-date',
+      })
+
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [{ field: 'dueDate' }],
     })
   })
 })

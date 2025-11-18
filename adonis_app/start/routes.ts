@@ -27,5 +27,7 @@ router
   .group(() => {
     router.get('/', [HomeController, 'index']).as('home')
     router.get('/tasks', [TasksController, 'index']).as('tasks.index')
+    router.get('/tasks/create', [TasksController, 'create']).as('tasks.create')
+    router.post('/tasks', [TasksController, 'store']).as('tasks.store')
   })
   .middleware([middleware.auth()])
