@@ -1,9 +1,9 @@
-# Local PostgreSQL (Docker)
+# Local PostgreSQL 18 (Docker)
 
-This project ships with a ready-to-use PostgreSQL service powered by Docker Compose. It mirrors the defaults referenced in `.env`, so the application connects without extra tweaks.
+This project ships with a ready-to-use PostgreSQL **18** service powered by Docker Compose. It mirrors the defaults referenced in `.env`, so the application connects without extra tweaks.
 
-> **Note**
-> The official PostgreSQL image does not yet provide v18. The compose file currently uses `postgres:17`. Once v18 is published, you can switch the `image` tag in `docker-compose.yml` to the desired version without any other code changes.
+> **Important**
+> The stack is validated only against PostgreSQL 18. Do **not** switch to SQLite or earlier Postgres majors: extensions (`citext`, `pg_trgm`) and enum migrations depend on PostgreSQL features that are absent elsewhere.
 
 ## Prerequisites
 

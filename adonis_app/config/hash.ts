@@ -2,14 +2,14 @@ import { defineConfig, drivers } from '@adonisjs/core/hash'
 import type { InferHashers } from '@adonisjs/core/types'
 
 const hashConfig = defineConfig({
-  default: 'argon2',
+  default: 'scrypt',
 
   list: {
-    argon2: drivers.argon2({
-      type: 'id',
-      memoryCost: 65536,
-      iterations: 3,
-      parallelism: 4,
+    scrypt: drivers.scrypt({
+      cost: 16384,
+      blockSize: 8,
+      parallelization: 1,
+      maxMemory: 32 * 1024 * 1024,
     }),
   },
 })

@@ -8,7 +8,8 @@
     "start": "node bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
-    "test": "node ace test",
+    "test": "tsx ./bin/test.ts",
+    "test:watch": "tsx watch ./bin/test.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
@@ -33,6 +34,7 @@
     "#abilities/*": "./app/abilities/*.js",
     "#database/*": "./database/*.js",
     "#factories/*": "./database/factories/*.js",
+    "#view_models/*": "./app/view_models/*.js",
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js"
@@ -55,6 +57,7 @@
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "ts-node-maintained": "^10.9.5",
+    "tsx": "^4.20.6",
     "typescript": "~5.8"
   },
   "dependencies": {
@@ -69,7 +72,7 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/view": "^7.0.0-7",
     "@faker-js/faker": "^9.9.0",
-    "argon2": "^0.43.1",
+    "@vinejs/vine": "^2.1.0",
     "luxon": "^3.7.2",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2"

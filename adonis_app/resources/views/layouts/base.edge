@@ -3,16 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@section('title', 'Taskflow')</title>
+    <title>{{ title || 'Taskflow' }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
   </head>
   <body>
     <main class="container">
       <header class="hero">
-        <h1>Taskflow</h1>
-        <p class="subtitle">AdonisJS v6 port in progress</p>
+        <div>
+          <h1>Taskflow</h1>
+          <p class="subtitle">AdonisJS v6 port in progress</p>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="{{ route('home') }}">Tableau de bord</a></li>
+            @if(auth?.isAuthenticated)
+              <li><a href="{{ route('tasks.index') }}">Mes tâches</a></li>
+              <li>
+                <form method="POST" action="/logout">
+                  @csrf()
+                  <button type="submit">Se déconnecter ({{ auth.user?.name }})</button>
+                </form>
+              </li>
+            @else
+              <li><a href="/login">Connexion</a></li>
+            @endif
+          </ul>
+        </nav>
       </header>
-      @!section('content')
+
+      @if(notification)
+        <article class="status {{ notification.type }}" role="alert">
+          {{ notification.message }}
+        </article>
+      @endif
+
+      {{{ pageContent }}}
     </main>
   </body>
 </html>

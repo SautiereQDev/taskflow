@@ -8,7 +8,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { userRoles, type UserRole } from '#types/domain'
 import type Task from '#models/task'
 
-const AuthFinder = withAuthFinder(() => hash.use('argon2'), {
+const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })

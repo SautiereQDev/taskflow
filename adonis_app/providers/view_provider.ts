@@ -61,7 +61,12 @@ export default class ViewProvider {
     HttpContext.getter(
       'view',
       function getView() {
-        return view.share({ request: this.request })
+        return view.share({
+          request: this.request,
+          auth: this.auth,
+          session: this.session,
+          currentRoute: this.route,
+        })
       },
       true
     )

@@ -1,0 +1,37 @@
+  <section aria-labelledby="login-title" class="login-card">
+    <h2 id="login-title">Connexion</h2>
+    <p>Identifiez-vous pour accéder à votre espace de travail.</p>
+
+    <form method="POST" action="/login" class="grid">
+      @csrf()
+
+      <label>
+        Email
+        <input
+          type="email"
+          name="email"
+          value="{{ form?.email || '' }}"
+          required
+          autocomplete="email"
+        />
+        @if(errors?.email)
+          <small class="error">{{ errors.email }}</small>
+        @endif
+      </label>
+
+      <label>
+        Mot de passe
+        <input type="password" name="password" required autocomplete="current-password" />
+        @if(errors?.password)
+          <small class="error">{{ errors.password }}</small>
+        @endif
+      </label>
+
+      <label class="remember">
+        <input type="checkbox" name="remember" />
+        Rester connecté•e
+      </label>
+
+      <button type="submit">Se connecter</button>
+    </form>
+  </section>

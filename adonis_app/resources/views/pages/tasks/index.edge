@@ -1,0 +1,198 @@
+  <style>
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-block-end: 1.5rem;
+    }
+
+    .filters-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-block-start: 0.5rem;
+    }
+
+    .tasks-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tasks-table th,
+    .tasks-table td {
+      padding: 0.65rem;
+      border-bottom: 1px solid var(--pico-muted-border-color);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .task-badge {
+      display: inline-flex;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background: var(--pico-muted-border-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block-start: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .pagination-controls .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pagination-controls a[aria-disabled='true'] {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  </style>
+
+  <section class="page-header">
+    <div>
+      <h2>Mes tâches</h2>
+      <p>Pilotage consolidé des éléments que vous suivez.</p>
+    </div>
+    <div>
+      <small>Total listé&nbsp;: {{ meta.total }}</small>
+    </div>
+  </section>
+
+  <form method="GET" aria-label="Filtres de recherche">
+    <div class="filters-grid">
+      <label>
+        <span>Statut</span>
+        <select name="status">
+          <option value="">Tous</option>
+          @each((tuple) in statusOptions)
+            <option value="{{ tuple[0] }}" @if(filters.status === tuple[0]) selected @endif>
+              {{ tuple[1] }}
+            </option>
+          @endeach
+        </select>
+      </label>
+
+      <label>
+        <span>Priorité</span>
+        <select name="priority">
+          <option value="">Toutes</option>
+          @each((tuple) in priorityOptions)
+            <option value="{{ tuple[0] }}" @if(filters.priority === tuple[0]) selected @endif>
+              {{ tuple[1] }}
+            </option>
+          @endeach
+        </select>
+      </label>
+
+      <label>
+        <span>Recherche</span>
+        <input
+          type="search"
+          name="search"
+          minlength="2"
+          value="{{ filters.search || '' }}"
+          placeholder="Titre ou description"
+        />
+      </label>
+
+      <label>
+        <span>Après le</span>
+        <input type="date" name="dueAfter" value="{{ filters.dueAfter ? filters.dueAfter.toISODate() : '' }}" />
+      </label>
+
+      <label>
+        <span>Avant le</span>
+        <input type="date" name="dueBefore" value="{{ filters.dueBefore ? filters.dueBefore.toISODate() : '' }}" />
+      </label>
+
+      <label>
+        <span>Par page</span>
+        <input type="number" name="perPage" min="1" max="50" value="{{ filters.perPage || 10 }}" />
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Appliquer</button>
+      <a href="{{ route('tasks.index') }}" role="button" class="secondary outline">Réinitialiser</a>
+    </div>
+  </form>
+
+  <section aria-live="polite">
+    @if(tasks.length)
+      <div class="overflow-auto">
+        <table class="tasks-table">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Statut</th>
+              <th>Priorité</th>
+              <th>Assignée à</th>
+              <th>Échéance</th>
+              <th>Dernière mise à jour</th>
+            </tr>
+          </thead>
+          <tbody>
+            @each(task in tasks)
+              <tr>
+                <td>
+                  <strong>{{ task.title }}</strong>
+                  <p>{{ task.description || 'Pas de description fournie.' }}</p>
+                </td>
+                <td>
+                  <span class="task-badge">{{ statusLabels[task.status] || task.status }}</span>
+                </td>
+                <td>{{ priorityLabels[task.priority] || task.priority }}</td>
+                <td>{{ task.assignee?.name || 'Non assignée' }}</td>
+                <td>
+                  @if(task.dueDate)
+                    {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
+                  @else
+                    —
+                  @endif
+                </td>
+                <td>{{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}</td>
+              </tr>
+            @endeach
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-controls">
+        <span>Page {{ meta.currentPage }} / {{ meta.lastPage }}</span>
+        <div class="actions">
+          @if(paginationLinks.prev)
+            <a role="button" href="?{{ paginationLinks.prev }}">Précédent</a>
+          @else
+            <a role="button" aria-disabled="true">Précédent</a>
+          @endif
+
+          @if(paginationLinks.next)
+            <a role="button" href="?{{ paginationLinks.next }}">Suivant</a>
+          @else
+            <a role="button" aria-disabled="true">Suivant</a>
+          @endif
+        </div>
+      </div>
+    @else
+      <article class="status">
+        <h3>Aucune tâche trouvée</h3>
+        <p>Relâchez certains filtres ou créez une nouvelle tâche pour démarrer.</p>
+      </article>
+    @endif
+  </section>

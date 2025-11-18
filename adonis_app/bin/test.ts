@@ -16,6 +16,72 @@ import 'reflect-metadata'
 import { Ignitor, prettyPrintError } from '@adonisjs/core'
 import { configure, processCLIArgs, run } from '@japa/runner'
 
+const EXIT_DEBUG_ENABLED = process.env.DEBUG_TEST_EXIT === 'true'
+
+if (EXIT_DEBUG_ENABLED) {
+  const originalDescriptor = Object.getOwnPropertyDescriptor(process, 'exitCode')
+  const history: Array<{ value: number | undefined; stack: string; source: 'exit' | 'exitCode' }> = []
+  let trackedExitCode = process.exitCode
+
+  if (originalDescriptor?.configurable) {
+    Object.defineProperty(process, 'exitCode', {
+      configurable: true,
+      enumerable: false,
+      get() {
+        return trackedExitCode
+      },
+      set(value) {
+        trackedExitCode = value
+        history.push({
+          value,
+          source: 'exitCode',
+          stack: new Error('process.exitCode instrumentation').stack || '',
+        })
+        console.log(`[@adonis-tests] process.exitCode -> ${value}`)
+      },
+    })
+  } else {
+    console.warn('[@adonis-tests] Cannot instrument process.exitCode (property not configurable).')
+  }
+
+  const originalExit = process.exit.bind(process)
+  const patchedExit: typeof process.exit = ((code?: number) => {
+    history.push({
+      value: code,
+      source: 'exit',
+      stack: new Error('process.exit instrumentation').stack || '',
+    })
+    console.log(
+      `[@adonis-tests] process.exit(${code ?? ''}) called (current exitCode=${process.exitCode ?? 0})`
+    )
+    return originalExit(code as never)
+  }) as typeof process.exit
+  process.exit = patchedExit
+
+  const printHistory = (label: string, code?: number) => {
+    console.log(`[@adonis-tests] ${label} (code=${code ?? trackedExitCode ?? 0})`)
+    if (!history.length) {
+      console.log('[@adonis-tests] exitCode history empty')
+      return
+    }
+    let index = 0
+    for (const entry of history) {
+      index += 1
+      console.log(`[@adonis-tests]   #${index}: source=${entry.source} value=${entry.value}`)
+      console.log(entry.stack)
+    }
+  }
+
+  process.on('beforeExit', (code) => printHistory('beforeExit', code))
+  process.on('exit', (code) => {
+    printHistory('exit', code)
+    if (originalDescriptor?.configurable) {
+      Object.defineProperty(process, 'exitCode', originalDescriptor)
+    }
+    process.exit = originalExit
+  })
+}
+
 /**
  * URL to the application root. AdonisJS need it to resolve
  * paths to file and directories for scaffolding commands
@@ -33,7 +99,7 @@ const IMPORTER = (filePath: string) => {
   return import(filePath)
 }
 
-new Ignitor(APP_ROOT, { importer: IMPORTER })
+const ignitor = new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     app.booting(async () => {
       await import('#start/env')
@@ -55,11 +121,13 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
       teardown: runnerHooks.teardown.concat([() => app.terminate()]),
     })
   })
-  .run(() => run())
-  .catch((error) => {
-    process.exitCode = 1
-    if (process.env.DEBUG_TESTS === 'true') {
-      console.error(error)
-    }
-    prettyPrintError(error)
-  })
+
+try {
+  await ignitor.run(() => run())
+} catch (error) {
+  process.exitCode = 1
+  if (process.env.DEBUG_TESTS === 'true') {
+    console.error(error)
+  }
+  prettyPrintError(error)
+}

@@ -10,6 +10,7 @@
 
 import router from '@adonisjs/core/services/router'
 import server from '@adonisjs/core/services/server'
+import app from '@adonisjs/core/services/app'
 
 /**
  * The error handler is used to convert an exception
@@ -36,9 +37,14 @@ router.use([
   () => import('@adonisjs/core/bodyparser_middleware'),
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#middleware/silent_auth_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('#middleware/detect_user_locale_middleware'),
 ])
+
+if (app.inTest) {
+  router.use([() => import('#middleware/test_auth_helper_middleware')])
+}
 
 /**
  * Named middleware collection must be explicitly assigned to

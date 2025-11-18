@@ -15,7 +15,7 @@
 | ------------- | ----------------------------------------------------------------------------- |
 | Database      | `@adonisjs/lucid`, `pg`, `luxon`                                              |
 | Validation    | `vinejs` (bundled) + custom validators                                        |
-| Sessions/Auth | `@adonisjs/session`, `@adonisjs/auth`, `@adonisjs/hash`, `argon2`             |
+| Sessions/Auth | `@adonisjs/session`, `@adonisjs/auth`, `@adonisjs/hash` (scrypt driver)       |
 | Views/Assets  | `@adonisjs/view`, `@adonisjs/static`, Vite Edge plugin, Alpine + HTMX bundles |
 | Security      | `@adonisjs/shield`, `@adonisjs/cors`, CSP nonce middleware                    |
 | i18n          | `@adonisjs/i18n` with JSON catalogs from `locales/`                           |

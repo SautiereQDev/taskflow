@@ -1,13 +1,29 @@
 import { defineConfig } from '@adonisjs/shield'
 
+import env from '#start/env'
+
+const nodeEnv = env.get('NODE_ENV')
+const isTestEnv = nodeEnv === 'test'
+const assetCdnHosts = ['https://cdn.jsdelivr.net']
+
 const shieldConfig = defineConfig({
   /**
    * Configure CSP policies for your app. Refer documentation
    * to learn more
    */
   csp: {
-    enabled: false,
-    directives: {},
+    enabled: !isTestEnv,
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", ...assetCdnHosts],
+      fontSrc: ["'self'", ...assetCdnHosts],
+      imgSrc: ["'self'", 'data:'],
+      connectSrc: ["'self'"],
+      frameAncestors: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: true,
+    },
     reportOnly: false,
   },
 
@@ -16,9 +32,9 @@ const shieldConfig = defineConfig({
    * to learn more
    */
   csrf: {
-    enabled: true,
+    enabled: !isTestEnv,
     exceptRoutes: [],
-    enableXsrfCookie: false,
+    enableXsrfCookie: true,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },
 

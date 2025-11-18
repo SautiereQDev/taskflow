@@ -1,14 +1,226 @@
-@layout('layouts/base')
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-block-end: 2rem;
+    }
 
-@section('title', 'Taskflow • Dashboard bientôt prêt')
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
 
-@section('content')
-  <section>
-    <p>Bienvenue sur la version AdonisJS de Taskflow. Les fonctionnalités arrivent étape par étape.</p>
-    <ul>
-      <li>Authentification et rôles Lucid</li>
-      <li>Gestion des tâches et activités</li>
-      <li>Dashboards SSR via Edge</li>
-    </ul>
+    .status-chip {
+      padding: 0.15rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tasks-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tasks-list article {
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+
+    .overview-section {
+      margin-block-start: 2rem;
+    }
+
+    .tasks-list header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .metrics-value {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+  </style>
+
+  <section class="hero">
+    <div>
+      <h2>Bonjour {{ auth.user?.name }} 👋</h2>
+      <p>Voici l'état de vos chantiers Taskflow. Gardons le rythme&nbsp;!</p>
+    </div>
   </section>
-@endsection
+
+  <section class="dashboard-grid" aria-label="Statistiques globales">
+    <article>
+      <h3>Total suivi</h3>
+      <p class="metrics-value">{{ summary.total }}</p>
+      <small>Vos tâches créées ou assignées</small>
+    </article>
+    <article>
+      <h3>En retard</h3>
+      <p class="metrics-value">{{ summary.overdue }}</p>
+      <small>À traiter en priorité</small>
+    </article>
+    <article>
+      <h3>À venir (7 j)</h3>
+      <p class="metrics-value">{{ summary.upcoming }}</p>
+      <small>Échéances sur la prochaine semaine</small>
+    </article>
+    <article>
+      <h3>Prochaine échéance</h3>
+      <p class="metrics-value">
+        @if(summary.nextDueDate)
+          {{ summary.nextDueDate.setLocale(locale).toFormat('dd LLL') }}
+        @else
+          —
+        @endif
+      </p>
+      <small>Basé sur les tâches actives</small>
+    </article>
+  </section>
+
+  <section class="overview-section" aria-label="Répartition par statut">
+    <h3>Répartition des statuts</h3>
+    <div class="status-grid">
+      @each(statusSummary in summary.statuses)
+        <article>
+          <header>
+            <span class="status-chip status-{{ statusSummary.status }}">
+              {{ statusLabels[statusSummary.status] || statusSummary.status }}
+            </span>
+          </header>
+          <p class="metrics-value">{{ statusSummary.count }}</p>
+        </article>
+      @endeach
+    </div>
+  </section>
+
+  <section class="overview-section" aria-label="Listes clés">
+    <div class="grid">
+      <article>
+        <header>
+          <h3>Mes tâches assignées</h3>
+          <small>5 prochaines à échéance</small>
+        </header>
+        @if(sections.assigned.length)
+          <ul class="tasks-list">
+            @each(task in sections.assigned)
+              <li>
+                <article>
+                  <header>
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-chip">{{ statusLabels[task.status] }}</span>
+                  </header>
+                  <p>{{ task.description || 'Pas de description fournie.' }}</p>
+                  <footer>
+                    <small>
+                      Échéance&nbsp;:
+                      @if(task.dueDate)
+                        {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
+                      @else
+                        aucune
+                      @endif
+                      • Priorité&nbsp;: {{ priorityLabels[task.priority] }}
+                    </small>
+                  </footer>
+                </article>
+              </li>
+            @endeach
+          </ul>
+        @else
+          <p>Aucune tâche assignée pour le moment 🎯</p>
+        @endif
+      </article>
+
+      <article>
+        <header>
+          <h3>Tâches créées</h3>
+          <small>Suivi des éléments que vous pilotez</small>
+        </header>
+        @if(sections.created.length)
+          <ul class="tasks-list">
+            @each(task in sections.created)
+              <li>
+                <article>
+                  <header>
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-chip">{{ statusLabels[task.status] }}</span>
+                  </header>
+                  <p>Assignée à {{ task.assignee?.name || 'Personne' }}</p>
+                  <footer>
+                    <small>Dernière mise à jour&nbsp;: {{ task.updatedAt.setLocale(locale).toFormat('dd LLL HH:mm') }}</small>
+                  </footer>
+                </article>
+              </li>
+            @endeach
+          </ul>
+        @else
+          <p>Créez une tâche pour lancer votre prochain chantier.</p>
+        @endif
+      </article>
+    </div>
+  </section>
+
+  <section class="overview-section" aria-label="Alertes">
+    <div class="grid">
+      <article>
+        <header>
+          <h3>Urgences</h3>
+          <small>Tâches en retard</small>
+        </header>
+        @if(sections.overdue.length)
+          <ul class="tasks-list">
+            @each(task in sections.overdue)
+              <li>
+                <article>
+                  <header>
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-chip">Retard</span>
+                  </header>
+                  <p>
+                    {{ task.assignee?.name || 'Non assignée' }} • échéance
+                    {{ task.dueDate?.setLocale(locale).toFormat('dd LLL yyyy') }}
+                  </p>
+                </article>
+              </li>
+            @endeach
+          </ul>
+        @else
+          <p>Tout est sous contrôle ✅</p>
+        @endif
+      </article>
+
+      <article>
+        <header>
+          <h3>Activité récente</h3>
+          <small>Dernières mises à jour</small>
+        </header>
+        @if(sections.recent.length)
+          <ul class="tasks-list">
+            @each(task in sections.recent)
+              <li>
+                <article>
+                  <header>
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-chip">{{ statusLabels[task.status] }}</span>
+                  </header>
+                  <p>Mise à jour le {{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}</p>
+                </article>
+              </li>
+            @endeach
+          </ul>
+        @else
+          <p>Aucune activité récente.</p>
+        @endif
+      </article>
+    </div>
+  </section>

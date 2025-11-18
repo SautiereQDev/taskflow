@@ -3,9 +3,20 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
+    "baseUrl": "./",
     "paths": {
-      "#types/*": ["app/types/*"],
-      "#factories/*": ["database/factories/*"]
+      "#types/*": [
+        "./app/types/*"
+      ],
+      "#factories/*": [
+        "./database/factories/*"
+      ],
+      "#services/*": [
+        "./app/services/*"
+      ],
+      "#view_models/*": [
+        "./app/view_models/*"
+      ]
     }
   }
 }
