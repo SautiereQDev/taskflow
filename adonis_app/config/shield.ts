@@ -22,7 +22,7 @@ const shieldConfig = defineConfig({
       connectSrc: ["'self'"],
       frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
-      upgradeInsecureRequests: true,
+      upgradeInsecureRequests: [],
     },
     reportOnly: false,
   },
