@@ -1,4 +1,17 @@
 {
+  "search": "Rechercher",
+  "search_placeholder": "Rechercher...",
+  "all": "Tous",
+  "filter": "Filtrer",
+  "reset": "Réinitialiser",
+  "actions": "Actions",
+  "edit": "Modifier",
+  "confirm_delete": "Voulez-vous vraiment supprimer cet enregistrement ?",
+  "delete": "Supprimer",
+  "previous": "Précédent",
+  "next": "Suivant",
+  "back": "Retour",
+  "save": "Enregistrer",
   "none": "aucune",
   "dash": "—"
 }

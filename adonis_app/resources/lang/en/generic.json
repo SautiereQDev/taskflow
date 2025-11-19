@@ -1,4 +1,17 @@
 {
+  "search": "Search",
+  "search_placeholder": "Search...",
+  "all": "All",
+  "filter": "Filter",
+  "reset": "Reset",
+  "actions": "Actions",
+  "edit": "Edit",
+  "confirm_delete": "Are you sure you want to delete this record?",
+  "delete": "Delete",
+  "previous": "Previous",
+  "next": "Next",
+  "back": "Back",
+  "save": "Save",
   "none": "none",
   "dash": "—"
 }
