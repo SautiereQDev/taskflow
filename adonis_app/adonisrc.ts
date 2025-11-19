@@ -29,6 +29,7 @@ export default defineConfig({
     () => import('@adonisjs/core/commands'),
     () => import('@adonisjs/lucid/commands'),
     () => import('@adonisjs/view/commands'),
+    () => import('@adonisjs/bouncer/commands')
   ],
 
   /*
@@ -56,6 +57,7 @@ export default defineConfig({
     () => import('@adonisjs/i18n/i18n_provider'),
     () => import('@adonisjs/limiter/limiter_provider'),
     () => import('#providers/view_provider'),
+    () => import('@adonisjs/bouncer/bouncer_provider')
   ],
 
   /*

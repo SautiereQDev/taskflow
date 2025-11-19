@@ -40,6 +40,7 @@ router.use([
   () => import('#middleware/silent_auth_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('#middleware/detect_user_locale_middleware'),
+  () => import('#middleware/initialize_bouncer_middleware')
 ])
 
 if (app.inTest) {

@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import factory from '@adonisjs/lucid/factories'
 
 import Task from '#models/task'
+import { UserFactory } from '#factories/user_factory'
 import { taskPriorities, taskStatuses } from '#types/domain'
 
 export const TaskFactory = factory
@@ -20,8 +21,9 @@ export const TaskFactory = factory
       priority,
       dueDate,
       completedAt,
-      creatorId: '',
       assigneeId: null,
     }
   })
+  .relation('creator', () => UserFactory)
+  .relation('assignee', () => UserFactory)
   .build()

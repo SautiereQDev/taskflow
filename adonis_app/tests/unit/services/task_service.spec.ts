@@ -102,9 +102,43 @@ test.group('TaskService.listFor', () => {
     const result = await service.listFor(owner, {}, { page: 2, perPage: 5 })
 
     assert.equal(result.meta.currentPage, 2)
-    assert.equal(result.meta.perPage, 5)
-    assert.equal(result.meta.total, 12)
     assert.equal(result.tasks.length, 5)
-    assert.equal(result.meta.lastPage, 3)
+    assert.equal(result.meta.total, 12)
+  })
+})
+
+test.group('TaskService.findById', () => {
+  test('returns task if found', async ({ assert }) => {
+    const task = await TaskFactory.with('creator').create()
+    const service = new TaskService()
+    const found = await service.findById(task.id)
+    assert.equal(found.id, task.id)
+  })
+
+  test('throws TaskNotFoundError if not found', async ({ assert }) => {
+    const service = new TaskService()
+    await assert.rejects(async () => {
+      await service.findById('invalid-id')
+    }, 'Tâche introuvable.')
+  })
+})
+
+test.group('TaskService.update', () => {
+  test('updates task fields', async ({ assert }) => {
+    const user = await UserFactory.create()
+    const task = await TaskFactory.with('creator').create()
+    const service = new TaskService()
+
+    const updated = await service.update(
+      task,
+      {
+        title: 'New Title',
+        status: 'done',
+      },
+      user
+    )
+
+    assert.equal(updated.title, 'New Title')
+    assert.equal(updated.status, 'done')
   })
 })

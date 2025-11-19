@@ -1,3 +1,5 @@
+@layout('layouts/base')
+@section('body')
   <style>
     .page-header {
       display: flex;
@@ -66,22 +68,24 @@
 
   <section class="page-header">
     <div>
-      <h2>Mes tâches</h2>
-      <p>Pilotage consolidé des éléments que vous suivez.</p>
+      <h2>{{ i18n.formatMessage('tasks.titles.list') }}</h2>
+      <p>{{ i18n.formatMessage('tasks.list.subtitle') }}</p>
     </div>
     <div>
-      <a role="button" class="secondary" href="{{ route('tasks.create') }}">Nouvelle tâche</a>
+      <a role="button" class="secondary" href="{{ route('tasks.create') }}">
+        {{ i18n.formatMessage('tasks.list.new') }}
+      </a>
       <br />
-      <small>Total listé&nbsp;: {{ meta.total }}</small>
+      <small>{{ i18n.formatMessage('tasks.list.total', { count: meta.total }) }}</small>
     </div>
   </section>
 
-  <form method="GET" aria-label="Filtres de recherche">
+  <form method="GET" aria-label="{{ i18n.formatMessage('tasks.list.subtitle') }}">
     <div class="filters-grid">
       <label>
-        <span>Statut</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.status') }}</span>
         <select name="status">
-          <option value="">Tous</option>
+          <option value="">{{ i18n.formatMessage('tasks.list.filters.all') }}</option>
           @each((tuple) in statusOptions)
             <option value="{{ tuple[0] }}" @if(filters.status === tuple[0]) selected @endif>
               {{ tuple[1] }}
@@ -91,9 +95,9 @@
       </label>
 
       <label>
-        <span>Priorité</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.priority') }}</span>
         <select name="priority">
-          <option value="">Toutes</option>
+          <option value="">{{ i18n.formatMessage('tasks.list.filters.allPriority') }}</option>
           @each((tuple) in priorityOptions)
             <option value="{{ tuple[0] }}" @if(filters.priority === tuple[0]) selected @endif>
               {{ tuple[1] }}
@@ -103,35 +107,37 @@
       </label>
 
       <label>
-        <span>Recherche</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.search') }}</span>
         <input
           type="search"
           name="search"
           minlength="2"
           value="{{ filters.search || '' }}"
-          placeholder="Titre ou description"
+          placeholder="{{ i18n.formatMessage('tasks.list.filters.searchPlaceholder') }}"
         />
       </label>
 
       <label>
-        <span>Après le</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.after') }}</span>
         <input type="date" name="dueAfter" value="{{ filters.dueAfter ? filters.dueAfter.toISODate() : '' }}" />
       </label>
 
       <label>
-        <span>Avant le</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.before') }}</span>
         <input type="date" name="dueBefore" value="{{ filters.dueBefore ? filters.dueBefore.toISODate() : '' }}" />
       </label>
 
       <label>
-        <span>Par page</span>
+        <span>{{ i18n.formatMessage('tasks.list.filters.perPage') }}</span>
         <input type="number" name="perPage" min="1" max="50" value="{{ filters.perPage || 10 }}" />
       </label>
     </div>
 
     <div class="form-actions">
-      <button type="submit">Appliquer</button>
-      <a href="{{ route('tasks.index') }}" role="button" class="secondary outline">Réinitialiser</a>
+      <button type="submit">{{ i18n.formatMessage('tasks.list.filters.apply') }}</button>
+      <a href="{{ route('tasks.index') }}" role="button" class="secondary outline">
+        {{ i18n.formatMessage('tasks.list.filters.reset') }}
+      </a>
     </div>
   </form>
 
@@ -141,13 +147,13 @@
         <table class="tasks-table">
           <thead>
             <tr>
-              <th>Titre</th>
-              <th>Statut</th>
-              <th>Priorité</th>
-              <th>Assignée à</th>
-              <th>Échéance</th>
-              <th>Dernière mise à jour</th>
-              <th>Actions</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.title') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.status') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.priority') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.assignee') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.dueDate') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.updatedAt') }}</th>
+              <th>{{ i18n.formatMessage('tasks.list.table.actions') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -157,18 +163,18 @@
                   <strong>
                     <a href="{{ route('tasks.show', { id: task.id }) }}">{{ task.title }}</a>
                   </strong>
-                  <p>{{ task.description || 'Pas de description fournie.' }}</p>
+                  <p>{{ task.description || i18n.formatMessage('tasks.list.table.emptyDescription') }}</p>
                 </td>
                 <td>
                   <span class="task-badge">{{ statusLabels[task.status] || task.status }}</span>
                 </td>
                 <td>{{ priorityLabels[task.priority] || task.priority }}</td>
-                <td>{{ task.assignee?.name || 'Non assignée' }}</td>
+                <td>{{ task.assignee?.name || i18n.formatMessage('tasks.list.table.unassigned') }}</td>
                 <td>
                   @if(task.dueDate)
                     {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
                   @else
-                    —
+                    {{ i18n.formatMessage('generic.dash') }}
                   @endif
                 </td>
                 <td>{{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}</td>
@@ -178,7 +184,7 @@
                     class="secondary outline"
                     href="{{ route('tasks.edit', { id: task.id }) }}"
                   >
-                    Modifier
+                    {{ i18n.formatMessage('tasks.list.table.edit') }}
                   </a>
                 </td>
               </tr>
@@ -188,25 +194,39 @@
       </div>
 
       <div class="pagination-controls">
-        <span>Page {{ meta.currentPage }} / {{ meta.lastPage }}</span>
+        <span>
+          {{ i18n.formatMessage('tasks.list.pagination.page', {
+            current: meta.currentPage,
+            total: meta.lastPage,
+          }) }}
+        </span>
         <div class="actions">
           @if(paginationLinks.prev)
-            <a role="button" href="?{{ paginationLinks.prev }}">Précédent</a>
+            <a role="button" href="?{{ paginationLinks.prev }}">
+              {{ i18n.formatMessage('tasks.list.pagination.prev') }}
+            </a>
           @else
-            <a role="button" aria-disabled="true">Précédent</a>
+            <a role="button" aria-disabled="true">
+              {{ i18n.formatMessage('tasks.list.pagination.prev') }}
+            </a>
           @endif
 
           @if(paginationLinks.next)
-            <a role="button" href="?{{ paginationLinks.next }}">Suivant</a>
+            <a role="button" href="?{{ paginationLinks.next }}">
+              {{ i18n.formatMessage('tasks.list.pagination.next') }}
+            </a>
           @else
-            <a role="button" aria-disabled="true">Suivant</a>
+            <a role="button" aria-disabled="true">
+              {{ i18n.formatMessage('tasks.list.pagination.next') }}
+            </a>
           @endif
         </div>
       </div>
     @else
       <article class="status">
-        <h3>Aucune tâche trouvée</h3>
-        <p>Relâchez certains filtres ou créez une nouvelle tâche pour démarrer.</p>
+        <h3>{{ i18n.formatMessage('tasks.list.empty.title') }}</h3>
+        <p>{{ i18n.formatMessage('tasks.list.empty.description') }}</p>
       </article>
     @endif
   </section>
+@endsection

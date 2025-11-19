@@ -1,0 +1,108 @@
+{
+  "titles": {
+    "list": "My tasks",
+    "create": "Create a task",
+    "edit": "Edit task",
+    "show": "Task details",
+    "dashboard": "Dashboard"
+  },
+  "list": {
+    "subtitle": "Consolidated cockpit for what you own.",
+    "new": "New task",
+    "total": "Listed: {count}",
+    "filters": {
+      "status": "Status",
+      "priority": "Priority",
+      "search": "Search",
+      "searchPlaceholder": "Title or description",
+      "after": "After",
+      "before": "Before",
+      "perPage": "Per page",
+      "apply": "Apply",
+      "reset": "Reset",
+      "all": "All",
+      "allPriority": "All"
+    },
+    "table": {
+      "title": "Title",
+      "status": "Status",
+      "priority": "Priority",
+      "assignee": "Assignee",
+      "dueDate": "Due date",
+      "updatedAt": "Last update",
+      "actions": "Actions",
+      "emptyDescription": "No description provided.",
+      "unassigned": "Unassigned",
+      "edit": "Edit",
+      "view": "View"
+    },
+    "pagination": {
+      "page": "Page {current} / {total}",
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "empty": {
+      "title": "No task found",
+      "description": "Relax some filters or create a new task to get started."
+    }
+  },
+  "form": {
+    "back": "Back to my tasks",
+    "fields": {
+      "title": "Title",
+      "status": "Status",
+      "priority": "Priority",
+      "dueDate": "Due date",
+      "assignee": "Assignee",
+      "description": "Description",
+      "descriptionPlaceholder": "Details, deliverables, context...",
+      "assigneeSelf": "Myself",
+      "assigneeYou": "(You)"
+    },
+    "create": {
+      "subtitle": "Provide the essentials to launch this workstream.",
+      "submit": "Create task",
+      "cancel": "Cancel"
+    },
+    "edit": {
+      "subtitle": "You are updating “{title}”.",
+      "meta": "ID: {id} — Last update {date}",
+      "submit": "Update"
+    }
+  },
+  "show": {
+    "back": "Back",
+    "edit": "Edit",
+    "status": "Status",
+    "priority": "Priority",
+    "assignee": "Assignee",
+    "dueDate": "Due date",
+    "history": "History",
+    "historyDescription": "Created by {creator} and owned by {assignee}.",
+    "createdAt": "Created on {date}",
+    "updatedAt": "Last update {date}",
+    "unassigned": "Unassigned",
+    "unknown": "Unknown",
+    "noDescription": "No description provided."
+  },
+  "notifications": {
+    "created": "Task created successfully.",
+    "updated": "Task updated successfully.",
+    "validationError": "Please fix the highlighted errors.",
+    "assignmentError": "Assigned user not found.",
+    "notFound": "Task not found or access denied."
+  },
+  "errors": {
+    "status": "Unsupported status.",
+    "priority": "Unsupported priority.",
+    "searchLength": "Please provide at least 2 characters.",
+    "dueBefore": "Invalid date for the “before” boundary.",
+    "dueAfter": "Invalid date for the “after” boundary.",
+    "titleRequired": "A title is required.",
+    "titleMin": "The title must contain at least 3 characters.",
+    "titleMax": "The title is too long.",
+    "descriptionMax": "Description cannot exceed 2000 characters.",
+    "dueDate": "Please provide a valid ISO date.",
+    "assignee": "Invalid assignee identifier."
+  }
+}

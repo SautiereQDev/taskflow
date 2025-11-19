@@ -1,0 +1,43 @@
+c[ info ] booting application to run tests...
+
+functional / Home page (tests\functional\home.spec.ts)
+  ÔêÜ renders dashboard overview for authenticated users (515.07ms)
+  ÔêÜ only displays tasks tied to the current user (415.44ms)
+  ├ù serves HTML when no JSON preference is provided (160.33ms)
+ ERRORS 
+
+> Home page / serves HTML when no JSON preference is provided
+
+  Comparing two different types of values. Expected function but received string.
+
+Ôä╣ AssertionError: expected 'application/json; charset=utf-8' to deeply equal [Function]
+
+ Ôüâ at Assert.deepEqual (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/assert/build/index.js:235:19)
+ Ôüâ at ApiResponse.assertHeader (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/api-client/build/index.js:416:19)
+ Ôüâ at Object.executor (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/tests/functional/home.spec.ts:85:14)
+
+   79 Ôöâ    test('serves HTML when no JSON preference is provided', async ({ client }) => {
+   80 Ôöâ      const user = await UserFactory.create()
+   81 Ôöâ  
+   82 Ôöâ      const response = await client.get('/').header('x-test-user-id', String(user.id))
+   83 Ôöâ  
+   84 Ôöâ      response.assertStatus(200)
+ ÔØ» 85 Ôöâ      response.assertHeader('content-type', (value) => value?.includes('text/html'))
+   86 Ôöâ      response.assertTextIncludes('Bonjour')
+   87 Ôöâ    })
+   88 Ôöâ  })
+   89 Ôöâ  
+
+ Ôüâ at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+ Ôüâ at async #wrapTestInTimeout (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:1054:7)
+ Ôüâ at async TestRunner.run (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:1102:7)
+ Ôüâ at async Test2.exec (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:1482:5)
+ Ôüâ at async GroupRunner.run (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:345:7)
+ Ôüâ at async Group.exec (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:513:5)
+ Ôüâ at async SuiteRunner.run (C:/Users/sauti/Documents/task_flow_adonis/adonis_app/node_modules/@japa/core/build/index.js:1809:7)
+[1/1]ÔöÇ
+
+ FAILED 
+
+Tests  2 passed, 1 failed (3)
+ Time  1s

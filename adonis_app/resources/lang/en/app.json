@@ -1,0 +1,14 @@
+{
+  "name": "Taskflow",
+  "tagline": "AdonisJS v6 port in progress",
+  "language": {
+    "label": "Language",
+    "submit": "Apply",
+    "options": {
+      "fr": "French",
+      "en": "English"
+    },
+    "updated": "Language updated.",
+    "invalid": "This language is not supported."
+  }
+}

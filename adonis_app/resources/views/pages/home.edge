@@ -1,3 +1,5 @@
+@layout('layouts/base')
+@section('body')
   <style>
     .dashboard-grid {
       display: grid;
@@ -54,42 +56,42 @@
 
   <section class="hero">
     <div>
-      <h2>Bonjour {{ auth.user?.name }} 👋</h2>
-      <p>Voici l'état de vos chantiers Taskflow. Gardons le rythme&nbsp;!</p>
+      <h2>{{ i18n.formatMessage('home.greeting', { name: auth.user?.name || '' }) }}</h2>
+      <p>{{ i18n.formatMessage('home.subtitle') }}</p>
     </div>
   </section>
 
-  <section class="dashboard-grid" aria-label="Statistiques globales">
+  <section class="dashboard-grid" aria-label="{{ i18n.formatMessage('home.statsTitle') }}">
     <article>
-      <h3>Total suivi</h3>
+      <h3>{{ i18n.formatMessage('home.metrics.total.title') }}</h3>
       <p class="metrics-value">{{ summary.total }}</p>
-      <small>Vos tâches créées ou assignées</small>
+      <small>{{ i18n.formatMessage('home.metrics.total.description') }}</small>
     </article>
     <article>
-      <h3>En retard</h3>
+      <h3>{{ i18n.formatMessage('home.metrics.overdue.title') }}</h3>
       <p class="metrics-value">{{ summary.overdue }}</p>
-      <small>À traiter en priorité</small>
+      <small>{{ i18n.formatMessage('home.metrics.overdue.description') }}</small>
     </article>
     <article>
-      <h3>À venir (7 j)</h3>
+      <h3>{{ i18n.formatMessage('home.metrics.upcoming.title') }}</h3>
       <p class="metrics-value">{{ summary.upcoming }}</p>
-      <small>Échéances sur la prochaine semaine</small>
+      <small>{{ i18n.formatMessage('home.metrics.upcoming.description') }}</small>
     </article>
     <article>
-      <h3>Prochaine échéance</h3>
+      <h3>{{ i18n.formatMessage('home.metrics.nextDue.title') }}</h3>
       <p class="metrics-value">
         @if(summary.nextDueDate)
           {{ summary.nextDueDate.setLocale(locale).toFormat('dd LLL') }}
         @else
-          —
+          {{ i18n.formatMessage('home.metrics.nextDue.empty') }}
         @endif
       </p>
-      <small>Basé sur les tâches actives</small>
+      <small>{{ i18n.formatMessage('home.metrics.nextDue.description') }}</small>
     </article>
   </section>
 
-  <section class="overview-section" aria-label="Répartition par statut">
-    <h3>Répartition des statuts</h3>
+  <section class="overview-section" aria-label="{{ i18n.formatMessage('home.statusSplit') }}">
+    <h3>{{ i18n.formatMessage('home.statusSplit') }}</h3>
     <div class="status-grid">
       @each(statusSummary in summary.statuses)
         <article>
@@ -104,12 +106,12 @@
     </div>
   </section>
 
-  <section class="overview-section" aria-label="Listes clés">
+  <section class="overview-section" aria-label="{{ i18n.formatMessage('home.lists.title') }}">
     <div class="grid">
       <article>
         <header>
-          <h3>Mes tâches assignées</h3>
-          <small>5 prochaines à échéance</small>
+          <h3>{{ i18n.formatMessage('home.lists.assigned.title') }}</h3>
+          <small>{{ i18n.formatMessage('home.lists.assigned.subtitle') }}</small>
         </header>
         @if(sections.assigned.length)
           <ul class="tasks-list">
@@ -120,16 +122,20 @@
                     <strong>{{ task.title }}</strong>
                     <span class="status-chip">{{ statusLabels[task.status] }}</span>
                   </header>
-                  <p>{{ task.description || 'Pas de description fournie.' }}</p>
+                  <p>{{ task.description || i18n.formatMessage('tasks.show.noDescription') }}</p>
                   <footer>
                     <small>
-                      Échéance&nbsp;:
                       @if(task.dueDate)
-                        {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
+                        {{ i18n.formatMessage('home.lists.dueDate', {
+                          date: task.dueDate.setLocale(locale).toFormat('dd LLL yyyy'),
+                        }) }}
                       @else
-                        aucune
+                        {{ i18n.formatMessage('home.lists.dueDate', { date: i18n.formatMessage('home.lists.none') }) }}
                       @endif
-                      • Priorité&nbsp;: {{ priorityLabels[task.priority] }}
+                      •
+                      {{ i18n.formatMessage('home.lists.priority', {
+                        label: priorityLabels[task.priority],
+                      }) }}
                     </small>
                   </footer>
                 </article>
@@ -137,14 +143,14 @@
             @endeach
           </ul>
         @else
-          <p>Aucune tâche assignée pour le moment 🎯</p>
+          <p>{{ i18n.formatMessage('home.lists.assigned.empty') }}</p>
         @endif
       </article>
 
       <article>
         <header>
-          <h3>Tâches créées</h3>
-          <small>Suivi des éléments que vous pilotez</small>
+          <h3>{{ i18n.formatMessage('home.lists.created.title') }}</h3>
+          <small>{{ i18n.formatMessage('home.lists.created.subtitle') }}</small>
         </header>
         @if(sections.created.length)
           <ul class="tasks-list">
@@ -155,16 +161,23 @@
                     <strong>{{ task.title }}</strong>
                     <span class="status-chip">{{ statusLabels[task.status] }}</span>
                   </header>
-                  <p>Assignée à {{ task.assignee?.name || 'Personne' }}</p>
+                  <p>
+                    {{ i18n.formatMessage('tasks.show.assignee') }} :
+                    {{ task.assignee?.name || i18n.formatMessage('tasks.show.unassigned') }}
+                  </p>
                   <footer>
-                    <small>Dernière mise à jour&nbsp;: {{ task.updatedAt.setLocale(locale).toFormat('dd LLL HH:mm') }}</small>
+                    <small>
+                      {{ i18n.formatMessage('home.lists.updatedAt', {
+                        date: task.updatedAt.setLocale(locale).toFormat('dd LLL HH:mm'),
+                      }) }}
+                    </small>
                   </footer>
                 </article>
               </li>
             @endeach
           </ul>
         @else
-          <p>Créez une tâche pour lancer votre prochain chantier.</p>
+          <p>{{ i18n.formatMessage('home.lists.created.empty') }}</p>
         @endif
       </article>
     </div>
@@ -174,8 +187,8 @@
     <div class="grid">
       <article>
         <header>
-          <h3>Urgences</h3>
-          <small>Tâches en retard</small>
+          <h3>{{ i18n.formatMessage('home.lists.overdue.title') }}</h3>
+          <small>{{ i18n.formatMessage('home.lists.overdue.subtitle') }}</small>
         </header>
         @if(sections.overdue.length)
           <ul class="tasks-list">
@@ -184,25 +197,27 @@
                 <article>
                   <header>
                     <strong>{{ task.title }}</strong>
-                    <span class="status-chip">Retard</span>
+                    <span class="status-chip">{{ i18n.formatMessage('home.lists.overdue.chip') }}</span>
                   </header>
                   <p>
-                    {{ task.assignee?.name || 'Non assignée' }} • échéance
-                    {{ task.dueDate?.setLocale(locale).toFormat('dd LLL yyyy') }}
+                    {{ task.assignee?.name || i18n.formatMessage('tasks.show.unassigned') }} •
+                    {{ i18n.formatMessage('home.lists.dueDate', {
+                      date: task.dueDate?.setLocale(locale).toFormat('dd LLL yyyy') || i18n.formatMessage('home.lists.none'),
+                    }) }}
                   </p>
                 </article>
               </li>
             @endeach
           </ul>
         @else
-          <p>Tout est sous contrôle ✅</p>
+          <p>{{ i18n.formatMessage('home.lists.overdue.empty') }}</p>
         @endif
       </article>
 
       <article>
         <header>
-          <h3>Activité récente</h3>
-          <small>Dernières mises à jour</small>
+          <h3>{{ i18n.formatMessage('home.lists.recent.title') }}</h3>
+          <small>{{ i18n.formatMessage('home.lists.recent.subtitle') }}</small>
         </header>
         @if(sections.recent.length)
           <ul class="tasks-list">
@@ -213,14 +228,19 @@
                     <strong>{{ task.title }}</strong>
                     <span class="status-chip">{{ statusLabels[task.status] }}</span>
                   </header>
-                  <p>Mise à jour le {{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}</p>
+                  <p>
+                    {{ i18n.formatMessage('home.lists.updatedAt', {
+                      date: task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm'),
+                    }) }}
+                  </p>
                 </article>
               </li>
             @endeach
           </ul>
         @else
-          <p>Aucune activité récente.</p>
+          <p>{{ i18n.formatMessage('home.lists.recent.empty') }}</p>
         @endif
       </article>
     </div>
   </section>
+@endsection

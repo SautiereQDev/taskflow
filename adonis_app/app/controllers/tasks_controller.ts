@@ -1,22 +1,37 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { errors } from '@vinejs/vine'
+// import { inject } from '@adonisjs/core'
+import { errors, SimpleMessagesProvider } from '@vinejs/vine'
 
 import TaskService, { TaskAssignmentError, TaskNotFoundError } from '#services/task_service'
 import User from '#models/user'
-import { priorityLabels, statusLabels } from '#view_models/task_labels'
-import { taskFiltersValidator } from '#validators/task/task_filters_validator'
-import { taskPayloadValidator } from '#validators/task/task_payload_validator'
+import { buildTaskLabels } from '#view_models/task_labels'
+import {
+  buildTaskFiltersMessages,
+  taskFiltersValidator,
+} from '#validators/task/task_filters_validator'
+import {
+  buildTaskPayloadMessages,
+  taskPayloadValidator,
+} from '#validators/task/task_payload_validator'
 
+// @inject()
 export default class TasksController {
-  constructor(private readonly taskService = new TaskService()) {}
+  private readonly taskService: TaskService
 
-  public async index({ auth, request, response, view, session }: HttpContext) {
+  constructor() {
+    this.taskService = new TaskService()
+  }
+
+  public async index({ auth, request, response, view, session, i18n }: HttpContext) {
     const user = auth.user!
-    const filters = await taskFiltersValidator.validate(request.qs())
+    const filters = await taskFiltersValidator.validate(request.qs(), {
+      messagesProvider: new SimpleMessagesProvider(buildTaskFiltersMessages(i18n)),
+    })
 
     const { page = 1, perPage = 10, ...queryFilters } = filters
     const result = await this.taskService.listFor(user, queryFilters, { page, perPage })
-    const locale = user.locale || 'fr'
+    const locale = i18n.locale
+    const { statusLabels, priorityLabels } = buildTaskLabels(i18n)
 
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
 
@@ -62,7 +77,7 @@ export default class TasksController {
           : null,
     }
 
-    const pageContent = await view.render('pages/tasks/index', {
+    const html = await view.render('pages/tasks/index', {
       filters,
       tasks: result.tasks,
       meta: result.meta,
@@ -72,75 +87,74 @@ export default class TasksController {
       priorityOptions,
       paginationLinks,
       locale,
-    })
-
-    const html = await view.render('layouts/base', {
-      title: 'Taskflow • Mes tâches',
-      pageContent,
+      title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('tasks.titles.list')}`,
       notification: session.flashMessages?.get('notification') || null,
     })
 
     return response.header('content-type', 'text/html; charset=utf-8').ok(html)
   }
 
-  public async create({ auth, view, session }: HttpContext) {
+  public async create({ auth, view, session, i18n, response, bouncer }: HttpContext) {
     const user = auth.user!
+    await bouncer.with('TaskPolicy').authorize('create')
     const flash = session.flashMessages
     const form = flash?.get('form') || { status: 'todo', priority: 'medium' }
     const errorsBag = flash?.get('errors') || {}
     const notification = flash?.get('notification') || null
+    const { statusLabels, priorityLabels } = buildTaskLabels(i18n)
+    const locale = i18n.locale
 
     const collaborators = await User.query().select(['id', 'name', 'email']).orderBy('name', 'asc')
 
-    const pageContent = await view.render('pages/tasks/create', {
+    const html = await view.render('pages/tasks/create', {
       form,
       errors: errorsBag,
       statusLabels,
       priorityLabels,
       collaborators,
-      locale: user.locale || 'fr',
+      locale,
       currentUser: user,
-    })
-
-    return view.render('layouts/base', {
-      title: 'Taskflow • Nouvelle tâche',
-      pageContent,
+      title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('tasks.titles.create')}`,
       notification,
     })
+
+    return response.header('content-type', 'text/html; charset=utf-8').ok(html)
   }
 
-  public async show({ auth, params, request, response, view, session }: HttpContext) {
-    const user = auth.user!
+  public async show({ params, request, response, view, session, i18n, bouncer, auth }: HttpContext) {
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+    const { statusLabels, priorityLabels } = buildTaskLabels(i18n)
+    const locale = i18n.locale
+    const user = auth.user!
 
     try {
-      const task = await this.taskService.findVisibleTask(user, params.id)
+      const task = await this.taskService.findById(params.id, user)
+      await bouncer.with('TaskPolicy').authorize('view', task)
 
       if (wantsJson) {
         return { task: task.serialize() }
       }
 
-      const pageContent = await view.render('pages/tasks/show', {
+      const html = await view.render('pages/tasks/show', {
         task,
         statusLabels,
         priorityLabels,
-        locale: user.locale || 'fr',
-      })
-
-      return view.render('layouts/base', {
-        title: `Taskflow • ${task.title}`,
-        pageContent,
+        locale,
+        title: `${i18n.formatMessage('app.name')} • ${task.title}`,
         notification: session.flashMessages?.get('notification') || null,
       })
+
+      return response.header('content-type', 'text/html; charset=utf-8').ok(html)
     } catch (error) {
       if (error instanceof TaskNotFoundError) {
+        const message = i18n.formatMessage('tasks.notifications.notFound')
         if (wantsJson) {
-          return response.status(404).send({ message: error.message })
+          return response.status(404).send({ message })
         }
 
         session.flash('notification', {
           type: 'error',
-          message: error.message,
+          message,
         })
         return response.redirect().toRoute('tasks.index')
       }
@@ -149,12 +163,15 @@ export default class TasksController {
     }
   }
 
-  public async edit({ auth, params, view, session, request, response }: HttpContext) {
+  public async edit({ auth, params, view, session, request, response, i18n, bouncer }: HttpContext) {
     const user = auth.user!
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+    const { statusLabels, priorityLabels } = buildTaskLabels(i18n)
+    const locale = i18n.locale
 
     try {
-      const task = await this.taskService.findVisibleTask(user, params.id)
+      const task = await this.taskService.findById(params.id, user)
+      await bouncer.with('TaskPolicy').authorize('edit', task)
 
       if (wantsJson) {
         return { task: task.serialize() }
@@ -178,31 +195,30 @@ export default class TasksController {
         .select(['id', 'name', 'email'])
         .orderBy('name', 'asc')
 
-      const pageContent = await view.render('pages/tasks/edit', {
+      const html = await view.render('pages/tasks/edit', {
         form,
         errors: errorsBag,
         statusLabels,
         priorityLabels,
         collaborators,
-        locale: user.locale || 'fr',
+        locale,
         currentUser: user,
         task,
-      })
-
-      return view.render('layouts/base', {
-        title: `Taskflow • Modifier ${task.title}`,
-        pageContent,
+        title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('tasks.titles.edit')} – ${task.title}`,
         notification,
       })
+
+      return response.header('content-type', 'text/html; charset=utf-8').ok(html)
     } catch (error) {
       if (error instanceof TaskNotFoundError) {
+        const message = i18n.formatMessage('tasks.notifications.notFound')
         if (wantsJson) {
-          return response.status(404).send({ message: error.message })
+          return response.status(404).send({ message })
         }
 
         session.flash('notification', {
           type: 'error',
-          message: error.message,
+          message,
         })
         return response.redirect().toRoute('tasks.index')
       }
@@ -211,13 +227,16 @@ export default class TasksController {
     }
   }
 
-  public async store({ auth, request, response, session }: HttpContext) {
+  public async store({ auth, request, response, session, i18n, bouncer }: HttpContext) {
     const user = auth.user!
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
     const formPayload = this.extractTaskPayload(request)
 
     try {
-      const payload = await taskPayloadValidator.validate(formPayload)
+      await bouncer.with('TaskPolicy').authorize('create')
+      const payload = await taskPayloadValidator.validate(formPayload, {
+        messagesProvider: new SimpleMessagesProvider(buildTaskPayloadMessages(i18n)),
+      })
 
       const task = await this.taskService.createFor(user, payload)
 
@@ -227,7 +246,7 @@ export default class TasksController {
 
       session.flash('notification', {
         type: 'success',
-        message: 'Tâche créée avec succès.',
+        message: i18n.formatMessage('tasks.notifications.created'),
       })
       return response.redirect().toRoute('tasks.index')
     } catch (error) {
@@ -239,6 +258,7 @@ export default class TasksController {
           session,
           formPayload,
           redirectRoute: 'tasks.create',
+          i18n,
         })
       ) {
         return
@@ -248,15 +268,19 @@ export default class TasksController {
     }
   }
 
-  public async update({ auth, request, response, session, params }: HttpContext) {
+  public async update({ auth, request, response, session, params, i18n, bouncer }: HttpContext) {
     const user = auth.user!
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
     const formPayload = this.extractTaskPayload(request)
     const taskId = params.id
 
     try {
-      const payload = await taskPayloadValidator.validate(formPayload)
-      const task = await this.taskService.updateFor(user, taskId, payload)
+      const payload = await taskPayloadValidator.validate(formPayload, {
+        messagesProvider: new SimpleMessagesProvider(buildTaskPayloadMessages(i18n)),
+      })
+      const task = await this.taskService.findById(taskId, user)
+      await bouncer.with('TaskPolicy').authorize('edit', task)
+      await this.taskService.update(task, payload, user)
 
       if (wantsJson) {
         return response.ok({ task: task.serialize() })
@@ -264,7 +288,7 @@ export default class TasksController {
 
       session.flash('notification', {
         type: 'success',
-        message: 'Tâche mise à jour avec succès.',
+        message: i18n.formatMessage('tasks.notifications.updated'),
       })
       return response.redirect().toRoute('tasks.index')
     } catch (error) {
@@ -277,19 +301,21 @@ export default class TasksController {
           formPayload,
           redirectRoute: 'tasks.edit',
           routeParams: { id: taskId },
+          i18n,
         })
       ) {
         return
       }
 
       if (error instanceof TaskNotFoundError) {
+        const message = i18n.formatMessage('tasks.notifications.notFound')
         if (wantsJson) {
-          return response.status(404).send({ message: error.message })
+          return response.status(404).send({ message })
         }
 
         session.flash('notification', {
           type: 'error',
-          message: error.message,
+          message,
         })
         return response.redirect().toRoute('tasks.index')
       }
@@ -359,6 +385,7 @@ export default class TasksController {
     formPayload,
     redirectRoute,
     routeParams,
+    i18n,
   }: {
     error: unknown
     wantsJson: boolean
@@ -367,6 +394,7 @@ export default class TasksController {
     formPayload: Record<string, unknown>
     redirectRoute: string
     routeParams?: Record<string, unknown>
+    i18n: HttpContext['i18n']
   }) {
     if (error instanceof errors.E_VALIDATION_ERROR) {
       if (wantsJson) {
@@ -378,25 +406,26 @@ export default class TasksController {
       session.flash('form', formPayload)
       session.flash('notification', {
         type: 'error',
-        message: 'Merci de corriger les erreurs du formulaire.',
+        message: i18n.formatMessage('tasks.notifications.validationError'),
       })
       response.redirect().toRoute(redirectRoute, routeParams)
       return true
     }
 
     if (error instanceof TaskAssignmentError) {
+      const message = i18n.formatMessage('tasks.notifications.assignmentError')
       if (wantsJson) {
         response.status(422).send({
-          errors: [{ field: error.field, message: error.message }],
+          errors: [{ field: error.field, message }],
         })
         return true
       }
 
-      session.flash('errors', { [error.field]: error.message })
+      session.flash('errors', { [error.field]: message })
       session.flash('form', formPayload)
       session.flash('notification', {
         type: 'error',
-        message: error.message,
+        message,
       })
       response.redirect().toRoute(redirectRoute, routeParams)
       return true

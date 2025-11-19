@@ -1,3 +1,5 @@
+@layout('layouts/base')
+@section('body')
   <style>
     .form-grid {
       display: grid;
@@ -15,11 +17,13 @@
 
   <section class="page-header">
     <div>
-      <h2>Créer une nouvelle tâche</h2>
-      <p>Définissez les informations clés pour démarrer ce chantier.</p>
+      <h2>{{ i18n.formatMessage('tasks.titles.create') }}</h2>
+      <p>{{ i18n.formatMessage('tasks.form.create.subtitle') }}</p>
     </div>
     <div>
-      <a role="button" class="secondary" href="{{ route('tasks.index') }}">Retour à mes tâches</a>
+      <a role="button" class="secondary" href="{{ route('tasks.index') }}">
+        {{ i18n.formatMessage('tasks.form.back') }}
+      </a>
     </div>
   </section>
 
@@ -27,7 +31,7 @@
     @csrf()
     <div class="form-grid">
       <label>
-        <span>Titre</span>
+        <span>{{ i18n.formatMessage('tasks.form.fields.title') }}</span>
         <input type="text" name="title" value="{{ form.title || '' }}" required minlength="3" maxlength="180" />
         @if(errors.title)
           <span class="field-error">{{ errors.title }}</span>
@@ -35,7 +39,7 @@
       </label>
 
       <label>
-        <span>Statut</span>
+        <span>{{ i18n.formatMessage('tasks.form.fields.status') }}</span>
         <select name="status">
           @each((tuple) in Object.entries(statusLabels))
             <option value="{{ tuple[0] }}" {{ (form.status || 'todo') === tuple[0] ? 'selected' : '' }}>
@@ -49,7 +53,7 @@
       </label>
 
       <label>
-        <span>Priorité</span>
+        <span>{{ i18n.formatMessage('tasks.form.fields.priority') }}</span>
         <select name="priority">
           @each((tuple) in Object.entries(priorityLabels))
             <option value="{{ tuple[0] }}" {{ (form.priority || 'medium') === tuple[0] ? 'selected' : '' }}>
@@ -63,7 +67,7 @@
       </label>
 
       <label>
-        <span>Échéance</span>
+        <span>{{ i18n.formatMessage('tasks.form.fields.dueDate') }}</span>
         <input type="date" name="dueDate" value="{{ form.dueDate || '' }}" />
         @if(errors.dueDate)
           <span class="field-error">{{ errors.dueDate }}</span>
@@ -71,9 +75,11 @@
       </label>
 
       <label>
-        <span>Assignée à</span>
+        <span>{{ i18n.formatMessage('tasks.form.fields.assignee') }}</span>
         <select name="assigneeId">
-          <option value="" {{ form.assigneeId ? '' : 'selected' }}>Moi-même</option>
+          <option value="" {{ form.assigneeId ? '' : 'selected' }}>
+            {{ i18n.formatMessage('tasks.form.fields.assigneeSelf') }}
+          </option>
           @each(userOption in collaborators)
             <option
               value="{{ userOption.id }}"
@@ -81,7 +87,7 @@
             >
               {{ userOption.name || userOption.email }}
               @if(userOption.id === currentUser.id)
-                (Vous)
+                {{ i18n.formatMessage('tasks.form.fields.assigneeYou') }}
               @endif
             </option>
           @endeach
@@ -93,12 +99,12 @@
     </div>
 
     <label style="margin-block-start: 1.5rem;">
-      <span>Description</span>
+      <span>{{ i18n.formatMessage('tasks.form.fields.description') }}</span>
       <textarea
         name="description"
         rows="5"
         maxlength="2000"
-        placeholder="Détails, livrables attendus, contexte..."
+        placeholder="{{ i18n.formatMessage('tasks.form.fields.descriptionPlaceholder') }}"
       >{{ form.description || '' }}</textarea>
       @if(errors.description)
         <span class="field-error">{{ errors.description }}</span>
@@ -106,7 +112,10 @@
     </label>
 
     <div style="margin-block-start: 1.5rem; display: flex; gap: 1rem;">
-      <button type="submit">Créer la tâche</button>
-      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">Annuler</a>
+      <button type="submit">{{ i18n.formatMessage('tasks.form.create.submit') }}</button>
+      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">
+        {{ i18n.formatMessage('tasks.form.create.cancel') }}
+      </a>
     </div>
   </form>
+@endsection

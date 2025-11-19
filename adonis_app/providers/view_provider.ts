@@ -85,6 +85,25 @@ export default class ViewProvider {
       const cacheViews = this.shouldCacheViews()
       const edge = new Edge({ cache: cacheViews })
 
+      // Enable compat mode to support @layout
+      // @ts-ignore
+      edge.compiler.compat = true
+      // @ts-ignore
+      edge.asyncCompiler.compat = true
+
+      // Register missing tags for compat mode
+      edge.registerTag({ tagName: 'layout', block: false, seekable: true, compile() {} })
+      edge.registerTag({
+        tagName: 'section',
+        block: true,
+        seekable: true,
+        compile(parser, buffer, token) {
+          for (const child of token.children) {
+            parser.processToken(child, buffer)
+          }
+        }
+      })
+
       edge.mount(this.app.viewsPath())
       edge.use(new Supercharged().wire, { recurring: !cacheViews })
 

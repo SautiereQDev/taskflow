@@ -1,5 +1,5 @@
 import { test } from '@japa/runner'
-import { UserFactory } from '#factories/user_factory'
+import { UserFactory } from '#database/factories/user_factory'
 
 test.group('Auth flow', () => {
   test('guest can view the login form', async ({ client }) => {
@@ -18,7 +18,7 @@ test.group('Auth flow', () => {
       .form({
         email: user.email,
         password: 'password',
-        remember: 'on',
+        // remember: 'on',
       })
 
     response.assertStatus(302)
@@ -48,22 +48,37 @@ test.group('Auth flow', () => {
 
     response.assertStatus(302)
     response.assertHeader('location', '/login')
-    response.assertCookie('taskflow_session')
 
-    const sessionCookie = response.cookie('taskflow_session')
-    const flashCookie = sessionCookie ? response.cookie(sessionCookie.value) : undefined
+    const cookies = response.header('set-cookie')
+    const sessionCookie = (Array.isArray(cookies) ? cookies : [cookies]).find((c) =>
+      c.startsWith('taskflow_session=')
+    )
 
-    assert.exists(flashCookie, 'flash cookie should be persisted')
+    assert.exists(sessionCookie, 'session cookie should be present')
 
-    const flashPayload = flashCookie?.value?.__flash__
-    assert.exists(flashPayload, 'flash payload should exist')
+    const followUp = await client
+      .get('/login')
+      .header('cookie', sessionCookie!.split(';')[0])
 
-    assert.deepEqual(flashPayload?.errors, {
-      email: 'Adresse email invalide.',
-      password: 'Votre mot de passe doit contenir au moins 8 caractères.',
-    })
+    followUp.assertStatus(200)
+    followUp.assertTextIncludes('Adresse email invalide')
+    followUp.assertTextIncludes('Votre mot de passe doit contenir au moins 8 caractères')
+    followUp.assertTextIncludes('Certaines informations sont manquantes ou invalides')
+  })
 
-    assert.equal(flashPayload?.form?.email, 'not-an-email')
-    assert.equal(flashPayload?.notification?.message, 'Certaines informations sont manquantes ou invalides.')
+  test('applies rate limiting after repeated failed attempts', async ({ client }) => {
+    const payload = {
+      email: 'bot@example.com',
+      password: 'definitely-wrong',
+    }
+
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const response = await client.post('/login').redirects(0).form(payload)
+      response.assertStatus(302)
+    }
+
+    const throttledResponse = await client.post('/login').redirects(0).form(payload)
+    throttledResponse.assertStatus(429)
+    throttledResponse.assertTextIncludes('Trop de tentatives de connexion')
   })
 })

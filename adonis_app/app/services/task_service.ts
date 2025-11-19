@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import { inject } from '@adonisjs/core'
 
 import Task from '#models/task'
 import User from '#models/user'
@@ -50,6 +51,7 @@ export class TaskNotFoundError extends Error {
   }
 }
 
+@inject()
 export default class TaskService {
   public async listFor(
     user: User,
@@ -124,8 +126,7 @@ export default class TaskService {
     return task
   }
 
-  public async updateFor(user: User, taskId: string, payload: TaskMutationInput): Promise<Task> {
-    const task = await this.findVisibleTask(user, taskId)
+  public async update(task: Task, payload: TaskMutationInput, user: User): Promise<Task> {
     const assigneeId = await this.resolveAssigneeId(user, payload.assigneeId, task.assigneeId)
 
     task.title = payload.title
@@ -149,18 +150,22 @@ export default class TaskService {
     return task
   }
 
-  public async findVisibleTask(user: User, taskId: string): Promise<Task> {
-    const task = await Task.query()
+  public async findById(taskId: string, user?: User): Promise<Task> {
+    const query = Task.query()
       .where('id', taskId)
-      .where((builder) => {
-        builder.where('creator_id', user.id).orWhere('assignee_id', user.id)
-      })
       .preload('assignee')
       .preload('creator')
-      .first()
+
+    if (user) {
+      query.where((builder) => {
+        builder.where('creator_id', user.id).orWhere('assignee_id', user.id)
+      })
+    }
+
+    const task = await query.first()
 
     if (!task) {
-      throw new TaskNotFoundError('Tâche introuvable ou accès refusé.')
+      throw new TaskNotFoundError('Tâche introuvable.')
     }
 
     return task

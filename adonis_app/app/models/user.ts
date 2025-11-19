@@ -64,6 +64,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
   }
 
   @beforeSave()
+  static async hashPassword(user: User) {
+    if (user.$dirty.password && !user.password.startsWith('$scrypt$')) {
+      user.password = await hash.make(user.password)
+    }
+  }
+
+  @beforeSave()
   static normalizeEmail(user: User) {
     user.email = user.email.toLowerCase()
   }

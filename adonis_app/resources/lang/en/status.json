@@ -1,0 +1,7 @@
+{
+  "todo": "To do",
+  "in_progress": "In progress",
+  "done": "Completed",
+  "cancelled": "Cancelled",
+  "overdue": "Late"
+}

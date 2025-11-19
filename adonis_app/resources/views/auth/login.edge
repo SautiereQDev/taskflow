@@ -1,12 +1,14 @@
+@layout('layouts/base')
+@section('body')
   <section aria-labelledby="login-title" class="login-card">
-    <h2 id="login-title">Connexion</h2>
-    <p>Identifiez-vous pour accéder à votre espace de travail.</p>
+    <h2 id="login-title">{{ i18n.formatMessage('auth.login.title') }}</h2>
+    <p>{{ i18n.formatMessage('auth.login.subtitle') }}</p>
 
     <form method="POST" action="/login" class="grid">
       @csrf()
 
       <label>
-        Email
+        {{ i18n.formatMessage('auth.login.email') }}
         <input
           type="email"
           name="email"
@@ -20,7 +22,7 @@
       </label>
 
       <label>
-        Mot de passe
+        {{ i18n.formatMessage('auth.login.password') }}
         <input type="password" name="password" required autocomplete="current-password" />
         @if(errors?.password)
           <small class="error">{{ errors.password }}</small>
@@ -29,9 +31,10 @@
 
       <label class="remember">
         <input type="checkbox" name="remember" />
-        Rester connecté•e
+        {{ i18n.formatMessage('auth.login.remember') }}
       </label>
 
-      <button type="submit">Se connecter</button>
+      <button type="submit">{{ i18n.formatMessage('auth.login.submit') }}</button>
     </form>
   </section>
+@endsection

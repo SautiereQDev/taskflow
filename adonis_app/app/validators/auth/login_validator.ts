@@ -1,4 +1,5 @@
 import vine from '@vinejs/vine'
+import type { I18n } from '@adonisjs/i18n'
 
 export const loginValidator = vine.compile(
   vine.object({
@@ -8,9 +9,11 @@ export const loginValidator = vine.compile(
   })
 )
 
-export const loginMessages = {
-  'email.required': 'Veuillez saisir votre adresse email.',
-  'email.email': 'Adresse email invalide.',
-  'password.required': 'Veuillez indiquer votre mot de passe.',
-  'password.minLength': 'Votre mot de passe doit contenir au moins 8 caractères.',
+export function buildLoginMessages(i18n: I18n) {
+  return {
+    'email.required': i18n.formatMessage('auth.errors.emailRequired'),
+    'email.email': i18n.formatMessage('auth.errors.emailInvalid'),
+    'password.required': i18n.formatMessage('auth.errors.passwordRequired'),
+    'password.minLength': i18n.formatMessage('auth.errors.passwordLength'),
+  }
 }

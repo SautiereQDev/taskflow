@@ -1,12 +1,18 @@
 import type { HttpContext } from '@adonisjs/core/http'
+// import { inject } from '@adonisjs/core'
 
 import DashboardService from '#services/dashboard_service'
-import { priorityLabels, statusLabels } from '#view_models/task_labels'
+import { buildTaskLabels } from '#view_models/task_labels'
 
+// @inject()
 export default class HomeController {
-  constructor(private readonly dashboardService = new DashboardService()) {}
+  private readonly dashboardService: DashboardService
 
-  public async index({ auth, view, request, response, session }: HttpContext) {
+  constructor() {
+    this.dashboardService = new DashboardService()
+  }
+
+  public async index({ auth, view, request, response, session, i18n }: HttpContext) {
     const user = auth.user!
     const dashboard = await this.dashboardService.buildFor(user)
 
@@ -18,16 +24,15 @@ export default class HomeController {
     }
 
 
-    const pageContent = await view.render('pages/home', {
+    const { statusLabels, priorityLabels } = buildTaskLabels(i18n)
+    const locale = i18n.locale
+
+    const html = await view.render('pages/home', {
       ...dashboard,
-      locale: user.locale || 'fr',
+      locale,
       statusLabels,
       priorityLabels,
-    })
-
-    const html = await view.render('layouts/base', {
-      title: 'Taskflow • Tableau de bord',
-      pageContent,
+      title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('nav.dashboard')}`,
       notification: session.flashMessages?.get('notification') || null,
     })
 

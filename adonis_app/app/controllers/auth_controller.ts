@@ -1,99 +1,118 @@
 import type { HttpContext } from '@adonisjs/core/http'
+// import { inject } from '@adonisjs/core'
 import { errors } from '@vinejs/vine'
-import User from '#models/user'
-import { loginMessages, loginValidator } from '#validators/auth/login_validator'
+import AuthService from '#services/auth_service'
+import { buildLoginMessages, loginValidator } from '#validators/auth/login_validator'
 
+// @inject()
 export default class AuthController {
-  public async showLogin({ view, session, request }: HttpContext) {
+  private readonly authService: AuthService
+
+  constructor() {
+    this.authService = new AuthService()
+  }
+
+  public async showLogin({ view, session, i18n, response }: HttpContext) {
     const flash = session.flashMessages
     const form = flash?.get('form') || {}
     const errorsBag = flash?.get('errors') || {}
     const notification = flash?.get('notification') || null
-    console.log('[showLogin] flash', {
-      sessionId: session.sessionId,
-      cookie: request.header('cookie'),
-      form,
-      errorsBag,
-      notification,
-    })
-    console.log('[showLogin] flash raw payload', flash?.toJSON())
-    console.log('[showLogin] session store', session.all())
+    const locale = i18n.locale
 
-    const pageContent = await view.render('auth/login', {
+    const html = await view.render('auth/login', {
       form,
       errors: errorsBag,
+      title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('auth.login.title')}`,
+      notification,
+      locale,
     })
 
-    return view.render('layouts/base', {
-      title: 'Connexion • Taskflow',
-      pageContent,
-      notification,
-    })
+    return response.header('content-type', 'text/html; charset=utf-8').ok(html)
   }
 
-  public async login({ auth, request, response, session }: HttpContext) {
+  public async login({ auth, request, response, session, i18n }: HttpContext) {
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+    const loginMessages = buildLoginMessages(i18n)
+
     try {
       const payload = await loginValidator.validate(
         request.only(['email', 'password', 'remember']),
         { messages: loginMessages }
       )
       const { email, password } = payload
-      const user = await User.verifyCredentials(email, password)
-      await auth.use('web').login(user)
+      const user = await this.authService.verifyCredentials(email, password)
+      await auth.use('web').login(user, !!payload.remember)
+
+      if (wantsJson) {
+        return response.ok({
+          message: i18n.formatMessage('auth.messages.success'),
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          },
+        })
+      }
+
       session.flash('notification', {
         type: 'success',
-        message: 'Connexion réussie, bon retour parmi nous 👋',
+        message: i18n.formatMessage('auth.messages.welcome'),
       })
       return response.redirect().toRoute('home')
     } catch (error) {
+      console.log('Login error:', error)
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        console.log('[auth.login] validation errors', {
-          sessionId: session.sessionId,
-          messages: error.messages,
-        })
-        session.flash('errors', this.transformValidationErrors(error))
+        const validationErrors = this.transformValidationErrors(error, loginMessages)
+
+        if (wantsJson) {
+          return response.status(422).send({ errors: validationErrors })
+        }
+
+        session.flash('errors', validationErrors)
         session.flash('form', { email: request.input('email') })
         session.flash('notification', {
           type: 'error',
-          message: 'Certaines informations sont manquantes ou invalides.',
-        })
-        console.log('[auth.login] after flash', {
-          session: session.all(),
-          responseFlash: session.responseFlashMessages.toJSON(),
+          message: i18n.formatMessage('auth.messages.invalidPayload'),
         })
         return response.redirect().toRoute('auth.showLogin')
       }
 
+      if (wantsJson) {
+        return response.status(401).send({
+          errors: {
+            email: i18n.formatMessage('auth.messages.invalid'),
+          },
+        })
+      }
+
       session.flash('errors', {
-        email: 'Identifiants invalides. Merci de réessayer.',
+        email: i18n.formatMessage('auth.messages.invalid'),
       })
       session.flash('form', { email: request.input('email') })
       session.flash('notification', {
         type: 'error',
-        message: 'Impossible de vous connecter avec ces identifiants.',
-      })
-      console.log('[auth.login] invalid credentials flash', {
-        session: session.all(),
-        responseFlash: session.responseFlashMessages.toJSON(),
+        message: i18n.formatMessage('auth.messages.blocked'),
       })
       return response.redirect().toRoute('auth.showLogin')
     }
   }
 
-  private transformValidationErrors(error: InstanceType<typeof errors.E_VALIDATION_ERROR>) {
+  private transformValidationErrors(
+    error: InstanceType<typeof errors.E_VALIDATION_ERROR>,
+    customMessages: Record<string, string>
+  ) {
     return error.messages.reduce<Record<string, string>>((acc, current) => {
       const key = `${current.field}.${current.rule}`
-      const customMessages = loginMessages as Record<string, string>
       acc[current.field] = customMessages[key] ?? current.message
       return acc
     }, {})
   }
 
-  public async logout({ auth, response, session }: HttpContext) {
+  public async logout({ auth, response, session, i18n }: HttpContext) {
     await auth.use('web').logout()
     session.flash('notification', {
       type: 'info',
-      message: 'Vous êtes maintenant déconnecté.',
+      message: i18n.formatMessage('auth.messages.logout'),
     })
     return response.redirect('/login')
   }

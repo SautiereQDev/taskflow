@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import { inject } from '@adonisjs/core'
 
 import Task from '#models/task'
 import type User from '#models/user'
@@ -24,6 +25,7 @@ export type DashboardPayload = {
   sections: DashboardSections
 }
 
+@inject()
 export default class DashboardService {
   public async buildFor(user: User): Promise<DashboardPayload> {
     const tasks = await Task.query()

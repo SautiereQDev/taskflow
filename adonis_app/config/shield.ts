@@ -4,6 +4,7 @@ import env from '#start/env'
 
 const nodeEnv = env.get('NODE_ENV')
 const isTestEnv = nodeEnv === 'test'
+const isProduction = nodeEnv === 'production'
 const assetCdnHosts = ['https://cdn.jsdelivr.net']
 
 const shieldConfig = defineConfig({
@@ -32,7 +33,7 @@ const shieldConfig = defineConfig({
    * to learn more
    */
   csrf: {
-    enabled: !isTestEnv,
+    enabled: isProduction,
     exceptRoutes: [],
     enableXsrfCookie: true,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],

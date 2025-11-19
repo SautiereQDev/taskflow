@@ -1,0 +1,53 @@
+{
+  "greeting": "Bonjour {name} 👋",
+  "subtitle": "Voici l'état de vos chantiers Taskflow. Gardons le rythme !",
+  "statsTitle": "Statistiques globales",
+  "metrics": {
+    "total": {
+      "title": "Total suivi",
+      "description": "Vos tâches créées ou assignées"
+    },
+    "overdue": {
+      "title": "En retard",
+      "description": "À traiter en priorité"
+    },
+    "upcoming": {
+      "title": "À venir (7 j)",
+      "description": "Échéances sur la prochaine semaine"
+    },
+    "nextDue": {
+      "title": "Prochaine échéance",
+      "description": "Basé sur les tâches actives",
+      "empty": "—"
+    }
+  },
+  "statusSplit": "Répartition des statuts",
+  "lists": {
+    "title": "Listes clés",
+    "assigned": {
+      "title": "Mes tâches assignées",
+      "subtitle": "5 prochaines à échéance",
+      "empty": "Aucune tâche assignée pour le moment 🎯"
+    },
+    "created": {
+      "title": "Tâches créées",
+      "subtitle": "Suivi des éléments que vous pilotez",
+      "empty": "Créez une tâche pour lancer votre prochain chantier."
+    },
+    "overdue": {
+      "title": "Urgences",
+      "subtitle": "Tâches en retard",
+      "chip": "Retard",
+      "empty": "Tout est sous contrôle ✅"
+    },
+    "recent": {
+      "title": "Activité récente",
+      "subtitle": "Dernières mises à jour",
+      "empty": "Aucune activité récente."
+    },
+    "none": "aucune",
+    "priority": "Priorité : {label}",
+    "dueDate": "Échéance : {date}",
+    "updatedAt": "Dernière mise à jour : {date}"
+  }
+}

@@ -1,4 +1,5 @@
-import vine, { SimpleMessagesProvider } from '@vinejs/vine'
+import vine from '@vinejs/vine'
+import type { I18n } from '@adonisjs/i18n'
 
 import { taskPriorities, taskStatuses } from '#types/domain'
 
@@ -19,15 +20,14 @@ const taskFiltersSchema = vine.object({
 
 export const taskFiltersValidator = vine.compile(taskFiltersSchema)
 
-taskFiltersValidator.messagesProvider = new SimpleMessagesProvider(
-  {
-    'status.enum': 'Statut non supporté.',
-    'priority.enum': 'Priorité non supportée.',
-    'search.minLength': 'Merci de préciser au moins 2 caractères pour la recherche.',
-    'dueBefore.date': 'Format de date invalide pour la borne avant.',
-    'dueAfter.date': 'Format de date invalide pour la borne après.',
-  },
-  {}
-)
+export function buildTaskFiltersMessages(i18n: I18n) {
+  return {
+    'status.enum': i18n.formatMessage('tasks.errors.status'),
+    'priority.enum': i18n.formatMessage('tasks.errors.priority'),
+    'search.minLength': i18n.formatMessage('tasks.errors.searchLength'),
+    'dueBefore.date': i18n.formatMessage('tasks.errors.dueBefore'),
+    'dueAfter.date': i18n.formatMessage('tasks.errors.dueAfter'),
+  }
+}
 
 export type TaskFiltersInput = vine.infer<typeof taskFiltersValidator>

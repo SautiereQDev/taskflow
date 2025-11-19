@@ -1,0 +1,53 @@
+{
+  "greeting": "Hello {name} 👋",
+  "subtitle": "Here is the current status of your Taskflow projects. Keep up the pace!",
+  "statsTitle": "Global statistics",
+  "metrics": {
+    "total": {
+      "title": "Tracked items",
+      "description": "Tasks you created or own"
+    },
+    "overdue": {
+      "title": "Overdue",
+      "description": "Handle these first"
+    },
+    "upcoming": {
+      "title": "Upcoming (7d)",
+      "description": "Due within the next week"
+    },
+    "nextDue": {
+      "title": "Next due date",
+      "description": "Based on active tasks",
+      "empty": "—"
+    }
+  },
+  "statusSplit": "Status breakdown",
+  "lists": {
+    "title": "Key lists",
+    "assigned": {
+      "title": "Tasks assigned to me",
+      "subtitle": "Next 5 by due date",
+      "empty": "No assigned task for now 🎯"
+    },
+    "created": {
+      "title": "Tasks I created",
+      "subtitle": "Follow-up for what you lead",
+      "empty": "Create a task to kick off your next initiative."
+    },
+    "overdue": {
+      "title": "Urgencies",
+      "subtitle": "Overdue tasks",
+      "chip": "Late",
+      "empty": "Everything is under control ✅"
+    },
+    "recent": {
+      "title": "Recent activity",
+      "subtitle": "Latest updates",
+      "empty": "No recent activity."
+    },
+    "none": "none",
+    "priority": "Priority: {label}",
+    "dueDate": "Due date: {date}",
+    "updatedAt": "Last update: {date}"
+  }
+}

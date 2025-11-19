@@ -1,3 +1,5 @@
+@layout('layouts/base')
+@section('body')
   <style>
     .details-grid {
       display: grid;
@@ -25,50 +27,61 @@
   <section class="page-header">
     <div>
       <h2>{{ task.title }}</h2>
-      <p>{{ task.description || 'Pas de description fournie.' }}</p>
+      <p>{{ task.description || i18n.formatMessage('tasks.show.noDescription') }}</p>
       <small>
-        Créée le {{ task.createdAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }} —
-        Dernière mise à jour {{ task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm') }}
+        {{ i18n.formatMessage('tasks.show.createdAt', {
+          date: task.createdAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm'),
+        }) }} —
+        {{ i18n.formatMessage('tasks.show.updatedAt', {
+          date: task.updatedAt.setLocale(locale).toFormat('dd LLL yyyy • HH:mm'),
+        }) }}
       </small>
     </div>
     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
-      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">Retour</a>
-      <a role="button" href="{{ route('tasks.edit', { id: task.id }) }}">Modifier</a>
+      <a role="button" class="secondary outline" href="{{ route('tasks.index') }}">
+        {{ i18n.formatMessage('tasks.show.back') }}
+      </a>
+      <a role="button" href="{{ route('tasks.edit', { id: task.id }) }}">
+        {{ i18n.formatMessage('tasks.show.edit') }}
+      </a>
     </div>
   </section>
 
   <section class="details-grid">
     <article class="detail-card">
-      <h4>Statut</h4>
+      <h4>{{ i18n.formatMessage('tasks.show.status') }}</h4>
       <strong>{{ statusLabels[task.status] || task.status }}</strong>
     </article>
 
     <article class="detail-card">
-      <h4>Priorité</h4>
+      <h4>{{ i18n.formatMessage('tasks.show.priority') }}</h4>
       <strong>{{ priorityLabels[task.priority] || task.priority }}</strong>
     </article>
 
     <article class="detail-card">
-      <h4>Assignée à</h4>
-      <strong>{{ task.assignee?.name || task.assignee?.email || 'Non assignée' }}</strong>
+      <h4>{{ i18n.formatMessage('tasks.show.assignee') }}</h4>
+      <strong>{{ task.assignee?.name || task.assignee?.email || i18n.formatMessage('tasks.show.unassigned') }}</strong>
     </article>
 
     <article class="detail-card">
-      <h4>Échéance</h4>
+      <h4>{{ i18n.formatMessage('tasks.show.dueDate') }}</h4>
       <strong>
         @if(task.dueDate)
           {{ task.dueDate.setLocale(locale).toFormat('dd LLL yyyy') }}
         @else
-          —
+          {{ i18n.formatMessage('generic.dash') }}
         @endif
       </strong>
     </article>
   </section>
 
   <section style="margin-block-start: 2rem;">
-    <h3>Historique</h3>
+    <h3>{{ i18n.formatMessage('tasks.show.history') }}</h3>
     <p>
-      Créée par {{ task.creator?.name || 'Inconnu' }} et suivie par
-      {{ task.assignee?.name || 'Non assignée' }}.
+      {{ i18n.formatMessage('tasks.show.historyDescription', {
+        creator: task.creator?.name || i18n.formatMessage('tasks.show.unknown'),
+        assignee: task.assignee?.name || i18n.formatMessage('tasks.show.unassigned'),
+      }) }}
     </p>
   </section>
+@endsection

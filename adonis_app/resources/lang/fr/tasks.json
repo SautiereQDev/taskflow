@@ -1,0 +1,108 @@
+{
+  "titles": {
+    "list": "Mes tâches",
+    "create": "Créer une nouvelle tâche",
+    "edit": "Modifier une tâche",
+    "show": "Détails de la tâche",
+    "dashboard": "Tableau de bord"
+  },
+  "list": {
+    "subtitle": "Pilotage consolidé des éléments que vous suivez.",
+    "new": "Nouvelle tâche",
+    "total": "Total listé : {count}",
+    "filters": {
+      "status": "Statut",
+      "priority": "Priorité",
+      "search": "Recherche",
+      "searchPlaceholder": "Titre ou description",
+      "after": "Après le",
+      "before": "Avant le",
+      "perPage": "Par page",
+      "apply": "Appliquer",
+      "reset": "Réinitialiser",
+      "all": "Tous",
+      "allPriority": "Toutes"
+    },
+    "table": {
+      "title": "Titre",
+      "status": "Statut",
+      "priority": "Priorité",
+      "assignee": "Assignée à",
+      "dueDate": "Échéance",
+      "updatedAt": "Dernière mise à jour",
+      "actions": "Actions",
+      "emptyDescription": "Pas de description fournie.",
+      "unassigned": "Non assignée",
+      "edit": "Modifier",
+      "view": "Voir"
+    },
+    "pagination": {
+      "page": "Page {current} / {total}",
+      "prev": "Précédent",
+      "next": "Suivant"
+    },
+    "empty": {
+      "title": "Aucune tâche trouvée",
+      "description": "Relâchez certains filtres ou créez une nouvelle tâche pour démarrer."
+    }
+  },
+  "form": {
+    "back": "Retour à mes tâches",
+    "fields": {
+      "title": "Titre",
+      "status": "Statut",
+      "priority": "Priorité",
+      "dueDate": "Échéance",
+      "assignee": "Assignée à",
+      "description": "Description",
+      "descriptionPlaceholder": "Détails, livrables attendus, contexte...",
+      "assigneeSelf": "Moi-même",
+      "assigneeYou": "(Vous)"
+    },
+    "create": {
+      "subtitle": "Définissez les informations clés pour démarrer ce chantier.",
+      "submit": "Créer la tâche",
+      "cancel": "Annuler"
+    },
+    "edit": {
+      "subtitle": "Vous mettez à jour « {title} ».",
+      "meta": "Référence : {id} — Dernière mise à jour {date}",
+      "submit": "Mettre à jour"
+    }
+  },
+  "show": {
+    "back": "Retour",
+    "edit": "Modifier",
+    "status": "Statut",
+    "priority": "Priorité",
+    "assignee": "Assignée à",
+    "dueDate": "Échéance",
+    "history": "Historique",
+    "historyDescription": "Créée par {creator} et suivie par {assignee}.",
+    "createdAt": "Créée le {date}",
+    "updatedAt": "Dernière mise à jour {date}",
+    "unassigned": "Non assignée",
+    "unknown": "Inconnu",
+    "noDescription": "Pas de description fournie."
+  },
+  "notifications": {
+    "created": "Tâche créée avec succès.",
+    "updated": "Tâche mise à jour avec succès.",
+    "validationError": "Merci de corriger les erreurs du formulaire.",
+    "assignmentError": "Utilisateur assigné introuvable.",
+    "notFound": "Tâche introuvable ou accès refusé."
+  },
+  "errors": {
+    "status": "Statut non supporté.",
+    "priority": "Priorité non supportée.",
+    "searchLength": "Merci de préciser au moins 2 caractères pour la recherche.",
+    "dueBefore": "Format de date invalide pour la borne avant.",
+    "dueAfter": "Format de date invalide pour la borne après.",
+    "titleRequired": "Un titre est obligatoire.",
+    "titleMin": "Le titre doit contenir au moins 3 caractères.",
+    "titleMax": "Le titre est trop long.",
+    "descriptionMax": "La description ne peut pas dépasser 2000 caractères.",
+    "dueDate": "Merci de fournir une date ISO valide.",
+    "assignee": "L'identifiant de la personne assignée est invalide."
+  }
+}

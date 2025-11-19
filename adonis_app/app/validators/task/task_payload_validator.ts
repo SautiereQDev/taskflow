@@ -1,4 +1,5 @@
-import vine, { SimpleMessagesProvider } from '@vinejs/vine'
+import vine from '@vinejs/vine'
+import type { I18n } from '@adonisjs/i18n'
 import { DateTime } from 'luxon'
 
 import { taskPriorities, taskStatuses } from '#types/domain'
@@ -22,18 +23,17 @@ const taskPayloadSchema = vine.object({
 
 export const taskPayloadValidator = vine.compile(taskPayloadSchema)
 
-taskPayloadValidator.messagesProvider = new SimpleMessagesProvider(
-  {
-    'title.required': 'Un titre est obligatoire.',
-    'title.minLength': 'Le titre doit contenir au moins 3 caractères.',
-    'title.maxLength': 'Le titre est trop long.',
-    'description.maxLength': 'La description ne peut pas dépasser 2000 caractères.',
-    'status.enum': 'Statut non supporté.',
-    'priority.enum': 'Priorité non supportée.',
-    'dueDate.date': 'Merci de fournir une date ISO valide.',
-    'assigneeId.regex': "L'identifiant de la personne assignée est invalide.",
-  },
-  {}
-)
+export function buildTaskPayloadMessages(i18n: I18n) {
+  return {
+    'title.required': i18n.formatMessage('tasks.errors.titleRequired'),
+    'title.minLength': i18n.formatMessage('tasks.errors.titleMin'),
+    'title.maxLength': i18n.formatMessage('tasks.errors.titleMax'),
+    'description.maxLength': i18n.formatMessage('tasks.errors.descriptionMax'),
+    'status.enum': i18n.formatMessage('tasks.errors.status'),
+    'priority.enum': i18n.formatMessage('tasks.errors.priority'),
+    'dueDate.date': i18n.formatMessage('tasks.errors.dueDate'),
+    'assigneeId.regex': i18n.formatMessage('tasks.errors.assignee'),
+  }
+}
 
 export type TaskPayloadInput = vine.infer<typeof taskPayloadSchema>

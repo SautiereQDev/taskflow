@@ -1,34 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale || i18n.locale }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title || 'Taskflow' }}</title>
+    <title>{{ title || i18n.formatMessage('app.name') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
   </head>
   <body>
     <main class="container">
       <header class="hero">
         <div>
-          <h1>Taskflow</h1>
-          <p class="subtitle">AdonisJS v6 port in progress</p>
+          <h1>{{ i18n.formatMessage('app.name') }}</h1>
+          <p class="subtitle">{{ i18n.formatMessage('app.tagline') }}</p>
         </div>
         <nav>
           <ul>
-            <li><a href="{{ route('home') }}">Tableau de bord</a></li>
+            <li><a href="{{ route('home') }}">{{ i18n.formatMessage('nav.dashboard') }}</a></li>
             @if(auth?.isAuthenticated)
-              <li><a href="{{ route('tasks.index') }}">Mes tâches</a></li>
+              <li><a href="{{ route('tasks.index') }}">{{ i18n.formatMessage('nav.tasks') }}</a></li>
               <li>
                 <form method="POST" action="/logout">
                   @csrf()
-                  <button type="submit">Se déconnecter ({{ auth.user?.name }})</button>
+                  <button type="submit">
+                    {{ i18n.formatMessage('nav.logout') }} ({{ auth.user?.name }})
+                  </button>
                 </form>
               </li>
             @else
-              <li><a href="/login">Connexion</a></li>
+              <li><a href="/login">{{ i18n.formatMessage('nav.login') }}</a></li>
             @endif
           </ul>
         </nav>
+        <form method="POST" action="{{ route('locale.update') }}" class="language-picker" style="min-width: 220px;">
+          @csrf()
+          <label style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>{{ i18n.formatMessage('app.language.label') }}</span>
+            <select name="locale">
+              @each(option in locales)
+                <option value="{{ option }}" {{ (locale || i18n.locale) === option ? 'selected' : '' }}>
+                  {{ i18n.formatMessage('app.language.options.' + option) }}
+                </option>
+              @endeach
+            </select>
+          </label>
+          <input type="hidden" name="redirectTo" value="{{ request?.url() || '/' }}" />
+          <button type="submit" class="secondary">
+            {{ i18n.formatMessage('app.language.submit') }}
+          </button>
+        </form>
       </header>
 
       @if(notification)
@@ -37,7 +56,7 @@
         </article>
       @endif
 
-      {{{ pageContent }}}
+      @!section('body')
     </main>
   </body>
 </html>

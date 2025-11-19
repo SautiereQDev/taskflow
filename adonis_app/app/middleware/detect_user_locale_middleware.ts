@@ -3,6 +3,8 @@ import i18nManager from '@adonisjs/i18n/services/main'
 import type { NextFn } from '@adonisjs/core/types/http'
 import { type HttpContext, RequestValidator } from '@adonisjs/core/http'
 
+import { SUPPORTED_LOCALES, isSupportedLocale } from '#constants/locales'
+
 /**
  * The "DetectUserLocaleMiddleware" middleware uses i18n service to share
  * a request specific i18n object with the HTTP Context
@@ -26,6 +28,16 @@ export default class DetectUserLocaleMiddleware {
    * Feel free to use different mechanism for finding user language.
    */
   protected getRequestLocale(ctx: HttpContext) {
+    const sessionLocale = ctx.session.get('locale')
+    if (isSupportedLocale(sessionLocale)) {
+      return sessionLocale
+    }
+
+    const userLocale = ctx.auth.user?.locale
+    if (isSupportedLocale(userLocale)) {
+      return userLocale
+    }
+
     const userLanguages = ctx.request.languages()
     return i18nManager.getSupportedLocaleFor(userLanguages)
   }
@@ -57,7 +69,11 @@ export default class DetectUserLocaleMiddleware {
      * edge templates.
      */
     if ('view' in ctx) {
-      ctx.view.share({ i18n: ctx.i18n })
+      ctx.view.share({
+        i18n: ctx.i18n,
+        locale: ctx.i18n.locale,
+        locales: SUPPORTED_LOCALES,
+      })
     }
 
     return next()
