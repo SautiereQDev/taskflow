@@ -1,0 +1,70 @@
+@layout('layouts/base')
+@section('body')
+  <div class="page-header">
+    <h1>{{ i18n.formatMessage('users.titles.edit') }}</h1>
+    <a href="{{ route('users.index') }}" role="button" class="secondary">
+      {{ i18n.formatMessage('generic.back') }}
+    </a>
+  </div>
+
+  <article>
+    <form method="POST" action="{{ route('users.update', [user.id]) }}?_method=PUT">
+      @csrf
+
+      <label>
+        {{ i18n.formatMessage('users.fields.name') }}
+        <input type="text" name="name" value="{{ old('name') || user.name }}" required>
+        @if(errors?.name)
+          <small class="error">{{ errors.name }}</small>
+        @endif
+      </label>
+
+      <label>
+        {{ i18n.formatMessage('users.fields.email') }}
+        <input type="email" name="email" value="{{ old('email') || user.email }}" required>
+        @if(errors?.email)
+          <small class="error">{{ errors.email }}</small>
+        @endif
+      </label>
+
+      <label>
+        {{ i18n.formatMessage('users.fields.password') }}
+        <input type="password" name="password" placeholder="{{ i18n.formatMessage('users.placeholders.password_optional') }}">
+        @if(errors?.password)
+          <small class="error">{{ errors.password }}</small>
+        @endif
+      </label>
+
+      <label>
+        {{ i18n.formatMessage('users.fields.role') }}
+        <select name="role" required>
+          @each(role in ['admin', 'manager', 'member'])
+            <option value="{{ role }}" {{ (old('role') || user.role) === role ? 'selected' : '' }}>
+              {{ i18n.formatMessage('users.roles.' + role) }}
+            </option>
+          @endeach
+        </select>
+        @if(errors?.role)
+          <small class="error">{{ errors.role }}</small>
+        @endif
+      </label>
+
+      <label>
+        {{ i18n.formatMessage('users.fields.locale') }}
+        <select name="locale" required>
+          <option value="fr" {{ (old('locale') || user.locale) === 'fr' ? 'selected' : '' }}>
+            {{ i18n.formatMessage('users.localeOptions.fr') }}
+          </option>
+          <option value="en" {{ (old('locale') || user.locale) === 'en' ? 'selected' : '' }}>
+            {{ i18n.formatMessage('users.localeOptions.en') }}
+          </option>
+        </select>
+        @if(errors?.locale)
+          <small class="error">{{ errors.locale }}</small>
+        @endif
+      </label>
+
+      <button type="submit">{{ i18n.formatMessage('generic.save') }}</button>
+    </form>
+  </article>
+@endsection

@@ -19,4 +19,7 @@ export const UserFactory = factory
   .state('manager', (user) => {
     user.role = 'manager'
   })
+  .state('member', (user) => {
+    user.role = 'member'
+  })
   .build()

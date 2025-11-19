@@ -33,9 +33,8 @@
     </div>
   </section>
 
-  <form method="POST" action="{{ route('tasks.update', { id: task.id }) }}">
-    @csrf()
-    @method('PUT')
+  <form method="POST" action="{{ route('tasks.update', { id: task.id }) }}?_method=PUT">
+    @csrf
     <div class="form-grid">
       <label>
         <span>{{ i18n.formatMessage('tasks.form.fields.title') }}</span>

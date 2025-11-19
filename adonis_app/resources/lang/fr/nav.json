@@ -1,6 +1,7 @@
 {
   "dashboard": "Tableau de bord",
   "tasks": "Mes tâches",
+  "users": "Utilisateurs",
   "login": "Connexion",
-  "logout": "Se déconnecter"
+  "logout": "Déconnexion"
 }

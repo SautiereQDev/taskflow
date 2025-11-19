@@ -1,0 +1,39 @@
+{
+  "titles": {
+    "list": "Utilisateurs",
+    "create": "Créer un utilisateur",
+    "edit": "Modifier l'utilisateur"
+  },
+  "actions": {
+    "create": "Nouvel utilisateur"
+  },
+  "fields": {
+    "name": "Nom",
+    "email": "Email",
+    "role": "Rôle",
+    "created_at": "Créé le",
+    "password": "Mot de passe",
+    "locale": "Langue"
+  },
+  "roles": {
+    "admin": "Administrateur",
+    "manager": "Manager",
+    "member": "Membre"
+  },
+  "localeOptions": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "placeholders": {
+    "password_optional": "Laisser vide pour conserver le mot de passe actuel"
+  },
+  "pagination": {
+    "summary": "Page {current} sur {total}"
+  },
+  "notifications": {
+    "empty": "Aucun utilisateur trouvé.",
+    "created": "Utilisateur créé avec succès.",
+    "updated": "Utilisateur mis à jour avec succès.",
+    "deleted": "Utilisateur supprimé avec succès."
+  }
+}

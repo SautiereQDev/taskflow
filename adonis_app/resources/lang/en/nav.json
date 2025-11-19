@@ -1,6 +1,7 @@
 {
   "dashboard": "Dashboard",
   "tasks": "My tasks",
+  "users": "Users",
   "login": "Sign in",
   "logout": "Sign out"
 }

@@ -269,6 +269,35 @@ test.group('Task editing', () => {
     assert.equal(task.dueDate?.toISODate(), newDueDate)
   })
 
+  test('updates a task via POST form using method spoofing', async ({ client, assert }) => {
+    const owner = await UserFactory.create()
+    const task = await TaskFactory.merge({
+      creatorId: owner.id,
+      assigneeId: owner.id,
+      status: 'todo',
+      title: 'Ancien titre',
+    }).create()
+
+    const response = await client
+      .post(`/tasks/${task.id}`)
+      .qs({ _method: 'PUT' })
+      .header('x-test-user-id', String(owner.id))
+      .redirects(0)
+      .form({
+        title: 'Titre mis à jour via POST',
+        priority: 'high',
+        status: 'in_progress',
+      })
+
+    response.assertStatus(302)
+    response.assertHeader('location', '/tasks')
+
+    await task.refresh()
+    assert.equal(task.title, 'Titre mis à jour via POST')
+    assert.equal(task.priority, 'high')
+    assert.equal(task.status, 'in_progress')
+  })
+
   test('prevents editing tasks outside the current user scope', async ({ client }) => {
     const owner = await UserFactory.create()
     const intruder = await UserFactory.create()

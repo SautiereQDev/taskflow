@@ -324,6 +324,78 @@ export default class TasksController {
     }
   }
 
+  public async destroy({ auth, response, session, i18n, params, bouncer, request }: HttpContext) {
+    const user = auth.user!
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+
+    try {
+      const task = await this.taskService.findById(params.id, user)
+      await bouncer.with('TaskPolicy').authorize('delete', task)
+
+      await this.taskService.delete(task)
+
+      if (wantsJson) {
+        return response.ok({ message: i18n.formatMessage('tasks.notifications.deleted') })
+      }
+
+      session.flash('notification', {
+        type: 'success',
+        message: i18n.formatMessage('tasks.notifications.deleted'),
+      })
+
+      return response.redirect().toRoute('tasks.index')
+    } catch (error) {
+      if (error instanceof TaskNotFoundError) {
+        const message = i18n.formatMessage('tasks.notifications.notFound')
+        if (wantsJson) {
+          return response.status(404).send({ message })
+        }
+
+        session.flash('notification', {
+          type: 'error',
+          message,
+        })
+        return response.redirect().toRoute('tasks.index')
+      }
+      throw error
+    }
+  }
+
+  public async toggle({ auth, response, session, i18n, params, bouncer, request }: HttpContext) {
+    const user = auth.user!
+    const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
+
+    try {
+      const task = await this.taskService.findById(params.id, user)
+      await bouncer.with('TaskPolicy').authorize('edit', task)
+
+      await this.taskService.toggleStatus(task)
+
+      if (wantsJson) {
+        return response.ok({
+          message: i18n.formatMessage('tasks.notifications.updated'),
+          task: task.serialize(),
+        })
+      }
+
+      return response.redirect().back()
+    } catch (error) {
+      if (error instanceof TaskNotFoundError) {
+        const message = i18n.formatMessage('tasks.notifications.notFound')
+        if (wantsJson) {
+          return response.status(404).send({ message })
+        }
+
+        session.flash('notification', {
+          type: 'error',
+          message,
+        })
+        return response.redirect().toRoute('tasks.index')
+      }
+      throw error
+    }
+  }
+
   private validationErrorsToBag(error: InstanceType<typeof errors.E_VALIDATION_ERROR>) {
     return error.messages.reduce<Record<string, string>>((acc, current) => {
       acc[current.field] = current.message

@@ -15,6 +15,7 @@ import { healthChecks } from '#start/health'
 const HomeController = () => import('#controllers/home_controller')
 const AuthController = () => import('#controllers/auth_controller')
 const TasksController = () => import('#controllers/tasks_controller')
+const UsersController = () => import('#controllers/users_controller')
 const LocaleController = () => import('#controllers/locale_controller')
 
 router.get('/health', async ({ response }) => {
@@ -44,9 +45,13 @@ router
         router.post('/', [TasksController, 'store']).use(taskMutationsThrottle).as('store')
         router.get('/:id/edit', [TasksController, 'edit']).as('edit')
         router.put('/:id', [TasksController, 'update']).use(taskMutationsThrottle).as('update')
+        router.delete('/:id', [TasksController, 'destroy']).as('destroy')
+        router.patch('/:id/toggle', [TasksController, 'toggle']).use(taskMutationsThrottle).as('toggle')
         router.get('/:id', [TasksController, 'show']).as('show')
       })
       .prefix('tasks')
       .as('tasks')
+
+    router.resource('users', UsersController).except(['show'])
   })
   .middleware([middleware.auth()])

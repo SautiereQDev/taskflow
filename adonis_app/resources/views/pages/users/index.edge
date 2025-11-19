@@ -1,0 +1,112 @@
+@layout('layouts/base')
+@section('body')
+  <div class="page-header">
+    <h1>{{ i18n.formatMessage('users.titles.list') }}</h1>
+    <a href="{{ route('users.create') }}" role="button">
+      {{ i18n.formatMessage('users.actions.create') }}
+    </a>
+  </div>
+
+  <form method="GET" action="{{ route('users.index') }}" class="filters-form">
+    <div class="filters-grid">
+      <label>
+        {{ i18n.formatMessage('generic.search') }}
+        <input
+          type="search"
+          name="search"
+          value="{{ filters.search || '' }}"
+          placeholder="{{ i18n.formatMessage('generic.search_placeholder') }}"
+        >
+      </label>
+
+      <label>
+        {{ i18n.formatMessage('users.fields.role') }}
+        <select name="role">
+          <option value="">{{ i18n.formatMessage('generic.all') }}</option>
+          @each(role in ['admin', 'manager', 'member'])
+            <option value="{{ role }}" {{ filters.role === role ? 'selected' : '' }}>
+              {{ i18n.formatMessage('users.roles.' + role) }}
+            </option>
+          @endeach
+        </select>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">{{ i18n.formatMessage('generic.filter') }}</button>
+      <a href="{{ route('users.index') }}" role="button" class="secondary">
+        {{ i18n.formatMessage('generic.reset') }}
+      </a>
+    </div>
+  </form>
+
+  <article>
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>{{ i18n.formatMessage('users.fields.name') }}</th>
+          <th>{{ i18n.formatMessage('users.fields.email') }}</th>
+          <th>{{ i18n.formatMessage('users.fields.role') }}</th>
+          <th>{{ i18n.formatMessage('users.fields.created_at') }}</th>
+          <th>{{ i18n.formatMessage('generic.actions') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(user in users)
+          <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="badge">{{ i18n.formatMessage('users.roles.' + user.role) }}</span>
+            </td>
+            <td>{{ user.createdAt.toFormat('dd/MM/yyyy') }}</td>
+            <td>
+              <div class="actions-group">
+                <a href="{{ route('users.edit', [user.id]) }}" role="button" class="outline small">
+                  {{ i18n.formatMessage('generic.edit') }}
+                </a>
+                @if(user.id !== auth.user.id)
+                  <form
+                    method="POST"
+                    action="{{ route('users.destroy', [user.id]) }}?_method=DELETE"
+                    onsubmit="return confirm('{{ i18n.formatMessage('generic.confirm_delete') }}')"
+                    style="display: inline;"
+                  >
+                    @csrf
+                    <button type="submit" class="outline secondary small">
+                      {{ i18n.formatMessage('generic.delete') }}
+                    </button>
+                  </form>
+                @endif
+              </div>
+            </td>
+          </tr>
+        @else
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 2rem;">
+              {{ i18n.formatMessage('users.notifications.empty') }}
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </article>
+
+  @if(meta.lastPage > 1)
+    <div class="pagination-controls">
+      @if(meta.currentPage > 1)
+        <a href="{{ route('users.index', { page: meta.currentPage - 1, ...filters }) }}" role="button" class="outline">
+          {{ i18n.formatMessage('generic.previous') }}
+        </a>
+      @endif
+
+      <span>{{ i18n.formatMessage('users.pagination.summary', { current: meta.currentPage, total: meta.lastPage }) }}</span>
+
+      @if(meta.currentPage < meta.lastPage)
+        <a href="{{ route('users.index', { page: meta.currentPage + 1, ...filters }) }}" role="button" class="outline">
+          {{ i18n.formatMessage('generic.next') }}
+        </a>
+      @endif
+    </div>
+  @endif
+@endsection

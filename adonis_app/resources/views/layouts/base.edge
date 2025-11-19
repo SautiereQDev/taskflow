@@ -18,6 +18,9 @@
             <li><a href="{{ route('home') }}">{{ i18n.formatMessage('nav.dashboard') }}</a></li>
             @if(auth?.isAuthenticated)
               <li><a href="{{ route('tasks.index') }}">{{ i18n.formatMessage('nav.tasks') }}</a></li>
+              @if(auth.user.role === 'admin')
+                <li><a href="{{ route('users.index') }}">{{ i18n.formatMessage('nav.users') }}</a></li>
+              @endif
               <li>
                 <form method="POST" action="/logout">
                   @csrf()

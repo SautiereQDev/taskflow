@@ -171,6 +171,18 @@ export default class TaskService {
     return task
   }
 
+  public async delete(task: Task): Promise<void> {
+    await task.delete()
+  }
+
+  public async toggleStatus(task: Task): Promise<Task> {
+    task.status = task.status === 'done' ? 'todo' : 'done'
+    await task.save()
+    await task.load('assignee')
+    await task.load('creator')
+    return task
+  }
+
   private async resolveAssigneeId(
     user: User,
     desiredId: string | null | undefined,

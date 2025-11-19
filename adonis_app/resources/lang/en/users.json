@@ -1,0 +1,39 @@
+{
+  "titles": {
+    "list": "Users",
+    "create": "Create User",
+    "edit": "Edit User"
+  },
+  "actions": {
+    "create": "New User"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "created_at": "Created At",
+    "password": "Password",
+    "locale": "Language"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "manager": "Manager",
+    "member": "Member"
+  },
+  "localeOptions": {
+    "fr": "French",
+    "en": "English"
+  },
+  "placeholders": {
+    "password_optional": "Leave blank to keep current password"
+  },
+  "pagination": {
+    "summary": "Page {current} / {total}"
+  },
+  "notifications": {
+    "empty": "No users found.",
+    "created": "User created successfully.",
+    "updated": "User updated successfully.",
+    "deleted": "User deleted successfully."
+  }
+}

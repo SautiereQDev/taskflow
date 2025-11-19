@@ -10,7 +10,7 @@ export default class AuthService {
    */
   public async verifyCredentials(email: string, password: string): Promise<User> {
     const user = await User.findBy('email', email)
-    
+
     if (!user) {
       throw new errors.E_INVALID_CREDENTIALS()
     }
