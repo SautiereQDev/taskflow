@@ -23,7 +23,7 @@
               @endif
               <li>
                 <form method="POST" action="/logout">
-                  @csrf()
+                  <input type="hidden" name="_csrf" value="{{ request.csrfToken }}">
                   <button type="submit">
                     {{ i18n.formatMessage('nav.logout') }} ({{ auth.user?.name }})
                   </button>
@@ -35,7 +35,7 @@
           </ul>
         </nav>
         <form method="POST" action="{{ route('locale.update') }}" class="language-picker" style="min-width: 220px;">
-          @csrf()
+          <input type="hidden" name="_csrf" value="{{ request.csrfToken }}">
           <label style="display: flex; align-items: center; gap: 0.5rem;">
             <span>{{ i18n.formatMessage('app.language.label') }}</span>
             <select name="locale">

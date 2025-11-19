@@ -28,7 +28,7 @@
   </section>
 
   <form method="POST" action="{{ route('tasks.store') }}">
-    @csrf()
+    <input type="hidden" name="_csrf" value="{{ request.csrfToken }}">
     <div class="form-grid">
       <label>
         <span>{{ i18n.formatMessage('tasks.form.fields.title') }}</span>

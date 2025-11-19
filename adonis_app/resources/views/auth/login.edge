@@ -5,7 +5,7 @@
     <p>{{ i18n.formatMessage('auth.login.subtitle') }}</p>
 
     <form method="POST" action="/login" class="grid">
-      @csrf()
+      <input type="hidden" name="_csrf" value="{{ request.csrfToken }}">
 
       <label>
         {{ i18n.formatMessage('auth.login.email') }}
