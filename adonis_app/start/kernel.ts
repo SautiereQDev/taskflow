@@ -40,6 +40,7 @@ router.use([
   () => import('#middleware/silent_auth_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('#middleware/detect_user_locale_middleware'),
+  () => import('#middleware/htmx_middleware'),
   () => import('#middleware/initialize_bouncer_middleware')
 ])
 
@@ -54,4 +55,5 @@ if (app.inTest) {
 export const middleware = router.named({
   guest: () => import('#middleware/guest_middleware'),
   auth: () => import('#middleware/auth_middleware'),
+  admin: () => import('#middleware/admin_middleware'),
 })

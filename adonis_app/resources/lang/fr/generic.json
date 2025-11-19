@@ -13,5 +13,8 @@
   "back": "Retour",
   "save": "Enregistrer",
   "none": "aucune",
-  "dash": "—"
+  "dash": "—",
+  "yes": "Oui",
+  "no": "Non",
+  "access_denied": "Vous n'avez pas accès à cette section."
 }

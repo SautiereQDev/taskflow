@@ -13,5 +13,8 @@
   "back": "Back",
   "save": "Save",
   "none": "none",
-  "dash": "—"
+  "dash": "—",
+  "yes": "Yes",
+  "no": "No",
+  "access_denied": "You do not have access to this area."
 }

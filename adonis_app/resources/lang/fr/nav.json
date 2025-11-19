@@ -2,6 +2,7 @@
   "dashboard": "Tableau de bord",
   "tasks": "Mes tâches",
   "users": "Utilisateurs",
+  "diagnostic": "Diagnostic",
   "login": "Connexion",
   "logout": "Déconnexion"
 }

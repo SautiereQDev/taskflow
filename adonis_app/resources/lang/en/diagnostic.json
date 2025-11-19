@@ -1,0 +1,49 @@
+{
+  "title": "Diagnostics center",
+  "subtitle": "Inspect runtime health, environment, and request metadata.",
+  "actions": {
+    "refresh": "Refresh data"
+  },
+  "sections": {
+    "health": {
+      "title": "Health checks",
+      "overall": "Overall status",
+      "last_run": "Generated at {timestamp}"
+    },
+    "application": {
+      "title": "Application"
+    },
+    "request": {
+      "title": "Request"
+    },
+    "system": {
+      "title": "System",
+      "memory": "Memory snapshot (MB)",
+      "load": "Load average"
+    }
+  },
+  "status": {
+    "ok": "Operational",
+    "warning": "Degraded",
+    "error": "Unavailable"
+  },
+  "columns": {
+    "check": "Check",
+    "status": "Status",
+    "finished_at": "Finished at",
+    "meta": "Meta"
+  },
+  "labels": {
+    "environment": "Environment",
+    "version": "Version",
+    "uptime": "Uptime (s)",
+    "platform": "Platform",
+    "node_version": "Node version",
+    "cpu_count": "CPU cores",
+    "user_agent": "User agent",
+    "htmx": "HTMX request",
+    "method": "Method",
+    "url": "URL",
+    "ip": "IP address"
+  }
+}

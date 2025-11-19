@@ -1,0 +1,135 @@
+@layout('layouts/base')
+@section('body')
+  <div class="page-header">
+    <div>
+      <h1>{{ i18n.formatMessage('diagnostic.title') }}</h1>
+      <p class="subtitle">{{ i18n.formatMessage('diagnostic.subtitle') }}</p>
+    </div>
+    <div class="actions-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="{{ route('diagnostic.index') }}" role="button" class="secondary">
+        {{ i18n.formatMessage('diagnostic.actions.refresh') }}
+      </a>
+      <a href="{{ route('home') }}" role="button">
+        {{ i18n.formatMessage('generic.back') }}
+      </a>
+    </div>
+  </div>
+
+  <article class="status {{ health.status }}">
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+      <strong>{{ i18n.formatMessage('diagnostic.sections.health.overall') }}</strong>
+      <span>{{ i18n.formatMessage('diagnostic.status.' + health.status) }}</span>
+    </header>
+    <p>
+      {{ i18n.formatMessage('diagnostic.sections.health.last_run', {
+        timestamp: generatedAt.setLocale(locale || i18n.locale).toFormat('dd LLL yyyy • HH:mm:ss')
+      }) }}
+    </p>
+  </article>
+
+  <div class="grid" style="--pico-grid-gap: 1rem;">
+    <article>
+      <h2>{{ i18n.formatMessage('diagnostic.sections.application.title') }}</h2>
+      <dl>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.environment') }}</dt>
+        <dd>{{ application.environment }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.version') }}</dt>
+        <dd>{{ application.version }}</dd>
+      </dl>
+    </article>
+
+    <article>
+      <h2>{{ i18n.formatMessage('diagnostic.sections.request.title') }}</h2>
+      <dl>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.method') }}</dt>
+        <dd>{{ requestMeta.method }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.url') }}</dt>
+        <dd>{{ requestMeta.url }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.ip') }}</dt>
+        <dd>{{ requestMeta.ip }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.user_agent') }}</dt>
+        <dd>{{ requestMeta.userAgent }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.htmx') }}</dt>
+        <dd>{{ requestMeta.htmx?.isHtmx ? i18n.formatMessage('generic.yes') : i18n.formatMessage('generic.no') }}</dd>
+      </dl>
+    </article>
+
+    <article>
+      <h2>{{ i18n.formatMessage('diagnostic.sections.system.title') }}</h2>
+      <dl>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.uptime') }}</dt>
+        <dd>{{ system.uptimeSeconds }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.platform') }}</dt>
+        <dd>{{ system.platform }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.node_version') }}</dt>
+        <dd>{{ system.nodeVersion }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.cpu_count') }}</dt>
+        <dd>{{ system.cpuCount }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.sections.system.load') }}</dt>
+        <dd>{{ system.loadAverage.join(' / ') }}</dd>
+      </dl>
+    </article>
+
+    <article style="grid-column: 1 / -1;">
+      <h2>{{ i18n.formatMessage('diagnostic.sections.system.memory') }}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ i18n.formatMessage('diagnostic.columns.check') }}</th>
+            <th>{{ i18n.formatMessage('diagnostic.columns.status') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @each(chunk in system.memory)
+            <tr>
+              <td>{{ chunk.label }}</td>
+              <td>{{ chunk.megabytes }}</td>
+            </tr>
+          @endeach
+        </tbody>
+      </table>
+    </article>
+  </div>
+
+  <article>
+    <h2>{{ i18n.formatMessage('diagnostic.sections.health.title') }}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ i18n.formatMessage('diagnostic.columns.check') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.status') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.finished_at') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.meta') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(check in diagnosticChecks)
+          <tr>
+            <td>{{ check.name }}</td>
+            <td>
+              <span class="badge {{ check.status }}">
+                {{ i18n.formatMessage('diagnostic.status.' + check.status) }}
+              </span>
+              <br />
+              <small>{{ check.message }}</small>
+            </td>
+            <td>{{ check.finishedAtLabel }}</td>
+            <td>
+              @if(check.meta)
+                <code>{{ JSON.stringify(check.meta) }}</code>
+              @else
+                {{ i18n.formatMessage('generic.none') }}
+              @endif
+            </td>
+          </tr>
+        @else
+          <tr>
+            <td colspan="4" style="text-align: center; padding: 1rem;">
+              {{ i18n.formatMessage('generic.none') }}
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </article>
+@endsection

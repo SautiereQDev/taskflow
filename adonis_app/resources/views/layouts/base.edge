@@ -20,6 +20,7 @@
               <li><a href="{{ route('tasks.index') }}">{{ i18n.formatMessage('nav.tasks') }}</a></li>
               @if(auth.user.role === 'admin')
                 <li><a href="{{ route('users.index') }}">{{ i18n.formatMessage('nav.users') }}</a></li>
+                <li><a href="{{ route('diagnostic.index') }}">{{ i18n.formatMessage('nav.diagnostic') }}</a></li>
               @endif
               <li>
                 <form method="POST" action="/logout">

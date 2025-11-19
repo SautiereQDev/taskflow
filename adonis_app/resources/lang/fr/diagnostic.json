@@ -1,0 +1,49 @@
+{
+  "title": "Centre de diagnostic",
+  "subtitle": "Surveille l'état de l'application et du système en temps réel.",
+  "actions": {
+    "refresh": "Rafraîchir les données"
+  },
+  "sections": {
+    "health": {
+      "title": "Contrôles de santé",
+      "overall": "Statut global",
+      "last_run": "Généré le {timestamp}"
+    },
+    "application": {
+      "title": "Application"
+    },
+    "request": {
+      "title": "Requête"
+    },
+    "system": {
+      "title": "Système",
+      "memory": "Instantané mémoire (Mo)",
+      "load": "Charge moyenne"
+    }
+  },
+  "status": {
+    "ok": "Opérationnel",
+    "warning": "Dégradé",
+    "error": "Indisponible"
+  },
+  "columns": {
+    "check": "Vérification",
+    "status": "Statut",
+    "finished_at": "Terminé à",
+    "meta": "Métadonnées"
+  },
+  "labels": {
+    "environment": "Environnement",
+    "version": "Version",
+    "uptime": "Temps de fonctionnement (s)",
+    "platform": "Plateforme",
+    "node_version": "Version Node",
+    "cpu_count": "Cœurs CPU",
+    "user_agent": "User-Agent",
+    "htmx": "Requête HTMX",
+    "method": "Méthode",
+    "url": "URL",
+    "ip": "Adresse IP"
+  }
+}

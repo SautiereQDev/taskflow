@@ -2,6 +2,7 @@
   "dashboard": "Dashboard",
   "tasks": "My tasks",
   "users": "Users",
+  "diagnostic": "Diagnostics",
   "login": "Sign in",
   "logout": "Sign out"
 }
