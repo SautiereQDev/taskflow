@@ -20,6 +20,11 @@
       "title": "Système",
       "memory": "Instantané mémoire (Mo)",
       "load": "Charge moyenne"
+    },
+    "metrics": {
+      "title": "Performance des requêtes",
+      "recent": "Requêtes récentes",
+      "empty": "Aucune donnée de requête pour le moment."
     }
   },
   "status": {
@@ -31,7 +36,12 @@
     "check": "Vérification",
     "status": "Statut",
     "finished_at": "Terminé à",
-    "meta": "Métadonnées"
+    "meta": "Métadonnées",
+    "method": "Méthode",
+    "url": "URL",
+    "status_code": "Statut",
+    "duration": "Durée (ms)",
+    "timestamp": "Enregistré à"
   },
   "labels": {
     "environment": "Environnement",
@@ -44,6 +54,9 @@
     "htmx": "Requête HTMX",
     "method": "Méthode",
     "url": "URL",
-    "ip": "Adresse IP"
+    "ip": "Adresse IP",
+    "total_requests": "Total requêtes suivies",
+    "average_duration": "Durée moyenne",
+    "p95_duration": "Durée p95"
   }
 }

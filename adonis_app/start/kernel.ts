@@ -41,6 +41,7 @@ router.use([
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('#middleware/detect_user_locale_middleware'),
   () => import('#middleware/htmx_middleware'),
+  () => import('#middleware/performance_tracker_middleware'),
   () => import('#middleware/initialize_bouncer_middleware')
 ])
 

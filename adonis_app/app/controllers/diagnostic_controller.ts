@@ -4,6 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 
 import { healthChecks } from '#start/health'
+import metricsService from '#services/metrics_service'
 
 export default class DiagnosticController {
   public async index({
@@ -19,6 +20,7 @@ export default class DiagnosticController {
     const report = await healthChecks.run()
     const wantsJson = request.accepts(['html', 'json']) === 'json' || request.ajax()
     const generatedAt = DateTime.now()
+    const metricsSnapshot = metricsService.getSnapshot()
 
     const memorySnapshot = process.memoryUsage()
     const memoryBreakdown = Object.entries(memorySnapshot).map(([label, value]) => ({
@@ -55,6 +57,7 @@ export default class DiagnosticController {
         memory: memoryBreakdown,
       },
       health: report,
+      metrics: metricsSnapshot,
     }
 
     if (wantsJson) {
@@ -74,6 +77,7 @@ export default class DiagnosticController {
     const html = await view.render('pages/diagnostic', {
       ...payload,
       diagnosticChecks,
+      recentMetrics: metricsSnapshot.recentRequests.slice(0, 10),
       locale: i18n.locale,
       title: `${i18n.formatMessage('app.name')} • ${i18n.formatMessage('diagnostic.title')}`,
       notification: session.flashMessages?.get('notification') || null,

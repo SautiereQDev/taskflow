@@ -1,5 +1,141 @@
 @layout('layouts/base')
 @section('body')
+  <style>
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-block-end: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .diagnostic-grid {
+      display: grid;
+      width: 100%;
+      padding: 1.25rem;
+      background: var(--pico-card-background-color, var(--pico-background-color));
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    }
+
+    .diagnostic-card h2 {
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--pico-muted-color, #555);
+      margin-block-end: 1.5rem;
+    }
+
+    @media (min-width: 1200px) {
+      .diagnostic-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .diagnostic-card {
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: var(--pico-card-background-color, var(--pico-background-color));
+    }
+
+    .diagnostic-details {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 1.25rem;
+      row-gap: 0.45rem;
+      margin: 0;
+    }
+
+    .diagnostic-details dt {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pico-muted-color, #677);
+      align-self: center;
+    }
+
+    .diagnostic-details dd {
+      margin: 0;
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+      font-size: 0.95rem;
+    }
+
+    .diagnostic-value {
+      color: var(--pico-color, #0f172a);
+    }
+
+    @media (max-width: 600px) {
+      .diagnostic-details {
+        grid-template-columns: 1fr;
+      }
+
+      .diagnostic-details dd {
+        text-align: left;
+      }
+    }
+
+    .status {
+      border-radius: 0.75rem;
+      padding: 1rem;
+      border: 1px solid var(--pico-muted-border-color);
+      margin-block-end: 1.5rem;
+      background: var(--pico-card-background-color, var(--pico-background-color));
+    }
+
+    .status.ok {
+      border-left: 4px solid #2ecc71;
+    }
+
+    .status.warning {
+      border-left: 4px solid #f1c40f;
+    }
+
+    .status.error {
+      border-left: 4px solid #e74c3c;
+    }
+
+    .memory-table,
+    .metrics-table,
+    .health-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .memory-table th,
+    .memory-table td,
+    .metrics-table th,
+    .metrics-table td,
+    .health-table th,
+    .health-table td {
+      padding: 0.65rem;
+      border-bottom: 1px solid var(--pico-muted-border-color);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .metrics-table code {
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      background: var(--pico-muted-border-color);
+    }
+  </style>
+
   <div class="page-header">
     <div>
       <h1>{{ i18n.formatMessage('diagnostic.title') }}</h1>
@@ -14,7 +150,6 @@
       </a>
     </div>
   </div>
-
   <article class="status {{ health.status }}">
     <header style="display: flex; justify-content: space-between; align-items: center;">
       <strong>{{ i18n.formatMessage('diagnostic.sections.health.overall') }}</strong>
@@ -27,52 +162,66 @@
     </p>
   </article>
 
-  <div class="grid" style="--pico-grid-gap: 1rem;">
-    <article>
+  <div class="diagnostic-grid">
+    <article class="diagnostic-card">
+      <h2>{{ i18n.formatMessage('diagnostic.sections.metrics.title') }}</h2>
+      <dl class="diagnostic-details">
+        <dt>{{ i18n.formatMessage('diagnostic.labels.total_requests') }}</dt>
+        <dd class="diagnostic-value">{{ metrics.totalRequests }}</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.average_duration') }}</dt>
+        <dd class="diagnostic-value">{{ metrics.averageDuration }} ms</dd>
+        <dt>{{ i18n.formatMessage('diagnostic.labels.p95_duration') }}</dt>
+        <dd class="diagnostic-value">{{ metrics.p95Duration }} ms</dd>
+      </dl>
+    </article>
+
+    <article class="diagnostic-card">
       <h2>{{ i18n.formatMessage('diagnostic.sections.application.title') }}</h2>
-      <dl>
+      <dl class="diagnostic-details">
         <dt>{{ i18n.formatMessage('diagnostic.labels.environment') }}</dt>
-        <dd>{{ application.environment }}</dd>
+        <dd class="diagnostic-value">{{ application.environment }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.version') }}</dt>
-        <dd>{{ application.version }}</dd>
+        <dd class="diagnostic-value">{{ application.version }}</dd>
       </dl>
     </article>
 
-    <article>
+    <article class="diagnostic-card">
       <h2>{{ i18n.formatMessage('diagnostic.sections.request.title') }}</h2>
-      <dl>
+      <dl class="diagnostic-details">
         <dt>{{ i18n.formatMessage('diagnostic.labels.method') }}</dt>
-        <dd>{{ requestMeta.method }}</dd>
+        <dd class="diagnostic-value">{{ requestMeta.method }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.url') }}</dt>
-        <dd>{{ requestMeta.url }}</dd>
+        <dd class="diagnostic-value">{{ requestMeta.url }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.ip') }}</dt>
-        <dd>{{ requestMeta.ip }}</dd>
+        <dd class="diagnostic-value">{{ requestMeta.ip }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.user_agent') }}</dt>
-        <dd>{{ requestMeta.userAgent }}</dd>
+        <dd class="diagnostic-value">{{ requestMeta.userAgent }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.htmx') }}</dt>
-        <dd>{{ requestMeta.htmx?.isHtmx ? i18n.formatMessage('generic.yes') : i18n.formatMessage('generic.no') }}</dd>
+        <dd class="diagnostic-value">
+          {{ requestMeta.htmx?.isHtmx ? i18n.formatMessage('generic.yes') : i18n.formatMessage('generic.no') }}
+        </dd>
       </dl>
     </article>
 
-    <article>
+    <article class="diagnostic-card">
       <h2>{{ i18n.formatMessage('diagnostic.sections.system.title') }}</h2>
-      <dl>
+      <dl class="diagnostic-details">
         <dt>{{ i18n.formatMessage('diagnostic.labels.uptime') }}</dt>
-        <dd>{{ system.uptimeSeconds }}</dd>
+        <dd class="diagnostic-value">{{ system.uptimeSeconds }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.platform') }}</dt>
-        <dd>{{ system.platform }}</dd>
+        <dd class="diagnostic-value">{{ system.platform }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.node_version') }}</dt>
-        <dd>{{ system.nodeVersion }}</dd>
+        <dd class="diagnostic-value">{{ system.nodeVersion }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.labels.cpu_count') }}</dt>
-        <dd>{{ system.cpuCount }}</dd>
+        <dd class="diagnostic-value">{{ system.cpuCount }}</dd>
         <dt>{{ i18n.formatMessage('diagnostic.sections.system.load') }}</dt>
-        <dd>{{ system.loadAverage.join(' / ') }}</dd>
+        <dd class="diagnostic-value">{{ system.loadAverage.join(' / ') }}</dd>
       </dl>
     </article>
 
-    <article style="grid-column: 1 / -1;">
+    <article class="diagnostic-card" style="grid-column: 1 / -1;">
       <h2>{{ i18n.formatMessage('diagnostic.sections.system.memory') }}</h2>
-      <table>
+      <table class="memory-table">
         <thead>
           <tr>
             <th>{{ i18n.formatMessage('diagnostic.columns.check') }}</th>
@@ -91,9 +240,43 @@
     </article>
   </div>
 
-  <article>
+  <article class="diagnostic-card">
+    <h2>{{ i18n.formatMessage('diagnostic.sections.metrics.recent') }}</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>{{ i18n.formatMessage('diagnostic.columns.method') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.url') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.status_code') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.duration') }}</th>
+          <th>{{ i18n.formatMessage('diagnostic.columns.timestamp') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(entry in recentMetrics)
+          <tr>
+            <td>{{ entry.method }}</td>
+            <td><code>{{ entry.url }}</code></td>
+            <td>{{ entry.status }}</td>
+            <td>{{ entry.durationMs }} ms</td>
+            <td>
+              {{ entry.timestamp.setLocale(locale || i18n.locale).toFormat('dd LLL yyyy • HH:mm:ss') }}
+            </td>
+          </tr>
+        @else
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 1rem;">
+              {{ i18n.formatMessage('diagnostic.sections.metrics.empty') }}
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </article>
+
+  <article class="diagnostic-card">
     <h2>{{ i18n.formatMessage('diagnostic.sections.health.title') }}</h2>
-    <table>
+    <table class="health-table">
       <thead>
         <tr>
           <th>{{ i18n.formatMessage('diagnostic.columns.check') }}</th>

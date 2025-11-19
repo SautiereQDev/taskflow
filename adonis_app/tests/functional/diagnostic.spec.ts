@@ -42,12 +42,16 @@ test.group('Diagnostics endpoint', () => {
       user: { id: string }
       application: { environment: string }
       health: { checks: unknown[] }
+      metrics: { totalRequests: number; recentRequests: unknown[] }
     }
 
     assert.equal(payload.user.id, admin.id)
     assert.equal(payload.application.environment, 'test')
     assert.isArray(payload.health.checks)
     assert.isAtLeast(payload.health.checks.length, 1)
+    assert.isObject(payload.metrics)
+    assert.isNumber(payload.metrics.totalRequests)
+    assert.isArray(payload.metrics.recentRequests)
   })
 
   test('renders the diagnostics dashboard in HTML for admins', async ({ client }) => {
@@ -58,5 +62,6 @@ test.group('Diagnostics endpoint', () => {
     response.assertStatus(200)
     response.assertTextIncludes('Centre de diagnostic')
     response.assertTextIncludes('Contrôles de santé')
+    response.assertTextIncludes('Requêtes récentes')
   })
 })

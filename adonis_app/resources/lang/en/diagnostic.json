@@ -20,6 +20,11 @@
       "title": "System",
       "memory": "Memory snapshot (MB)",
       "load": "Load average"
+    },
+    "metrics": {
+      "title": "Request performance",
+      "recent": "Recent requests",
+      "empty": "No request data captured yet."
     }
   },
   "status": {
@@ -31,7 +36,12 @@
     "check": "Check",
     "status": "Status",
     "finished_at": "Finished at",
-    "meta": "Meta"
+    "meta": "Meta",
+    "method": "Method",
+    "url": "URL",
+    "status_code": "Status",
+    "duration": "Duration (ms)",
+    "timestamp": "Recorded at"
   },
   "labels": {
     "environment": "Environment",
@@ -44,6 +54,9 @@
     "htmx": "HTMX request",
     "method": "Method",
     "url": "URL",
-    "ip": "IP address"
+    "ip": "IP address",
+    "total_requests": "Total tracked requests",
+    "average_duration": "Average duration",
+    "p95_duration": "p95 duration"
   }
 }
