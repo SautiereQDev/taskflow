@@ -1,91 +1,87 @@
-import './config/di-container.js'; // MUST be first for DI
-import { initializeTelemetry } from './config/telemetry.config.js';
-import { createApp } from './config/express.config.js';
-import { logger } from './utils/logger.util.js';
-import { PrismaClient } from '@prisma/client';
-import { validateEnvVars } from './config/security.config.js';
+import express from 'express';
+import session from 'express-session';
+import ConnectPgSimple from 'connect-pg-simple';
+import cookieParser from 'cookie-parser';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import expressLayouts from 'express-ejs-layouts';
+import { prisma } from './db.js';
+import { logger } from './utils.js';
+import routes from './routes.js';
+import {
+  i18nMiddleware,
+  i18nLocalsMiddleware,
+  attachUser,
+  htmxMiddleware,
+  cspNonceMiddleware,
+  errorHandler,
+  notFoundHandler,
+} from './middleware.js';
 
-/**
- * Server Entry Point
- *
- * Initializes and starts the Express server
- */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Initialize OpenTelemetry (must be before any application code)
-initializeTelemetry();
-
-// Validate environment variables at startup (security best practice)
-validateEnvVars();
-// Force restart
+const app = express();
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
-const HOST = process.env.HOST ?? '0.0.0.0';
 
-// Create Express application
-const app = createApp();
+// Body Parsing
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Create Prisma client for graceful shutdown
-const prisma = new PrismaClient();
+// Middleware de sécurité (CSP Nonce) - Doit être avant expressLayouts
+app.use(cspNonceMiddleware);
 
-/**
- * Start the server
- */
-async function start(): Promise<void> {
-  try {
-    // Test database connection
-    await prisma.$connect();
-    logger.info('Database connected successfully');
+// Session Management
+const PgSession = ConnectPgSimple(session);
+app.use(
+  session({
+    store: new PgSession({
+      conString: process.env.DATABASE_URL,
+      createTableIfMissing: true,
+      tableName: 'session',
+    }),
+    secret: process.env.SESSION_SECRET ?? 'taskflow-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
-    // Start HTTP server
-    const server = app.listen(PORT, HOST, () => {
-      logger.info(`Server started`, {
-        port: PORT,
-        host: HOST,
-        env: process.env.NODE_ENV ?? 'development',
-        nodeVersion: process.version,
-      });
-    });
+// View Engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
+app.use(expressLayouts);
+app.set('layout', 'layouts/main');
 
-    // Graceful shutdown handlers
-    const gracefulShutdown = (signal: string): void => {
-      logger.info(`${signal} received, starting graceful shutdown...`);
+// Static Files
+app.use(express.static(path.join(__dirname, '../public')));
 
-      // Stop accepting new connections
-      server.close(() => {
-        logger.info('HTTP server closed');
+// Middleware
+app.use(htmxMiddleware);
+app.use(i18nMiddleware);
+app.use(i18nLocalsMiddleware);
+app.use(attachUser);
 
-        // Disconnect from database
-        void prisma.$disconnect().then(() => {
-          logger.info('Database disconnected');
-          logger.info('Graceful shutdown complete');
-          process.exit(0);
-        });
-      });
+// Routes
+app.use('/', routes);
 
-      // Force shutdown after timeout
-      setTimeout(() => {
-        logger.error('Forced shutdown after timeout');
-        process.exit(1);
-      }, 10000); // 10 seconds
-    };
+// Error Handling
+app.use(notFoundHandler);
+app.use(errorHandler);
 
-    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-
-    // Handle uncaught errors
-    process.on('uncaughtException', (error: Error) => {
-      logger.error('Uncaught exception', { error: error.message, stack: error.stack });
-      process.exit(1);
-    });
-
-    process.on('unhandledRejection', (reason: unknown) => {
-      logger.error('Unhandled rejection', { reason });
-      process.exit(1);
-    });
-  } catch (error) {
-    logger.error('Failed to start server', { error });
-    process.exit(1);
-  }
+// Start Server
+try {
+  await prisma.$connect();
+  logger.info('Database connected');
+  app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`Server started on port ${PORT}`);
+  });
+} catch (error) {
+  logger.error('Failed to start server', error);
+  process.exit(1);
 }
-
-// Start the application
-void start();

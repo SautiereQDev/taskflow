@@ -4,8 +4,10 @@ import Backend from 'i18next-fs-backend';
 import * as i18nextHttpMiddleware from 'i18next-http-middleware';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
 import { IAuthenticatedRequest, IUser } from './types.js';
 import { prisma } from './db.js';
+import { AppError, logger } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,4 +93,37 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     return res.redirect('/auth/login');
   }
   next();
+};
+
+export const htmxMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  req.isHtmx = req.headers['hx-request'] === 'true';
+  next();
+};
+
+export const cspNonceMiddleware = (_req: Request, res: Response, next: NextFunction) => {
+  res.locals.cspNonce = crypto.randomBytes(16).toString('hex');
+  next();
+};
+
+export const errorHandler = (
+  error: Error | AppError,
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const statusCode = error instanceof AppError ? error.statusCode : 500;
+  logger.error(error.message, { stack: error.stack });
+
+  if (req.isHtmx) {
+    res.status(statusCode).send(`<div class="alert alert-error">${error.message}</div>`);
+  } else {
+    res.status(statusCode).render('pages/500', { error });
+  }
+};
+
+export const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
+  if (/\.(css|js|png|jpg|jpeg|gif|ico|svg)$/.exec(req.path)) {
+    return next();
+  }
+  res.status(404).render('pages/404', { title: 'Page non trouvée' });
 };
