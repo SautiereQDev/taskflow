@@ -4,85 +4,142 @@
   const heading = isEdit ? 'Modifier la tâche' : 'Nouvelle tâche';
   const backHref = isEdit && currentTask ? `/tasks/${currentTask.id}` : '/tasks';
   const action = isEdit && currentTask ? `/tasks/${currentTask.id}` : '/tasks';
-  const method = isEdit ? 'POST' : 'POST'; // Using POST for both, handled by controller logic or hidden field if needed, but here we use standard POST
 %>
 
-<div class="max-w-2xl mx-auto py-8">
-  <div class="flex items-center justify-between mb-6">
-    <a href="<%= backHref %>" class="btn btn-ghost btn-sm gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-      Retour
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-8">
+    <a href="<%= backHref %>" class="btn btn-circle btn-ghost btn-sm" aria-label="Retour">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
     </a>
+    <div>
+      <h1 class="text-3xl font-bold text-base-content"><%= heading %></h1>
+      <p class="text-base-content/60 mt-1"><%= isEdit ? `Édition de la tâche #${currentTask.id}` : 'Remplissez les informations ci-dessous' %></p>
+    </div>
   </div>
 
-  <div class="card bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title text-2xl mb-6"><%= heading %></h2>
-
-      <form action="<%= action %>" method="POST" class="space-y-4">
-        <!-- CSRF Token -->
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-
+  <form action="<%= action %>" method="POST" class="space-y-8">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    
+    <!-- Main Content Card -->
+    <div class="card bg-base-100 shadow-xl border border-base-200">
+      <div class="card-body p-6 md:p-8 gap-6">
+        
+        <!-- Title -->
         <div class="form-control w-full">
-          <label class="label"><span class="label-text">Titre</span></label>
-          <input type="text" name="title" value="<%= currentTask?.title || '' %>" required minlength="3" maxlength="200" class="input input-bordered w-full" />
+          <label class="label">
+            <span class="label-text font-bold text-base">Titre de la tâche <span class="text-error">*</span></span>
+          </label>
+          <input type="text" name="title" value="<%= currentTask?.title || '' %>" placeholder="Ex: Implémenter l'authentification" required minlength="3" maxlength="200" class="input input-bordered w-full focus:input-primary text-lg px-4 py-2 h-12" />
         </div>
 
+        <!-- Description -->
         <div class="form-control w-full">
-          <label class="label"><span class="label-text">Description</span></label>
-          <textarea name="description" rows="5" maxlength="2000" class="textarea textarea-bordered h-32"><%= currentTask?.description || '' %></textarea>
+          <label class="label">
+            <span class="label-text font-bold text-base">Description</span>
+          </label>
+          <textarea name="description" rows="8" maxlength="2000" placeholder="Décrivez la tâche en détail..." class="textarea textarea-bordered h-48 focus:textarea-primary leading-relaxed text-base px-4 py-3"><%= currentTask?.description || '' %></textarea>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="divider my-2"></div>
+
+        <!-- Metadata Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Status -->
           <div class="form-control w-full">
-            <label class="label"><span class="label-text">Statut</span></label>
-            <select name="status" class="select select-bordered w-full">
+            <label class="label">
+              <span class="label-text font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Statut
+              </span>
+            </label>
+            <select name="status" class="select select-bordered w-full px-4 h-10">
               <% ['TODO', 'IN_PROGRESS', 'DONE'].forEach(status => { %>
-                <option value="<%= status %>" <%= currentTask?.status === status ? 'selected' : '' %>><%= status %></option>
+                <option value="<%= status %>" <%= currentTask?.status === status ? 'selected' : '' %>>
+                  <%= status === 'TODO' ? 'À faire' : status === 'IN_PROGRESS' ? 'En cours' : 'Terminé' %>
+                </option>
               <% }) %>
             </select>
           </div>
 
+          <!-- Priority -->
           <div class="form-control w-full">
-            <label class="label"><span class="label-text">Priorité</span></label>
-            <select name="priority" class="select select-bordered w-full">
+            <label class="label">
+              <span class="label-text font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                Priorité
+              </span>
+            </label>
+            <select name="priority" class="select select-bordered w-full px-4 h-10">
               <% ['LOW', 'MEDIUM', 'HIGH'].forEach(priority => { %>
-                <option value="<%= priority %>" <%= currentTask?.priority === priority ? 'selected' : '' %>><%= priority %></option>
+                <option value="<%= priority %>" <%= currentTask?.priority === priority ? 'selected' : '' %>>
+                  <%= priority === 'LOW' ? 'Basse' : priority === 'MEDIUM' ? 'Moyenne' : 'Haute' %>
+                </option>
               <% }) %>
             </select>
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Assignee -->
           <div class="form-control w-full">
-            <label class="label"><span class="label-text">Assignée à</span></label>
-            <select name="assigneeId" class="select select-bordered w-full">
-              <option value="">Non assignée</option>
+            <label class="label">
+              <span class="label-text font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                Assignée à
+              </span>
+            </label>
+            <select name="assigneeId" class="select select-bordered w-full px-4 h-10">
+              <option value="">-- Non assignée --</option>
               <% users.forEach(u => { %>
                 <option value="<%= u.id %>" <%= currentTask?.assigneeId === u.id ? 'selected' : '' %>><%= u.name %></option>
               <% }) %>
             </select>
           </div>
 
+          <!-- Due Date -->
           <div class="form-control w-full">
-            <label class="label"><span class="label-text">Date d'échéance</span></label>
-            <input type="datetime-local" name="dueDate" value="<%= currentTask?.dueDate ? new Date(currentTask.dueDate).toISOString().slice(0, 16) : '' %>" class="input input-bordered w-full" />
+            <label class="label">
+              <span class="label-text font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                Date d'échéance
+              </span>
+            </label>
+            <input type="datetime-local" name="dueDate" value="<%= currentTask?.dueDate ? new Date(currentTask.dueDate).toISOString().slice(0, 16) : '' %>" class="input input-bordered w-full px-4 h-10" />
           </div>
+
         </div>
 
-        <div class="card-actions justify-end mt-6">
-          <a href="<%= backHref %>" class="btn btn-ghost">Annuler</a>
-          <button type="submit" class="btn btn-primary"><%= isEdit ? 'Enregistrer' : 'Créer' %></button>
+        <!-- Actions -->
+        <div class="card-actions justify-end mt-8 pt-4 border-t border-base-200">
+          <a href="<%= backHref %>" class="btn btn-ghost hover:bg-base-200">Annuler</a>
+          <button type="submit" class="btn btn-primary px-8 gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <%= isEdit ? 'Enregistrer' : 'Créer la tâche' %>
+          </button>
         </div>
-      </form>
-
-      <% if (isEdit) { %>
-        <div class="divider">DANGER ZONE</div>
-        <form action="/tasks/<%= currentTask.id %>/delete" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit" class="btn btn-error btn-outline w-full">Supprimer la tâche</button>
-        </form>
-      <% } %>
+      </div>
     </div>
-  </div>
+  </form>
+
+  <!-- Danger Zone (Only for Edit) -->
+  <% if (isEdit) { %>
+    <div class="card bg-base-100 shadow-sm border border-error/20 mt-8">
+      <div class="card-body p-6">
+        <h3 class="text-lg font-bold text-error flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          Zone de danger
+        </h3>
+        <p class="text-sm text-base-content/70 mb-4">Cette action est irréversible. La tâche sera définitivement supprimée.</p>
+        <form action="/tasks/<%= currentTask.id %>/delete" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn btn-error btn-outline btn-sm gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            Supprimer la tâche
+          </button>
+        </form>
+      </div>
+    </div>
+  <% } %>
 </div>

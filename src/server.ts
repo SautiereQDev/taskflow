@@ -8,6 +8,7 @@ import expressLayouts from 'express-ejs-layouts';
 import { prisma } from './db.js';
 import { logger } from './utils.js';
 import routes from './routes.js';
+import { doubleCsrfProtection, generateToken } from './csrf.js';
 import {
   i18nMiddleware,
   i18nLocalsMiddleware,
@@ -51,6 +52,19 @@ app.use(
     },
   })
 );
+
+// CSRF Protection - Must be after session and cookie parser
+app.use(doubleCsrfProtection);
+app.use((req, res, next) => {
+  try {
+    const token = generateToken(req, res);
+    res.locals.csrfToken = token ?? 'missing-token';
+  } catch (error) {
+    logger.error('Error generating CSRF token', error);
+    res.locals.csrfToken = 'error-generating-token';
+  }
+  next();
+});
 
 // View Engine
 app.set('view engine', 'ejs');

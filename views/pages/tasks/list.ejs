@@ -1,49 +1,66 @@
-<div class="container mx-auto px-4 py-8" id="tasks-container">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold"><%= t('tasks.title') || 'Tasks' %></h1>
-    <a href="/tasks/new" class="btn btn-primary">
-      <%= t('tasks.new') || 'New Task' %>
+<div class="container mx-auto px-4 py-8 max-w-7xl" id="tasks-container">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-base-content"><%= t('tasks.title') || 'Tâches' %></h1>
+      <p class="text-base-content/60 mt-1">Gérez et suivez l'avancement de vos projets</p>
+    </div>
+    <a href="/tasks/new" class="btn btn-primary gap-2 shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+      <%= t('tasks.new') || 'Nouvelle tâche' %>
     </a>
   </div>
 
   <!-- Filters -->
-  <div class="card bg-base-100 shadow-xl mb-6">
-    <div class="card-body p-4">
-      <form action="/tasks" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4" hx-get="/tasks" hx-target="#tasks-container" hx-swap="outerHTML" hx-push-url="true" hx-trigger="submit, change, keyup delay:500ms from:input">
-        <div class="form-control w-full">
+  <div class="card bg-base-100 shadow-md border border-base-200 mb-8">
+    <div class="card-body p-6">
+      <form action="/tasks" method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end" hx-get="/tasks" hx-target="#tasks-container" hx-swap="outerHTML" hx-push-url="true" hx-trigger="submit, change, keyup delay:500ms from:input">
+        
+        <!-- Search -->
+        <div class="form-control w-full md:col-span-4">
           <label class="label">
-            <span class="label-text"><%= t('common.search') || 'Search' %></span>
+            <span class="label-text font-medium"><%= t('common.search') || 'Rechercher' %></span>
           </label>
-          <input type="text" name="search" placeholder="<%= t('common.search') %>..." value="<%= filters.search || '' %>" class="input input-bordered w-full px-4">
+          <div class="relative">
+            <input type="text" name="search" placeholder="Titre ou description..." value="<%= filters.search || '' %>" class="input input-bordered w-full pl-10 focus:input-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
         </div>
-        <div class="form-control w-full">
+
+        <!-- Status Filter -->
+        <div class="form-control w-full md:col-span-3">
           <label class="label">
-            <span class="label-text"><%= t('tasks.status') || 'Status' %></span>
+            <span class="label-text font-medium"><%= t('tasks.status') || 'Statut' %></span>
           </label>
-          <select name="status" class="select select-bordered w-full px-4">
-            <option value=""><%= t('tasks.allTasks') %></option>
-            <option value="TODO" <%= filters.status === 'TODO' ? 'selected' : '' %>><%= t('tasks.statuses.TODO') %></option>
-            <option value="IN_PROGRESS" <%= filters.status === 'IN_PROGRESS' ? 'selected' : '' %>><%= t('tasks.statuses.IN_PROGRESS') %></option>
-            <option value="DONE" <%= filters.status === 'DONE' ? 'selected' : '' %>><%= t('tasks.statuses.DONE') %></option>
+          <select name="status" class="select select-bordered w-full focus:select-primary">
+            <option value=""><%= t('tasks.allTasks') || 'Tous les statuts' %></option>
+            <option value="TODO" <%= filters.status === 'TODO' ? 'selected' : '' %>><%= t('tasks.statuses.TODO') || 'À faire' %></option>
+            <option value="IN_PROGRESS" <%= filters.status === 'IN_PROGRESS' ? 'selected' : '' %>><%= t('tasks.statuses.IN_PROGRESS') || 'En cours' %></option>
+            <option value="DONE" <%= filters.status === 'DONE' ? 'selected' : '' %>><%= t('tasks.statuses.DONE') || 'Terminé' %></option>
           </select>
         </div>
-        <div class="form-control w-full">
+
+        <!-- Assignee Filter -->
+        <div class="form-control w-full md:col-span-3">
           <label class="label">
-            <span class="label-text"><%= t('tasks.assignee') || 'Assignee' %></span>
+            <span class="label-text font-medium"><%= t('tasks.assignee') || 'Assigné à' %></span>
           </label>
-          <select name="assigneeId" class="select select-bordered w-full px-4">
-            <option value=""><%= t('tasks.allAssignees') %></option>
+          <select name="assigneeId" class="select select-bordered w-full focus:select-primary">
+            <option value=""><%= t('tasks.allAssignees') || 'Tous les membres' %></option>
             <% users.forEach(u => { %>
               <option value="<%= u.id %>" <%= filters.assigneeId === u.id ? 'selected' : '' %>><%= u.name %></option>
             <% }) %>
           </select>
         </div>
-        <div class="form-control w-full">
-          <label class="label invisible">
-            <span class="label-text"><%= t('common.reset') %></span>
+
+        <!-- Reset Button -->
+        <div class="form-control w-full md:col-span-2">
+          <label class="label invisible hidden md:block">
+            <span class="label-text">Reset</span>
           </label>
-          <a href="/tasks" class="btn btn-secondary w-full" hx-get="/tasks" hx-target="#tasks-container" hx-swap="outerHTML" hx-push-url="true">
-            <%= t('common.reset') || 'Reset' %>
+          <a href="/tasks" class="btn btn-ghost border-base-300 hover:bg-base-200 w-full gap-2" hx-get="/tasks" hx-target="#tasks-container" hx-swap="outerHTML" hx-push-url="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            <%= t('common.reset') || 'Réinitialiser' %>
           </a>
         </div>
       </form>
@@ -51,47 +68,86 @@
   </div>
 
   <!-- List -->
-  <div class="card bg-base-100 shadow-xl overflow-hidden">
+  <div class="card bg-base-100 shadow-xl border border-base-200 overflow-hidden">
     <div class="overflow-x-auto">
-      <table class="table w-full">
-        <thead>
+      <table class="table table-zebra w-full">
+        <thead class="bg-base-200/50">
           <tr>
-            <th><%= t('tasks.form.title', 'Title') %></th>
-            <th><%= t('tasks.form.status', 'Status') %></th>
-            <th><%= t('tasks.form.priority', 'Priority') %></th>
-            <th><%= t('tasks.assignee', 'Assignee') %></th>
+            <th class="w-1/3"><%= t('tasks.form.title', 'Tâche') %></th>
+            <th><%= t('tasks.form.status', 'Statut') %></th>
+            <th><%= t('tasks.form.priority', 'Priorité') %></th>
+            <th><%= t('tasks.assignee', 'Assigné à') %></th>
             <th class="text-right"><%= t('common.actions', 'Actions') %></th>
           </tr>
         </thead>
         <tbody>
+          <% if (tasks.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-center py-12">
+                <div class="flex flex-col items-center justify-center opacity-60">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-base-content/30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                  <p class="text-lg font-medium">Aucune tâche trouvée</p>
+                  <p class="text-sm">Essayez de modifier vos filtres ou créez une nouvelle tâche.</p>
+                </div>
+              </td>
+            </tr>
+          <% } %>
           <% tasks.forEach(task => { %>
-            <tr class="hover">
+            <tr class="hover group transition-colors">
               <td>
-                <a href="/tasks/<%= task.id %>" class="link link-primary no-underline hover:underline font-bold"><%= task.title %></a>
+                <div class="flex flex-col">
+                  <a href="/tasks/<%= task.id %>" class="font-bold text-base hover:text-primary transition-colors mb-1"><%= task.title %></a>
+                  <span class="text-xs text-base-content/60 line-clamp-1"><%= task.description || 'Pas de description' %></span>
+                </div>
               </td>
               <td>
-                <span class="badge
-                  <%= task.status === 'DONE' ? 'badge-success' : (task.status === 'IN_PROGRESS' ? 'badge-warning' : 'badge-ghost') %>">
-                  <%= t('tasks.statuses.' + task.status) %>
-                </span>
+                <div class="badge gap-2 py-3 px-4 font-medium
+                  <%= task.status === 'DONE' ? 'badge-success text-success-content' : (task.status === 'IN_PROGRESS' ? 'badge-warning text-warning-content' : 'badge-ghost') %>">
+                  <% if (task.status === 'DONE') { %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  <% } else if (task.status === 'IN_PROGRESS') { %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <% } else { %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                  <% } %>
+                  <%= t('tasks.statuses.' + task.status) || task.status %>
+                </div>
               </td>
               <td>
-                <span class="badge <%= task.priority === 'HIGH' ? 'badge-error' : (task.priority === 'MEDIUM' ? 'badge-warning' : 'badge-info') %>">
+                <div class="badge badge-sm
+                  <%= task.priority === 'HIGH' ? 'badge-error badge-outline' : (task.priority === 'MEDIUM' ? 'badge-warning badge-outline' : 'badge-info badge-outline') %>">
                   <%= task.priority %>
-                </span>
+                </div>
               </td>
-              <td class="text-base-content/70"><%= task.assignee ? task.assignee.name : '-' %></td>
-              <td class="text-right flex justify-end gap-2">
-                <a href="/tasks/<%= task.id %>/edit" class="btn btn-primary btn-xs"><%= t('common.edit') %></a>
-                <% if (typeof user !== 'undefined' && user.role === 'ADMIN') { %>
-                  <button class="btn btn-error btn-xs" 
-                          hx-post="/tasks/<%= task.id %>/delete" 
-                          hx-confirm="<%= t('common.confirmDelete') || 'Are you sure?' %>"
-                          hx-target="closest tr" 
-                          hx-swap="outerHTML swap:1s">
-                    <%= t('common.delete') || 'Delete' %>
-                  </button>
+              <td>
+                <% if (task.assignee) { %>
+                  <div class="flex items-center gap-2" title="<%= task.assignee.email %>">
+                    <div class="avatar placeholder">
+                      <div class="bg-neutral text-neutral-content rounded-full w-6 h-6 text-xs">
+                        <span><%= task.assignee.name.substring(0, 2).toUpperCase() %></span>
+                      </div>
+                    </div>
+                    <span class="text-sm font-medium"><%= task.assignee.name %></span>
+                  </div>
+                <% } else { %>
+                  <span class="text-base-content/40 text-sm italic">Non assigné</span>
                 <% } %>
+              </td>
+              <td class="text-right">
+                <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <a href="/tasks/<%= task.id %>/edit" class="btn btn-ghost btn-xs btn-square tooltip" data-tip="<%= t('common.edit') %>">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                  </a>
+                  <% if (typeof user !== 'undefined' && user.role === 'ADMIN') { %>
+                    <button class="btn btn-ghost text-error btn-xs btn-square tooltip" data-tip="<%= t('common.delete') %>"
+                            hx-post="/tasks/<%= task.id %>/delete" 
+                            hx-confirm="<%= t('common.confirmDelete') || 'Êtes-vous sûr ?' %>"
+                            hx-target="closest tr" 
+                            hx-swap="outerHTML swap:1s">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </button>
+                  <% } %>
+                </div>
               </td>
             </tr>
           <% }) %>
@@ -101,15 +157,25 @@
   </div>
 
   <!-- Pagination -->
-  <div class="mt-6 flex justify-center">
-    <div class="join">
-      <% if (pagination.page > 1) { %>
-        <a href="/tasks?page=<%= pagination.page - 1 %>" class="join-item btn"><%= t('common.previous') %></a>
-      <% } %>
-      <button class="join-item btn btn-disabled"><%= t('a11y.pageOf', { current: pagination.page, total: pagination.totalPages }) %></button>
-      <% if (pagination.page < pagination.totalPages) { %>
-        <a href="/tasks?page=<%= pagination.page + 1 %>" class="join-item btn"><%= t('common.next') %></a>
-      <% } %>
+  <% if (pagination.totalPages > 1) { %>
+    <div class="mt-8 flex justify-center">
+      <div class="join shadow-sm">
+        <% if (pagination.page > 1) { %>
+          <a href="/tasks?page=<%= pagination.page - 1 %>" class="join-item btn btn-sm"><%= t('common.previous') || 'Précédent' %></a>
+        <% } else { %>
+          <button class="join-item btn btn-sm btn-disabled"><%= t('common.previous') || 'Précédent' %></button>
+        <% } %>
+        
+        <button class="join-item btn btn-sm no-animation bg-base-100 cursor-default">
+          Page <%= pagination.page %> sur <%= pagination.totalPages %>
+        </button>
+        
+        <% if (pagination.page < pagination.totalPages) { %>
+          <a href="/tasks?page=<%= pagination.page + 1 %>" class="join-item btn btn-sm"><%= t('common.next') || 'Suivant' %></a>
+        <% } else { %>
+          <button class="join-item btn btn-sm btn-disabled"><%= t('common.next') || 'Suivant' %></button>
+        <% } %>
+      </div>
     </div>
-  </div>
+  <% } %>
 </div>
