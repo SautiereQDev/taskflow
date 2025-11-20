@@ -1,0 +1,121 @@
+                                         Sujet de projet
+                          ENSIIE FISA FC Bases du Web 2024-2025
+
+
+     Le projet est votre évaluation pour ce module. Vous devez le rendre au plus tard 14 jours après
+la dernière séance, à 23h59. (Donc si la dernière séance a lieu le 3 octobre, vous devez rendre votre
+projet au plus tard le 17 octobre 23h59.)
+     Votre travail doit être archivé dans un dossier nom prenom.tar.gz. Cette archive doit ensuite
+être déposée sur http://exam.ensiie.fr dans le dépôt nommé bawe11-fisa-projet.
+
+
+1      Instructions
+1.1     Rendu
+     Vous devez produire un petit site web comprenant :
+    — une partie client avec au plus 15 fichiers non binaires ; et une partie en javascript.
+    — une partie serveur avec au plus 10 fichiers non binaires.
+    — une base de données (si la base est relationnelle comme le SQL, elle doit contenir 2 ou 3
+      tables ; si la base est non relationnelle elle doit contenir des données de nature différentes)
+    — un fichier rapport.pdf de 2 pages maximum (hors images).
+    — un fichier README.txt ou README.md
+   Le site ne peut contenir plus de fichier ou de tables qu’indiqué ci-dessus ; sauf si cela est justifié
+par un choix de technologie (voir plus loin). Le site peut contenir d’autre types de fichiers (des
+médias par exemple) mais la taille totale de l’archive rendue ne devra pas excéder 3Mo.
+
+   Le site doit contenir une zone titre et/ou menu qui doit apparaı̂tre en haut ou sur le côté de
+chaque page ; et une zone crédit et/ou contact qui doit apparaı̂tre en bas de chaque page.
+
+     Chaque page du site doit contenir deux boutons :
+    — un bouton pour traduire le site en anglais.
+    — un bouton jour/nuit pour changer l’aspect de la page avec des couleurs clairs ou des couleurs
+      sombres. Ce changement d’aspect doit être dynamique (sans rechargement de la page).
+
+   Le site doit contenir au moins 2 types de requête à la base de données : requêtage de type
+SELECT pour lire le contenu d’une ou plusieurs tables, et requêtage de type UPDATE, INSERT ou
+DELETE pour modifier le contenu. Au moins une page du site doit permettre d’afficher un contenu
+qui dépend des données de la base.
+
+    Le sujet du site est libre (mais doit respecter la loi, le règlement intérieur de l’école et la charte
+informatique de l’école, bien entendu).
+
+1.2     Technologies
+    — Si votre niveau est débutant ou si vous n’avez jamais travaillé en PHP ou en SQL, vous devez
+      produire votre site web avec les technologies suivantes : HTML/CSS/PHP/SQL/JS. Les 5
+      technologies doivent être utilisées.
+    — Sinon le choix de la technologie est libre, mais il faut respecter les consignes.
+
+
+
+                                                     1
+1.3      Rapport
+   Le rapport doit faire deux pages maximum, sans tenir compte des images. Il doit contenir une
+capture d’écran de chaque page visitable sur le site, avec les modes français/anglais et jour/nuit.
+   Dans ce rapport vous devez expliquer, dans cet ordre :
+    — les technologies utilisées. Vous pouvez ici justifier le dépassement en nombre de fichiers ou
+      de tables.
+    — succinctement, ce que fait votre site web et comment le manipuler, une sorte de petit manuel
+      de votre site
+    — un ou deux détails technique dans le code ; par exemple si vous avez rencontré une difficulté,
+      vous pouvez l’expliquer ici et comment vous l’avez surmontée ; si vous aviez plusieurs choix
+      pour un même rendu, comment avez vous fait ce choix ; . . .
+
+1.4      README
+    Si vous avez utilisé les technologies HTML/CSS/PHP/SQL/JS, ajoutez un fichier pour créer
+la base de données initiale. Ce fichier peut être créé avec un dump de la base. Vous pouvez par
+exemple regarder la commande pg dump en postgreySQL. Sinon, vous pouvez créer vous même un
+fichier SQL contenant les requêtes nécessaires pour la création de la base et son remplissage initial.
+Le README doit juste indiquer où trouver ce fichier.
+    Si vous avez utilisé une technologie autre que HTML/CSS/PHP/SQL/JS. Le fichier README doit
+expliquer comment démarrer le serveur web en situation de développement (inutile d’aller jusqu’en
+situation de production). Toutes les étapes doivent être décrites entre le téléchargement des fichiers
+et le moment où une page web s’affiche à l’écran. Votre site ne doit pas nécessiter d’installer trop de
+technologies. Le site doit pouvoir tourner sur une machine simple qui n’a pas de grosses ressources.
+Si les étapes sont trop lourdes (s’il faut par exemple installer docker ou anaconda pour démarrer
+facilement le site web), vous pouvez proposer si vous en avez les ressources une version en ligne
+de votre site web qui peut être visitée. Si ce n’est pas possible, essayez de simplifier l’installation
+minimale.
+
+
+2      Barême
+     Le barême est le suivant :
+    — Non-respect des consignes du nombre maximum de fichiers, de tables, de pages ou de la taille
+      maximum de l’archive ou en cas d’absence des fichiers rapports et readme) : pénalité de 20
+      points.
+    — Présence d’une partie client avec fichier de style : 1 point
+    — Présence d’une partie serveur : 1 point
+    — Présence d’une base de données : 1 point
+    — Présence de javascript : 1 point
+    — Fichier README : 2 points
+    — Clarté du rapport : 2 points
+    — Bouton pour changer de langue : 3 points
+    — Bouton pour changer de style jour/nuit : 3 points
+    — Présence des requêtes d’accès et d’écriture en base : 2 points
+    — Site fonctionnel sur Firefox : 4 points
+
+
+
+
+                                                    2
+3    Conseils
+   Si vous souhaitez intégrer des vidéos dans votre site, utilisez des vidéos très basses résolution
+ou courte afin de ne pas dépasser la limite d’espace du site. De même pour les images, inutile de
+mettre des images haute résolution.
+
+   Vous pouvez utiliser des LLM pour vous aider. Cependant, l’objectif du cours est d’apprendre à
+manipuler ces langages. Il est donc fortement déconseillé aux personnes novices d’utiliser ces outils
+pour coder à leur place. Pour les personnes expérimentées, il peut être intéressant d’utiliser une
+IA pour gérer du code qui sera retravaillé ensuite.
+
+    Ne soyez pas trop ambitieux. Notamment, la traduction sera longue si votre site est volumineux.
+Commencez par un site simple, rédigez ensuite les fichiers rapport et README. Faites ensuite
+évoluer votre site si vous le souhaitez.
+
+   Si vous avez déjà une expérience en web, profitez en pour tester des technologies que vous ne
+connaissez pas. Une telle technologie n’est pas récompensée par des points mais cela vous permettra
+d’augmenter votre expérience.
+
+
+
+
+                                                   3
+
