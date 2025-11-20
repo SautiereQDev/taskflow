@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { Request } from 'express';
+import 'express-session';
 
 export enum UserRole {
   ADMIN = 'ADMIN',
@@ -25,17 +28,28 @@ export interface IUser {
   locale: string;
 }
 
-export type IAuthenticatedRequest = Request & {
-  session: Request['session'] & {
+declare module 'express-session' {
+  interface SessionData {
     userId?: string;
+    theme?: 'light' | 'dark';
     locale?: string;
     initialized?: boolean;
-  };
-  user?: IUser;
-  isHtmx?: boolean;
-  i18n?: {
-    changeLanguage: (lang: string) => Promise<void>;
-    language: string;
-  };
-  t?: (key: string) => string;
-};
+  }
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      isHtmx?: boolean;
+      user?: IUser;
+      t?: (key: string) => string;
+      __?: (key: string) => string;
+      i18n?: {
+        changeLanguage: (lang: string) => Promise<void>;
+        language: string;
+      };
+    }
+  }
+}
+
+export type IAuthenticatedRequest = Request;
