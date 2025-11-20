@@ -211,6 +211,9 @@ export const TaskController = {
   },
 
   delete: async (req: IAuthenticatedRequest, res: Response) => {
+    if (req.user?.role !== UserRole.ADMIN) {
+      return res.status(403).send('Forbidden');
+    }
     await prisma.task.delete({ where: { id: req.params.id } });
     if (req.isHtmx) htmxRedirect(res, '/tasks');
     else res.redirect('/tasks');

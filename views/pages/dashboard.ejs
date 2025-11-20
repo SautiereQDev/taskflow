@@ -25,7 +25,7 @@
   <div class="card bg-base-100 shadow-xl overflow-hidden">
     <div class="px-6 py-4 border-b border-base-300 flex justify-between items-center">
       <h2 class="text-xl font-semibold"><%= t('dashboard.recentTasks') || 'Recent Tasks' %></h2>
-      <a href="/tasks" class="link link-primary no-underline hover:underline"><%= t('dashboard.viewAll') || 'View All' %></a>
+      <a href="/tasks" class="btn btn-sm btn-ghost"><%= t('dashboard.viewAll') || 'View All' %></a>
     </div>
     <div class="divide-y divide-base-300">
       <% recentTasks.forEach(task => { %>
@@ -36,7 +36,7 @@
               <%= t('tasks.statuses.' + task.status) %> - <%= task.assignee ? task.assignee.name : 'Unassigned' %>
             </p>
           </div>
-          <span class="badge <%= task.priority === 'HIGH' ? 'badge-error' : 'badge-ghost' %>">
+          <span class="badge <%= task.priority === 'HIGH' ? 'badge-error' : (task.priority === 'MEDIUM' ? 'badge-warning' : 'badge-info') %>">
             <%= task.priority %>
           </span>
         </div>

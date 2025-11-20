@@ -14,13 +14,13 @@
           <label class="label">
             <span class="label-text"><%= t('common.search') || 'Search' %></span>
           </label>
-          <input type="text" name="search" placeholder="<%= t('common.search') %>..." value="<%= filters.search || '' %>" class="input input-bordered w-full">
+          <input type="text" name="search" placeholder="<%= t('common.search') %>..." value="<%= filters.search || '' %>" class="input input-bordered w-full px-4">
         </div>
         <div class="form-control w-full">
           <label class="label">
             <span class="label-text"><%= t('tasks.status') || 'Status' %></span>
           </label>
-          <select name="status" class="select select-bordered w-full">
+          <select name="status" class="select select-bordered w-full px-4">
             <option value=""><%= t('tasks.allTasks') %></option>
             <option value="TODO" <%= filters.status === 'TODO' ? 'selected' : '' %>><%= t('tasks.statuses.TODO') %></option>
             <option value="IN_PROGRESS" <%= filters.status === 'IN_PROGRESS' ? 'selected' : '' %>><%= t('tasks.statuses.IN_PROGRESS') %></option>
@@ -31,7 +31,7 @@
           <label class="label">
             <span class="label-text"><%= t('tasks.assignee') || 'Assignee' %></span>
           </label>
-          <select name="assigneeId" class="select select-bordered w-full">
+          <select name="assigneeId" class="select select-bordered w-full px-4">
             <option value=""><%= t('tasks.allAssignees') %></option>
             <% users.forEach(u => { %>
               <option value="<%= u.id %>" <%= filters.assigneeId === u.id ? 'selected' : '' %>><%= u.name %></option>
@@ -75,10 +75,23 @@
                   <%= t('tasks.statuses.' + task.status) %>
                 </span>
               </td>
-              <td class="text-base-content/70"><%= task.priority %></td>
+              <td>
+                <span class="badge <%= task.priority === 'HIGH' ? 'badge-error' : (task.priority === 'MEDIUM' ? 'badge-warning' : 'badge-info') %>">
+                  <%= task.priority %>
+                </span>
+              </td>
               <td class="text-base-content/70"><%= task.assignee ? task.assignee.name : '-' %></td>
-              <td class="text-right">
+              <td class="text-right flex justify-end gap-2">
                 <a href="/tasks/<%= task.id %>/edit" class="btn btn-primary btn-xs"><%= t('common.edit') %></a>
+                <% if (typeof user !== 'undefined' && user.role === 'ADMIN') { %>
+                  <button class="btn btn-error btn-xs" 
+                          hx-post="/tasks/<%= task.id %>/delete" 
+                          hx-confirm="<%= t('common.confirmDelete') || 'Are you sure?' %>"
+                          hx-target="closest tr" 
+                          hx-swap="outerHTML swap:1s">
+                    <%= t('common.delete') || 'Delete' %>
+                  </button>
+                <% } %>
               </td>
             </tr>
           <% }) %>

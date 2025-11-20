@@ -12,8 +12,12 @@
         <div>
           <h1 class="card-title text-3xl mb-2"><%= task.title %></h1>
           <div class="flex flex-wrap gap-2">
-            <span class="badge badge-lg"><%= task.status %></span>
-            <span class="badge badge-lg badge-outline"><%= task.priority %></span>
+            <span class="badge badge-lg <%= task.status === 'DONE' ? 'badge-success' : (task.status === 'IN_PROGRESS' ? 'badge-warning' : 'badge-ghost') %>">
+              <%= task.status %>
+            </span>
+            <span class="badge badge-lg <%= task.priority === 'HIGH' ? 'badge-error' : (task.priority === 'MEDIUM' ? 'badge-warning' : 'badge-info') %>">
+              <%= task.priority %>
+            </span>
             <% if (task.dueDate) { %>
               <span class="badge badge-lg badge-ghost">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M5 11h14M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -22,8 +26,16 @@
             <% } %>
           </div>
         </div>
-        <div class="card-actions">
+        <div class="card-actions flex gap-2">
           <a href="/tasks/<%= task.id %>/edit" class="btn btn-primary btn-sm">Modifier</a>
+          <% if (typeof user !== 'undefined' && user.role === 'ADMIN') { %>
+            <button class="btn btn-error btn-sm" 
+                    hx-post="/tasks/<%= task.id %>/delete" 
+                    hx-confirm="<%= t('common.confirmDelete') || 'Are you sure?' %>"
+                    hx-target="body">
+              <%= t('common.delete') || 'Delete' %>
+            </button>
+          <% } %>
         </div>
       </div>
 

@@ -2658,6 +2658,11 @@ video {
     border-color: currentColor;
   }
 
+  .badge-info {
+    --badge-color: var(--color-info);
+    --badge-fg: var(--color-info-content);
+  }
+
   .badge-success {
     --badge-color: var(--color-success);
     --badge-fg: var(--color-success-content);

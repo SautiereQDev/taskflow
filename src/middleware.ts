@@ -12,6 +12,10 @@ import { AppError, logger } from './utils.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+logger.info(
+  `[i18n] Loading locales from: ${path.join(process.cwd(), 'locales/{{lng}}/{{ns}}.json')}`
+);
+
 // Initialize i18next
 await i18next
   .use(Backend)
@@ -23,7 +27,7 @@ await i18next
     ns: ['translation'],
     defaultNS: 'translation',
     backend: {
-      loadPath: path.join(__dirname, '../locales/{{lng}}/{{ns}}.json'),
+      loadPath: path.join(process.cwd(), 'locales/{{lng}}/{{ns}}.json'),
     },
     detection: {
       order: ['querystring', 'session', 'cookie', 'header'],
