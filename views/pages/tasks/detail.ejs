@@ -1,12 +1,75 @@
-<div class="max-w-5xl mx-auto tf-section">
- <div class="flex items-center justify-between tf-gap">
- <a href="/tasks" class="btn btn-ghost btn-sm gap-2">
- <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
- </svg>
- Retour à la liste
- </a>
- </div>
+<div class="max-w-5xl mx-auto py-8">
+  <div class="flex items-center justify-between mb-6">
+    <a href="/tasks" class="btn btn-ghost btn-sm gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+      Retour à la liste
+    </a>
+  </div>
 
- <%- include('../../partials/tasks/task-detail-card', { task }) %>
+  <section class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+        <div>
+          <h1 class="card-title text-3xl mb-2"><%= task.title %></h1>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge badge-lg"><%= task.status %></span>
+            <span class="badge badge-lg badge-outline"><%= task.priority %></span>
+            <% if (task.dueDate) { %>
+              <span class="badge badge-lg badge-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M5 11h14M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                <%= new Date(task.dueDate).toLocaleDateString() %>
+              </span>
+            <% } %>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="/tasks/<%= task.id %>/edit" class="btn btn-primary btn-sm">Modifier</a>
+        </div>
+      </div>
+
+      <div class="prose max-w-none mb-8">
+        <% if (task.description) { %>
+          <p class="whitespace-pre-wrap"><%= task.description %></p>
+        <% } else { %>
+          <p class="italic opacity-60">Aucune description.</p>
+        <% } %>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-base-200 p-4 rounded-lg">
+          <h3 class="text-sm font-bold uppercase opacity-70 mb-2">Créée par</h3>
+          <div class="flex items-center gap-3">
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content rounded-full w-10">
+                <span><%= task.creator.name.substring(0, 2).toUpperCase() %></span>
+              </div>
+            </div>
+            <div>
+              <div class="font-bold"><%= task.creator.name %></div>
+              <div class="text-sm opacity-70"><%= task.creator.email %></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-base-200 p-4 rounded-lg">
+          <h3 class="text-sm font-bold uppercase opacity-70 mb-2">Assignée à</h3>
+          <% if (task.assignee) { %>
+            <div class="flex items-center gap-3">
+              <div class="avatar placeholder">
+                <div class="bg-neutral text-neutral-content rounded-full w-10">
+                  <span><%= task.assignee.name.substring(0, 2).toUpperCase() %></span>
+                </div>
+              </div>
+              <div>
+                <div class="font-bold"><%= task.assignee.name %></div>
+                <div class="text-sm opacity-70"><%= task.assignee.email %></div>
+              </div>
+            </div>
+          <% } else { %>
+            <p class="opacity-70">Non assignée</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
