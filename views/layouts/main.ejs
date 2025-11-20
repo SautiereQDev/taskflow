@@ -1,45 +1,125 @@
 <!DOCTYPE html>
 <html lang="<%= locale || 'fr' %>" data-theme="light">
 <head>
- <%- include('../partials/head', { title: typeof title !== 'undefined' ? title : 'TaskFlow' }) %>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'TaskFlow - Gestionnaire de tâches collaboratif moderne' %>">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle : (typeof title !== 'undefined' ? title : 'TaskFlow') %> | TaskFlow</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/output.css">
 </head>
 <body class="min-h-screen bg-base-100 font-sans antialiased transition-colors duration-300">
- <!-- Skip to main content link for accessibility -->
- <a href="#main-content" class="skip-link">
- <%= typeof __=== 'function' ? __('a11y.skipToContent') : 'Aller au contenu principal' %>
- </a>
+  <a href="#main-content" class="skip-link">
+    <%= typeof __=== 'function' ? __('a11y.skipToContent') : 'Aller au contenu principal' %>
+  </a>
 
- <div class="tf-app-shell">
- <%- include('../partials/header') %>
+  <div class="tf-app-shell">
+    <header class="bg-base-200 border border-base-content/10 shadow-md sticky top-0 z-50 border-b border-base-300">
+      <div class="container mx-auto px-4">
+        <nav class="navbar min-h-16">
+          <div class="navbar-start">
+            <a href="/" class="btn btn-ghost text-xl font-bold gap-2">
+              <span class="hidden sm:inline">TaskFlow</span>
+            </a>
+          </div>
 
- <main id="main-content" class="tf-main tf-stack py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full" tabindex="-1">
- <%- include('../partials/flash-messages') %>
- <%- body %>
- </main>
+          <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 gap-1">
+              <% if (typeof user !== 'undefined' && user) { %>
+                <li><a href="/dashboard" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'dashboard' ? 'active' : '' %>"><%= __('nav.dashboard') %></a></li>
+                <li><a href="/tasks" class="<%= typeof activeRoute !== 'undefined' && activeRoute === 'tasks' ? 'active' : '' %>"><%= __('nav.tasks') %></a></li>
+              <% } %>
+            </ul>
+          </div>
 
- <%- include('../partials/footer') %>
- </div>
+          <div class="navbar-end gap-2">
+            <div class="dropdown dropdown-end">
+              <label tabindex="0" class="btn btn-ghost btn-sm gap-1">
+                <span class="font-semibold"><%= (typeof locale !== 'undefined' ? locale : 'fr').toUpperCase() %></span>
+              </label>
+              <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 rounded-box w-32">
+                <li><a href="?lang=fr" class="<%= (typeof locale !== 'undefined' && locale === 'fr') ? 'active' : '' %>">🇫🇷 Français</a></li>
+                <li><a href="?lang=en" class="<%= (typeof locale !== 'undefined' && locale === 'en') ? 'active' : '' %>">🇬🇧 English</a></li>
+              </ul>
+            </div>
 
- <!-- Toast Notifications (Alpine.js) -->
- <%- include('../partials/toast-notifications') %>
+            <div x-data="themeSwitch">
+              <button @click="toggle" class="btn btn-ghost btn-circle">
+                <svg x-show="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <svg x-show="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+              </button>
+            </div>
 
- <!-- HTMX 2.0.7 Bundle - Local bundle with loading-states extension -->
- <!-- No CDN required! -->
- <script nonce="<%= cspNonce %>" src="/js/htmx-bundle.js"></script>
+            <% if (typeof user !== 'undefined' && user) { %>
+              <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 h-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
+                    <span class="text-sm font-semibold"><%= user.name.substring(0, 2).toUpperCase() %></span>
+                  </div>
+                </label>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-300 border border-base-content/10 shadow-lg mt-3 p-2 rounded-box w-52">
+                  <li><a href="/auth/logout" class="text-error"><%= __('nav.logout') %></a></li>
+                </ul>
+              </div>
+            <% } else { %>
+              <a href="/auth/login" class="btn btn-ghost"><%= __('nav.login') %></a>
+              <a href="/auth/register" class="btn btn-primary"><%= __('nav.register') %></a>
+            <% } %>
+          </div>
+        </nav>
+      </div>
+    </header>
 
- <!-- HTMX Custom Events & URL Handling (HTMX 2.0) -->
- <script nonce="<%= cspNonce %>" src="/js/htmx-events.js"></script>
- <script nonce="<%= cspNonce %>" src="/js/htmx-filters-url.js"></script>
- <script nonce="<%= cspNonce %>" src="/js/task-card-click.js"></script>
+    <main id="main-content" class="tf-main tf-stack py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full" tabindex="-1">
+      <%
+        const messages = locals.messages || {};
+        const successMessages = messages.success || [];
+        const errorMessages = messages.error || [];
+        const infoMessages = messages.info || [];
+      %>
+      <% if (successMessages.length > 0 || errorMessages.length > 0 || infoMessages.length > 0) { %>
+        <div class="container mx-auto px-4 mt-4">
+          <% successMessages.forEach(msg => { %>
+            <div class="alert alert-success mb-2 shadow-lg" data-flash-message><span><%= msg %></span></div>
+          <% }) %>
+          <% errorMessages.forEach(msg => { %>
+            <div class="alert alert-error mb-2 shadow-lg" data-flash-message><span><%= msg %></span></div>
+          <% }) %>
+          <% infoMessages.forEach(msg => { %>
+            <div class="alert alert-info mb-2 shadow-lg" data-flash-message><span><%= msg %></span></div>
+          <% }) %>
+        </div>
+        <script nonce="<%= locals.cspNonce %>">
+          document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('[data-flash-message]');
+            flashMessages.forEach(function(message) {
+              setTimeout(function() {
+                if (message.parentNode) {
+                  message.style.transition = 'opacity 0.5s ease-out';
+                  message.style.opacity = '0';
+                  setTimeout(function() { message.remove(); }, 500);
+                }
+              }, 5000);
+            });
+          });
+        </script>
+      <% } %>
 
- <!-- Theme initialization (runs BEFORE Alpine) -->
- <script nonce="<%= cspNonce %>" src="/js/theme-init.js"></script>
+      <%- body %>
+    </main>
 
- <!-- Alpine.js components (must load BEFORE Alpine.js itself) -->
- <script nonce="<%= cspNonce %>" src="/js/alpine-components.js"></script>
+    <footer class="bg-base-200 border border-base-content/10 shadow-md mt-auto border-t border-base-300">
+      <div class="container mx-auto px-4 py-8 text-center">
+        <p class="text-sm opacity-70">TaskFlow &copy; <%= new Date().getFullYear() %></p>
+      </div>
+    </footer>
+  </div>
 
- <!-- Alpine.js 3.15.1 CSP Build - Bundled with persist, intersect, focus plugins -->
- <!-- No 'unsafe-eval' required! -->
- <script nonce="<%= cspNonce %>" defer src="/js/alpine-csp.js"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.14.3/dist/cdn.min.js"></script>
+  <script nonce="<%= locals.cspNonce %>" src="/js/main.js"></script>
 </body>
 </html>
