@@ -34,7 +34,6 @@ router.get('/', attachUser, (req: Request, res: Response) => {
   res.render('pages/home', {
     title: 'TaskFlow - Modern Task Management',
     user: undefined,
-    locale: req.session.locale ?? 'fr',
   });
 });
 

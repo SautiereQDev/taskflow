@@ -2,8 +2,8 @@
  <div class="w-full max-w-md">
  <div class="bg-base-300 border border-base-content/10 shadow-lg tf-card-padding rounded-xl">
  <div class="text-center tf-group">
- <h1 class="text-3xl font-bold mb-2">Créer un compte</h1>
- <p class="text-base-content/70">Rejoignez TaskFlow aujourd'hui</p>
+ <h1 class="text-3xl font-bold mb-2"><%= __('auth.registerPage.title') %></h1>
+ <p class="text-base-content/70"><%= __('auth.registerPage.subtitle') %></p>
  </div>
 
  <form method="POST" action="/auth/register" class="tf-group">
@@ -12,7 +12,7 @@
 
  <!-- Name Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Nom complet',
+ label: __('auth.registerPage.name'),
  name: 'name',
  type: 'text',
  value: typeof formData !== 'undefined' ? formData.name : '',
@@ -23,7 +23,7 @@
 
  <!-- Email Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Email',
+ label: __('auth.registerPage.email'),
  name: 'email',
  type: 'email',
  value: typeof formData !== 'undefined' ? formData.email : '',
@@ -35,19 +35,19 @@
 
  <!-- Password Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Mot de passe',
+ label: __('auth.registerPage.password'),
  name: 'password',
  type: 'password',
  placeholder: '••••••••',
  required: true,
  autocomplete: 'new-password',
- helpText: typeof errors !== 'undefined' && errors.password ? '' : 'Minimum 8 caractères',
+ helpText: typeof errors !== 'undefined' && errors.password ? '' : __('auth.registerPage.passwordHelp'),
  error: typeof errors !== 'undefined' ? errors.password : ''
  }) %>
 
  <!-- Confirm Password Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Confirmer le mot de passe',
+ label: __('auth.registerPage.confirmPassword'),
  name: 'confirmPassword',
  type: 'password',
  placeholder: '••••••••',
@@ -57,7 +57,7 @@
  }) %>
 
  <%- include('../../partials/ui/forms/checkbox', {
- label: 'J\'accepte les <a href="/terms" class="link link-primary">conditions d\'utilisation</a> et la <a href="/privacy" class="link link-primary">politique de confidentialité</a>',
+ label: __('auth.registerPage.terms'),
  name: 'acceptTerms',
  required: true,
  size: 'sm',
@@ -65,19 +65,19 @@
  }) %>
 
  <%- include('../../partials/ui/button', {
- text: 'Créer mon compte',
+ text: __('auth.registerPage.submit'),
  type: 'submit',
  variant: 'primary',
  block: true
  }) %>
  </form>
 
- <div class="divider">OU</div>
+ <div class="divider"><%= __('auth.or') %></div>
 
  <div class="text-center">
  <p class="text-sm">
- Déjà un compte ?
- <a href="/auth/login" class="link link-primary">Se connecter</a>
+ <%= __('auth.registerPage.hasAccount') %>
+ <a href="/auth/login" class="link link-primary"><%= __('auth.registerPage.login') %></a>
  </p>
  </div>
  </div>

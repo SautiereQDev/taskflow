@@ -84,6 +84,15 @@ export class AuthController {
       // Store user ID in session
       req.session.userId = result.user.id;
 
+      // Restore user's preferred locale
+      if (result.user.locale) {
+        req.session.locale = result.user.locale;
+        // Update current request language
+        if (req.i18n) {
+          await req.i18n.changeLanguage(result.user.locale);
+        }
+      }
+
       // Log session before save
       logger.info('Session before save', {
         userId: req.session.userId,

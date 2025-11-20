@@ -5191,14 +5191,14 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for focus states */
 
-[data-theme="dark"] .btn:focus-visible {
+[data-theme='dark'] .btn:focus-visible {
   --tw-ring-color: var(--color-primary);
   --tw-ring-offset-color: var(--color-base-100);
 }
 
 /* Dark theme enhancement for all buttons - better contrast */
 
-[data-theme="dark"] .btn:not(.btn-ghost):not(.btn-outline) {
+[data-theme='dark'] .btn:not(.btn-ghost):not(.btn-outline) {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -5270,13 +5270,13 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for primary buttons */
 
-[data-theme="dark"] .btn-primary {
+[data-theme='dark'] .btn-primary {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-primary:hover {
+[data-theme='dark'] .btn-primary:hover {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -5284,7 +5284,7 @@ svg:not([stroke-width]) {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-[data-theme="dark"] .btn-primary {
+[data-theme='dark'] .btn-primary {
     border: 1px solid rgba(var(--p), 0.4);
   }
 
@@ -5316,24 +5316,24 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for outline buttons */
 
-[data-theme="dark"] .btn-outline {
+[data-theme='dark'] .btn-outline {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-outline:hover {
+[data-theme='dark'] .btn-outline:hover {
   --tw-bg-opacity: 0.1;
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-outline {
+[data-theme='dark'] .btn-outline {
     border-color: rgba(255, 255, 255, 0.3);
   }
 
-[data-theme="dark"] .btn-outline:hover {
+[data-theme='dark'] .btn-outline:hover {
     border-color: rgba(var(--p), 0.8);
   }
 
@@ -5358,7 +5358,7 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for ghost buttons */
 
-[data-theme="dark"] .btn-ghost:hover {
+[data-theme='dark'] .btn-ghost:hover {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -5400,13 +5400,13 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for error buttons */
 
-[data-theme="dark"] .btn-error {
+[data-theme='dark'] .btn-error {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-error:hover {
+[data-theme='dark'] .btn-error:hover {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -5414,7 +5414,7 @@ svg:not([stroke-width]) {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-[data-theme="dark"] .btn-error {
+[data-theme='dark'] .btn-error {
     border: 1px solid rgba(var(--er), 0.4);
   }
 
@@ -5435,19 +5435,19 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for outline error buttons */
 
-[data-theme="dark"] .btn-outline.btn-error {
+[data-theme='dark'] .btn-outline.btn-error {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-outline.btn-error:hover {
+[data-theme='dark'] .btn-outline.btn-error:hover {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-[data-theme="dark"] .btn-outline.btn-error {
+[data-theme='dark'] .btn-outline.btn-error {
     border-color: rgba(var(--er), 0.6);
   }
 
@@ -5465,8 +5465,8 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for disabled buttons - more visible */
 
-[data-theme="dark"] .btn:disabled,
-  [data-theme="dark"] .btn.disabled {
+[data-theme='dark'] .btn:disabled,
+  [data-theme='dark'] .btn.disabled {
   opacity: 0.6;
     border-color: rgba(255, 255, 255, 0.2);
 }
@@ -5510,14 +5510,14 @@ svg:not([stroke-width]) {
 
 /* Dark theme enhancement for circular buttons */
 
-[data-theme="dark"] .btn-circle:not(.btn-ghost) {
+[data-theme='dark'] .btn-circle:not(.btn-ghost) {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] .btn-circle.btn-ghost:hover {
+[data-theme='dark'] .btn-circle.btn-ghost:hover {
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
@@ -5555,7 +5555,9 @@ svg:not([stroke-width]) {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
 /* Button spacing utilities */
@@ -5777,68 +5779,68 @@ svg:not([stroke-width]) {
 
 /* Dark theme typography improvements - Better contrast for WCAG AA */
 
-[data-theme="dark"] .tf-text-secondary {
+[data-theme='dark'] .tf-text-secondary {
   --tw-text-opacity: 0.9;
 }
 
-[data-theme="dark"] .tf-text-muted {
+[data-theme='dark'] .tf-text-muted {
   --tw-text-opacity: 0.75;
 }
 
 /* Dark theme improvements for inline opacity classes */
 
-[data-theme="dark"] .text-base-content\/80 {
+[data-theme='dark'] .text-base-content\/80 {
     opacity: 0.9 !important;
   }
 
-[data-theme="dark"] .text-base-content\/70 {
+[data-theme='dark'] .text-base-content\/70 {
     opacity: 0.85 !important;
   }
 
-[data-theme="dark"] .text-base-content\/60 {
+[data-theme='dark'] .text-base-content\/60 {
     opacity: 0.75 !important;
   }
 
-[data-theme="dark"] .text-base-content\/50 {
+[data-theme='dark'] .text-base-content\/50 {
     opacity: 0.65 !important;
   }
 
 /* Dark theme improvements for prose content */
 
-[data-theme="dark"] .prose {
+[data-theme='dark'] .prose {
     color: rgba(255, 255, 255, 0.9);
   }
 
-[data-theme="dark"] .prose-sm,
-  [data-theme="dark"] .prose-base {
+[data-theme='dark'] .prose-sm,
+  [data-theme='dark'] .prose-base {
     color: rgba(255, 255, 255, 0.9);
   }
 
 /* Dark theme improvements for alert components */
 
-[data-theme="dark"] .alert {
+[data-theme='dark'] .alert {
     color: rgba(255, 255, 255, 0.9) !important;
   }
 
-[data-theme="dark"] .alert-info {
+[data-theme='dark'] .alert-info {
     background-color: rgba(var(--in), 0.15) !important;
     border-color: rgba(var(--in), 0.3) !important;
     color: rgba(255, 255, 255, 0.9) !important;
   }
 
-[data-theme="dark"] .alert-success {
+[data-theme='dark'] .alert-success {
     background-color: rgba(var(--su), 0.15) !important;
     border-color: rgba(var(--su), 0.3) !important;
     color: rgba(255, 255, 255, 0.9) !important;
   }
 
-[data-theme="dark"] .alert-warning {
+[data-theme='dark'] .alert-warning {
     background-color: rgba(var(--wa), 0.15) !important;
     border-color: rgba(var(--wa), 0.3) !important;
     color: rgba(255, 255, 255, 0.9) !important;
   }
 
-[data-theme="dark"] .alert-error {
+[data-theme='dark'] .alert-error {
     background-color: rgba(var(--er), 0.15) !important;
     border-color: rgba(var(--er), 0.3) !important;
     color: rgba(255, 255, 255, 0.9) !important;
@@ -5846,7 +5848,7 @@ svg:not([stroke-width]) {
 
 /* Alert SVG icons in dark mode */
 
-[data-theme="dark"] .alert svg {
+[data-theme='dark'] .alert svg {
     color: rgba(255, 255, 255, 0.9);
     opacity: 0.9;
   }
@@ -5857,73 +5859,73 @@ svg:not([stroke-width]) {
     border-width: 2px;
   }
 
-.checkbox:not(:checked):not([aria-checked="true"]) {
+.checkbox:not(:checked):not([aria-checked='true']) {
     border-color: rgba(0, 0, 0, 0.3);
   }
 
-.checkbox:not(:checked):not([aria-checked="true"]):hover {
+.checkbox:not(:checked):not([aria-checked='true']):hover {
     border-color: rgba(0, 0, 0, 0.5);
   }
 
 /* Ensure colored checkboxes (primary, info, etc.) are visible when unchecked */
 
-.checkbox-primary:not(:checked):not([aria-checked="true"]),
-  .checkbox-secondary:not(:checked):not([aria-checked="true"]),
-  .checkbox-accent:not(:checked):not([aria-checked="true"]),
-  .checkbox-info:not(:checked):not([aria-checked="true"]),
-  .checkbox-success:not(:checked):not([aria-checked="true"]),
-  .checkbox-warning:not(:checked):not([aria-checked="true"]),
-  .checkbox-error:not(:checked):not([aria-checked="true"]) {
+.checkbox-primary:not(:checked):not([aria-checked='true']),
+  .checkbox-secondary:not(:checked):not([aria-checked='true']),
+  .checkbox-accent:not(:checked):not([aria-checked='true']),
+  .checkbox-info:not(:checked):not([aria-checked='true']),
+  .checkbox-success:not(:checked):not([aria-checked='true']),
+  .checkbox-warning:not(:checked):not([aria-checked='true']),
+  .checkbox-error:not(:checked):not([aria-checked='true']) {
     border-color: rgba(0, 0, 0, 0.35);
     border-width: 2px;
   }
 
-.checkbox-primary:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-secondary:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-accent:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-info:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-success:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-warning:not(:checked):not([aria-checked="true"]):hover,
-  .checkbox-error:not(:checked):not([aria-checked="true"]):hover {
+.checkbox-primary:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-secondary:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-accent:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-info:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-success:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-warning:not(:checked):not([aria-checked='true']):hover,
+  .checkbox-error:not(:checked):not([aria-checked='true']):hover {
     border-color: rgba(0, 0, 0, 0.55);
   }
 
 /* Dark theme improvements for checkboxes - Better visibility */
 
-[data-theme="dark"] .checkbox {
+[data-theme='dark'] .checkbox {
     border-color: rgba(255, 255, 255, 0.4);
     border-width: 2px;
   }
 
-[data-theme="dark"] .checkbox:hover {
+[data-theme='dark'] .checkbox:hover {
     border-color: rgba(255, 255, 255, 0.6);
   }
 
-[data-theme="dark"] .checkbox:checked,
-  [data-theme="dark"] .checkbox[aria-checked="true"] {
+[data-theme='dark'] .checkbox:checked,
+  [data-theme='dark'] .checkbox[aria-checked='true'] {
     border-color: transparent;
   }
 
 /* Dark theme: Ensure colored checkboxes are visible when unchecked */
 
-[data-theme="dark"] .checkbox-primary:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-secondary:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-accent:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-info:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-success:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-warning:not(:checked):not([aria-checked="true"]),
-  [data-theme="dark"] .checkbox-error:not(:checked):not([aria-checked="true"]) {
+[data-theme='dark'] .checkbox-primary:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-secondary:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-accent:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-info:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-success:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-warning:not(:checked):not([aria-checked='true']),
+  [data-theme='dark'] .checkbox-error:not(:checked):not([aria-checked='true']) {
     border-color: rgba(255, 255, 255, 0.45);
     border-width: 2px;
   }
 
-[data-theme="dark"] .checkbox-primary:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-secondary:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-accent:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-info:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-success:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-warning:not(:checked):not([aria-checked="true"]):hover,
-  [data-theme="dark"] .checkbox-error:not(:checked):not([aria-checked="true"]):hover {
+[data-theme='dark'] .checkbox-primary:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-secondary:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-accent:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-info:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-success:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-warning:not(:checked):not([aria-checked='true']):hover,
+  [data-theme='dark'] .checkbox-error:not(:checked):not([aria-checked='true']):hover {
     border-color: rgba(255, 255, 255, 0.65);
   }
 
@@ -5964,36 +5966,36 @@ svg:not([stroke-width]) {
 
 /* Dark theme improvements for inputs */
 
-[data-theme="dark"] .input,
-  [data-theme="dark"] .select,
-  [data-theme="dark"] .textarea {
+[data-theme='dark'] .input,
+  [data-theme='dark'] .select,
+  [data-theme='dark'] .textarea {
     border-color: rgba(255, 255, 255, 0.3);
   }
 
-[data-theme="dark"] .input:hover,
-  [data-theme="dark"] .select:hover,
-  [data-theme="dark"] .textarea:hover {
+[data-theme='dark'] .input:hover,
+  [data-theme='dark'] .select:hover,
+  [data-theme='dark'] .textarea:hover {
     border-color: rgba(255, 255, 255, 0.5);
   }
 
-[data-theme="dark"] .input:focus,
-  [data-theme="dark"] .select:focus,
-  [data-theme="dark"] .textarea:focus {
+[data-theme='dark'] .input:focus,
+  [data-theme='dark'] .select:focus,
+  [data-theme='dark'] .textarea:focus {
     border-color: rgba(255, 255, 255, 0.6);
   }
 
 /* Dark theme improvements for radio buttons */
 
-[data-theme="dark"] .radio {
+[data-theme='dark'] .radio {
     border-color: rgba(255, 255, 255, 0.4);
     border-width: 2px;
   }
 
-[data-theme="dark"] .radio:hover {
+[data-theme='dark'] .radio:hover {
     border-color: rgba(255, 255, 255, 0.6);
   }
 
-[data-theme="dark"] .radio:checked {
+[data-theme='dark'] .radio:checked {
     border-color: transparent;
   }
 
@@ -7562,7 +7564,7 @@ svg:not([stroke-width]) {
   --tw-text-opacity: 0.8;
 }
 
-[data-theme="dark"] .hover\:tf-text-secondary:hover {
+[data-theme='dark'] .hover\:tf-text-secondary:hover {
   --tw-text-opacity: 0.9;
 }
 
@@ -7578,7 +7580,7 @@ svg:not([stroke-width]) {
   }
 
   
-  [data-theme="dark"] .md\:prose-base {
+  [data-theme='dark'] .md\:prose-base {
     color: rgba(255, 255, 255, 0.9);
   }
 }
@@ -7889,4 +7891,3 @@ svg:not([stroke-width]) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
-

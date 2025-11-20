@@ -16,7 +16,7 @@ initializeTelemetry();
 
 // Validate environment variables at startup (security best practice)
 validateEnvVars();
-
+// Force restart
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const HOST = process.env.HOST ?? '0.0.0.0';
 

@@ -2,8 +2,8 @@
  <div class="w-full max-w-md">
  <div class="bg-base-300 border border-base-content/10 shadow-lg tf-card-padding rounded-xl">
  <div class="text-center tf-group">
- <h1 class="text-3xl font-bold mb-2">Connexion</h1>
- <p class="text-base-content/70">Connectez-vous à votre compte</p>
+ <h1 class="text-3xl font-bold mb-2"><%= __('auth.loginPage.title') %></h1>
+ <p class="text-base-content/70"><%= __('auth.loginPage.subtitle') %></p>
  </div>
 
  <form method="POST" action="/auth/login" class="tf-group">
@@ -20,7 +20,7 @@
 
  <!-- Email Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Email',
+ label: __('auth.loginPage.email'),
  name: 'email',
  type: 'email',
  value: typeof formData !== 'undefined' ? formData.email : '',
@@ -32,7 +32,7 @@
 
  <!-- Password Field -->
  <%- include('../../partials/ui/forms/input', {
- label: 'Mot de passe',
+ label: __('auth.loginPage.password'),
  name: 'password',
  type: 'password',
  placeholder: '••••••••',
@@ -42,24 +42,24 @@
  }) %>
 
  <%- include('../../partials/ui/forms/checkbox', {
- label: 'Se souvenir de moi',
+ label: __('auth.loginPage.rememberMe'),
  name: 'rememberMe'
  }) %>
 
  <%- include('../../partials/ui/button', {
- text: 'Se connecter',
+ text: __('auth.loginPage.submit'),
  type: 'submit',
  variant: 'primary',
  block: true
  }) %>
  </form>
 
- <div class="divider">OU</div>
+ <div class="divider"><%= __('auth.or') %></div>
 
  <div class="text-center">
  <p class="text-sm">
- Pas encore de compte ?
- <a href="/auth/register" class="link link-primary">S'inscrire</a>
+ <%= __('auth.loginPage.noAccount') %>
+ <a href="/auth/register" class="link link-primary"><%= __('auth.loginPage.register') %></a>
  </p>
  </div>
  </div>

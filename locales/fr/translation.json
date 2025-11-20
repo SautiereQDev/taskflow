@@ -51,7 +51,99 @@
     "cookies": "Cookies",
     "licenses": "Licences"
   },
+  "home": {
+    "hero": {
+      "badge": "Nouveau : TaskFlow 2.0 est disponible !",
+      "title": {
+        "prefix": "Gérez vos projets avec",
+        "highlight": "simplicité et efficacité"
+      },
+      "subtitle": "TaskFlow est l'outil idéal pour organiser votre travail, collaborer avec votre équipe et suivre vos projets en temps réel.",
+      "cta": {
+        "start": "Commencer gratuitement",
+        "features": "Découvrir les fonctionnalités"
+      },
+      "stats": {
+        "free": "Gratuit",
+        "fast": "Rapide",
+        "secure": "Sécurisé"
+      }
+    },
+    "features": {
+      "title": "Fonctionnalités principales",
+      "subtitle": "Tout ce dont vous avez besoin pour réussir vos projets",
+      "intuitive": {
+        "title": "Simple et Intuitif",
+        "desc": "Interface épurée et facile à prendre en main. Concentrez-vous sur vos tâches, pas sur l'outil."
+      },
+      "collaboration": {
+        "title": "Collaboration",
+        "desc": "Travaillez en équipe avec l'assignation de tâches, les commentaires et les notifications."
+      },
+      "analytics": {
+        "title": "Analyses détaillées",
+        "desc": "Suivez la progression de vos projets avec des graphiques et des rapports précis."
+      },
+      "tracking": {
+        "title": "Suivi de temps",
+        "desc": "Mesurez le temps passé sur chaque tâche pour optimiser votre productivité."
+      },
+      "notifications": {
+        "title": "Notifications intelligentes",
+        "desc": "Restez informé des mises à jour importantes sans être submergé."
+      },
+      "security": {
+        "title": "Sécurité avancée",
+        "desc": "Vos données sont chiffrées et protégées selon les meilleurs standards de l'industrie."
+      },
+      "kanban": {
+        "title": "Gestion Kanban",
+        "desc": "Visualisez votre flux de travail avec notre tableau Kanban intuitif."
+      },
+      "collab": {
+        "title": "Collaboration",
+        "desc": "Travaillez ensemble en temps réel, assignez des tâches et partagez des fichiers."
+      }
+    },
+    "cta": {
+      "title": "Prêt à booster votre productivité ?",
+      "subtitle": "Rejoignez des milliers d'équipes qui utilisent TaskFlow au quotidien.",
+      "createAccount": "Créer un compte maintenant",
+      "login": "Se connecter"
+    },
+    "trust": {
+      "title": "Ils nous font confiance",
+      "noCard": "Pas de carte requise",
+      "free": "14 jours gratuits",
+      "setup": "Installation rapide"
+    }
+  },
   "auth": {
+    "or": "OU",
+    "loginPage": {
+      "title": "Connexion",
+      "subtitle": "Accédez à votre espace de travail",
+      "email": "Email",
+      "password": "Mot de passe",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "noAccount": "Pas encore de compte ?",
+      "register": "Créer un compte"
+    },
+    "registerPage": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez TaskFlow aujourd'hui",
+      "name": "Nom complet",
+      "email": "Email",
+      "password": "Mot de passe",
+      "passwordHelp": "Minimum 8 caractères",
+      "confirmPassword": "Confirmer le mot de passe",
+      "terms": "J'accepte les <a href=\"/terms\" class=\"link link-primary\">conditions d'utilisation</a> et la <a href=\"/privacy\" class=\"link link-primary\">politique de confidentialité</a>",
+      "submit": "Créer mon compte",
+      "hasAccount": "Déjà un compte ?",
+      "login": "Se connecter"
+    },
     "login": "Connexion",
     "register": "Inscription",
     "logout": "Déconnexion",

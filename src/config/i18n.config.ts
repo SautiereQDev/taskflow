@@ -41,11 +41,12 @@ await i18next
 
     // Detection order and caches
     detection: {
-      order: ['querystring', 'session', 'header'],
+      order: ['querystring', 'session', 'cookie', 'header'],
       lookupQuerystring: 'lang',
       lookupSession: 'locale',
+      lookupCookie: 'i18next',
       lookupHeader: 'accept-language',
-      caches: ['cookie'],
+      caches: ['cookie', 'session'],
       cookieSecure: process.env.NODE_ENV === 'production',
       cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
     },

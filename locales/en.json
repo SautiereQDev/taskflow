@@ -11,6 +11,124 @@
       "register": "Sign Up",
       "logout": "Logout"
     },
+    "home": {
+      "hero": {
+        "badge": "New: TaskFlow 2.0 is available!",
+        "title": {
+          "prefix": "Manage your projects with",
+          "highlight": "simplicity and efficiency"
+        },
+        "subtitle": "TaskFlow is the ideal tool to organize your work, collaborate with your team, and track your projects in real-time.",
+        "cta": {
+          "start": "Get Started for Free",
+          "features": "Discover Features"
+        },
+        "stats": {
+          "free": "Free",
+          "fast": "Fast",
+          "secure": "Secure"
+        }
+      },
+      "features": {
+        "title": "Key Features",
+        "subtitle": "Everything you need to succeed in your projects",
+        "intuitive": {
+          "title": "Simple and Intuitive",
+          "desc": "Clean interface and easy to use. Focus on your tasks, not on the tool."
+        },
+        "collaboration": {
+          "title": "Collaboration",
+          "desc": "Work as a team with task assignment, comments, and notifications."
+        },
+        "analytics": {
+          "title": "Detailed Analytics",
+          "desc": "Track your project progress with precise charts and reports."
+        },
+        "tracking": {
+          "title": "Time Tracking",
+          "desc": "Measure time spent on each task to optimize your productivity."
+        },
+        "notifications": {
+          "title": "Smart Notifications",
+          "desc": "Stay informed of important updates without being overwhelmed."
+        },
+        "security": {
+          "title": "Advanced Security",
+          "desc": "Your data is encrypted and protected according to the best industry standards."
+        },
+        "kanban": {
+          "title": "Kanban Management",
+          "desc": "Visualize your workflow with our intuitive Kanban board."
+        },
+        "collab": {
+          "title": "Collaboration",
+          "desc": "Work together in real-time, assign tasks, and share files."
+        }
+      },
+      "cta": {
+        "title": "Ready to boost your productivity?",
+        "subtitle": "Join thousands of teams using TaskFlow daily.",
+        "createAccount": "Create an Account Now",
+        "login": "Login"
+      },
+      "trust": {
+        "title": "They trust us",
+        "noCard": "No credit card required",
+        "free": "14 days free",
+        "setup": "Quick setup"
+      }
+    },
+    "auth": {
+      "or": "OR",
+      "loginPage": {
+        "title": "Login",
+        "subtitle": "Access your workspace",
+        "email": "Email",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "submit": "Sign In",
+        "noAccount": "No account yet?",
+        "register": "Create an account"
+      },
+      "registerPage": {
+        "title": "Create an account",
+        "subtitle": "Join TaskFlow today",
+        "name": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "passwordHelp": "Minimum 8 characters",
+        "confirmPassword": "Confirm Password",
+        "terms": "I accept the <a href=\"/terms\" class=\"link link-primary\">Terms of Service</a> and <a href=\"/privacy\" class=\"link link-primary\">Privacy Policy</a>",
+        "submit": "Create my account",
+        "hasAccount": "Already have an account?",
+        "login": "Sign In"
+      },
+      "login": {
+        "title": "Login",
+        "subtitle": "Access your workspace",
+        "email": "Email",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "submit": "Sign In",
+        "noAccount": "No account yet?",
+        "register": "Create an account"
+      },
+      "register": {
+        "title": "Create an account",
+        "subtitle": "Join TaskFlow today",
+        "name": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "passwordHelp": "Minimum 8 characters",
+        "confirmPassword": "Confirm Password",
+        "terms": "I accept the <a href=\"/terms\" class=\"link link-primary\">Terms of Service</a> and <a href=\"/privacy\" class=\"link link-primary\">Privacy Policy</a>",
+        "submit": "Create my account",
+        "hasAccount": "Already have an account?",
+        "login": "Sign In"
+      }
+    },
     "footer": {
       "tagline": "Modern collaborative task management",
       "copyright": "© {{year}} TaskFlow. All rights reserved.",
