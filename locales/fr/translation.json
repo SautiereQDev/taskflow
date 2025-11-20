@@ -10,12 +10,29 @@
     "create": "Créer",
     "back": "Retour",
     "search": "Rechercher",
+    "reset": "Réinitialiser",
     "filter": "Filtrer",
     "yes": "Oui",
     "no": "Non",
     "or": "ou",
     "close": "Fermer",
-    "update": "Mettre à jour"
+    "update": "Mettre à jour",
+    "actions": "Actions",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu principal",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "loading": "Chargement, veuillez patienter",
+    "imageAlt": "Image",
+    "required": "Champ requis",
+    "openInNewTab": "Ouvrir dans un nouvel onglet",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "currentPage": "Page actuelle",
+    "pageOf": "Page {{current}} sur {{total}}"
   },
   "theme": {
     "switchToLight": "Passer au thème clair",
@@ -158,10 +175,15 @@
     "accountCreated": "Compte créé avec succès ! Bienvenue à bord !",
     "loggedOut": "Vous avez été déconnecté"
   },
+  "task": {
+    "new": "Nouvelle tâche"
+  },
   "tasks": {
     "title": "Tâches",
+    "new": "Nouvelle tâche",
     "myTasks": "Mes tâches",
     "allTasks": "Toutes les tâches",
+    "allAssignees": "Tous les utilisateurs",
     "newTask": "Nouvelle tâche",
     "taskDetails": "Détails de la tâche",
     "editTask": "Modifier la tâche",
@@ -184,6 +206,7 @@
       "priority": "Priorité",
       "dueDate": "Date d'échéance",
       "assignee": "Assigner à",
+      "noAssignee": "Non assigné",
       "submit": "Enregistrer",
       "cancel": "Annuler"
     },
@@ -196,6 +219,8 @@
     "taskUpdated": "Tâche mise à jour avec succès !",
     "taskDeleted": "Tâche supprimée avec succès !",
     "noTasks": "Aucune tâche trouvée",
+    "noDueDate": "Pas de date d'échéance",
+    "noDescription": "Pas de description",
     "statuses": {
       "TODO": "À faire",
       "IN_PROGRESS": "En cours",
@@ -211,6 +236,10 @@
   },
   "dashboard": {
     "title": "Tableau de bord",
+    "recentTasks": "Tâches récentes",
+    "viewAll": "Voir tout",
+    "myTasks": "Mes tâches",
+    "completed": "Terminées",
     "welcome": "Bienvenue, {{name}} !",
     "subtitle": "Vous suivez {{total}} tâche(s) dont {{open}} active(s).",
     "stats": "Statistiques",

@@ -135,6 +135,7 @@
     "edit": "Edit",
     "create": "Create",
     "search": "Search",
+    "reset": "Reset",
     "filter": "Filter",
     "sort": "Sort",
     "loading": "Loading...",
@@ -143,7 +144,10 @@
     "warning": "Warning",
     "info": "Information",
     "back": "Back",
-    "update": "Update"
+    "update": "Update",
+    "actions": "Actions",
+    "previous": "Previous",
+    "next": "Next"
   },
   "a11y": {
     "skipToContent": "Skip to main content",
@@ -209,7 +213,12 @@
       "supportEmail": "Contact Support"
     }
   },
+  "task": {
+    "new": "New Task"
+  },
   "tasks": {
+    "title": "Tasks",
+    "new": "New Task",
     "edit": {
       "title": "Edit Task",
       "subtitle": "Modify the task information below",
@@ -231,20 +240,33 @@
       "dueDate": "Due Date",
       "dueDateHint": "Deadline date and time (optional)"
     },
-    "status": {
-      "todo": "To Do",
-      "inProgress": "In Progress",
-      "done": "Done",
-      "cancelled": "Cancelled"
+    "status": "Status",
+    "taskDeleted": "Task deleted successfully!",
+    "noTasks": "No tasks found",
+    "noDueDate": "No due date",
+    "noDescription": "No description",
+    "statuses": {
+      "TODO": "To Do",
+      "IN_PROGRESS": "In Progress",
+      "DONE": "Done",
+      "CANCELLED": "Cancelled"
     },
     "priority": {
       "low": "Low",
       "medium": "Medium",
       "high": "High",
       "urgent": "Urgent"
-    }
+    },
+    "allTasks": "All Tasks",
+    "allAssignees": "All Users"
   },
   "dashboard": {
+    "title": "Dashboard",
+    "totalTasks": "Total Tasks",
+    "myTasks": "My Tasks",
+    "completed": "Completed",
+    "recentTasks": "Recent Tasks",
+    "viewAll": "View All",
     "hero": {
       "greeting": "Hello{{#if name}}, {{name}}{{/if}}",
       "wave": "👋",
